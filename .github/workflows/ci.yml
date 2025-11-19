@@ -1,0 +1,91 @@
+name: CI (Nuxt)
+
+on:
+  push:
+    branches:
+      - "main"
+      - "develop"
+      - "release/**"
+      - "release-please--branches--main--components--*"
+  pull_request:
+    branches:
+      - "main"
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------------------------------------
+      # Step 0: Detect release-please pull requests
+      # ---------------------------------------------------------
+      - name: Detect release-please PR
+        id: detect_release_please
+        run: |
+          is_rp=false
+
+          # For pull_request events, check if branch name starts with release-please--
+          if [ "${{ github.event_name }}" = "pull_request" ] && [[ "${{ github.head_ref }}" == release-please--* ]]; then
+            is_rp=true
+          fi
+
+          echo "is_release_please=$is_rp" >> $GITHUB_OUTPUT
+
+      # ---------------------------------------------------------
+      # Step 1: Fast exit for release-please PRs
+      # (Mark the job as success without running any heavy steps)
+      # ---------------------------------------------------------
+      - name: Skip heavy CI for release-please PR
+        if: steps.detect_release_please.outputs.is_release_please == 'true'
+        run: |
+          echo "✔ Release Please PR detected."
+          echo "✔ CI build is intentionally skipped for this PR."
+          echo "✔ Job marked as successful."
+          # nothing else to do
+
+      # ---------------------------------------------------------
+      # Steps below run ONLY if it's NOT a release-please PR
+      # ---------------------------------------------------------
+
+      - name: Checkout repository
+        if: steps.detect_release_please.outputs.is_release_please != 'true'
+        uses: actions/checkout@v4
+
+      - name: Setup Node 24.11.0
+        if: steps.detect_release_please.outputs.is_release_please != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.11.0
+          cache: npm
+
+      - name: Verify Node version
+        if: steps.detect_release_please.outputs.is_release_please != 'true'
+        run: node -v
+
+      - name: Install dependencies
+        if: steps.detect_release_please.outputs.is_release_please != 'true'
+        run: npm ci
+
+      - name: Lint
+        if: steps.detect_release_please.outputs.is_release_please != 'true'
+        run: npm run lint --if-present
+
+      - name: Typecheck
+        if: steps.detect_release_please.outputs.is_release_please != 'true'
+        run: npm run typecheck --if-present
+
+      - name: Build Nuxt app
+        if: steps.detect_release_please.outputs.is_release_please != 'true'
+        run: npm run build
+
+      - name: Upload dist artifact
+        if: steps.detect_release_please.outputs.is_release_please != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuxt-dist
+          path: dist
+          if-no-files-found: ignore
