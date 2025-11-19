@@ -22,6 +22,22 @@ export default defineNuxtConfig({
       stylistic: true,
     },
   },
+  i18n: {
+    baseUrl: 'http://localhost:3000/',
+    strategy: 'prefix_except_default',
+    defaultLocale: 'en',
+
+    locales: [
+      { code: 'en', iso: 'en-US', language: 'en-US', name: 'English', file: 'en.json' },
+      { code: 'it', iso: 'it-IT', language: 'it-IT', name: 'Italiano', file: 'it.json' },
+    ],
+    langDir: 'locales/',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+    },
+  },
   icon: {
     mode: 'css',
     cssLayer: 'base',
