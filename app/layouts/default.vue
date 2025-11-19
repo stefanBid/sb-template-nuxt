@@ -8,7 +8,7 @@ const routes = computed(() => [
 const langs = [
   { code: 'en', label: 'English', icon: 'circle-flags:en' },
   { code: 'it', label: 'Italiano', icon: 'circle-flags:it' },
-] as Array<LangItem>
+] as Array<MenuItem>
 
 // Events
 

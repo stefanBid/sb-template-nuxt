@@ -1,7 +1,7 @@
 declare global {
   /** Add all global types here **/
 
-  interface LangItem {
+  interface MenuItem {
     code: string
     label: string
     icon: string

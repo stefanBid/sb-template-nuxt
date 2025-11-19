@@ -3,7 +3,7 @@
 <script setup lang="ts">
 interface TheHeaderProps {
   routes: Array<RouteItem>
-  langs: Array<LangItem>
+  langs: Array<MenuItem>
   selectedLangId?: string | null
 }
 
@@ -87,7 +87,7 @@ watch(isMdUp, (newVal) => {
         >
           <NuxtImg
             alt="Logo"
-            class="object-contain size-8 sm:size-10 md:size-12 u-app-soft-transition"
+            class="object-contain size-8 sm:size-10 md:size-12 u-app-soft-transition ty-app-btn-label"
             src="/images/logo.webp"
           />
           Your Website
@@ -119,6 +119,7 @@ watch(isMdUp, (newVal) => {
           </nav>
           <div class="ml-0 md:ml-4 hidden! md:inline-block!">
             <BaseIconMenu
+              :icon="'solar:globus-bold-duotone'"
               :items="props.langs"
               :selected-item-id="props.selectedLangId"
               @select="itemId => onSelectLang(itemId)"
@@ -183,6 +184,7 @@ watch(isMdUp, (newVal) => {
         </div>
         <div class="p-6">
           <BaseIconMenu
+            :icon="'solar:globus-bold-duotone'"
             :items="props.langs"
             :selected-item-id="props.selectedLangId"
             @select="itemId => onSelectLang(itemId)"

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 interface BaseIconMenuProps {
-  items: Array<LangItem>
+  icon: string
+  items: Array<MenuItem>
   selectedItemId?: string | null
+
 }
 
 // Input / Output
@@ -83,7 +85,7 @@ watch(open, (newVal) => {
     >
       <Icon
         class="size-6"
-        name="solar:globus-bold-duotone"
+        :name="props.icon"
       />
     </button>
 
