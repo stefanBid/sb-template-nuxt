@@ -73,10 +73,10 @@ watch(open, (newVal) => {
       ref="reference"
       :aria-expanded="open ? 'true' : 'false'"
       aria-haspopup="menu"
-      class="inline-flex items-center p-1 bg-transparent gap-2 rounded-xl ty-sb-btn-label u-sb-soft-transition u-sb-focus cursor-pointer"
+      class="inline-flex items-center p-1 bg-transparent gap-2 rounded-xl ty-app-btn-label u-app-soft-transition u-app-focus cursor-pointer"
       :class="{
-        'text-sb-contrast/80 hover:text-sb-contrast': !open,
-        'text-sb-contrast': open,
+        'text-white/80 hover:text-white': !open,
+        'text-white': open,
       }"
       type="button"
       @click="toggleFloating(!open)"
@@ -93,7 +93,7 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-100 rounded-xl border border-sb-border/60 bg-sb-surface w-fit shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
+          class="z-100 rounded-xl border border-white/10 bg-app-main w-fit shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
           :style="floatingStyles"
         >
           <ul
@@ -104,10 +104,10 @@ watch(open, (newVal) => {
             <li v-for="item in props.items" :key="item.code">
               <button
                 :aria-current="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 text-sb-contrast sb-focus ty-sb-label normal-case! gap-2 u-sb-focus u-sb-soft-transition"
+                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 text-white sb-focus ty-app-label normal-case! gap-2 u-app-focus u-app-soft-transition"
                 :class="{
-                  'bg-sb-surface-2': props.selectedItemId === item.code,
-                  'hover:bg-sb-surface-2 cursor-pointer': props.selectedItemId !== item.code,
+                  'bg-white/5': props.selectedItemId === item.code,
+                  'hover:bg-white/5 cursor-pointer': props.selectedItemId !== item.code,
                 }"
                 role="menuitem"
                 type="button"
