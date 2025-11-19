@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/stefanBid/sb-nuxt-template/compare/v1.0.0...v1.1.0) (2025-11-19)
+
+
+### Features
+
+* add ESLint configuration for code formatting and linting ([#2](https://github.com/stefanBid/sb-nuxt-template/issues/2)) ([9c93c97](https://github.com/stefanBid/sb-nuxt-template/commit/9c93c97bddcaa88c826f3db397792d3ef343052c))
+
 ## 1.0.0 (2025-11-19)
 
 
