@@ -15,10 +15,15 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@floating-ui/vue": "^1.1.9",
     "@nuxt/eslint": "^1.10.0",
     "@nuxt/icon": "^2.1.0",
+    "@iconify-json/circle-flags": "^1.2.10",
+    "@iconify-json/solar": "^1.2.5",
     "@nuxt/image": "^2.0.0",
     "@tailwindcss/vite": "^4.1.17",
+    "@vueuse/core": "^14.0.0",
+    "@vueuse/nuxt": "^14.0.0",
     "eslint": "^9.39.1",
     "nuxt": "^4.2.1",
     "tailwindcss": "^4.1.17",

@@ -73,7 +73,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-html.sb-scroll-locked,
-html.sb-scroll-locked body {
+html.app-scroll-locked,
+html.app-scroll-locked body {
   overflow: hidden !important;
 }
