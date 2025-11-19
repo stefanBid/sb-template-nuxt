@@ -50,7 +50,7 @@ img, picture, video, canvas, svg {
 
 /* Text selection */
 ::selection {
-  background: color-mix(in oklab, var(--color-app-accent) 50%, #000 70%);
+  background: color-mix(in oklab, var(--color-app-contrast) 50%, #000 70%);
   color: var(--color-app-contrast);
 }
 
@@ -60,8 +60,8 @@ img, picture, video, canvas, svg {
   height: 5px;
 }
 *::-webkit-scrollbar-thumb {
-  background: color-mix(in oklab, var(--color-app-accent) 70%, #000 65%);
-  border: 1px solid color-mix(in oklab, var(--color-app-accent) 70%, #000 65%);
+  background: color-mix(in oklab, var(--color-app-contrast) 70%, #000 65%);
+  border: 1px solid color-mix(in oklab, var(--color-app-contrast) 70%, #000 65%);
   border-radius: 999px;
 }
 *::-webkit-scrollbar-track {
