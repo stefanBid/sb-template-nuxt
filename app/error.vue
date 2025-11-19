@@ -18,7 +18,7 @@ const handleBackHome = () => {
   <div
     class="min-h-screen bg-app-main text-white flex items-center justify-center p-8 md:p-12 lg:p-16"
   >
-    <main class="w-full max-w-7xl mx-auto">
+    <main class="w-full max-w-[1400px] mx-auto">
       <section
         class="flex flex-col items-center text-center gap-6 py-20"
       >
