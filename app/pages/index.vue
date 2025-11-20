@@ -1,3 +1,27 @@
+<script setup lang="ts">
+// Dependencies
+const { t } = useI18n()
+const route = useRoute()
+
+useSeoMeta({
+  // LOCALIZED
+  title: () => t('meta.home.title'),
+  description: () => t('meta.home.description'),
+  ogTitle: () => t('meta.home.title'),
+  ogDescription: () => t('meta.home.description'),
+  twitterTitle: () => t('meta.home.title'),
+  twitterDescription: () => t('meta.home.description'),
+
+  // GLOBALS
+  ogImage: '/images/card-logo.jpg',
+  twitterImage: '/images/card-logo.jpg',
+  twitterCard: 'summary',
+
+  // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
+  ogUrl: () => `http://localhost:3000/${route.fullPath}`,
+})
+</script>
+
 <template>
   <div class="min-h-screen bg-app-main text-app-contrast p-8 md:p-12 lg:p-16">
     <div class="max-w-7xl mx-auto space-y-16">
@@ -401,7 +425,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-// Page setup
-</script>
