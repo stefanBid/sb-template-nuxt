@@ -18,7 +18,7 @@ useSeoMeta({
   twitterCard: 'summary',
 
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
-  ogUrl: () => `http://localhost:3000/${route.fullPath}`,
+  ogUrl: () => `http://localhost:3000${route.fullPath}`,
 })
 </script>
 
