@@ -34,7 +34,7 @@ body {
   margin: 0; /* remove default browser margin */
   background-color: var(--color-app-main);
   color: var(--color-app-contrast);
-  font-family: var(--font-secondary);
+  font-family: var(--font-app-secondary);
   font-weight: 400;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
@@ -50,8 +50,8 @@ img, picture, video, canvas, svg {
 
 /* Text selection */
 ::selection {
-  background: color-mix(in oklab, var(--color-app-contrast) 50%, #000 70%);
-  color: var(--color-app-contrast);
+  background: var(--color-app-accent);
+  color: #ffffff;
 }
 
 /* Scrollbar (webkit only, subtle) */
@@ -60,12 +60,12 @@ img, picture, video, canvas, svg {
   height: 5px;
 }
 *::-webkit-scrollbar-thumb {
-  background: color-mix(in oklab, var(--color-app-contrast) 70%, #000 65%);
-  border: 1px solid color-mix(in oklab, var(--color-app-contrast) 70%, #000 65%);
+  background: var(--color-app-muted);
+  border: 1px solid var(--color-app-muted);
   border-radius: 999px;
 }
 *::-webkit-scrollbar-track {
-  background: tra
+  background: transparent;
 }
 
 /* Remove text inflation on mobile Safari */
