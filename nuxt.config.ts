@@ -11,7 +11,14 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: true },
   css: ['./app/assets/css/main.css'],
+  sourcemap: {
+    client: false,
+    server: false,
+  },
   compatibilityDate: '2025-07-15',
+  nitro: {
+    preset: 'netlify',
+  },
   vite: {
     plugins: [
       tailwindcss(),
@@ -41,5 +48,19 @@ export default defineNuxtConfig({
   icon: {
     mode: 'css',
     cssLayer: 'base',
+  },
+  image: {
+    provider: process.env.NETLIFY ? 'netlify' : 'ipx',
+    providers: {
+      cloudinary: {
+        name: 'cloudinary',
+        options: {
+          baseURL: process.env.NUXT_PUBLIC_CLOUDINARY_BASE,
+        },
+      },
+    },
+    quality: 80,
+    format: ['webp', 'avif', 'png'],
+    screens: { 'sm': 640, 'md': 768, 'lg': 1024, 'xl': 1280, '2xl': 1536 },
   },
 })
