@@ -78,7 +78,7 @@ watch(isMdUp, (newVal) => {
   <div class="relative z-50">
     <!-- HEADER FIXED -->
     <header
-      class="fixed top-0 inset-x-0 h-16 border-b border-white/10 u-app-soft-transition backdrop-blur supports-backdrop-filter:bg-app-main/60 bg-app-main/80"
+      class="fixed top-0 inset-x-0 h-16 border-b border-app-border u-app-soft-transition backdrop-blur supports-backdrop-filter:bg-app-main/60 bg-app-main/80"
     >
       <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-app-soft-transition px-6 md:px-10">
         <NuxtLink
@@ -95,15 +95,15 @@ watch(isMdUp, (newVal) => {
 
         <!-- Desktop nav -->
         <div class="flex items-center">
-          <nav class="hidden md:flex items-center gap-6 bg-white/5 rounded-xl px-4 py-2">
+          <nav class="hidden md:flex items-center gap-6 bg-app-surface rounded-xl px-4 py-2 border border-app-border">
             <template v-for="r in routes" :key="r.path">
               <NuxtLink
                 v-if="!r.disabled"
                 class="ty-app-btn-label normal-case! cursor-pointer u-app-soft-transition u-app-focus rounded-md"
                 :class="{
-                  'text-white/80 hover:text-white font-normal!': currentRoute.path !== r.path && !r.disabled,
-                  'text-app-contrast font-bold!': currentRoute.path === r.path && !r.disabled,
-                  'opacity-50 cursor-not-allowed text-white/80': r.disabled,
+                  'text-app-contrast/70 hover:text-app-contrast font-normal!': currentRoute.path !== r.path && !r.disabled,
+                  'text-app-accent font-bold!': currentRoute.path === r.path && !r.disabled,
+                  'opacity-50 cursor-not-allowed text-app-contrast/70': r.disabled,
                 }"
                 :to="r.path"
               >
@@ -111,7 +111,7 @@ watch(isMdUp, (newVal) => {
               </NuxtLink>
               <span
                 v-else
-                class="ty-app-btn-label normal-case! font-normal! cursor-not-allowed opacity-50 text-white/80 u-app-soft-transition rounded-md"
+                class="ty-app-btn-label normal-case! font-normal! cursor-not-allowed opacity-50 text-app-contrast/70 u-app-soft-transition rounded-md"
               >
                 {{ r.name }}
               </span>
@@ -148,23 +148,23 @@ watch(isMdUp, (newVal) => {
       <aside
         id="mobile-drawer"
         :aria-modal="open ? 'true' : undefined"
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-app-main border-r border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.3)] transition-transform duration-300 will-change-transform"
+        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-app-surface border-r border-app-border shadow-[0_20px_60px_var(--color-app-shadow)] transition-transform duration-300 will-change-transform"
         :class="open ? 'translate-x-0' : '-translate-x-full'"
         :inert="!open"
         :role="open ? 'dialog' : undefined"
       >
-        <div class="flex items-center justify-between px-6 py-3 border-b border-white/10">
-          <span class="ty-label text-white/70 font-semibold! u-app-soft-transition">{{ t('header.route-section') }}</span>
+        <div class="flex items-center justify-between px-6 py-3 border-b border-app-border">
+          <span class="ty-label text-app-muted font-semibold! u-app-soft-transition">{{ t('header.route-section') }}</span>
         </div>
 
         <nav class="flex flex-col gap-2 p-6">
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
-              class="rounded-lg p-3 ty-btn-label cursor-pointer u-app-soft-transition u-app-focus"
+              class="rounded-lg p-3 ty-btn-label cursor-pointer u-app-soft-transition u-app-focus text-app-contrast"
               :class="{
-                'hover:bg-white/5': currentRoute.path !== r.path,
-                'bg-app-contrast font-bold!': currentRoute.path === r.path,
+                'hover:bg-app-surface-2': currentRoute.path !== r.path,
+                'bg-app-accent text-white font-bold!': currentRoute.path === r.path,
               }"
               :to="r.path"
               @click="onClose()"
@@ -173,14 +173,14 @@ watch(isMdUp, (newVal) => {
             </NuxtLink>
             <span
               v-else
-              class="rounded-lg p-3 ty-btn-label cursor-not-allowed opacity-50 text-white/80 u-app-soft-transition"
+              class="rounded-lg p-3 ty-btn-label cursor-not-allowed opacity-50 text-app-contrast/70 u-app-soft-transition"
             >
               {{ r.name }}
             </span>
           </template>
         </nav>
-        <div class="flex items-center justify-between px-6 py-3 border-y border-white/10">
-          <span class="ty-label text-white/70 u-app-soft-transition font-semibold ">{{ t('header.settings-section') }}</span>
+        <div class="flex items-center justify-between px-6 py-3 border-y border-app-border">
+          <span class="ty-label text-app-muted u-app-soft-transition font-semibold ">{{ t('header.settings-section') }}</span>
         </div>
         <div class="p-6">
           <BaseIconMenu
