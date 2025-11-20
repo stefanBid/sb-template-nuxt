@@ -55,6 +55,11 @@ This template provides a complete development environment with:
 - Cloudinary integration ready
 - **@nuxt/icon** with Solar and Circle Flags icon sets
 
+### 🔍 **SEO Optimization**
+- **Sitemap** - Pre-configured sitemap template (`public/sitemap.xml`)
+- Ready to extend with dynamic routes and multilingual URLs
+- Optimized for search engine indexing
+
 ### 📦 **Project Structure**
 ```
 app/
