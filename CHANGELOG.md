@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/stefanBid/sb-nuxt-template/compare/v1.6.0...v1.6.1) (2025-11-24)
+
+
+### Bug Fixes
+
+* update sitemap lastmod dates and hreflang attributes ([#24](https://github.com/stefanBid/sb-nuxt-template/issues/24)) ([9bc0e28](https://github.com/stefanBid/sb-nuxt-template/commit/9bc0e28c97545e6d005a3c58d34981a539b5f69c))
+
 ## [1.6.0](https://github.com/stefanBid/sb-nuxt-template/compare/v1.5.3...v1.6.0) (2025-11-20)
 
 
