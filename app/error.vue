@@ -55,7 +55,7 @@ const handleBackHome = () => {
         </div>
 
         <!-- Actions -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-10 mt-4 u-app-soft-transition">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-10 mt-4 u-app-soft-transition">
           <button
             class="ty-app-btn-label px-6 py-3 bg-app-accent text-white rounded-lg hover:bg-app-accent-hover u-app-soft-transition"
             type="button"

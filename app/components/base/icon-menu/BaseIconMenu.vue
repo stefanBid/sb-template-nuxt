@@ -100,7 +100,7 @@ watch(open, (newVal) => {
         >
           <ul
             ref="menu"
-            class="p-1 outline-none space-y-2"
+            class="p-2 outline-none space-y-2"
             role="menu"
           >
             <li v-for="item in props.items" :key="item.code">
