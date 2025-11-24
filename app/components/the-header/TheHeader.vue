@@ -1,5 +1,3 @@
-<!-- app/components/the-header/TheHeader.vue -->
-
 <script setup lang="ts">
 interface TheHeaderProps {
   routes: Array<RouteItem>
