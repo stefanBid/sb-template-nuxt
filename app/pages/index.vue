@@ -23,8 +23,8 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="min-h-screen bg-app-main text-app-contrast p-8 md:p-12 lg:p-16">
-    <div class="max-w-7xl mx-auto space-y-16">
+  <div class="min-h-screen bg-app-main text-app-contrast py-20">
+    <div class="space-y-16">
       <!-- Typography Section -->
       <section class="space-y-8">
         <h2 class="ty-app-title-xl text-app-accent mb-8">
