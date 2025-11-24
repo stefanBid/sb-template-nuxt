@@ -53,7 +53,7 @@ onMounted(() => {
     ]"
     role="alert"
   >
-    <div class="flex items-start gap-3 sm:gap-4">
+    <div class="flex items-start gap-3 sm:gap-4 u-app-soft-transition">
       <!-- Icon -->
       <div
         v-if="props.icon"
@@ -75,7 +75,7 @@ onMounted(() => {
         <h3
           v-if="props.title"
           :class="[
-            'ty-app-title text-lg sm:text-xl mb-1',
+            'ty-app-title mb-1 u-app-soft-transition',
             {
               'text-emerald-900': props.type === 'success',
               'text-amber-900': props.type === 'warning',
@@ -88,7 +88,7 @@ onMounted(() => {
         </h3>
         <p
           :class="[
-            'ty-app-paragraph text-[0.8125rem] sm:text-sm',
+            'ty-app-paragraph u-app-soft-transition',
             {
               'text-emerald-800': props.type === 'success',
               'text-amber-800': props.type === 'warning',
@@ -105,7 +105,7 @@ onMounted(() => {
       <BaseCloseButton
         v-if="props.dismissible"
         :class="[
-          'shrink-0 -mt-1 -mr-1',
+          'shrink-0 -mt-1 -mr-1 u-app-soft-transition',
           {
             'text-emerald-700 hover:bg-emerald-100': props.type === 'success',
             'text-amber-700 hover:bg-amber-100': props.type === 'warning',

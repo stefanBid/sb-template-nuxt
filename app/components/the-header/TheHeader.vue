@@ -119,7 +119,7 @@ watch(isMdUp, (newVal) => {
               </span>
             </template>
           </nav>
-          <div class="ml-0 md:ml-4 hidden! md:inline-block!">
+          <div class="ml-0 md:ml-4 hidden! md:inline-block! u-app-soft-transition ">
             <BaseIconMenu
               :icon="'solar:globus-bold-duotone'"
               :items="props.langs"
