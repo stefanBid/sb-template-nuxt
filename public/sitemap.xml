@@ -2,29 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <!--An Example of first page Sitemap -->
-  <!-- Homepage EN -->
+  <!-- Homepage EN (Default) -->
   <url>
     <loc>http://localhost:3000/</loc>
-    <lastmod>2025-11-18</lastmod>
+    <lastmod>2025-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/" />
-    <xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/" />
     <xhtml:link rel="alternate" hreflang="en-US" href="http://localhost:3000/" />
-    <xhtml:link rel="alternate" hreflang="it" href="http://localhost:3000/it" />
     <xhtml:link rel="alternate" hreflang="it-IT" href="http://localhost:3000/it" />
   </url>
 
   <!-- Homepage IT -->
   <url>
     <loc>http://localhost:3000/it</loc>
-    <lastmod>2025-11-18</lastmod>
+    <lastmod>2025-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="http://localhost:3000/" />
-    <xhtml:link rel="alternate" hreflang="en" href="http://localhost:3000/" />
     <xhtml:link rel="alternate" hreflang="en-US" href="http://localhost:3000/" />
-    <xhtml:link rel="alternate" hreflang="it" href="http://localhost:3000/it" />
     <xhtml:link rel="alternate" hreflang="it-IT" href="http://localhost:3000/it" />
   </url>
 
