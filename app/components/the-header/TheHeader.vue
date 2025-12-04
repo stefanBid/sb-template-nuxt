@@ -90,7 +90,7 @@ watch(isMdUp, (newVal) => {
           <NuxtImg
             alt="Logo"
             class="object-contain size-8 sm:size-10 md:size-12 u-app-soft-transition ty-app-btn-label"
-            src="/images/logo.webp"
+            src="/logo.webp"
           />
           Your Website
         </NuxtLink>

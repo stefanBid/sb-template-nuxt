@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           <NuxtImg
             alt="Logo"
             class="object-contain size-7 sm:size-8 md:size-9 u-app-soft-transition"
-            src="/images/logo.webp"
+            src="/logo.webp"
           />
           <span class="ty-app-title">
             Your Website
@@ -127,7 +127,9 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <Icon class="size-4 shrink-0" name="mdi:github" />
+            <span class="inline-flex items-center justify-center p-0.5 border border-app-contrast/85 rounded">
+              <Icon class="size-4 shrink-0" name="mdi:github" />
+            </span>
             <span class="ty-app-caption text-app-contrast/85">
               GitHub
             </span>
@@ -141,7 +143,9 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <Icon class="size-4 shrink-0" name="mdi:linkedin" />
+            <span class="inline-flex items-center justify-center p-0.5 border border-app-contrast/85 rounded">
+              <Icon class="size-4 shrink-0" name="mdi:linkedin" />
+            </span>
             <span class="ty-app-caption text-app-contrast/85">
               LinkedIn
             </span>
@@ -155,7 +159,9 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <Icon class="size-4 shrink-0" name="mdi:instagram" />
+            <span class="inline-flex items-center justify-center p-0.5 border border-app-contrast/85 rounded">
+              <Icon class="size-4" name="logos:instagram-icon" />
+            </span>
             <span class="ty-app-caption text-app-contrast/85">
               Instagram
             </span>
