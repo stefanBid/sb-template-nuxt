@@ -766,8 +766,11 @@ Feel free to use it for personal or commercial projects.
 ## 👤 Author
 
 **Stefano Biddau**
+
 📧 Email: biddau.stefano99@gmail.com
+
 🐙 GitHub: [@stefanoBid](https://github.com/stefanoBid)
+
 🌐 Website: [stefanobiddau.com](https://stefanobiddau.com)
 
 ---
