@@ -82,7 +82,7 @@ watch(isMdUp, (newVal) => {
         'bg-app-main/80 supports-backdrop-filter:bg-app-main/60': !open,
       }"
     >
-      <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between">
+      <div class=" h-full flex items-center max-w-350 mx-auto justify-between">
         <NuxtLink
           class="inline-flex items-center gap-2 ty-app-title tracking-tight hover:opacity-90 u-app-focus u-app-soft-transition rounded cursor-pointer"
           :to="props.routes[0]?.path || '/'"
