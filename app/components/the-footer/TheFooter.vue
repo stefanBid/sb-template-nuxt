@@ -40,7 +40,6 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             class="object-contain size-7 sm:size-8 md:size-9 u-app-soft-transition"
             fetchpriority="high"
             loading="eager"
-            priority
             src="/logo.webp"
           />
           <span class="ty-app-title">
