@@ -9,11 +9,11 @@
 
   ![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)
   ![Vue](https://img.shields.io/badge/vue-3.5.25-4FC08D?logo=vue.js)
-  ![Nuxt](https://img.shields.io/badge/nuxt-4.2.1-00DC82?logo=nuxt.js)
+  ![Nuxt](https://img.shields.io/badge/nuxt-4.2.2-00DC82?logo=nuxt.js)
   ![TypeScript](https://img.shields.io/badge/typescript-latest-3178C6?logo=typescript)
-  ![Tailwind CSS](https://img.shields.io/badge/tailwind-4.1.17-38B2AC?logo=tailwind-css)
+  ![Tailwind CSS](https://img.shields.io/badge/tailwind-4.1.18-38B2AC?logo=tailwind-css)
   ![i18n](https://img.shields.io/badge/i18n-10.2.1-blue)
-  ![ESLint](https://img.shields.io/badge/eslint-9.39.1-4B32C3?logo=eslint)
+  ![ESLint](https://img.shields.io/badge/eslint-9.39.2-4B32C3?logo=eslint)
 
   **Stop wasting time on boilerplate. Start building features.**
 
