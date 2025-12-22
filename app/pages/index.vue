@@ -131,75 +131,160 @@ useSeoMeta({
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Card 1 - Simple -->
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border hover:border-app-accent transition-colors">
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Simple Card
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              A basic card with border and hover effect.
-            </p>
-          </div>
+          <!-- Card 1 - Simple Dark -->
+          <BaseCard
+            variant="dark"
+            :title="t('pages.home.cards.simple-dark.title')"
+            :subtitle="t('pages.home.cards.simple-dark.subtitle')"
+            :paragraph="t('pages.home.cards.simple-dark.paragraph')"
+          />
 
-          <!-- Card 2 - With Image -->
-          <div class="bg-app-surface rounded-lg border border-app-border overflow-hidden hover:border-app-accent transition-colors">
-            <div class="h-40 bg-linear-to-br from-app-accent to-purple-600"></div>
-            <div class="p-6">
-              <h3 class="ty-app-title text-app-contrast mb-3">
-                Card with Image
+          <!-- Card 2 - Simple Light -->
+          <BaseCard
+            variant="light"
+            :title="t('pages.home.cards.simple-light.title')"
+            :paragraph="t('pages.home.cards.simple-light.paragraph')"
+          />
+
+          <!-- Card 3 - Dark Hover -->
+          <BaseCard
+            variant="dark-hover"
+            :title="t('pages.home.cards.dark-hover.title')"
+            :subtitle="t('pages.home.cards.dark-hover.subtitle')"
+            :paragraph="t('pages.home.cards.dark-hover.paragraph')"
+          />
+
+          <!-- Card 4 - Light Hover -->
+          <BaseCard
+            variant="light-hover"
+            :title="t('pages.home.cards.light-hover.title')"
+            :paragraph="t('pages.home.cards.light-hover.paragraph')"
+          />
+
+          <!-- Card 5 - With Header Icon -->
+          <BaseCard
+            variant="dark"
+            :title="t('pages.home.cards.with-icon.title')"
+            :subtitle="t('pages.home.cards.with-icon.subtitle')"
+            :paragraph="t('pages.home.cards.with-icon.paragraph')"
+          >
+            <template #card-header>
+              <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center">
+                <Icon class="size-6 text-app-accent" name="lucide:star" />
+              </div>
+            </template>
+          </BaseCard>
+
+          <!-- Card 6 - With Footer Button -->
+          <BaseCard
+            variant="light-hover"
+            :title="t('pages.home.cards.with-action.title')"
+            :subtitle="t('pages.home.cards.with-action.subtitle')"
+            :paragraph="t('pages.home.cards.with-action.paragraph')"
+          >
+            <template #card-footer>
+              <BaseButton variant="primary">
+                <Icon class="size-5 mr-2" name="lucide:arrow-right" />
+                {{ t('pages.home.cards.with-action.button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Card 7 - Center Aligned -->
+          <BaseCard
+            variant="dark"
+            align="center"
+            :title="t('pages.home.cards.center-aligned.title')"
+            :subtitle="t('pages.home.cards.center-aligned.subtitle')"
+            :paragraph="t('pages.home.cards.center-aligned.paragraph')"
+          />
+
+          <!-- Card 8 - Right Aligned -->
+          <BaseCard
+            variant="light"
+            align="right"
+            :title="t('pages.home.cards.right-aligned.title')"
+            :subtitle="t('pages.home.cards.right-aligned.subtitle')"
+            :paragraph="t('pages.home.cards.right-aligned.paragraph')"
+          />
+
+          <!-- Card 9 - Complete Example -->
+          <BaseCard
+            variant="dark-hover"
+            align="left"
+            :title="t('pages.home.cards.complete.title')"
+            :subtitle="t('pages.home.cards.complete.subtitle')"
+            :paragraph="t('pages.home.cards.complete.paragraph')"
+          >
+            <template #card-header>
+              <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center">
+                <Icon class="size-6 text-app-accent" name="lucide:zap" />
+              </div>
+            </template>
+            <template #card-footer>
+              <BaseButton variant="outline">
+                {{ t('pages.home.cards.complete.button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Card 10 - Full Custom Content -->
+          <BaseCard variant="dark" :full-custom-content="true">
+            <div class="text-center space-y-4">
+              <div class="w-16 h-16 bg-app-accent/20 rounded-full flex items-center justify-center mx-auto">
+                <Icon class="size-8 text-app-accent" name="lucide:heart" />
+              </div>
+              <h3 class="ty-app-title">
+                {{ t('pages.home.cards.full-custom.title') }}
               </h3>
               <p class="ty-app-paragraph text-app-muted">
-                Card with image area at the top.
+                {{ t('pages.home.cards.full-custom.paragraph') }}
               </p>
+              <div class="flex gap-2 justify-center pt-4">
+                <BaseButton variant="primary">
+                  <Icon class="size-5 mr-2" name="lucide:thumbs-up" />
+                  {{ t('pages.home.cards.full-custom.like-button') }}
+                </BaseButton>
+                <BaseButton variant="secondary">
+                  <Icon class="size-5 mr-2" name="lucide:share-2" />
+                  {{ t('pages.home.cards.full-custom.share-button') }}
+                </BaseButton>
+              </div>
             </div>
-          </div>
+          </BaseCard>
 
-          <!-- Card 3 - With Badge -->
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border hover:border-app-accent transition-colors relative">
-            <span class="ty-app-label text-app-accent absolute top-4 right-4 bg-app-accent/20 px-3 py-1 rounded-full">
-              NEW
-            </span>
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Card with Badge
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              Card with corner badge.
-            </p>
-          </div>
+          <!-- Card 11 - Multiple Buttons -->
+          <BaseCard
+            variant="light-hover"
+            :title="t('pages.home.cards.multi-action.title')"
+            :subtitle="t('pages.home.cards.multi-action.subtitle')"
+            :paragraph="t('pages.home.cards.multi-action.paragraph')"
+          >
+            <template #card-footer>
+              <div class="flex gap-2">
+                <BaseButton variant="primary">
+                  {{ t('pages.home.cards.multi-action.save-button') }}
+                </BaseButton>
+                <BaseButton variant="outline">
+                  {{ t('pages.home.cards.multi-action.cancel-button') }}
+                </BaseButton>
+              </div>
+            </template>
+          </BaseCard>
 
-          <!-- Card 4 - With Icon -->
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border hover:border-app-accent transition-colors">
-            <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center mb-4">
-              <span class="ty-app-title text-app-accent">★</span>
-            </div>
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Card with Icon
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              Card with decorative icon.
-            </p>
-          </div>
-
-          <!-- Card 5 - Featured -->
-          <div class="p-6 bg-linear-to-br from-app-accent/20 to-purple-600/20 rounded-lg border-2 border-app-accent">
-            <span class="ty-app-label text-app-accent mb-2 block">FEATURED</span>
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Featured Card
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              Card with highlighted style.
-            </p>
-          </div>
-
-          <!-- Card 6 - Interactive -->
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border hover:bg-app-surface-2 hover:border-app-accent transition-all cursor-pointer transform hover:scale-105">
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Interactive Card
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              Card with full hover effect.
-            </p>
-          </div>
+          <!-- Card 12 - Loading State -->
+          <BaseCard
+            variant="dark"
+            :title="t('pages.home.cards.loading-state.title')"
+            :subtitle="t('pages.home.cards.loading-state.subtitle')"
+            :paragraph="t('pages.home.cards.loading-state.paragraph')"
+          >
+            <template #card-footer>
+              <BaseButton variant="primary" :is-loading="true">
+                {{ t('pages.home.cards.loading-state.button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
         </div>
       </section>
 
@@ -309,27 +394,27 @@ useSeoMeta({
       <!-- Buttons Section -->
       <section class="space-y-8 pb-16">
         <h2 class="ty-app-title-xl text-app-accent mb-8">
-          Buttons
+          {{ t('pages.home.buttons.section-title') }}
         </h2>
 
         <div class="space-y-8">
           <!-- Primary Buttons -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Primary Buttons
+              {{ t('pages.home.buttons.primary.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
               <BaseButton variant="primary">
-                Primary Button
+                {{ t('pages.home.buttons.primary.button') }}
               </BaseButton>
               <BaseButton variant="primary" :is-disabled="true">
-                Disabled
+                {{ t('pages.home.buttons.primary.disabled') }}
               </BaseButton>
               <BaseButton variant="primary" :is-loading="true">
-                Loading
+                {{ t('pages.home.buttons.primary.loading') }}
               </BaseButton>
               <BaseButton variant="primary" type="submit">
-                Submit Button
+                {{ t('pages.home.buttons.primary.submit') }}
               </BaseButton>
             </div>
           </div>
@@ -337,17 +422,17 @@ useSeoMeta({
           <!-- Secondary Buttons -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Secondary Buttons
+              {{ t('pages.home.buttons.secondary.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
               <BaseButton variant="secondary">
-                Secondary Button
+                {{ t('pages.home.buttons.secondary.button') }}
               </BaseButton>
               <BaseButton variant="secondary" :is-disabled="true">
-                Disabled
+                {{ t('pages.home.buttons.secondary.disabled') }}
               </BaseButton>
               <BaseButton variant="secondary" :is-loading="true">
-                Loading
+                {{ t('pages.home.buttons.secondary.loading') }}
               </BaseButton>
             </div>
           </div>
@@ -355,17 +440,17 @@ useSeoMeta({
           <!-- Outline Buttons -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Outline Buttons
+              {{ t('pages.home.buttons.outline.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
               <BaseButton variant="outline">
-                Outline Button
+                {{ t('pages.home.buttons.outline.button') }}
               </BaseButton>
               <BaseButton variant="outline" :is-disabled="true">
-                Disabled
+                {{ t('pages.home.buttons.outline.disabled') }}
               </BaseButton>
               <BaseButton variant="outline" :is-loading="true">
-                Loading
+                {{ t('pages.home.buttons.outline.loading') }}
               </BaseButton>
             </div>
           </div>
@@ -373,17 +458,17 @@ useSeoMeta({
           <!-- Link Buttons -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Link Buttons
+              {{ t('pages.home.buttons.link.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
               <BaseButton variant="primary" type="link" to="https://github.com">
-                Primary Link
+                {{ t('pages.home.buttons.link.primary') }}
               </BaseButton>
               <BaseButton variant="secondary" type="link" to="https://nuxt.com">
-                Secondary Link
+                {{ t('pages.home.buttons.link.secondary') }}
               </BaseButton>
               <BaseButton variant="outline" type="link" to="https://tailwindcss.com">
-                Outline Link
+                {{ t('pages.home.buttons.link.outline') }}
               </BaseButton>
             </div>
           </div>
@@ -391,20 +476,20 @@ useSeoMeta({
           <!-- Buttons with Icons -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Buttons with Custom Content
+              {{ t('pages.home.buttons.with-icons.title') }}
             </h3>
             <div class="flex flex-wrap gap-4 items-center">
               <BaseButton variant="primary">
                 <Icon class="size-5 mr-2" name="lucide:send" />
-                Send Message
+                {{ t('pages.home.buttons.with-icons.send') }}
               </BaseButton>
               <BaseButton variant="secondary">
                 <Icon class="size-5 mr-2" name="lucide:download" />
-                Download
+                {{ t('pages.home.buttons.with-icons.download') }}
               </BaseButton>
               <BaseButton variant="outline">
                 <Icon class="size-5 mr-2" name="lucide:heart" />
-                Like
+                {{ t('pages.home.buttons.with-icons.like') }}
               </BaseButton>
             </div>
           </div>
@@ -412,17 +497,17 @@ useSeoMeta({
           <!-- All States Demo -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              All States Demo
+              {{ t('pages.home.buttons.states.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
               <BaseButton variant="primary">
-                Normal
+                {{ t('pages.home.buttons.states.normal') }}
               </BaseButton>
               <BaseButton variant="primary" :is-loading="true">
-                Loading
+                {{ t('pages.home.buttons.states.loading') }}
               </BaseButton>
               <BaseButton variant="primary" :is-disabled="true">
-                Disabled
+                {{ t('pages.home.buttons.states.disabled') }}
               </BaseButton>
             </div>
           </div>

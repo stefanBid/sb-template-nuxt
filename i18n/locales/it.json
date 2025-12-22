@@ -16,7 +16,114 @@
     "settings-section": "Impostazioni"
   },
   "pages": {
-    "home": {}
+    "home": {
+      "cards": {
+        "simple-dark": {
+          "title": "Card Scura Semplice",
+          "subtitle": "Con sottotitolo",
+          "paragraph": "Una card base con variante scura, titolo, sottotitolo e paragrafo. Perfetta per contenuti semplici."
+        },
+        "simple-light": {
+          "title": "Card Chiara Semplice",
+          "paragraph": "Card con variante chiara con solo titolo e paragrafo, senza sottotitolo."
+        },
+        "dark-hover": {
+          "title": "Card Scura con Hover",
+          "subtitle": "Variante interattiva",
+          "paragraph": "Card con effetto hover che cambia lo sfondo al passaggio del mouse."
+        },
+        "light-hover": {
+          "title": "Card Chiara con Hover",
+          "paragraph": "Card chiara con effetto hover interattivo."
+        },
+        "with-icon": {
+          "title": "Card con Icona",
+          "subtitle": "Usando lo slot card-header",
+          "paragraph": "Card con icona nell'header utilizzando lo slot card-header."
+        },
+        "with-action": {
+          "title": "Card con Azione",
+          "subtitle": "Usando lo slot card-footer",
+          "paragraph": "Card con bottone nel footer utilizzando lo slot card-footer.",
+          "button": "Leggi di più"
+        },
+        "center-aligned": {
+          "title": "Allineata al Centro",
+          "subtitle": "Allineamento testo al centro",
+          "paragraph": "Card con allineamento centrale per tutti i contenuti testuali."
+        },
+        "right-aligned": {
+          "title": "Allineata a Destra",
+          "subtitle": "Allineamento testo a destra",
+          "paragraph": "Card con allineamento a destra per desktop e centro per mobile."
+        },
+        "complete": {
+          "title": "Card Completa",
+          "subtitle": "Con tutte le funzionalità",
+          "paragraph": "Card completa con icona nell'header, bottone nel footer e tutti gli elementi disponibili.",
+          "button": "Scopri di più"
+        },
+        "full-custom": {
+          "title": "Completamente Personalizzata",
+          "paragraph": "Card con contenuto completamente personalizzato usando la prop fullCustomContent.",
+          "like-button": "Mi piace",
+          "share-button": "Condividi"
+        },
+        "multi-action": {
+          "title": "Card Multi-Azione",
+          "subtitle": "Più bottoni nel footer",
+          "paragraph": "Card con più azioni nel footer per scenari complessi.",
+          "save-button": "Salva",
+          "cancel-button": "Annulla"
+        },
+        "loading-state": {
+          "title": "Stato di Caricamento",
+          "subtitle": "Bottone con caricamento",
+          "paragraph": "Card che mostra lo stato di caricamento nel bottone.",
+          "button": "Elaborazione"
+        }
+      },
+      "buttons": {
+        "section-title": "Bottoni",
+        "primary": {
+          "title": "Bottoni Primari",
+          "button": "Bottone Primario",
+          "disabled": "Disabilitato",
+          "loading": "Caricamento",
+          "submit": "Bottone Invio"
+        },
+        "secondary": {
+          "title": "Bottoni Secondari",
+          "button": "Bottone Secondario",
+          "disabled": "Disabilitato",
+          "loading": "Caricamento"
+        },
+        "outline": {
+          "title": "Bottoni Outline",
+          "button": "Bottone Outline",
+          "disabled": "Disabilitato",
+          "loading": "Caricamento"
+        },
+        "link": {
+          "title": "Bottoni Link",
+          "primary": "Link Primario",
+          "secondary": "Link Secondario",
+          "outline": "Link Outline"
+        },
+        "with-icons": {
+          "title": "Bottoni con Contenuto Personalizzato",
+          "send": "Invia Messaggio",
+          "download": "Scarica",
+          "like": "Mi piace"
+        },
+        "states": {
+          "title": "Demo Stati Completi",
+          "normal": "Normale",
+          "loading": "Caricamento",
+          "disabled": "Disabilitato"
+        }
+      }
+    }
   },
   "footer": {
     "tagline": "Slogan del tuo sito",

@@ -16,7 +16,114 @@
     "settings-section": "Settings"
   },
   "pages": {
-    "home": {}
+    "home": {
+      "cards": {
+        "simple-dark": {
+          "title": "Simple Dark Card",
+          "subtitle": "With subtitle",
+          "paragraph": "A basic card with dark variant, title, subtitle and paragraph. Perfect for simple content."
+        },
+        "simple-light": {
+          "title": "Simple Light Card",
+          "paragraph": "Card with light variant featuring only title and paragraph, without subtitle."
+        },
+        "dark-hover": {
+          "title": "Dark Hover Card",
+          "subtitle": "Interactive variant",
+          "paragraph": "Card with hover effect that changes background on mouse over."
+        },
+        "light-hover": {
+          "title": "Light Hover Card",
+          "paragraph": "Light card with interactive hover effect."
+        },
+        "with-icon": {
+          "title": "Card with Icon",
+          "subtitle": "Using card-header slot",
+          "paragraph": "Card with icon in header using the card-header slot."
+        },
+        "with-action": {
+          "title": "Card with Action",
+          "subtitle": "Using card-footer slot",
+          "paragraph": "Card with button in footer using the card-footer slot.",
+          "button": "Read More"
+        },
+        "center-aligned": {
+          "title": "Center Aligned",
+          "subtitle": "Text alignment center",
+          "paragraph": "Card with center alignment for all text content."
+        },
+        "right-aligned": {
+          "title": "Right Aligned",
+          "subtitle": "Text alignment right",
+          "paragraph": "Card with right alignment for desktop and center for mobile."
+        },
+        "complete": {
+          "title": "Complete Card",
+          "subtitle": "With all features",
+          "paragraph": "Complete card with header icon, footer button and all available elements.",
+          "button": "Learn More"
+        },
+        "full-custom": {
+          "title": "Full Custom",
+          "paragraph": "Card with fully customized content using the fullCustomContent prop.",
+          "like-button": "Like",
+          "share-button": "Share"
+        },
+        "multi-action": {
+          "title": "Multi-Action Card",
+          "subtitle": "Multiple footer buttons",
+          "paragraph": "Card with multiple actions in footer for complex scenarios.",
+          "save-button": "Save",
+          "cancel-button": "Cancel"
+        },
+        "loading-state": {
+          "title": "Loading State",
+          "subtitle": "Button with loading",
+          "paragraph": "Card showing loading state in the button.",
+          "button": "Processing"
+        }
+      },
+      "buttons": {
+        "section-title": "Buttons",
+        "primary": {
+          "title": "Primary Buttons",
+          "button": "Primary Button",
+          "disabled": "Disabled",
+          "loading": "Loading",
+          "submit": "Submit Button"
+        },
+        "secondary": {
+          "title": "Secondary Buttons",
+          "button": "Secondary Button",
+          "disabled": "Disabled",
+          "loading": "Loading"
+        },
+        "outline": {
+          "title": "Outline Buttons",
+          "button": "Outline Button",
+          "disabled": "Disabled",
+          "loading": "Loading"
+        },
+        "link": {
+          "title": "Link Buttons",
+          "primary": "Primary Link",
+          "secondary": "Secondary Link",
+          "outline": "Outline Link"
+        },
+        "with-icons": {
+          "title": "Buttons with Custom Content",
+          "send": "Send Message",
+          "download": "Download",
+          "like": "Like"
+        },
+        "states": {
+          "title": "All States Demo",
+          "normal": "Normal",
+          "loading": "Loading",
+          "disabled": "Disabled"
+        }
+      }
+    }
   },
   "footer": {
     "tagline": "Tagline of your website",
