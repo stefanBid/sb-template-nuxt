@@ -140,7 +140,7 @@ Custom checkbox with label slot.
 #### **BaseCombobox**
 Advanced select component with single/multiple selection.
 
-**Types:** `single`, `multiple`  
+**Types:** `single`, `multiple`
 **Features:** Searchable, keyboard navigation, floating UI, custom icons
 
 ```vue
@@ -158,7 +158,7 @@ Advanced select component with single/multiple selection.
 #### **BaseChip**
 Compact label component for tags, badges, and status indicators.
 
-**Variants:** `accent`, `primary`, `secondary`  
+**Variants:** `accent`, `primary`, `secondary`
 **Features:** Icon support, rounded design, responsive sizing
 
 ```vue
@@ -166,10 +166,10 @@ Compact label component for tags, badges, and status indicators.
 <BaseChip text="Featured" variant="accent" />
 
 <!-- Chip with icon -->
-<BaseChip 
-  icon="lucide:star" 
-  text="Premium" 
-  variant="accent" 
+<BaseChip
+  icon="lucide:star"
+  text="Premium"
+  variant="accent"
 />
 
 <!-- Use cases -->
