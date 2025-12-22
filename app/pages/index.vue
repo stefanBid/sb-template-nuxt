@@ -3,6 +3,14 @@
 const { t } = useI18n()
 const route = useRoute()
 
+// State for dialogs
+const isSimpleDialogOpen = ref(false)
+const isMediumDialogOpen = ref(false)
+const isLargeDialogOpen = ref(false)
+const isHeaderDialogOpen = ref(false)
+const isFooterDialogOpen = ref(false)
+const isConfirmDialogOpen = ref(false)
+
 useSeoMeta({
   // LOCALIZED
   title: () => t('meta.home.title'),
@@ -133,40 +141,40 @@ useSeoMeta({
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Card 1 - Simple Dark -->
           <BaseCard
-            variant="dark"
-            :title="t('pages.home.cards.simple-dark.title')"
-            :subtitle="t('pages.home.cards.simple-dark.subtitle')"
             :paragraph="t('pages.home.cards.simple-dark.paragraph')"
+            :subtitle="t('pages.home.cards.simple-dark.subtitle')"
+            :title="t('pages.home.cards.simple-dark.title')"
+            variant="dark"
           />
 
           <!-- Card 2 - Simple Light -->
           <BaseCard
-            variant="light"
-            :title="t('pages.home.cards.simple-light.title')"
             :paragraph="t('pages.home.cards.simple-light.paragraph')"
+            :title="t('pages.home.cards.simple-light.title')"
+            variant="light"
           />
 
           <!-- Card 3 - Dark Hover -->
           <BaseCard
-            variant="dark-hover"
-            :title="t('pages.home.cards.dark-hover.title')"
-            :subtitle="t('pages.home.cards.dark-hover.subtitle')"
             :paragraph="t('pages.home.cards.dark-hover.paragraph')"
+            :subtitle="t('pages.home.cards.dark-hover.subtitle')"
+            :title="t('pages.home.cards.dark-hover.title')"
+            variant="dark-hover"
           />
 
           <!-- Card 4 - Light Hover -->
           <BaseCard
-            variant="light-hover"
-            :title="t('pages.home.cards.light-hover.title')"
             :paragraph="t('pages.home.cards.light-hover.paragraph')"
+            :title="t('pages.home.cards.light-hover.title')"
+            variant="light-hover"
           />
 
           <!-- Card 5 - With Header Icon -->
           <BaseCard
-            variant="dark"
-            :title="t('pages.home.cards.with-icon.title')"
-            :subtitle="t('pages.home.cards.with-icon.subtitle')"
             :paragraph="t('pages.home.cards.with-icon.paragraph')"
+            :subtitle="t('pages.home.cards.with-icon.subtitle')"
+            :title="t('pages.home.cards.with-icon.title')"
+            variant="dark"
           >
             <template #card-header>
               <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center">
@@ -177,10 +185,10 @@ useSeoMeta({
 
           <!-- Card 6 - With Footer Button -->
           <BaseCard
-            variant="light-hover"
-            :title="t('pages.home.cards.with-action.title')"
-            :subtitle="t('pages.home.cards.with-action.subtitle')"
             :paragraph="t('pages.home.cards.with-action.paragraph')"
+            :subtitle="t('pages.home.cards.with-action.subtitle')"
+            :title="t('pages.home.cards.with-action.title')"
+            variant="light-hover"
           >
             <template #card-footer>
               <BaseButton variant="primary">
@@ -192,29 +200,29 @@ useSeoMeta({
 
           <!-- Card 7 - Center Aligned -->
           <BaseCard
-            variant="dark"
             align="center"
-            :title="t('pages.home.cards.center-aligned.title')"
-            :subtitle="t('pages.home.cards.center-aligned.subtitle')"
             :paragraph="t('pages.home.cards.center-aligned.paragraph')"
+            :subtitle="t('pages.home.cards.center-aligned.subtitle')"
+            :title="t('pages.home.cards.center-aligned.title')"
+            variant="dark"
           />
 
           <!-- Card 8 - Right Aligned -->
           <BaseCard
-            variant="light"
             align="right"
-            :title="t('pages.home.cards.right-aligned.title')"
-            :subtitle="t('pages.home.cards.right-aligned.subtitle')"
             :paragraph="t('pages.home.cards.right-aligned.paragraph')"
+            :subtitle="t('pages.home.cards.right-aligned.subtitle')"
+            :title="t('pages.home.cards.right-aligned.title')"
+            variant="light"
           />
 
           <!-- Card 9 - Complete Example -->
           <BaseCard
-            variant="dark-hover"
             align="left"
-            :title="t('pages.home.cards.complete.title')"
-            :subtitle="t('pages.home.cards.complete.subtitle')"
             :paragraph="t('pages.home.cards.complete.paragraph')"
+            :subtitle="t('pages.home.cards.complete.subtitle')"
+            :title="t('pages.home.cards.complete.title')"
+            variant="dark-hover"
           >
             <template #card-header>
               <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center">
@@ -229,7 +237,7 @@ useSeoMeta({
           </BaseCard>
 
           <!-- Card 10 - Full Custom Content -->
-          <BaseCard variant="dark" :full-custom-content="true">
+          <BaseCard :full-custom-content="true" variant="dark">
             <div class="text-center space-y-4">
               <div class="w-16 h-16 bg-app-accent/20 rounded-full flex items-center justify-center mx-auto">
                 <Icon class="size-8 text-app-accent" name="lucide:heart" />
@@ -255,10 +263,10 @@ useSeoMeta({
 
           <!-- Card 11 - Multiple Buttons -->
           <BaseCard
-            variant="light-hover"
-            :title="t('pages.home.cards.multi-action.title')"
-            :subtitle="t('pages.home.cards.multi-action.subtitle')"
             :paragraph="t('pages.home.cards.multi-action.paragraph')"
+            :subtitle="t('pages.home.cards.multi-action.subtitle')"
+            :title="t('pages.home.cards.multi-action.title')"
+            variant="light-hover"
           >
             <template #card-footer>
               <div class="flex gap-2">
@@ -274,13 +282,13 @@ useSeoMeta({
 
           <!-- Card 12 - Loading State -->
           <BaseCard
-            variant="dark"
-            :title="t('pages.home.cards.loading-state.title')"
-            :subtitle="t('pages.home.cards.loading-state.subtitle')"
             :paragraph="t('pages.home.cards.loading-state.paragraph')"
+            :subtitle="t('pages.home.cards.loading-state.subtitle')"
+            :title="t('pages.home.cards.loading-state.title')"
+            variant="dark"
           >
             <template #card-footer>
-              <BaseButton variant="primary" :is-loading="true">
+              <BaseButton :is-loading="true" variant="primary">
                 {{ t('pages.home.cards.loading-state.button') }}
               </BaseButton>
             </template>
@@ -407,13 +415,13 @@ useSeoMeta({
               <BaseButton variant="primary">
                 {{ t('pages.home.buttons.primary.button') }}
               </BaseButton>
-              <BaseButton variant="primary" :is-disabled="true">
+              <BaseButton :is-disabled="true" variant="primary">
                 {{ t('pages.home.buttons.primary.disabled') }}
               </BaseButton>
-              <BaseButton variant="primary" :is-loading="true">
+              <BaseButton :is-loading="true" variant="primary">
                 {{ t('pages.home.buttons.primary.loading') }}
               </BaseButton>
-              <BaseButton variant="primary" type="submit">
+              <BaseButton type="submit" variant="primary">
                 {{ t('pages.home.buttons.primary.submit') }}
               </BaseButton>
             </div>
@@ -428,10 +436,10 @@ useSeoMeta({
               <BaseButton variant="secondary">
                 {{ t('pages.home.buttons.secondary.button') }}
               </BaseButton>
-              <BaseButton variant="secondary" :is-disabled="true">
+              <BaseButton :is-disabled="true" variant="secondary">
                 {{ t('pages.home.buttons.secondary.disabled') }}
               </BaseButton>
-              <BaseButton variant="secondary" :is-loading="true">
+              <BaseButton :is-loading="true" variant="secondary">
                 {{ t('pages.home.buttons.secondary.loading') }}
               </BaseButton>
             </div>
@@ -446,10 +454,10 @@ useSeoMeta({
               <BaseButton variant="outline">
                 {{ t('pages.home.buttons.outline.button') }}
               </BaseButton>
-              <BaseButton variant="outline" :is-disabled="true">
+              <BaseButton :is-disabled="true" variant="outline">
                 {{ t('pages.home.buttons.outline.disabled') }}
               </BaseButton>
-              <BaseButton variant="outline" :is-loading="true">
+              <BaseButton :is-loading="true" variant="outline">
                 {{ t('pages.home.buttons.outline.loading') }}
               </BaseButton>
             </div>
@@ -461,13 +469,13 @@ useSeoMeta({
               {{ t('pages.home.buttons.link.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
-              <BaseButton variant="primary" type="link" to="https://github.com">
+              <BaseButton to="https://github.com" type="link" variant="primary">
                 {{ t('pages.home.buttons.link.primary') }}
               </BaseButton>
-              <BaseButton variant="secondary" type="link" to="https://nuxt.com">
+              <BaseButton to="https://nuxt.com" type="link" variant="secondary">
                 {{ t('pages.home.buttons.link.secondary') }}
               </BaseButton>
-              <BaseButton variant="outline" type="link" to="https://tailwindcss.com">
+              <BaseButton to="https://tailwindcss.com" type="link" variant="outline">
                 {{ t('pages.home.buttons.link.outline') }}
               </BaseButton>
             </div>
@@ -503,16 +511,214 @@ useSeoMeta({
               <BaseButton variant="primary">
                 {{ t('pages.home.buttons.states.normal') }}
               </BaseButton>
-              <BaseButton variant="primary" :is-loading="true">
+              <BaseButton :is-loading="true" variant="primary">
                 {{ t('pages.home.buttons.states.loading') }}
               </BaseButton>
-              <BaseButton variant="primary" :is-disabled="true">
+              <BaseButton :is-disabled="true" variant="primary">
                 {{ t('pages.home.buttons.states.disabled') }}
               </BaseButton>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Dialogs Section -->
+      <section class="space-y-8 pb-16">
+        <h2 class="ty-app-title-xl text-app-accent mb-8">
+          {{ t('pages.home.dialogs.section-title') }}
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Simple Dialog (Small) -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.simple.content')"
+            :subtitle="t('pages.home.dialogs.simple.subtitle')"
+            :title="t('pages.home.dialogs.simple.title')"
+            variant="dark"
+          >
+            <template #card-footer>
+              <BaseButton variant="primary" @click="isSimpleDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Medium Dialog -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.medium.content')"
+            :subtitle="t('pages.home.dialogs.medium.subtitle')"
+            :title="t('pages.home.dialogs.medium.title')"
+            variant="light"
+          >
+            <template #card-footer>
+              <BaseButton variant="secondary" @click="isMediumDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Large Dialog -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.large.content')"
+            :subtitle="t('pages.home.dialogs.large.subtitle')"
+            :title="t('pages.home.dialogs.large.title')"
+            variant="dark-hover"
+          >
+            <template #card-footer>
+              <BaseButton variant="outline" @click="isLargeDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Dialog with Custom Header -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.with-header.content')"
+            :subtitle="t('pages.home.dialogs.with-header.subtitle')"
+            :title="t('pages.home.dialogs.with-header.title')"
+            variant="light-hover"
+          >
+            <template #card-footer>
+              <BaseButton variant="primary" @click="isHeaderDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Dialog with Footer Actions -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.with-footer.content')"
+            :subtitle="t('pages.home.dialogs.with-footer.subtitle')"
+            :title="t('pages.home.dialogs.with-footer.title')"
+            variant="dark"
+          >
+            <template #card-footer>
+              <BaseButton variant="secondary" @click="isFooterDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Confirmation Dialog -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.confirmation.content')"
+            :subtitle="t('pages.home.dialogs.confirmation.subtitle')"
+            :title="t('pages.home.dialogs.confirmation.title')"
+            variant="light"
+          >
+            <template #card-footer>
+              <BaseButton variant="outline" @click="isConfirmDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+        </div>
+      </section>
     </div>
+
+    <!-- Dialog Components -->
+    <BaseDialog
+      :is-open="isSimpleDialogOpen"
+      size="sm"
+      :subtitle="t('pages.home.dialogs.simple.subtitle')"
+      :title="t('pages.home.dialogs.simple.title')"
+      @close="isSimpleDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.simple.content') }}</p>
+      <template #footer>
+        <BaseButton variant="primary" @click="isSimpleDialogOpen = false">
+          {{ t('pages.home.dialogs.simple.close-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isMediumDialogOpen"
+      size="md"
+      :subtitle="t('pages.home.dialogs.medium.subtitle')"
+      :title="t('pages.home.dialogs.medium.title')"
+      @close="isMediumDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.medium.content') }}</p>
+      <template #footer>
+        <BaseButton variant="secondary" @click="isMediumDialogOpen = false">
+          {{ t('pages.home.dialogs.medium.close-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isLargeDialogOpen"
+      size="lg"
+      :subtitle="t('pages.home.dialogs.large.subtitle')"
+      :title="t('pages.home.dialogs.large.title')"
+      @close="isLargeDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.large.content') }}</p>
+      <template #footer>
+        <BaseButton variant="outline" @click="isLargeDialogOpen = false">
+          {{ t('pages.home.dialogs.large.close-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isHeaderDialogOpen"
+      size="md"
+      :subtitle="t('pages.home.dialogs.with-header.subtitle')"
+      :title="t('pages.home.dialogs.with-header.title')"
+      @close="isHeaderDialogOpen = false"
+    >
+      <template #header>
+        <div class="p-4 bg-app-accent/10 rounded-lg border border-app-accent/20">
+          <p class="ty-app-paragraph text-app-accent">
+            <Icon class="size-5 inline-block mr-2" name="lucide:alert-circle" />
+            {{ t('pages.home.dialogs.with-header.header-content') }}
+          </p>
+        </div>
+      </template>
+      <p>{{ t('pages.home.dialogs.with-header.content') }}</p>
+      <template #footer>
+        <BaseButton variant="primary" @click="isHeaderDialogOpen = false">
+          {{ t('pages.home.dialogs.with-header.close-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isFooterDialogOpen"
+      size="md"
+      :subtitle="t('pages.home.dialogs.with-footer.subtitle')"
+      :title="t('pages.home.dialogs.with-footer.title')"
+      @close="isFooterDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.with-footer.content') }}</p>
+      <template #footer>
+        <BaseButton variant="outline" @click="isFooterDialogOpen = false">
+          {{ t('pages.home.dialogs.with-footer.cancel-button') }}
+        </BaseButton>
+        <BaseButton variant="primary" @click="isFooterDialogOpen = false">
+          {{ t('pages.home.dialogs.with-footer.save-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isConfirmDialogOpen"
+      size="sm"
+      :subtitle="t('pages.home.dialogs.confirmation.subtitle')"
+      :title="t('pages.home.dialogs.confirmation.title')"
+      @close="isConfirmDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.confirmation.content') }}</p>
+      <template #footer>
+        <BaseButton variant="outline" @click="isConfirmDialogOpen = false">
+          {{ t('pages.home.dialogs.confirmation.cancel-button') }}
+        </BaseButton>
+        <BaseButton variant="primary" @click="isConfirmDialogOpen = false">
+          {{ t('pages.home.dialogs.confirmation.confirm-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
   </div>
 </template>

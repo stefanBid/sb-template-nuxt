@@ -122,6 +122,49 @@
           "loading": "Loading",
           "disabled": "Disabled"
         }
+      },
+      "dialogs": {
+        "section-title": "Dialogs",
+        "trigger-button": "Open Dialog",
+        "simple": {
+          "title": "Simple Dialog",
+          "subtitle": "Small size dialog",
+          "content": "This is a simple dialog with basic content. Dialogs are useful for displaying information or requesting user input without navigating away from the current page.",
+          "close-button": "Close"
+        },
+        "medium": {
+          "title": "Medium Dialog",
+          "subtitle": "Medium size dialog",
+          "content": "This dialog has a medium size, perfect for forms or more detailed content. You can add any content you want inside the dialog body slot.",
+          "close-button": "Close"
+        },
+        "large": {
+          "title": "Large Dialog",
+          "subtitle": "Large size dialog",
+          "content": "This is a large dialog that provides more space for complex content. It's ideal for displaying detailed information, long forms, or rich media content.",
+          "close-button": "Close"
+        },
+        "with-header": {
+          "title": "Dialog with Custom Header",
+          "subtitle": "Using the header slot",
+          "header-content": "This is a custom header section that appears between the title and the body. You can add any custom content here.",
+          "content": "The body content goes here. The custom header slot is useful for adding warnings, alerts, or additional information.",
+          "close-button": "Close"
+        },
+        "with-footer": {
+          "title": "Dialog with Footer Actions",
+          "subtitle": "Using the footer slot",
+          "content": "This dialog demonstrates the footer slot where you can add action buttons. This is perfect for forms or confirmation dialogs.",
+          "cancel-button": "Cancel",
+          "save-button": "Save Changes"
+        },
+        "confirmation": {
+          "title": "Confirm Action",
+          "subtitle": "Are you sure?",
+          "content": "This action cannot be undone. Please confirm that you want to proceed with this operation.",
+          "cancel-button": "Cancel",
+          "confirm-button": "Confirm"
+        }
       }
     }
   },

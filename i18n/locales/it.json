@@ -122,6 +122,49 @@
           "loading": "Caricamento",
           "disabled": "Disabilitato"
         }
+      },
+      "dialogs": {
+        "section-title": "Dialog",
+        "trigger-button": "Apri Dialog",
+        "simple": {
+          "title": "Dialog Semplice",
+          "subtitle": "Dialog di piccole dimensioni",
+          "content": "Questo è un dialog semplice con contenuto di base. I dialog sono utili per visualizzare informazioni o richiedere input dall'utente senza navigare via dalla pagina corrente.",
+          "close-button": "Chiudi"
+        },
+        "medium": {
+          "title": "Dialog Medio",
+          "subtitle": "Dialog di medie dimensioni",
+          "content": "Questo dialog ha dimensioni medie, perfetto per form o contenuti più dettagliati. Puoi aggiungere qualsiasi contenuto tu voglia nello slot del body.",
+          "close-button": "Chiudi"
+        },
+        "large": {
+          "title": "Dialog Grande",
+          "subtitle": "Dialog di grandi dimensioni",
+          "content": "Questo è un dialog grande che fornisce più spazio per contenuti complessi. È ideale per visualizzare informazioni dettagliate, form lunghi o contenuti multimediali.",
+          "close-button": "Chiudi"
+        },
+        "with-header": {
+          "title": "Dialog con Header Personalizzato",
+          "subtitle": "Usando lo slot header",
+          "header-content": "Questa è una sezione header personalizzata che appare tra il titolo e il body. Puoi aggiungere qualsiasi contenuto personalizzato qui.",
+          "content": "Il contenuto del body va qui. Lo slot header personalizzato è utile per aggiungere avvisi, alert o informazioni aggiuntive.",
+          "close-button": "Chiudi"
+        },
+        "with-footer": {
+          "title": "Dialog con Azioni nel Footer",
+          "subtitle": "Usando lo slot footer",
+          "content": "Questo dialog dimostra lo slot footer dove puoi aggiungere bottoni di azione. È perfetto per form o dialog di conferma.",
+          "cancel-button": "Annulla",
+          "save-button": "Salva Modifiche"
+        },
+        "confirmation": {
+          "title": "Conferma Azione",
+          "subtitle": "Sei sicuro?",
+          "content": "Questa azione non può essere annullata. Per favore conferma che vuoi procedere con questa operazione.",
+          "cancel-button": "Annulla",
+          "confirm-button": "Conferma"
+        }
       }
     }
   },
