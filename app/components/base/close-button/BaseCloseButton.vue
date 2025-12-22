@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Input / Output
-const emit = defineEmits <{
+const emit = defineEmits<{
   // eslint-disable-next-line no-unused-vars
   (e: 'close', falsyValue: false): void
 }>()

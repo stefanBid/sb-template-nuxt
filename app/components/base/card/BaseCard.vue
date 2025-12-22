@@ -8,6 +8,7 @@ interface BaseCardProps {
   fullCustomContent?: boolean
 }
 
+// Input / Output
 const props = withDefaults(defineProps<BaseCardProps>(), {
   title: undefined,
   subtitle: undefined,

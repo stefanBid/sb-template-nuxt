@@ -4,6 +4,8 @@ interface BaseChipProps {
   icon?: string
   variant?: 'accent' | 'primary' | 'secondary'
 }
+
+// Input / Output
 const props = withDefaults(defineProps<BaseChipProps>(), {
   icon: undefined,
   variant: 'accent',
