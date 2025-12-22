@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Input / Output
-const emit = defineEmits <{
+const emit = defineEmits<{
   // eslint-disable-next-line no-unused-vars
   (e: 'close', falsyValue: false): void
 }>()
@@ -18,7 +18,7 @@ const onClose = () => {
   >
     <Icon
       class="size-6 md:size-7 u-app-soft-transition"
-      name="mdi:close-box"
+      name="lucide:x"
     />
   </button>
 </template>

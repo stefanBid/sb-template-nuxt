@@ -3,6 +3,31 @@
 const { t } = useI18n()
 const route = useRoute()
 
+// State for dialogs
+const isSimpleDialogOpen = ref(false)
+const isMediumDialogOpen = ref(false)
+const isLargeDialogOpen = ref(false)
+const isHeaderDialogOpen = ref(false)
+const isFooterDialogOpen = ref(false)
+const isConfirmDialogOpen = ref(false)
+
+// State for inputs
+const textInput = ref('')
+const emailInput = ref('')
+const passwordInput = ref('')
+const numberInput = ref('')
+const textareaInput = ref('')
+const checkboxInput = ref(false)
+const comboboxInput = ref<string[]>([])
+const multiComboboxInput = ref<string[]>([])
+
+const comboboxItems = [
+  { label: 'Option 1', value: 'option-1' },
+  { label: 'Option 2', value: 'option-2' },
+  { label: 'Option 3', value: 'option-3' },
+  { label: 'Option 4', value: 'option-4' },
+]
+
 useSeoMeta({
   // LOCALIZED
   title: () => t('meta.home.title'),
@@ -131,176 +156,388 @@ useSeoMeta({
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Card 1 - Simple -->
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border hover:border-app-accent transition-colors">
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Simple Card
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              A basic card with border and hover effect.
-            </p>
-          </div>
+          <!-- Card 1 - Simple Dark -->
+          <BaseCard
+            :paragraph="t('pages.home.cards.simple-dark.paragraph')"
+            :subtitle="t('pages.home.cards.simple-dark.subtitle')"
+            :title="t('pages.home.cards.simple-dark.title')"
+            variant="dark"
+          />
 
-          <!-- Card 2 - With Image -->
-          <div class="bg-app-surface rounded-lg border border-app-border overflow-hidden hover:border-app-accent transition-colors">
-            <div class="h-40 bg-linear-to-br from-app-accent to-purple-600"></div>
-            <div class="p-6">
-              <h3 class="ty-app-title text-app-contrast mb-3">
-                Card with Image
+          <!-- Card 2 - Simple Light -->
+          <BaseCard
+            :paragraph="t('pages.home.cards.simple-light.paragraph')"
+            :title="t('pages.home.cards.simple-light.title')"
+            variant="light"
+          />
+
+          <!-- Card 3 - Dark Hover -->
+          <BaseCard
+            :paragraph="t('pages.home.cards.dark-hover.paragraph')"
+            :subtitle="t('pages.home.cards.dark-hover.subtitle')"
+            :title="t('pages.home.cards.dark-hover.title')"
+            variant="dark-hover"
+          />
+
+          <!-- Card 4 - Light Hover -->
+          <BaseCard
+            :paragraph="t('pages.home.cards.light-hover.paragraph')"
+            :title="t('pages.home.cards.light-hover.title')"
+            variant="light-hover"
+          />
+
+          <!-- Card 5 - With Header Icon -->
+          <BaseCard
+            :paragraph="t('pages.home.cards.with-icon.paragraph')"
+            :subtitle="t('pages.home.cards.with-icon.subtitle')"
+            :title="t('pages.home.cards.with-icon.title')"
+            variant="dark"
+          >
+            <template #card-header>
+              <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center">
+                <Icon class="size-6 text-app-accent" name="lucide:star" />
+              </div>
+            </template>
+          </BaseCard>
+
+          <!-- Card 6 - With Footer Button -->
+          <BaseCard
+            :paragraph="t('pages.home.cards.with-action.paragraph')"
+            :subtitle="t('pages.home.cards.with-action.subtitle')"
+            :title="t('pages.home.cards.with-action.title')"
+            variant="light-hover"
+          >
+            <template #card-footer>
+              <BaseButton variant="primary">
+                <Icon class="size-5 mr-2" name="lucide:arrow-right" />
+                {{ t('pages.home.cards.with-action.button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Card 7 - Center Aligned -->
+          <BaseCard
+            align="center"
+            :paragraph="t('pages.home.cards.center-aligned.paragraph')"
+            :subtitle="t('pages.home.cards.center-aligned.subtitle')"
+            :title="t('pages.home.cards.center-aligned.title')"
+            variant="dark"
+          />
+
+          <!-- Card 8 - Right Aligned -->
+          <BaseCard
+            align="right"
+            :paragraph="t('pages.home.cards.right-aligned.paragraph')"
+            :subtitle="t('pages.home.cards.right-aligned.subtitle')"
+            :title="t('pages.home.cards.right-aligned.title')"
+            variant="light"
+          />
+
+          <!-- Card 9 - Complete Example -->
+          <BaseCard
+            align="left"
+            :paragraph="t('pages.home.cards.complete.paragraph')"
+            :subtitle="t('pages.home.cards.complete.subtitle')"
+            :title="t('pages.home.cards.complete.title')"
+            variant="dark-hover"
+          >
+            <template #card-header>
+              <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center">
+                <Icon class="size-6 text-app-accent" name="lucide:zap" />
+              </div>
+            </template>
+            <template #card-footer>
+              <BaseButton variant="outline">
+                {{ t('pages.home.cards.complete.button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Card 10 - Full Custom Content -->
+          <BaseCard :full-custom-content="true" variant="dark">
+            <div class="text-center space-y-4">
+              <div class="w-16 h-16 bg-app-accent/20 rounded-full flex items-center justify-center mx-auto">
+                <Icon class="size-8 text-app-accent" name="lucide:heart" />
+              </div>
+              <h3 class="ty-app-title">
+                {{ t('pages.home.cards.full-custom.title') }}
               </h3>
               <p class="ty-app-paragraph text-app-muted">
-                Card with image area at the top.
+                {{ t('pages.home.cards.full-custom.paragraph') }}
               </p>
+              <div class="flex gap-2 justify-center pt-4">
+                <BaseButton variant="primary">
+                  <Icon class="size-5 mr-2" name="lucide:thumbs-up" />
+                  {{ t('pages.home.cards.full-custom.like-button') }}
+                </BaseButton>
+                <BaseButton variant="secondary">
+                  <Icon class="size-5 mr-2" name="lucide:share-2" />
+                  {{ t('pages.home.cards.full-custom.share-button') }}
+                </BaseButton>
+              </div>
             </div>
-          </div>
+          </BaseCard>
 
-          <!-- Card 3 - With Badge -->
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border hover:border-app-accent transition-colors relative">
-            <span class="ty-app-label text-app-accent absolute top-4 right-4 bg-app-accent/20 px-3 py-1 rounded-full">
-              NEW
-            </span>
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Card with Badge
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              Card with corner badge.
-            </p>
-          </div>
+          <!-- Card 11 - Multiple Buttons -->
+          <BaseCard
+            :paragraph="t('pages.home.cards.multi-action.paragraph')"
+            :subtitle="t('pages.home.cards.multi-action.subtitle')"
+            :title="t('pages.home.cards.multi-action.title')"
+            variant="light-hover"
+          >
+            <template #card-footer>
+              <div class="flex gap-2">
+                <BaseButton variant="primary">
+                  {{ t('pages.home.cards.multi-action.save-button') }}
+                </BaseButton>
+                <BaseButton variant="outline">
+                  {{ t('pages.home.cards.multi-action.cancel-button') }}
+                </BaseButton>
+              </div>
+            </template>
+          </BaseCard>
 
-          <!-- Card 4 - With Icon -->
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border hover:border-app-accent transition-colors">
-            <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center mb-4">
-              <span class="ty-app-title text-app-accent">★</span>
-            </div>
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Card with Icon
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              Card with decorative icon.
-            </p>
-          </div>
-
-          <!-- Card 5 - Featured -->
-          <div class="p-6 bg-linear-to-br from-app-accent/20 to-purple-600/20 rounded-lg border-2 border-app-accent">
-            <span class="ty-app-label text-app-accent mb-2 block">FEATURED</span>
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Featured Card
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              Card with highlighted style.
-            </p>
-          </div>
-
-          <!-- Card 6 - Interactive -->
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border hover:bg-app-surface-2 hover:border-app-accent transition-all cursor-pointer transform hover:scale-105">
-            <h3 class="ty-app-title text-app-contrast mb-3">
-              Interactive Card
-            </h3>
-            <p class="ty-app-paragraph text-app-muted">
-              Card with full hover effect.
-            </p>
-          </div>
+          <!-- Card 12 - Loading State -->
+          <BaseCard
+            :paragraph="t('pages.home.cards.loading-state.paragraph')"
+            :subtitle="t('pages.home.cards.loading-state.subtitle')"
+            :title="t('pages.home.cards.loading-state.title')"
+            variant="dark"
+          >
+            <template #card-footer>
+              <BaseButton :is-loading="true" variant="primary">
+                {{ t('pages.home.cards.loading-state.button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
         </div>
       </section>
 
       <!-- Inputs Section -->
       <section class="space-y-8">
         <h2 class="ty-app-title-xl text-app-accent mb-8">
-          Input Fields
+          {{ t('pages.home.inputs.section-title') }}
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
           <!-- Text Input -->
-          <div class="space-y-2">
-            <label class="ty-app-label text-app-contrast block">Text Input</label>
-            <input
-              class="w-full px-4 py-3 bg-app-surface border border-app-border rounded-lg text-app-contrast ty-app-paragraph focus:border-app-accent focus:outline-none transition-colors"
-              placeholder="Enter text..."
-              type="text"
-            />
-          </div>
+          <BaseInput
+            id="text-input"
+            v-model:input="textInput"
+            :hint="t('pages.home.inputs.text.hint')"
+            :label="t('pages.home.inputs.text.label')"
+            :placeholder="t('pages.home.inputs.text.placeholder')"
+            type="text"
+          />
 
-          <!-- Email Input -->
-          <div class="space-y-2">
-            <label class="ty-app-label text-app-contrast block">Email Input</label>
-            <input
-              class="w-full px-4 py-3 bg-app-surface border border-app-border rounded-lg text-app-contrast ty-app-paragraph focus:border-app-accent focus:outline-none transition-colors"
-              placeholder="email@example.com"
-              type="email"
-            />
-          </div>
+          <!-- Email Input with Icon -->
+          <BaseInput
+            id="email-input"
+            v-model:input="emailInput"
+            :hint="t('pages.home.inputs.email.hint')"
+            :label="t('pages.home.inputs.email.label')"
+            :placeholder="t('pages.home.inputs.email.placeholder')"
+            prefix-icon="lucide:mail"
+            type="email"
+          />
 
-          <!-- Password Input -->
-          <div class="space-y-2">
-            <label class="ty-app-label text-app-contrast block">Password Input</label>
-            <input
-              class="w-full px-4 py-3 bg-app-surface border border-app-border rounded-lg text-app-contrast ty-app-paragraph focus:border-app-accent focus:outline-none transition-colors"
-              placeholder="••••••••"
-              type="password"
-            />
-          </div>
+          <!-- Password Input with Icon -->
+          <BaseInput
+            id="password-input"
+            v-model:input="passwordInput"
+            :hint="t('pages.home.inputs.password.hint')"
+            :label="t('pages.home.inputs.password.label')"
+            :placeholder="t('pages.home.inputs.password.placeholder')"
+            prefix-icon="lucide:lock"
+            type="password"
+          />
 
-          <!-- Number Input -->
-          <div class="space-y-2">
-            <label class="ty-app-label text-app-contrast block">Number Input</label>
-            <input
-              class="w-full px-4 py-3 bg-app-surface border border-app-border rounded-lg text-app-contrast ty-app-paragraph focus:border-app-accent focus:outline-none transition-colors"
-              placeholder="123"
-              type="number"
-            />
-          </div>
+          <!-- Number Input with Icon -->
+          <BaseInput
+            id="number-input"
+            v-model:input="numberInput"
+            :hint="t('pages.home.inputs.number.hint')"
+            :label="t('pages.home.inputs.number.label')"
+            :placeholder="t('pages.home.inputs.number.placeholder')"
+            prefix-icon="lucide:hash"
+            type="number"
+          />
 
-          <!-- Select -->
-          <div class="space-y-2">
-            <label class="ty-app-label text-app-contrast block">Select</label>
-            <select class="w-full px-4 py-3 bg-app-surface border border-app-border rounded-lg text-app-contrast ty-app-paragraph focus:border-app-accent focus:outline-none transition-colors">
-              <option>Option 1</option>
-              <option>Option 2</option>
-              <option>Option 3</option>
-            </select>
-          </div>
+          <!-- Single Select Combobox -->
+          <BaseCombobox
+            id="combobox-single"
+            v-model:input="comboboxInput"
+            :hint="t('pages.home.inputs.combobox.hint')"
+            :items="comboboxItems"
+            :label="t('pages.home.inputs.combobox.label')"
+            :placeholder="t('pages.home.inputs.combobox.placeholder')"
+            prefix-icon="lucide:list"
+            type="single"
+          />
+
+          <!-- Multiple Select Combobox -->
+          <BaseCombobox
+            id="combobox-multiple"
+            v-model:input="multiComboboxInput"
+            :hint="t('pages.home.inputs.combobox-multiple.hint')"
+            :items="comboboxItems"
+            :label="t('pages.home.inputs.combobox-multiple.label')"
+            :placeholder="t('pages.home.inputs.combobox-multiple.placeholder')"
+            prefix-icon="lucide:list-checks"
+            type="multiple"
+          />
 
           <!-- Textarea -->
-          <div class="space-y-2 md:col-span-2">
-            <label class="ty-app-label text-app-contrast block">Textarea</label>
-            <textarea
-              class="w-full px-4 py-3 bg-app-surface border border-app-border rounded-lg text-app-contrast ty-app-paragraph focus:border-app-accent focus:outline-none transition-colors resize-none"
-              placeholder="Enter your message..."
-              rows="4"
-            ></textarea>
-          </div>
+          <BaseTextarea
+            id="textarea-input"
+            v-model:input="textareaInput"
+            class="md:col-span-2"
+            :hint="t('pages.home.inputs.textarea.hint')"
+            :label="t('pages.home.inputs.textarea.label')"
+            :max-length="200"
+            :placeholder="t('pages.home.inputs.textarea.placeholder')"
+            :rows="4"
+          />
 
           <!-- Checkbox -->
-          <div class="space-y-2">
-            <label class="flex items-center gap-3 cursor-pointer">
-              <input
-                class="w-5 h-5 bg-app-surface border border-app-border rounded text-app-accent focus:ring-app-accent focus:ring-2"
-                type="checkbox"
+          <BaseCheckbox
+            id="checkbox-input"
+            v-model:input="checkboxInput"
+            :label="t('pages.home.inputs.checkbox.label')"
+          >
+            {{ t('pages.home.inputs.checkbox.text') }}
+          </BaseCheckbox>
+
+          <!-- Input with Error -->
+          <BaseInput
+            id="error-input"
+            :error="t('pages.home.inputs.error.message')"
+            :label="t('pages.home.inputs.error.label')"
+            :placeholder="t('pages.home.inputs.error.placeholder')"
+            prefix-icon="lucide:alert-circle"
+            type="text"
+          />
+        </div>
+      </section>
+
+      <!-- Chips Section -->
+      <section class="space-y-8">
+        <h2 class="ty-app-title-xl text-app-accent mb-8">
+          {{ t('pages.home.chips.section-title') }}
+        </h2>
+
+        <div class="space-y-8 max-w-4xl">
+          <!-- Accent Chips -->
+          <div class="space-y-4">
+            <h3 class="ty-app-subtitle text-app-contrast">
+              {{ t('pages.home.chips.accent.title') }}
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              <BaseChip
+                :text="t('pages.home.chips.accent.simple')"
+                variant="accent"
               />
-              <span class="ty-app-paragraph text-app-contrast">Checkbox Option</span>
-            </label>
+              <BaseChip
+                icon="lucide:star"
+                :text="t('pages.home.chips.accent.with-icon')"
+                variant="accent"
+              />
+              <BaseChip
+                icon="lucide:zap"
+                :text="t('pages.home.chips.accent.featured')"
+                variant="accent"
+              />
+            </div>
           </div>
 
-          <!-- Radio -->
-          <div class="space-y-2">
-            <label class="ty-app-label text-app-contrast block mb-3">Radio Buttons</label>
-            <div class="space-y-2">
-              <label class="flex items-center gap-3 cursor-pointer">
-                <input
-                  class="w-5 h-5 bg-app-surface border border-app-border text-app-accent focus:ring-app-accent focus:ring-2"
-                  name="radio-group"
-                  type="radio"
-                />
-                <span class="ty-app-paragraph text-app-contrast">Radio 1</span>
-              </label>
-              <label class="flex items-center gap-3 cursor-pointer">
-                <input
-                  class="w-5 h-5 bg-app-surface border border-app-border text-app-accent focus:ring-app-accent focus:ring-2"
-                  name="radio-group"
-                  type="radio"
-                />
-                <span class="ty-app-paragraph text-app-contrast">Radio 2</span>
-              </label>
+          <!-- Primary Chips -->
+          <div class="space-y-4">
+            <h3 class="ty-app-subtitle text-app-contrast">
+              {{ t('pages.home.chips.primary.title') }}
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              <BaseChip
+                :text="t('pages.home.chips.primary.simple')"
+                variant="primary"
+              />
+              <BaseChip
+                icon="lucide:tag"
+                :text="t('pages.home.chips.primary.with-icon')"
+                variant="primary"
+              />
+              <BaseChip
+                icon="lucide:bookmark"
+                :text="t('pages.home.chips.primary.category')"
+                variant="primary"
+              />
+            </div>
+          </div>
+
+          <!-- Secondary Chips -->
+          <div class="space-y-4">
+            <h3 class="ty-app-subtitle text-app-contrast">
+              {{ t('pages.home.chips.secondary.title') }}
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              <BaseChip
+                :text="t('pages.home.chips.secondary.simple')"
+                variant="secondary"
+              />
+              <BaseChip
+                icon="lucide:info"
+                :text="t('pages.home.chips.secondary.with-icon')"
+                variant="secondary"
+              />
+              <BaseChip
+                icon="lucide:clock"
+                :text="t('pages.home.chips.secondary.status')"
+                variant="secondary"
+              />
+            </div>
+          </div>
+
+          <!-- Use Cases Example -->
+          <div class="space-y-4">
+            <h3 class="ty-app-subtitle text-app-contrast">
+              {{ t('pages.home.chips.use-cases.title') }}
+            </h3>
+            <div class="space-y-4">
+              <!-- Tags -->
+              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
+                <p class="ty-app-label text-app-muted mb-3">
+                  {{ t('pages.home.chips.use-cases.tags-label') }}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <BaseChip icon="lucide:code" text="Vue.js" variant="accent" />
+                  <BaseChip icon="lucide:code" text="Nuxt" variant="accent" />
+                  <BaseChip icon="lucide:code" text="TypeScript" variant="accent" />
+                  <BaseChip icon="lucide:code" text="Tailwind" variant="accent" />
+                </div>
+              </div>
+
+              <!-- Status -->
+              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
+                <p class="ty-app-label text-app-muted mb-3">
+                  {{ t('pages.home.chips.use-cases.status-label') }}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <BaseChip icon="lucide:check-circle" :text="t('pages.home.chips.use-cases.active')" variant="accent" />
+                  <BaseChip icon="lucide:clock" :text="t('pages.home.chips.use-cases.pending')" variant="secondary" />
+                  <BaseChip icon="lucide:alert-circle" :text="t('pages.home.chips.use-cases.warning')" variant="primary" />
+                </div>
+              </div>
+
+              <!-- Categories -->
+              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
+                <p class="ty-app-label text-app-muted mb-3">
+                  {{ t('pages.home.chips.use-cases.categories-label') }}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <BaseChip icon="lucide:folder" :text="t('pages.home.chips.use-cases.design')" variant="primary" />
+                  <BaseChip icon="lucide:folder" :text="t('pages.home.chips.use-cases.development')" variant="primary" />
+                  <BaseChip icon="lucide:folder" :text="t('pages.home.chips.use-cases.marketing')" variant="primary" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -309,114 +546,323 @@ useSeoMeta({
       <!-- Buttons Section -->
       <section class="space-y-8 pb-16">
         <h2 class="ty-app-title-xl text-app-accent mb-8">
-          Buttons
+          {{ t('pages.home.buttons.section-title') }}
         </h2>
 
         <div class="space-y-8">
           <!-- Primary Buttons -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Primary Buttons
+              {{ t('pages.home.buttons.primary.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
-              <button class="ty-app-btn-label px-6 py-3 bg-app-accent text-white rounded-lg hover:bg-app-accent-hover transition-colors">
-                Primary Button
-              </button>
-              <button class="ty-app-btn-label px-6 py-3 bg-app-accent text-white rounded-lg hover:bg-app-accent-hover transition-colors opacity-50 cursor-not-allowed">
-                Disabled
-              </button>
-              <button class="ty-app-btn-label px-8 py-4 bg-app-accent text-white rounded-lg hover:bg-app-accent-hover transition-colors">
-                Large Button
-              </button>
-              <button class="ty-app-btn-label px-4 py-2 bg-app-accent text-white rounded-lg hover:bg-app-accent-hover transition-colors text-sm">
-                Small Button
-              </button>
+              <BaseButton variant="primary">
+                {{ t('pages.home.buttons.primary.button') }}
+              </BaseButton>
+              <BaseButton :is-disabled="true" variant="primary">
+                {{ t('pages.home.buttons.primary.disabled') }}
+              </BaseButton>
+              <BaseButton :is-loading="true" variant="primary">
+                {{ t('pages.home.buttons.primary.loading') }}
+              </BaseButton>
+              <BaseButton type="submit" variant="primary">
+                {{ t('pages.home.buttons.primary.submit') }}
+              </BaseButton>
+            </div>
+          </div>
+
+          <!-- Secondary Buttons -->
+          <div class="space-y-4">
+            <h3 class="ty-app-subtitle text-app-contrast">
+              {{ t('pages.home.buttons.secondary.title') }}
+            </h3>
+            <div class="flex flex-wrap gap-4">
+              <BaseButton variant="secondary">
+                {{ t('pages.home.buttons.secondary.button') }}
+              </BaseButton>
+              <BaseButton :is-disabled="true" variant="secondary">
+                {{ t('pages.home.buttons.secondary.disabled') }}
+              </BaseButton>
+              <BaseButton :is-loading="true" variant="secondary">
+                {{ t('pages.home.buttons.secondary.loading') }}
+              </BaseButton>
             </div>
           </div>
 
           <!-- Outline Buttons -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Outline Buttons
+              {{ t('pages.home.buttons.outline.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
-              <button class="ty-app-btn-label px-6 py-3 bg-transparent border-2 border-app-accent text-app-accent rounded-lg hover:bg-app-accent hover:text-white transition-colors">
-                Outline Button
-              </button>
-              <button class="ty-app-btn-label px-6 py-3 bg-transparent border-2 border-app-contrast text-app-contrast rounded-lg hover:bg-app-contrast hover:text-white transition-colors">
-                Dark Outline
-              </button>
-              <button class="ty-app-btn-label px-6 py-3 bg-transparent border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-600 hover:text-white transition-colors">
-                Purple Outline
-              </button>
+              <BaseButton variant="outline">
+                {{ t('pages.home.buttons.outline.button') }}
+              </BaseButton>
+              <BaseButton :is-disabled="true" variant="outline">
+                {{ t('pages.home.buttons.outline.disabled') }}
+              </BaseButton>
+              <BaseButton :is-loading="true" variant="outline">
+                {{ t('pages.home.buttons.outline.loading') }}
+              </BaseButton>
             </div>
           </div>
 
-          <!-- Ghost Buttons -->
+          <!-- Link Buttons -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Ghost Buttons
+              {{ t('pages.home.buttons.link.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
-              <button class="ty-app-btn-label px-6 py-3 bg-transparent text-app-accent rounded-lg hover:bg-app-accent/10 transition-colors">
-                Ghost Button
-              </button>
-              <button class="ty-app-btn-label px-6 py-3 bg-transparent text-app-contrast rounded-lg hover:bg-app-surface-2 transition-colors">
-                Ghost Dark
-              </button>
+              <BaseButton to="https://github.com" type="link" variant="primary">
+                {{ t('pages.home.buttons.link.primary') }}
+              </BaseButton>
+              <BaseButton to="https://nuxt.com" type="link" variant="secondary">
+                {{ t('pages.home.buttons.link.secondary') }}
+              </BaseButton>
+              <BaseButton to="https://tailwindcss.com" type="link" variant="outline">
+                {{ t('pages.home.buttons.link.outline') }}
+              </BaseButton>
             </div>
           </div>
 
-          <!-- Gradient Buttons -->
+          <!-- Buttons with Icons -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Gradient Buttons
-            </h3>
-            <div class="flex flex-wrap gap-4">
-              <button class="ty-app-btn-label px-6 py-3 bg-linear-to-r from-app-accent to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity">
-                Gradient Button
-              </button>
-              <button class="ty-app-btn-label px-6 py-3 bg-linear-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity">
-                Blue to Purple
-              </button>
-            </div>
-          </div>
-
-          <!-- Icon Buttons -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              Icon Buttons
+              {{ t('pages.home.buttons.with-icons.title') }}
             </h3>
             <div class="flex flex-wrap gap-4 items-center">
-              <button class="ty-app-btn-label px-6 py-3 bg-app-accent text-white rounded-lg hover:bg-app-accent-hover transition-colors flex items-center gap-2">
-                <span>→</span>
-                With Icon
-              </button>
-              <button class="w-12 h-12 bg-app-accent text-white rounded-lg hover:bg-app-accent-hover transition-colors flex items-center justify-center text-xl">
-                +
-              </button>
-              <button class="w-12 h-12 bg-app-surface border border-app-border text-app-contrast rounded-full hover:border-app-accent transition-colors flex items-center justify-center">
-                ★
-              </button>
+              <BaseButton variant="primary">
+                <Icon class="size-5 mr-2" name="lucide:send" />
+                {{ t('pages.home.buttons.with-icons.send') }}
+              </BaseButton>
+              <BaseButton variant="secondary">
+                <Icon class="size-5 mr-2" name="lucide:download" />
+                {{ t('pages.home.buttons.with-icons.download') }}
+              </BaseButton>
+              <BaseButton variant="outline">
+                <Icon class="size-5 mr-2" name="lucide:heart" />
+                {{ t('pages.home.buttons.with-icons.like') }}
+              </BaseButton>
             </div>
           </div>
 
-          <!-- Rounded Buttons -->
+          <!-- All States Demo -->
           <div class="space-y-4">
             <h3 class="ty-app-subtitle text-app-contrast">
-              Rounded Buttons
+              {{ t('pages.home.buttons.states.title') }}
             </h3>
             <div class="flex flex-wrap gap-4">
-              <button class="ty-app-btn-label px-8 py-3 bg-app-accent text-white rounded-full hover:bg-app-accent-hover transition-colors">
-                Rounded Button
-              </button>
-              <button class="ty-app-btn-label px-8 py-3 bg-transparent border-2 border-app-accent text-app-accent rounded-full hover:bg-app-accent hover:text-white transition-colors">
-                Rounded Outline
-              </button>
+              <BaseButton variant="primary">
+                {{ t('pages.home.buttons.states.normal') }}
+              </BaseButton>
+              <BaseButton :is-loading="true" variant="primary">
+                {{ t('pages.home.buttons.states.loading') }}
+              </BaseButton>
+              <BaseButton :is-disabled="true" variant="primary">
+                {{ t('pages.home.buttons.states.disabled') }}
+              </BaseButton>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Dialogs Section -->
+      <section class="space-y-8 pb-16">
+        <h2 class="ty-app-title-xl text-app-accent mb-8">
+          {{ t('pages.home.dialogs.section-title') }}
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Simple Dialog (Small) -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.simple.content')"
+            :subtitle="t('pages.home.dialogs.simple.subtitle')"
+            :title="t('pages.home.dialogs.simple.title')"
+            variant="dark"
+          >
+            <template #card-footer>
+              <BaseButton variant="primary" @click="isSimpleDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Medium Dialog -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.medium.content')"
+            :subtitle="t('pages.home.dialogs.medium.subtitle')"
+            :title="t('pages.home.dialogs.medium.title')"
+            variant="light"
+          >
+            <template #card-footer>
+              <BaseButton variant="secondary" @click="isMediumDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Large Dialog -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.large.content')"
+            :subtitle="t('pages.home.dialogs.large.subtitle')"
+            :title="t('pages.home.dialogs.large.title')"
+            variant="dark-hover"
+          >
+            <template #card-footer>
+              <BaseButton variant="outline" @click="isLargeDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Dialog with Custom Header -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.with-header.content')"
+            :subtitle="t('pages.home.dialogs.with-header.subtitle')"
+            :title="t('pages.home.dialogs.with-header.title')"
+            variant="light-hover"
+          >
+            <template #card-footer>
+              <BaseButton variant="primary" @click="isHeaderDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Dialog with Footer Actions -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.with-footer.content')"
+            :subtitle="t('pages.home.dialogs.with-footer.subtitle')"
+            :title="t('pages.home.dialogs.with-footer.title')"
+            variant="dark"
+          >
+            <template #card-footer>
+              <BaseButton variant="secondary" @click="isFooterDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+
+          <!-- Confirmation Dialog -->
+          <BaseCard
+            :paragraph="t('pages.home.dialogs.confirmation.content')"
+            :subtitle="t('pages.home.dialogs.confirmation.subtitle')"
+            :title="t('pages.home.dialogs.confirmation.title')"
+            variant="light"
+          >
+            <template #card-footer>
+              <BaseButton variant="outline" @click="isConfirmDialogOpen = true">
+                {{ t('pages.home.dialogs.trigger-button') }}
+              </BaseButton>
+            </template>
+          </BaseCard>
+        </div>
+      </section>
     </div>
+
+    <!-- Dialog Components -->
+    <BaseDialog
+      :is-open="isSimpleDialogOpen"
+      size="sm"
+      :subtitle="t('pages.home.dialogs.simple.subtitle')"
+      :title="t('pages.home.dialogs.simple.title')"
+      @close="isSimpleDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.simple.content') }}</p>
+      <template #footer>
+        <BaseButton variant="primary" @click="isSimpleDialogOpen = false">
+          {{ t('pages.home.dialogs.simple.close-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isMediumDialogOpen"
+      size="md"
+      :subtitle="t('pages.home.dialogs.medium.subtitle')"
+      :title="t('pages.home.dialogs.medium.title')"
+      @close="isMediumDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.medium.content') }}</p>
+      <template #footer>
+        <BaseButton variant="secondary" @click="isMediumDialogOpen = false">
+          {{ t('pages.home.dialogs.medium.close-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isLargeDialogOpen"
+      size="lg"
+      :subtitle="t('pages.home.dialogs.large.subtitle')"
+      :title="t('pages.home.dialogs.large.title')"
+      @close="isLargeDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.large.content') }}</p>
+      <template #footer>
+        <BaseButton variant="outline" @click="isLargeDialogOpen = false">
+          {{ t('pages.home.dialogs.large.close-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isHeaderDialogOpen"
+      size="md"
+      :subtitle="t('pages.home.dialogs.with-header.subtitle')"
+      :title="t('pages.home.dialogs.with-header.title')"
+      @close="isHeaderDialogOpen = false"
+    >
+      <template #header>
+        <div class="p-4 bg-app-accent/10 rounded-lg border border-app-accent/20">
+          <p class="ty-app-paragraph text-app-accent">
+            <Icon class="size-5 inline-block mr-2" name="lucide:alert-circle" />
+            {{ t('pages.home.dialogs.with-header.header-content') }}
+          </p>
+        </div>
+      </template>
+      <p>{{ t('pages.home.dialogs.with-header.content') }}</p>
+      <template #footer>
+        <BaseButton variant="primary" @click="isHeaderDialogOpen = false">
+          {{ t('pages.home.dialogs.with-header.close-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isFooterDialogOpen"
+      size="md"
+      :subtitle="t('pages.home.dialogs.with-footer.subtitle')"
+      :title="t('pages.home.dialogs.with-footer.title')"
+      @close="isFooterDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.with-footer.content') }}</p>
+      <template #footer>
+        <BaseButton variant="outline" @click="isFooterDialogOpen = false">
+          {{ t('pages.home.dialogs.with-footer.cancel-button') }}
+        </BaseButton>
+        <BaseButton variant="primary" @click="isFooterDialogOpen = false">
+          {{ t('pages.home.dialogs.with-footer.save-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
+
+    <BaseDialog
+      :is-open="isConfirmDialogOpen"
+      size="sm"
+      :subtitle="t('pages.home.dialogs.confirmation.subtitle')"
+      :title="t('pages.home.dialogs.confirmation.title')"
+      @close="isConfirmDialogOpen = false"
+    >
+      <p>{{ t('pages.home.dialogs.confirmation.content') }}</p>
+      <template #footer>
+        <BaseButton variant="outline" @click="isConfirmDialogOpen = false">
+          {{ t('pages.home.dialogs.confirmation.cancel-button') }}
+        </BaseButton>
+        <BaseButton variant="primary" @click="isConfirmDialogOpen = false">
+          {{ t('pages.home.dialogs.confirmation.confirm-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
   </div>
 </template>

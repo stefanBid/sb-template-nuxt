@@ -106,7 +106,7 @@ watch(open, (newVal) => {
             <li v-for="item in props.items" :key="item.code">
               <button
                 :aria-current="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 text-app-contrast sb-focus ty-app-label normal-case! gap-2 u-app-focus u-app-soft-transition"
+                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 text-app-contrast ty-app-label normal-case! gap-2 u-app-focus u-app-soft-transition"
                 :class="{
                   'bg-app-surface-2': props.selectedItemId === item.code,
                   'hover:bg-app-surface-2 cursor-pointer': props.selectedItemId !== item.code,

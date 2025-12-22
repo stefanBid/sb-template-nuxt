@@ -16,7 +16,237 @@
     "settings-section": "Settings"
   },
   "pages": {
-    "home": {}
+    "home": {
+      "cards": {
+        "simple-dark": {
+          "title": "Simple Dark Card",
+          "subtitle": "With subtitle",
+          "paragraph": "A basic card with dark variant, title, subtitle and paragraph. Perfect for simple content."
+        },
+        "simple-light": {
+          "title": "Simple Light Card",
+          "paragraph": "Card with light variant featuring only title and paragraph, without subtitle."
+        },
+        "dark-hover": {
+          "title": "Dark Hover Card",
+          "subtitle": "Interactive variant",
+          "paragraph": "Card with hover effect that changes background on mouse over."
+        },
+        "light-hover": {
+          "title": "Light Hover Card",
+          "paragraph": "Light card with interactive hover effect."
+        },
+        "with-icon": {
+          "title": "Card with Icon",
+          "subtitle": "Using card-header slot",
+          "paragraph": "Card with icon in header using the card-header slot."
+        },
+        "with-action": {
+          "title": "Card with Action",
+          "subtitle": "Using card-footer slot",
+          "paragraph": "Card with button in footer using the card-footer slot.",
+          "button": "Read More"
+        },
+        "center-aligned": {
+          "title": "Center Aligned",
+          "subtitle": "Text alignment center",
+          "paragraph": "Card with center alignment for all text content."
+        },
+        "right-aligned": {
+          "title": "Right Aligned",
+          "subtitle": "Text alignment right",
+          "paragraph": "Card with right alignment for desktop and center for mobile."
+        },
+        "complete": {
+          "title": "Complete Card",
+          "subtitle": "With all features",
+          "paragraph": "Complete card with header icon, footer button and all available elements.",
+          "button": "Learn More"
+        },
+        "full-custom": {
+          "title": "Full Custom",
+          "paragraph": "Card with fully customized content using the fullCustomContent prop.",
+          "like-button": "Like",
+          "share-button": "Share"
+        },
+        "multi-action": {
+          "title": "Multi-Action Card",
+          "subtitle": "Multiple footer buttons",
+          "paragraph": "Card with multiple actions in footer for complex scenarios.",
+          "save-button": "Save",
+          "cancel-button": "Cancel"
+        },
+        "loading-state": {
+          "title": "Loading State",
+          "subtitle": "Button with loading",
+          "paragraph": "Card showing loading state in the button.",
+          "button": "Processing"
+        }
+      },
+      "buttons": {
+        "section-title": "Buttons",
+        "primary": {
+          "title": "Primary Buttons",
+          "button": "Primary Button",
+          "disabled": "Disabled",
+          "loading": "Loading",
+          "submit": "Submit Button"
+        },
+        "secondary": {
+          "title": "Secondary Buttons",
+          "button": "Secondary Button",
+          "disabled": "Disabled",
+          "loading": "Loading"
+        },
+        "outline": {
+          "title": "Outline Buttons",
+          "button": "Outline Button",
+          "disabled": "Disabled",
+          "loading": "Loading"
+        },
+        "link": {
+          "title": "Link Buttons",
+          "primary": "Primary Link",
+          "secondary": "Secondary Link",
+          "outline": "Outline Link"
+        },
+        "with-icons": {
+          "title": "Buttons with Custom Content",
+          "send": "Send Message",
+          "download": "Download",
+          "like": "Like"
+        },
+        "states": {
+          "title": "All States Demo",
+          "normal": "Normal",
+          "loading": "Loading",
+          "disabled": "Disabled"
+        }
+      },
+      "dialogs": {
+        "section-title": "Dialogs",
+        "trigger-button": "Open Dialog",
+        "simple": {
+          "title": "Simple Dialog",
+          "subtitle": "Small size dialog",
+          "content": "This is a simple dialog with basic content. Dialogs are useful for displaying information or requesting user input without navigating away from the current page.",
+          "close-button": "Close"
+        },
+        "medium": {
+          "title": "Medium Dialog",
+          "subtitle": "Medium size dialog",
+          "content": "This dialog has a medium size, perfect for forms or more detailed content. You can add any content you want inside the dialog body slot.",
+          "close-button": "Close"
+        },
+        "large": {
+          "title": "Large Dialog",
+          "subtitle": "Large size dialog",
+          "content": "This is a large dialog that provides more space for complex content. It's ideal for displaying detailed information, long forms, or rich media content.",
+          "close-button": "Close"
+        },
+        "with-header": {
+          "title": "Dialog with Custom Header",
+          "subtitle": "Using the header slot",
+          "header-content": "This is a custom header section that appears between the title and the body. You can add any custom content here.",
+          "content": "The body content goes here. The custom header slot is useful for adding warnings, alerts, or additional information.",
+          "close-button": "Close"
+        },
+        "with-footer": {
+          "title": "Dialog with Footer Actions",
+          "subtitle": "Using the footer slot",
+          "content": "This dialog demonstrates the footer slot where you can add action buttons. This is perfect for forms or confirmation dialogs.",
+          "cancel-button": "Cancel",
+          "save-button": "Save Changes"
+        },
+        "confirmation": {
+          "title": "Confirm Action",
+          "subtitle": "Are you sure?",
+          "content": "This action cannot be undone. Please confirm that you want to proceed with this operation.",
+          "cancel-button": "Cancel",
+          "confirm-button": "Confirm"
+        }
+      },
+      "inputs": {
+        "section-title": "Input Fields",
+        "text": {
+          "label": "Text Input",
+          "placeholder": "Enter text...",
+          "hint": "This is a text input field"
+        },
+        "email": {
+          "label": "Email Input",
+          "placeholder": "email{'@'}example.com",
+          "hint": "Enter a valid email address"
+        },
+        "password": {
+          "label": "Password Input",
+          "placeholder": "••••••••",
+          "hint": "Minimum 8 characters"
+        },
+        "number": {
+          "label": "Number Input",
+          "placeholder": "123",
+          "hint": "Enter a numeric value"
+        },
+        "combobox": {
+          "label": "Select Option",
+          "placeholder": "Choose one...",
+          "hint": "Single selection combobox"
+        },
+        "combobox-multiple": {
+          "label": "Multiple Selection",
+          "placeholder": "Choose multiple...",
+          "hint": "Multiple selection combobox"
+        },
+        "textarea": {
+          "label": "Textarea",
+          "placeholder": "Enter your message...",
+          "hint": "Maximum 200 characters"
+        },
+        "checkbox": {
+          "label": "Checkbox",
+          "text": "I agree to the terms and conditions"
+        },
+        "error": {
+          "label": "Input with Error",
+          "placeholder": "This field has an error",
+          "message": "This field is required"
+        }
+      },
+      "chips": {
+        "section-title": "Chips",
+        "accent": {
+          "title": "Accent Chips",
+          "simple": "Accent",
+          "with-icon": "Featured",
+          "featured": "New"
+        },
+        "primary": {
+          "title": "Primary Chips",
+          "simple": "Primary",
+          "with-icon": "Tag",
+          "category": "Saved"
+        },
+        "secondary": {
+          "title": "Secondary Chips",
+          "simple": "Secondary",
+          "with-icon": "Info",
+          "status": "Pending"
+        },
+        "use-cases": {
+          "title": "Use Cases",
+          "tags-label": "Technology Tags",
+          "status-label": "Status Indicators",
+          "categories-label": "Project Categories",
+          "active": "Active",
+          "pending": "Pending",
+          "warning": "Review Required",
+          "design": "Design",
+          "development": "Development",
+          "marketing": "Marketing"
+        }
+      }
+    }
   },
   "footer": {
     "tagline": "Tagline of your website",

@@ -16,7 +16,237 @@
     "settings-section": "Impostazioni"
   },
   "pages": {
-    "home": {}
+    "home": {
+      "cards": {
+        "simple-dark": {
+          "title": "Card Scura Semplice",
+          "subtitle": "Con sottotitolo",
+          "paragraph": "Una card base con variante scura, titolo, sottotitolo e paragrafo. Perfetta per contenuti semplici."
+        },
+        "simple-light": {
+          "title": "Card Chiara Semplice",
+          "paragraph": "Card con variante chiara con solo titolo e paragrafo, senza sottotitolo."
+        },
+        "dark-hover": {
+          "title": "Card Scura con Hover",
+          "subtitle": "Variante interattiva",
+          "paragraph": "Card con effetto hover che cambia lo sfondo al passaggio del mouse."
+        },
+        "light-hover": {
+          "title": "Card Chiara con Hover",
+          "paragraph": "Card chiara con effetto hover interattivo."
+        },
+        "with-icon": {
+          "title": "Card con Icona",
+          "subtitle": "Usando lo slot card-header",
+          "paragraph": "Card con icona nell'header utilizzando lo slot card-header."
+        },
+        "with-action": {
+          "title": "Card con Azione",
+          "subtitle": "Usando lo slot card-footer",
+          "paragraph": "Card con bottone nel footer utilizzando lo slot card-footer.",
+          "button": "Leggi di più"
+        },
+        "center-aligned": {
+          "title": "Allineata al Centro",
+          "subtitle": "Allineamento testo al centro",
+          "paragraph": "Card con allineamento centrale per tutti i contenuti testuali."
+        },
+        "right-aligned": {
+          "title": "Allineata a Destra",
+          "subtitle": "Allineamento testo a destra",
+          "paragraph": "Card con allineamento a destra per desktop e centro per mobile."
+        },
+        "complete": {
+          "title": "Card Completa",
+          "subtitle": "Con tutte le funzionalità",
+          "paragraph": "Card completa con icona nell'header, bottone nel footer e tutti gli elementi disponibili.",
+          "button": "Scopri di più"
+        },
+        "full-custom": {
+          "title": "Completamente Personalizzata",
+          "paragraph": "Card con contenuto completamente personalizzato usando la prop fullCustomContent.",
+          "like-button": "Mi piace",
+          "share-button": "Condividi"
+        },
+        "multi-action": {
+          "title": "Card Multi-Azione",
+          "subtitle": "Più bottoni nel footer",
+          "paragraph": "Card con più azioni nel footer per scenari complessi.",
+          "save-button": "Salva",
+          "cancel-button": "Annulla"
+        },
+        "loading-state": {
+          "title": "Stato di Caricamento",
+          "subtitle": "Bottone con caricamento",
+          "paragraph": "Card che mostra lo stato di caricamento nel bottone.",
+          "button": "Elaborazione"
+        }
+      },
+      "buttons": {
+        "section-title": "Bottoni",
+        "primary": {
+          "title": "Bottoni Primari",
+          "button": "Bottone Primario",
+          "disabled": "Disabilitato",
+          "loading": "Caricamento",
+          "submit": "Bottone Invio"
+        },
+        "secondary": {
+          "title": "Bottoni Secondari",
+          "button": "Bottone Secondario",
+          "disabled": "Disabilitato",
+          "loading": "Caricamento"
+        },
+        "outline": {
+          "title": "Bottoni Outline",
+          "button": "Bottone Outline",
+          "disabled": "Disabilitato",
+          "loading": "Caricamento"
+        },
+        "link": {
+          "title": "Bottoni Link",
+          "primary": "Link Primario",
+          "secondary": "Link Secondario",
+          "outline": "Link Outline"
+        },
+        "with-icons": {
+          "title": "Bottoni con Contenuto Personalizzato",
+          "send": "Invia Messaggio",
+          "download": "Scarica",
+          "like": "Mi piace"
+        },
+        "states": {
+          "title": "Demo Stati Completi",
+          "normal": "Normale",
+          "loading": "Caricamento",
+          "disabled": "Disabilitato"
+        }
+      },
+      "dialogs": {
+        "section-title": "Dialog",
+        "trigger-button": "Apri Dialog",
+        "simple": {
+          "title": "Dialog Semplice",
+          "subtitle": "Dialog di piccole dimensioni",
+          "content": "Questo è un dialog semplice con contenuto di base. I dialog sono utili per visualizzare informazioni o richiedere input dall'utente senza navigare via dalla pagina corrente.",
+          "close-button": "Chiudi"
+        },
+        "medium": {
+          "title": "Dialog Medio",
+          "subtitle": "Dialog di medie dimensioni",
+          "content": "Questo dialog ha dimensioni medie, perfetto per form o contenuti più dettagliati. Puoi aggiungere qualsiasi contenuto tu voglia nello slot del body.",
+          "close-button": "Chiudi"
+        },
+        "large": {
+          "title": "Dialog Grande",
+          "subtitle": "Dialog di grandi dimensioni",
+          "content": "Questo è un dialog grande che fornisce più spazio per contenuti complessi. È ideale per visualizzare informazioni dettagliate, form lunghi o contenuti multimediali.",
+          "close-button": "Chiudi"
+        },
+        "with-header": {
+          "title": "Dialog con Header Personalizzato",
+          "subtitle": "Usando lo slot header",
+          "header-content": "Questa è una sezione header personalizzata che appare tra il titolo e il body. Puoi aggiungere qualsiasi contenuto personalizzato qui.",
+          "content": "Il contenuto del body va qui. Lo slot header personalizzato è utile per aggiungere avvisi, alert o informazioni aggiuntive.",
+          "close-button": "Chiudi"
+        },
+        "with-footer": {
+          "title": "Dialog con Azioni nel Footer",
+          "subtitle": "Usando lo slot footer",
+          "content": "Questo dialog dimostra lo slot footer dove puoi aggiungere bottoni di azione. È perfetto per form o dialog di conferma.",
+          "cancel-button": "Annulla",
+          "save-button": "Salva Modifiche"
+        },
+        "confirmation": {
+          "title": "Conferma Azione",
+          "subtitle": "Sei sicuro?",
+          "content": "Questa azione non può essere annullata. Per favore conferma che vuoi procedere con questa operazione.",
+          "cancel-button": "Annulla",
+          "confirm-button": "Conferma"
+        }
+      },
+      "inputs": {
+        "section-title": "Campi di Input",
+        "text": {
+          "label": "Input di Testo",
+          "placeholder": "Inserisci testo...",
+          "hint": "Questo è un campo di testo"
+        },
+        "email": {
+          "label": "Input Email",
+          "placeholder": "email{'@'}esempio.it",
+          "hint": "Inserisci un indirizzo email valido"
+        },
+        "password": {
+          "label": "Input Password",
+          "placeholder": "••••••••",
+          "hint": "Minimo 8 caratteri"
+        },
+        "number": {
+          "label": "Input Numerico",
+          "placeholder": "123",
+          "hint": "Inserisci un valore numerico"
+        },
+        "combobox": {
+          "label": "Seleziona Opzione",
+          "placeholder": "Scegli una...",
+          "hint": "Combobox a selezione singola"
+        },
+        "combobox-multiple": {
+          "label": "Selezione Multipla",
+          "placeholder": "Scegli multiple...",
+          "hint": "Combobox a selezione multipla"
+        },
+        "textarea": {
+          "label": "Area di Testo",
+          "placeholder": "Inserisci il tuo messaggio...",
+          "hint": "Massimo 200 caratteri"
+        },
+        "checkbox": {
+          "label": "Checkbox",
+          "text": "Accetto i termini e le condizioni"
+        },
+        "error": {
+          "label": "Input con Errore",
+          "placeholder": "Questo campo ha un errore",
+          "message": "Questo campo è obbligatorio"
+        }
+      },
+      "chips": {
+        "section-title": "Chip",
+        "accent": {
+          "title": "Chip Accent",
+          "simple": "Accent",
+          "with-icon": "In evidenza",
+          "featured": "Nuovo"
+        },
+        "primary": {
+          "title": "Chip Primary",
+          "simple": "Primary",
+          "with-icon": "Etichetta",
+          "category": "Salvato"
+        },
+        "secondary": {
+          "title": "Chip Secondary",
+          "simple": "Secondary",
+          "with-icon": "Info",
+          "status": "In attesa"
+        },
+        "use-cases": {
+          "title": "Casi d'uso",
+          "tags-label": "Tag Tecnologie",
+          "status-label": "Indicatori di Stato",
+          "categories-label": "Categorie Progetto",
+          "active": "Attivo",
+          "pending": "In attesa",
+          "warning": "Revisione richiesta",
+          "design": "Design",
+          "development": "Sviluppo",
+          "marketing": "Marketing"
+        }
+      }
+    }
   },
   "footer": {
     "tagline": "Slogan del tuo sito",
