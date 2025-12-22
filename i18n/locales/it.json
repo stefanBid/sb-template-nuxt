@@ -212,6 +212,39 @@
           "placeholder": "Questo campo ha un errore",
           "message": "Questo campo è obbligatorio"
         }
+      },
+      "chips": {
+        "section-title": "Chip",
+        "accent": {
+          "title": "Chip Accent",
+          "simple": "Accent",
+          "with-icon": "In evidenza",
+          "featured": "Nuovo"
+        },
+        "primary": {
+          "title": "Chip Primary",
+          "simple": "Primary",
+          "with-icon": "Etichetta",
+          "category": "Salvato"
+        },
+        "secondary": {
+          "title": "Chip Secondary",
+          "simple": "Secondary",
+          "with-icon": "Info",
+          "status": "In attesa"
+        },
+        "use-cases": {
+          "title": "Casi d'uso",
+          "tags-label": "Tag Tecnologie",
+          "status-label": "Indicatori di Stato",
+          "categories-label": "Categorie Progetto",
+          "active": "Attivo",
+          "pending": "In attesa",
+          "warning": "Revisione richiesta",
+          "design": "Design",
+          "development": "Sviluppo",
+          "marketing": "Marketing"
+        }
       }
     }
   },

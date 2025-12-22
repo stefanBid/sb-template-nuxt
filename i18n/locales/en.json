@@ -212,6 +212,39 @@
           "placeholder": "This field has an error",
           "message": "This field is required"
         }
+      },
+      "chips": {
+        "section-title": "Chips",
+        "accent": {
+          "title": "Accent Chips",
+          "simple": "Accent",
+          "with-icon": "Featured",
+          "featured": "New"
+        },
+        "primary": {
+          "title": "Primary Chips",
+          "simple": "Primary",
+          "with-icon": "Tag",
+          "category": "Saved"
+        },
+        "secondary": {
+          "title": "Secondary Chips",
+          "simple": "Secondary",
+          "with-icon": "Info",
+          "status": "Pending"
+        },
+        "use-cases": {
+          "title": "Use Cases",
+          "tags-label": "Technology Tags",
+          "status-label": "Status Indicators",
+          "categories-label": "Project Categories",
+          "active": "Active",
+          "pending": "Pending",
+          "warning": "Review Required",
+          "design": "Design",
+          "development": "Development",
+          "marketing": "Marketing"
+        }
       }
     }
   },

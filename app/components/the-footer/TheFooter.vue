@@ -124,49 +124,46 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           <a
             v-if="props.githubUrl"
             aria-label="Open GitHub profile"
-            class="inline-flex items-center gap-2 rounded-xl bg-app-surface px-3 py-1.5 border border-app-border u-app-soft-transition u-app-focus hover:bg-app-surface-2"
+            class="u-app-focus rounded-full"
             :href="githubUrl"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <span class="inline-flex items-center justify-center p-0.5 border border-app-contrast/85 rounded">
-              <Icon class="size-4 shrink-0" name="lucide:github" />
-            </span>
-            <span class="ty-app-caption text-app-contrast/85">
-              GitHub
-            </span>
+            <BaseChip
+              icon="lucide:github"
+              text="GitHub"
+              variant="primary"
+            />
           </a>
 
           <a
             v-if="props.linkedinUrl"
             aria-label="Open LinkedIn profile"
-            class="inline-flex items-center gap-2 rounded-xl bg-app-surface px-3 py-1.5 border border-app-border u-app-soft-transition u-app-focus hover:bg-app-surface-2"
+            class="u-app-focus rounded-full"
             :href="props.linkedinUrl"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <span class="inline-flex items-center justify-center p-0.5 border border-app-contrast/85 rounded">
-              <Icon class="size-4 shrink-0" name="lucide:linkedin" />
-            </span>
-            <span class="ty-app-caption text-app-contrast/85">
-              LinkedIn
-            </span>
+            <BaseChip
+              icon="lucide:linkedin"
+              text="LinkedIn"
+              variant="primary"
+            />
           </a>
 
           <a
             v-if="props.instagramUrl"
             aria-label="Open Instagram profile"
-            class="inline-flex items-center gap-2 rounded-xl bg-app-surface px-3 py-1.5 border border-app-border u-app-soft-transition u-app-focus hover:bg-app-surface-2"
+            class="u-app-focus rounded-full"
             :href="props.instagramUrl"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <span class="inline-flex items-center justify-center p-0.5 border border-app-contrast/85 rounded">
-              <Icon class="size-4" name="lucide:instagram" />
-            </span>
-            <span class="ty-app-caption text-app-contrast/85">
-              Instagram
-            </span>
+            <BaseChip
+              icon="lucide:instagram"
+              text="Instagram"
+              variant="primary"
+            />
           </a>
         </div>
       </section>

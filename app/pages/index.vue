@@ -420,6 +420,129 @@ useSeoMeta({
         </div>
       </section>
 
+      <!-- Chips Section -->
+      <section class="space-y-8">
+        <h2 class="ty-app-title-xl text-app-accent mb-8">
+          {{ t('pages.home.chips.section-title') }}
+        </h2>
+
+        <div class="space-y-8 max-w-4xl">
+          <!-- Accent Chips -->
+          <div class="space-y-4">
+            <h3 class="ty-app-subtitle text-app-contrast">
+              {{ t('pages.home.chips.accent.title') }}
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              <BaseChip
+                :text="t('pages.home.chips.accent.simple')"
+                variant="accent"
+              />
+              <BaseChip
+                icon="lucide:star"
+                :text="t('pages.home.chips.accent.with-icon')"
+                variant="accent"
+              />
+              <BaseChip
+                icon="lucide:zap"
+                :text="t('pages.home.chips.accent.featured')"
+                variant="accent"
+              />
+            </div>
+          </div>
+
+          <!-- Primary Chips -->
+          <div class="space-y-4">
+            <h3 class="ty-app-subtitle text-app-contrast">
+              {{ t('pages.home.chips.primary.title') }}
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              <BaseChip
+                :text="t('pages.home.chips.primary.simple')"
+                variant="primary"
+              />
+              <BaseChip
+                icon="lucide:tag"
+                :text="t('pages.home.chips.primary.with-icon')"
+                variant="primary"
+              />
+              <BaseChip
+                icon="lucide:bookmark"
+                :text="t('pages.home.chips.primary.category')"
+                variant="primary"
+              />
+            </div>
+          </div>
+
+          <!-- Secondary Chips -->
+          <div class="space-y-4">
+            <h3 class="ty-app-subtitle text-app-contrast">
+              {{ t('pages.home.chips.secondary.title') }}
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              <BaseChip
+                :text="t('pages.home.chips.secondary.simple')"
+                variant="secondary"
+              />
+              <BaseChip
+                icon="lucide:info"
+                :text="t('pages.home.chips.secondary.with-icon')"
+                variant="secondary"
+              />
+              <BaseChip
+                icon="lucide:clock"
+                :text="t('pages.home.chips.secondary.status')"
+                variant="secondary"
+              />
+            </div>
+          </div>
+
+          <!-- Use Cases Example -->
+          <div class="space-y-4">
+            <h3 class="ty-app-subtitle text-app-contrast">
+              {{ t('pages.home.chips.use-cases.title') }}
+            </h3>
+            <div class="space-y-4">
+              <!-- Tags -->
+              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
+                <p class="ty-app-label text-app-muted mb-3">
+                  {{ t('pages.home.chips.use-cases.tags-label') }}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <BaseChip icon="lucide:code" text="Vue.js" variant="accent" />
+                  <BaseChip icon="lucide:code" text="Nuxt" variant="accent" />
+                  <BaseChip icon="lucide:code" text="TypeScript" variant="accent" />
+                  <BaseChip icon="lucide:code" text="Tailwind" variant="accent" />
+                </div>
+              </div>
+
+              <!-- Status -->
+              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
+                <p class="ty-app-label text-app-muted mb-3">
+                  {{ t('pages.home.chips.use-cases.status-label') }}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <BaseChip icon="lucide:check-circle" :text="t('pages.home.chips.use-cases.active')" variant="accent" />
+                  <BaseChip icon="lucide:clock" :text="t('pages.home.chips.use-cases.pending')" variant="secondary" />
+                  <BaseChip icon="lucide:alert-circle" :text="t('pages.home.chips.use-cases.warning')" variant="primary" />
+                </div>
+              </div>
+
+              <!-- Categories -->
+              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
+                <p class="ty-app-label text-app-muted mb-3">
+                  {{ t('pages.home.chips.use-cases.categories-label') }}
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <BaseChip icon="lucide:folder" :text="t('pages.home.chips.use-cases.design')" variant="primary" />
+                  <BaseChip icon="lucide:folder" :text="t('pages.home.chips.use-cases.development')" variant="primary" />
+                  <BaseChip icon="lucide:folder" :text="t('pages.home.chips.use-cases.marketing')" variant="primary" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Buttons Section -->
       <section class="space-y-8 pb-16">
         <h2 class="ty-app-title-xl text-app-accent mb-8">
