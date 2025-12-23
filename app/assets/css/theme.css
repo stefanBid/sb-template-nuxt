@@ -2,8 +2,13 @@
   /* =======================================
      FONT FAMILIES
      ======================================= */
-  --font-app-primary: 'Bebas Neue', system-ui, sans-serif;
-  --font-app-secondary: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-app-primary: 'Poppins', sans-serif;
+  --font-app-secondary: 'Inter', sans-serif;
+
+  /* Remove default Tailwind fonts */
+  --font-sans: initial;
+  --font-serif: initial;
+  --font-mono: initial;
 
   /* =======================================
      BASE COLORS - LIGHT MODE
