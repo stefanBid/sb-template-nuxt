@@ -24,7 +24,7 @@ const emit = defineEmits<{
   (e: 'chip-click'): void
 }>()
 
-// Computed
+// State
 const componentTag = computed(() => {
   if (props.linkable) {
     return 'a'
