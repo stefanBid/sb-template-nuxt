@@ -124,37 +124,37 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           <BaseChip
             v-if="props.githubUrl"
             icon="lucide:github"
-            text="GitHub"
-            variant="primary"
             :linkable="{
               href: props.githubUrl,
               target: '_blank',
-              rel: 'noopener noreferrer'
+              rel: 'noopener noreferrer',
             }"
+            text="GitHub"
+            variant="primary"
           />
 
           <BaseChip
             v-if="props.linkedinUrl"
             icon="lucide:linkedin"
-            text="LinkedIn"
-            variant="primary"
             :linkable="{
               href: props.linkedinUrl,
               target: '_blank',
-              rel: 'noopener noreferrer'
+              rel: 'noopener noreferrer',
             }"
+            text="LinkedIn"
+            variant="primary"
           />
 
           <BaseChip
             v-if="props.instagramUrl"
             icon="lucide:instagram"
-            text="Instagram"
-            variant="primary"
             :linkable="{
               href: props.instagramUrl,
               target: '_blank',
-              rel: 'noopener noreferrer'
+              rel: 'noopener noreferrer',
             }"
+            text="Instagram"
+            variant="primary"
           />
         </div>
       </section>
