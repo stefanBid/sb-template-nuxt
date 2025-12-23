@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.4](https://github.com/stefanBid/sb-template-nuxt/compare/v2.1.3...v2.1.4) (2025-12-23)
+
+
+### Bug Fixes
+
+* update icon button text color classes for active state ([#66](https://github.com/stefanBid/sb-template-nuxt/issues/66)) ([1003404](https://github.com/stefanBid/sb-template-nuxt/commit/1003404b5c022b479ccca4b0a2190112f2fc6864))
+
 ## [2.1.3](https://github.com/stefanBid/sb-template-nuxt/compare/v2.1.2...v2.1.3) (2025-12-23)
 
 
