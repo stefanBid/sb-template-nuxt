@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/stefanBid/sb-template-nuxt/compare/v2.1.0...v2.1.1) (2025-12-23)
+
+
+### Bug Fixes
+
+* update font families in theme and main CSS files ([#60](https://github.com/stefanBid/sb-template-nuxt/issues/60)) ([da22daa](https://github.com/stefanBid/sb-template-nuxt/commit/da22daa81832adb31a2d1c857828f41bb8cf5feb))
+
 ## [2.1.0](https://github.com/stefanBid/sb-template-nuxt/compare/v2.0.0...v2.1.0) (2025-12-23)
 
 
