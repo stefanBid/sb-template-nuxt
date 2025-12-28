@@ -9,3 +9,11 @@
 @utility u-app-focus {
   @apply outline-none ring-app-contrast focus-visible:ring-2;
 }
+
+@utility u-app-focus-within {
+  @apply outline-none ring-app-contrast focus-within:ring-2;
+}
+
+@utility u-app-no-focus {
+  @apply outline-none ring-0 focus-visible:ring-0 focus-visible:outline-none focus:outline-none;
+}
