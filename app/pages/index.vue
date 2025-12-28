@@ -34,6 +34,251 @@ const handleChipClick = (chipName: string) => {
   console.log(`${chipName} clicked!`)
 }
 
+// Rich Text example data
+const richTextBlocks: RichBlock[] = [
+  {
+    type: 'heading',
+    level: 1,
+    children: [
+      {
+        type: 'text',
+        text: 'Rich Text Component',
+      },
+    ],
+  },
+  {
+    type: 'paragraph',
+    children: [
+      {
+        type: 'text',
+        text: 'The ',
+      },
+      {
+        type: 'text',
+        text: 'BaseRichText',
+        bold: true,
+      },
+      {
+        type: 'text',
+        text: ' component allows you to display dynamically formatted content. It supports various text styles such as ',
+      },
+      {
+        type: 'text',
+        text: 'bold',
+        bold: true,
+      },
+      {
+        type: 'text',
+        text: ', ',
+      },
+      {
+        type: 'text',
+        text: 'italic',
+        italic: true,
+      },
+      {
+        type: 'text',
+        text: ', ',
+      },
+      {
+        type: 'text',
+        text: 'underlined',
+        underline: true,
+      },
+      {
+        type: 'text',
+        text: ', ',
+      },
+      {
+        type: 'text',
+        text: 'strikethrough',
+        strikethrough: true,
+      },
+      {
+        type: 'text',
+        text: ', and ',
+      },
+      {
+        type: 'text',
+        text: 'inline code',
+        code: true,
+      },
+      {
+        type: 'text',
+        text: '.',
+      },
+    ],
+  },
+  {
+    type: 'heading',
+    level: 2,
+    children: [
+      {
+        type: 'text',
+        text: 'Key Features',
+      },
+    ],
+  },
+  {
+    type: 'list',
+    format: 'unordered',
+    children: [
+      {
+        type: 'list-item',
+        children: [
+          {
+            type: 'text',
+            text: 'Support for headings at various levels (H1-H6)',
+          },
+        ],
+      },
+      {
+        type: 'list-item',
+        children: [
+          {
+            type: 'text',
+            text: 'Paragraphs with advanced formatting',
+          },
+        ],
+      },
+      {
+        type: 'list-item',
+        children: [
+          {
+            type: 'text',
+            text: 'Ordered and unordered lists',
+          },
+        ],
+      },
+      {
+        type: 'list-item',
+        children: [
+          {
+            type: 'text',
+            text: 'Quotes and code blocks',
+          },
+        ],
+      },
+      {
+        type: 'list-item',
+        children: [
+          {
+            type: 'link',
+            url: 'https://nuxt.com',
+            children: [
+              {
+                type: 'text',
+                text: 'External links',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'heading',
+    level: 3,
+    children: [
+      {
+        type: 'text',
+        text: 'Ordered List Example',
+      },
+    ],
+  },
+  {
+    type: 'list',
+    format: 'ordered',
+    children: [
+      {
+        type: 'list-item',
+        children: [
+          {
+            type: 'text',
+            text: 'First item',
+            bold: true,
+          },
+        ],
+      },
+      {
+        type: 'list-item',
+        children: [
+          {
+            type: 'text',
+            text: 'Second item with ',
+          },
+          {
+            type: 'text',
+            text: 'formatted text',
+            italic: true,
+          },
+        ],
+      },
+      {
+        type: 'list-item',
+        children: [
+          {
+            type: 'text',
+            text: 'Third item',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: 'quote',
+    children: [
+      {
+        type: 'text',
+        text: 'This is an example quote. Quotes are useful for highlighting important concepts or citing external sources.',
+        italic: true,
+      },
+    ],
+  },
+  {
+    type: 'code',
+    children: [
+      {
+        type: 'text',
+        text: 'const example = {\n  component: "BaseRichText",\n  blocks: richTextBlocks\n}',
+      },
+    ],
+  },
+  {
+    type: 'paragraph',
+    children: [
+      {
+        type: 'text',
+        text: 'The component uses the ',
+      },
+      {
+        type: 'text',
+        text: 'useSanitize()',
+        code: true,
+      },
+      {
+        type: 'text',
+        text: ' composable to ensure the generated HTML content is safe. For more information, visit the ',
+      },
+      {
+        type: 'link',
+        url: 'https://nuxt.com/docs',
+        children: [
+          {
+            type: 'text',
+            text: 'Nuxt documentation',
+            bold: true,
+          },
+        ],
+      },
+      {
+        type: 'text',
+        text: '.',
+      },
+    ],
+  },
+]
+
 useSeoMeta({
   // LOCALIZED
   title: () => t('meta.home.title'),
@@ -734,6 +979,26 @@ useSeoMeta({
                 {{ t('pages.home.buttons.states.disabled') }}
               </BaseButton>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Rich Text Section -->
+      <section class="space-y-8 pb-16">
+        <h2 class="ty-app-title-xl text-app-accent mb-8">
+          Rich Text
+        </h2>
+
+        <div class="max-w-4xl">
+          <div class="p-8 bg-app-surface rounded-lg border border-app-border">
+            <BaseRichText :blocks="richTextBlocks" />
+          </div>
+
+          <div class="mt-6 p-6 bg-app-main rounded-lg border border-app-border">
+            <h3 class="ty-app-subtitle text-app-contrast mb-4">
+              Utilizzo
+            </h3>
+            <pre class="ty-app-label text-app-muted overflow-x-auto"><code>&lt;BaseRichText :blocks="richTextBlocks" /&gt;</code></pre>
           </div>
         </div>
       </section>
