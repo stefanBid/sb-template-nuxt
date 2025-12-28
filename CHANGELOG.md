@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/stefanBid/sb-template-nuxt/compare/v2.1.5...v2.2.0) (2025-12-28)
+
+
+### Features
+
+* add rich text block types and conversion logic ([#70](https://github.com/stefanBid/sb-template-nuxt/issues/70)) ([95e6a9f](https://github.com/stefanBid/sb-template-nuxt/commit/95e6a9fa7ccf346fcd67464cc5128d576efc40ec))
+
 ## [2.1.5](https://github.com/stefanBid/sb-template-nuxt/compare/v2.1.4...v2.1.5) (2025-12-24)
 
 
