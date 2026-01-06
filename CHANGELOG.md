@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/stefanBid/sb-template-nuxt/compare/v2.2.2...v2.3.0) (2026-01-06)
+
+
+### Features
+
+* add new base component for media carousel and a new component for accordion ([#76](https://github.com/stefanBid/sb-template-nuxt/issues/76)) ([7552246](https://github.com/stefanBid/sb-template-nuxt/commit/755224680a3529384db0ea6d89d6bc4d3e872aa7))
+
 ## [2.2.2](https://github.com/stefanBid/sb-template-nuxt/compare/v2.2.1...v2.2.2) (2026-01-06)
 
 
