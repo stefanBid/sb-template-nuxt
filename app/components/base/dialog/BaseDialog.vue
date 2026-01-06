@@ -77,13 +77,14 @@ watch(
 
 <template>
   <Teleport to="body">
-    <Transition name="scale-fade">
+    <Transition appear name="scale-fade">
       <div
         v-if="isOpen"
         aria-labelledby="app-dialog-title"
         aria-modal="true"
-        class="fixed inset-0 z-200 flex items-center justify-center p-4 md:p-6"
+        class="fixed inset-0 z-200 flex items-center justify-center p-4 md:p-6 will-change-[opacity,transform]"
         role="dialog"
+        style="isolation: isolate;"
       >
         <!-- Overlay -->
         <div
