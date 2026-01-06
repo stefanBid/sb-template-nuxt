@@ -213,6 +213,40 @@
           "message": "This field is required"
         }
       },
+      "media-carousel": {
+        "section-title": "Media Carousel",
+        "description": "The {component} component allows you to display a collection of images or videos in an interactive carousel with navigation controls and thumbnails.",
+        "features": {
+          "autoplay": "Auto-play functionality with 5-second intervals",
+          "navigation": "Previous/Next navigation arrows",
+          "thumbnails": "Thumbnail preview navigation",
+          "counter": "Counter badge showing current position",
+          "media-support": "Support for both images and videos",
+          "responsive": "Responsive design with optimized sizing"
+        }
+      },
+      "accordion": {
+        "section-title": "Accordion",
+        "description": "The {component} component allows you to organize content in collapsible sections, perfect for FAQs, settings panels, or any content that needs to be hidden/shown.",
+        "items": {
+          "getting-started": {
+            "title": "Getting Started",
+            "content": "The accordion component is easy to use and highly customizable. Simply pass the title and content as props, and optionally add an icon to make it more visually appealing."
+          },
+          "features": {
+            "title": "Key Features",
+            "content": "This component supports both controlled and uncontrolled states, smooth animations, custom icons, and full keyboard accessibility. It's fully responsive and follows modern design patterns."
+          },
+          "customization": {
+            "title": "Customization Options",
+            "content": "You can customize the accordion with different icons, control its open/close state programmatically, or let it manage its own state. The design adapts perfectly to your theme."
+          },
+          "use-cases": {
+            "title": "Common Use Cases",
+            "content": "Accordions are perfect for FAQs, documentation sections, product details, settings panels, and any scenario where you need to present information in a space-efficient way."
+          }
+        }
+      },
       "chips": {
         "section-title": "Chips",
         "primary": {
