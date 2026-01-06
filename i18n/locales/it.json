@@ -213,6 +213,40 @@
           "message": "Questo campo è obbligatorio"
         }
       },
+      "media-carousel": {
+        "section-title": "Carosello Media",
+        "description": "Il componente {component} permette di visualizzare una collezione di immagini o video in un carosello interattivo con controlli di navigazione e miniature.",
+        "features": {
+          "autoplay": "Funzionalità di auto-play con intervalli di 5 secondi",
+          "navigation": "Frecce di navigazione Precedente/Successivo",
+          "thumbnails": "Navigazione tramite miniature di anteprima",
+          "counter": "Badge contatore che mostra la posizione corrente",
+          "media-support": "Supporto per immagini e video",
+          "responsive": "Design responsive con dimensionamento ottimizzato"
+        }
+      },
+      "accordion": {
+        "section-title": "Accordion",
+        "description": "Il componente {component} permette di organizzare contenuti in sezioni richiudibili, perfetto per FAQ, pannelli di impostazioni o qualsiasi contenuto che deve essere nascosto/mostrato.",
+        "items": {
+          "getting-started": {
+            "title": "Come Iniziare",
+            "content": "Il componente accordion è facile da usare e altamente personalizzabile. Passa semplicemente il titolo e il contenuto come props, e opzionalmente aggiungi un'icona per renderlo più accattivante visivamente."
+          },
+          "features": {
+            "title": "Caratteristiche Principali",
+            "content": "Questo componente supporta stati controllati e non controllati, animazioni fluide, icone personalizzate e completa accessibilità da tastiera. È completamente responsive e segue i moderni pattern di design."
+          },
+          "customization": {
+            "title": "Opzioni di Personalizzazione",
+            "content": "Puoi personalizzare l'accordion con icone diverse, controllare il suo stato aperto/chiuso programmaticamente, oppure lasciare che gestisca il proprio stato. Il design si adatta perfettamente al tuo tema."
+          },
+          "use-cases": {
+            "title": "Casi d'Uso Comuni",
+            "content": "Gli accordion sono perfetti per FAQ, sezioni di documentazione, dettagli prodotto, pannelli di impostazioni e qualsiasi scenario in cui è necessario presentare informazioni in modo efficiente per lo spazio."
+          }
+        }
+      },
       "chips": {
         "section-title": "Chip",
         "primary": {

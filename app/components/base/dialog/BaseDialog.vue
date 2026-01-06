@@ -60,10 +60,13 @@ watch(
       // Disable scroll when dialog opens
       lock()
 
+      // Use requestAnimationFrame to avoid forced reflow
       nextTick(() => {
-        if (dialogRef.value) {
-          dialogRef.value.focus()
-        }
+        requestAnimationFrame(() => {
+          if (dialogRef.value) {
+            dialogRef.value.focus()
+          }
+        })
       })
     }
     else {

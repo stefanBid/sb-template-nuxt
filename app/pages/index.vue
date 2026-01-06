@@ -279,6 +279,35 @@ const richTextBlocks: RichBlock[] = [
   },
 ]
 
+// Media Carousel example data
+const carouselItems = [
+  {
+    type: 'photo' as const,
+    url: '/example.jpg',
+    alternativeText: 'Example image 1',
+  },
+  {
+    type: 'photo' as const,
+    url: '/example.jpg',
+    alternativeText: 'Example image 2',
+  },
+  {
+    type: 'photo' as const,
+    url: '/example.jpg',
+    alternativeText: 'Example image 3',
+  },
+  {
+    type: 'photo' as const,
+    url: '/example.jpg',
+    alternativeText: 'Example image 4',
+  },
+  {
+    type: 'photo' as const,
+    url: '/example.jpg',
+    alternativeText: 'Example image 5',
+  },
+]
+
 useSeoMeta({
   // LOCALIZED
   title: () => t('meta.home.title'),
@@ -561,6 +590,91 @@ useSeoMeta({
               </BaseButton>
             </template>
           </BaseCard>
+        </div>
+      </section>
+
+      <!-- Media Carousel Section -->
+      <section class="space-y-8">
+        <h2 class="ty-app-title-xl text-app-accent mb-8">
+          {{ t('pages.home.media-carousel.section-title') }}
+        </h2>
+
+        <div class="max-w-5xl">
+          <BaseMediaCarousel :items="carouselItems" />
+        </div>
+
+        <div class="space-y-2 max-w-4xl">
+          <p class="ty-app-paragraph text-app-muted">
+            {{ t('pages.home.media-carousel.description', { component: 'BaseMediaCarousel' }) }}
+          </p>
+          <ul class="ty-app-paragraph text-app-muted list-disc list-inside space-y-1">
+            <li>{{ t('pages.home.media-carousel.features.autoplay') }}</li>
+            <li>{{ t('pages.home.media-carousel.features.navigation') }}</li>
+            <li>{{ t('pages.home.media-carousel.features.thumbnails') }}</li>
+            <li>{{ t('pages.home.media-carousel.features.counter') }}</li>
+            <li>{{ t('pages.home.media-carousel.features.media-support') }}</li>
+            <li>{{ t('pages.home.media-carousel.features.responsive') }}</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Accordion Section -->
+      <section class="space-y-8">
+        <h2 class="ty-app-title-xl text-app-accent mb-8">
+          {{ t('pages.home.accordion.section-title') }}
+        </h2>
+
+        <div class="space-y-2 max-w-4xl mb-8">
+          <p class="ty-app-paragraph text-app-muted">
+            {{ t('pages.home.accordion.description', { component: 'BaseAccordion' }) }}
+          </p>
+        </div>
+
+        <div class="space-y-4 max-w-4xl">
+          <!-- Accordion 1 - With Icon -->
+          <BaseAccordion
+            icon="lucide:rocket"
+            id="accordion-1"
+            :title="t('pages.home.accordion.items.getting-started.title')"
+          >
+            <p class="ty-app-paragraph">
+              {{ t('pages.home.accordion.items.getting-started.content') }}
+            </p>
+          </BaseAccordion>
+
+          <!-- Accordion 2 - With Icon -->
+          <BaseAccordion
+            icon="lucide:sparkles"
+            id="accordion-2"
+            :title="t('pages.home.accordion.items.features.title')"
+          >
+            <p class="ty-app-paragraph">
+              {{ t('pages.home.accordion.items.features.content') }}
+            </p>
+          </BaseAccordion>
+
+          <!-- Accordion 3 - With Icon -->
+          <BaseAccordion
+            icon="lucide:palette"
+            id="accordion-3"
+            :title="t('pages.home.accordion.items.customization.title')"
+          >
+            <p class="ty-app-paragraph">
+              {{ t('pages.home.accordion.items.customization.content') }}
+            </p>
+          </BaseAccordion>
+
+          <!-- Accordion 4 - With Icon and Open by Default -->
+          <BaseAccordion
+            icon="lucide:lightbulb"
+            id="accordion-4"
+            :is-open="true"
+            :title="t('pages.home.accordion.items.use-cases.title')"
+          >
+            <p class="ty-app-paragraph">
+              {{ t('pages.home.accordion.items.use-cases.content') }}
+            </p>
+          </BaseAccordion>
         </div>
       </section>
 
