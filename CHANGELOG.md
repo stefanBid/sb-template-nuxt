@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/stefanBid/sb-template-nuxt/compare/v2.2.1...v2.2.2) (2026-01-06)
+
+
+### Bug Fixes
+
+* **BaseDialog:** enhance transition and styling for improved accessibility ([#74](https://github.com/stefanBid/sb-template-nuxt/issues/74)) ([ab950c9](https://github.com/stefanBid/sb-template-nuxt/commit/ab950c9f346626859029c4d15e52f7813a5e8e15))
+
 ## [2.2.1](https://github.com/stefanBid/sb-template-nuxt/compare/v2.2.0...v2.2.1) (2025-12-28)
 
 
