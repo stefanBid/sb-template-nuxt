@@ -15,9 +15,9 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@floating-ui/vue": "^1.1.9",
-    "@nuxt/eslint": "^1.12.1",
-    "@nuxt/icon": "^2.1.1",
+    "@floating-ui/vue": "^1.1.10",
+    "@nuxt/eslint": "^1.13.0",
+    "@nuxt/icon": "^2.2.1",
     "@nuxt/image": "^2.0.0",
     "@nuxtjs/color-mode": "^4.0.0",
     "@nuxtjs/i18n": "^10.2.1",
@@ -26,15 +26,15 @@
     "@vueuse/nuxt": "^14.1.0",
     "eslint": "^9.39.2",
     "isomorphic-dompurify": "^2.35.0",
-    "nuxt": "^4.2.2",
+    "nuxt": "^4.3.0",
     "tailwindcss": "^4.1.18",
-    "vue": "^3.5.26",
-    "vue-router": "^4.6.4"
+    "vue": "^3.5.27",
+    "vue-router": "^5.0.0"
   },
   "devDependencies": {
     "@iconify-json/flagpack": "^1.2.7",
-    "@iconify-json/lucide": "^1.2.82",
-    "@types/node": "^25.0.3"
+    "@iconify-json/lucide": "^1.2.87",
+    "@types/node": "^25.1.0"
   },
   "engines": {
     "node": ">=24.11.0"
