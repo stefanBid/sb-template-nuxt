@@ -15,26 +15,26 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@floating-ui/vue": "^1.1.10",
-    "@nuxt/eslint": "^1.13.0",
+    "@floating-ui/vue": "^1.1.11",
+    "@nuxt/eslint": "^1.15.2",
     "@nuxt/icon": "^2.2.1",
     "@nuxt/image": "^2.0.0",
     "@nuxtjs/color-mode": "^4.0.0",
-    "@nuxtjs/i18n": "^10.2.1",
-    "@tailwindcss/vite": "^4.1.18",
-    "@vueuse/core": "^14.1.0",
-    "@vueuse/nuxt": "^14.1.0",
-    "eslint": "^9.39.2",
-    "isomorphic-dompurify": "^2.35.0",
-    "nuxt": "^4.3.0",
-    "tailwindcss": "^4.1.18",
-    "vue": "^3.5.27",
-    "vue-router": "^5.0.0"
+    "@nuxtjs/i18n": "^10.2.3",
+    "@tailwindcss/vite": "^4.2.2",
+    "@vueuse/core": "^14.2.1",
+    "@vueuse/nuxt": "^14.2.1",
+    "eslint": "^10.0.3",
+    "isomorphic-dompurify": "^3.5.1",
+    "nuxt": "^4.4.2",
+    "tailwindcss": "^4.2.2",
+    "vue": "^3.5.30",
+    "vue-router": "^5.0.3"
   },
   "devDependencies": {
     "@iconify-json/flagpack": "^1.2.7",
-    "@iconify-json/lucide": "^1.2.87",
-    "@types/node": "^25.1.0"
+    "@iconify-json/lucide": "^1.2.98",
+    "@types/node": "^25.5.0"
   },
   "engines": {
     "node": ">=24.11.0"
