@@ -705,6 +705,7 @@ This repository ships with pre-configured [GitHub Copilot](https://github.com/fe
 | `check-lint.prompt.md` | "Check del lint" · "Il progetto è pulito?" | Runs `eslint --fix`, reports remaining warnings and blocking errors |
 | `check-build.prompt.md` | "Check del build" · "Il progetto builda?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
 | `bump-version.prompt.md` | "Aggiornami il progetto alla versione X.Y.Z" | Detects changes via git, shows a CHANGELOG draft for approval, then updates `package.json` version, `CHANGELOG.md` and README badges |
+| `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
 
 ### How to run a prompt
 
