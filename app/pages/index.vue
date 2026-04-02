@@ -633,8 +633,8 @@ useSeoMeta({
         <div class="space-y-4 max-w-4xl">
           <!-- Accordion 1 - With Icon -->
           <BaseAccordion
-            icon="lucide:rocket"
             id="accordion-1"
+            icon="lucide:rocket"
             :title="t('pages.home.accordion.items.getting-started.title')"
           >
             <p class="ty-app-paragraph">
@@ -644,8 +644,8 @@ useSeoMeta({
 
           <!-- Accordion 2 - With Icon -->
           <BaseAccordion
-            icon="lucide:sparkles"
             id="accordion-2"
+            icon="lucide:sparkles"
             :title="t('pages.home.accordion.items.features.title')"
           >
             <p class="ty-app-paragraph">
@@ -655,8 +655,8 @@ useSeoMeta({
 
           <!-- Accordion 3 - With Icon -->
           <BaseAccordion
-            icon="lucide:palette"
             id="accordion-3"
+            icon="lucide:palette"
             :title="t('pages.home.accordion.items.customization.title')"
           >
             <p class="ty-app-paragraph">
@@ -666,8 +666,8 @@ useSeoMeta({
 
           <!-- Accordion 4 - With Icon and Open by Default -->
           <BaseAccordion
-            icon="lucide:lightbulb"
             id="accordion-4"
+            icon="lucide:lightbulb"
             :is-open="true"
             :title="t('pages.home.accordion.items.use-cases.title')"
           >

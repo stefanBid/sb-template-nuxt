@@ -254,6 +254,20 @@ No semicolons · single quotes · trailing commas · 2-space indent · `vue/attr
 
 ---
 
+## Available prompts
+
+Prompt files in `.github/prompts/` — require **Agent mode**. Invoke them by typing the trigger phrase.
+
+| File | Trigger phrase | What it does |
+|---|---|---|
+| `bump-version.prompt.md` | "aggiornami il progetto alla versione X.Y.Z" | Updates `package.json` version, `CHANGELOG.md` entries and README badges |
+| `check-lint.prompt.md` | "check del lint" / "il progetto è pulito?" | Runs `eslint --fix`, then reports remaining warnings and blocking errors |
+| `check-build.prompt.md` | "check del build" / "il progetto builda?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
+| `update-docs.prompt.md` | "aggiorna la documentazione" / "aggiorna il README" | Reads the full project and rewrites `README.md` as a structured documentation book |
+| `init-project.prompt.md` | "Inizializziamo il progetto" / "inizializza il progetto" / "reset del progetto" | Sets project name, app context, username; resets version and CHANGELOG; syncs instruction files |
+
+---
+
 ## Project initialisation — trigger phrase
 
 When the user writes something like **"Inizializziamo il progetto"**, **"inizializza il progetto"**, **"reset del progetto"**, or any clearly equivalent phrase:
