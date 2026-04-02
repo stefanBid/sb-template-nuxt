@@ -219,9 +219,16 @@ const emit = defineEmits<{
 - Always set `aria-label` on icon-only interactive elements.
 - Use `aria-describedby` for form hints/errors; `aria-invalid` on inputs with errors.
 
-### i18n
-- All user-facing strings must go through `useI18n()` / `$t()`. Never hardcode UI text in templates.
-- Translation keys live in `i18n/locales/en.json` (source of truth) + `i18n/locales/it.json`.
+### i18n — ABSOLUTE RULE
+> **NEVER hardcode strings in Vue templates or scripts. No exceptions.**
+
+Every user-facing string — labels, placeholders, tooltips, `aria-label`, error messages, button text, anything visible to the user — must:
+1. Use `$t('key')` in templates or `const { t } = useI18n()` in `<script setup>`
+2. Be added to **both** translation files simultaneously:
+   - `i18n/locales/en.json` — source of truth, English
+   - `i18n/locales/it.json` — Italian translation
+
+When generating code that contains any string, always output the `$t()` call AND the two JSON entries together.
 
 ### ESLint (key rules)
 No semicolons · single quotes · trailing commas · 2-space indent · `vue/attributes-order: alphabetical` · max 3 attributes per line (1 per line when multiline).
@@ -266,6 +273,7 @@ Prompt files in `.github/prompts/` — require **Agent mode**. Invoke them by ty
 | `check-build.prompt.md` | "check del build" / "il progetto builda?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
 | `update-docs.prompt.md` | "aggiorna la documentazione" / "aggiorna il README" | Reads the full project and rewrites `README.md` as a structured documentation book |
 | `init-project.prompt.md` | "Inizializziamo il progetto" / "inizializza il progetto" / "reset del progetto" | Sets project name, app context, username; resets version and CHANGELOG; syncs instruction files |
+| `check-gsc.prompt.md` | "check GSC" / "verifica la SEO" / "controlla sitemap e meta tag" / "il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls |
 
 ---
 

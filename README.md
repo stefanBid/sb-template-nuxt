@@ -706,6 +706,7 @@ This repository ships with pre-configured [GitHub Copilot](https://github.com/fe
 | `check-build.prompt.md` | "Check del build" · "Il progetto builda?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
 | `bump-version.prompt.md` | "Aggiornami il progetto alla versione X.Y.Z" | Detects changes via git, shows a CHANGELOG draft for approval, then updates `package.json` version, `CHANGELOG.md` and README badges |
 | `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
+| `check-gsc.prompt.md` | "Check GSC" · "Verifica la SEO" · "Il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
 
 ### How to run a prompt
 

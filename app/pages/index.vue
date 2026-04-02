@@ -2,6 +2,7 @@
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
+const config = useRuntimeConfig()
 
 // State for dialogs
 const isSimpleDialogOpen = ref(false)
@@ -318,7 +319,7 @@ useSeoMeta({
   twitterDescription: () => t('meta.home.description'),
 
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
-  ogUrl: () => `http://localhost:3000${route.fullPath}`,
+  ogUrl: () => `${config.public.siteUrl}${route.fullPath}`,
 })
 </script>
 

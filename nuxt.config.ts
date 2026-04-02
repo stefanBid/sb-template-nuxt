@@ -59,9 +59,9 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#0f0f20' },
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Your Site Name' },
-        { property: 'og:image', content: 'https://yourdomain.com/og-image.jpg' },
+        { property: 'og:image', content: 'https://www.yoursite.com/og-image.jpg' },
         { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:image', content: 'https://yourdomain.com/twitter-image.jpg' },
+        { name: 'twitter:image', content: 'https://www.yoursite.com/twitter-image.jpg' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -72,7 +72,9 @@ export default defineNuxtConfig({
   css: ['./app/assets/css/main.css'],
 
   runtimeConfig: {
-    public: {},
+    public: {
+      siteUrl: 'https://www.yoursite.com',
+    },
   },
 
   routeRules: {
