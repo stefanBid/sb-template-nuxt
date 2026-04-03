@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/stefanBid/sb-template-nuxt/compare/v2.3.1...v2.4.0) (2026-04-03)
+
+
+### Features
+
+* add AI code support ([#81](https://github.com/stefanBid/sb-template-nuxt/issues/81)) ([bb4fd2f](https://github.com/stefanBid/sb-template-nuxt/commit/bb4fd2fc76a1e9bf6ed9299338b7a49a492e476a))
+
 ## [2.4.0] — 2026-04-03
 
 ### Features
