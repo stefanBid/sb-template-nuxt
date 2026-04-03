@@ -7,8 +7,8 @@
   },
   "meta": {
     "home": {
-      "title": "Home",
-      "description": "Description"
+      "title": "Your Site Name — Your Tagline",
+      "description": "A short description of your homepage for search engines and social sharing. Keep it between 120 and 160 characters."
     }
   },
   "header": {

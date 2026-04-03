@@ -5,331 +5,56 @@
 
   # SB-Template Nuxt
 
-  ### 🚀 Production-Ready Nuxt 3 Starter with Superpowers
-
-  ![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)
-  ![Vue](https://img.shields.io/badge/vue-3.5.27-4FC08D?logo=vue.js)
-  ![Nuxt](https://img.shields.io/badge/nuxt-4.3.0-00DC82?logo=nuxt.js)
-  ![TypeScript](https://img.shields.io/badge/typescript-latest-3178C6?logo=typescript)
-  ![Tailwind CSS](https://img.shields.io/badge/tailwind-4.1.18-38B2AC?logo=tailwind-css)
-  ![i18n](https://img.shields.io/badge/i18n-10.2.1-blue)
-  ![ESLint](https://img.shields.io/badge/eslint-9.39.2-4B32C3?logo=eslint)
+  ![Version](https://img.shields.io/badge/version-2.4.0-blue)
+  [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
+  [![Nuxt](https://img.shields.io/badge/nuxt-4-00DC82?logo=nuxt.js)](https://nuxt.com)
+  [![Vue](https://img.shields.io/badge/vue-3-4FC08D?logo=vue.js)](https://vuejs.org)
+  [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
+  [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
+  ![License](https://img.shields.io/badge/license-MIT-green)
 
   **Stop wasting time on boilerplate. Start building features.**
 
-  A battle-tested, feature-rich Nuxt 3 template that includes everything you need: modern design system, reusable UI components, i18n support, and CI/CD ready to deploy. Build beautiful, production-ready interfaces in minutes, not weeks.
-
-  [Quick Start](#-quick-start) • [Features](#-core-features) • [Components](#-ready-to-use-components) • [Deploy](#-deployment)
+  A Nuxt 4 starter template with an opinionated design system, reusable UI components, i18n, dark mode and pre-configured AI tooling. Clone it, initialise it for your project, and start building features on day one.
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [Core Features](#-core-features)
-- [Ready-to-Use Components](#-ready-to-use-components)
-- [Quick Start](#-quick-start)
-- [Project Structure](#-project-structure)
-- [Customization](#-customization)
-  - [Theme & Styling](#-theme--styling)
-  - [Internationalization](#-internationalization)
-  - [Components](#-using-built-in-components)
-  - [Composables](#-composables-reference)
-- [Deployment](#-deployment)
-- [CI/CD](#-cicd-workflows)
-
----
-
-## ✨ Core Features
-
-### 🎨 Styling & Design System
-- **Tailwind CSS 4.1.18** - Modern utility-first CSS with custom design tokens
-- **Custom Theme System** - Pre-configured theme with CSS variables for easy customization
-- **Typography Utilities** - 9 ready-to-use text styles (`ty-app-hero`, `ty-app-title`, etc.)
-- **Color Palette** - Semantic color system (main, surface, accent, contrast, muted, error)
-- **Responsive Design** - Mobile-first with smooth transitions on all breakpoints
-- **Dark Mode Ready** - Theme structure prepared for dark mode implementation
-
-### 🌍 Internationalization (i18n)
-- **@nuxtjs/i18n 10.2.1** - Complete i18n solution
-- **English & Italian** included (easily add more)
-- **URL Strategy** - `prefix_except_default` (e.g., `/page` for EN, `/it/page` for IT)
-- **Translation Files** - JSON-based translations in `i18n/locales/`
-
-### 🧩 Pre-Built Components
-- **`TheHeader`** - Responsive navigation with mobile drawer
-- **`TheFooter`** - Multi-column footer with social links
-- **`TheNotificationBanner`** - Toast notifications (success, error, warning, info)
-- **`BaseIconMenu`** - Floating dropdown menu with keyboard navigation
-- **`BaseCloseButton`** - Accessible close button
+1. [Overview](#1-overview)
+2. [Getting Started](#2-getting-started)
+3. [Project Structure](#3-project-structure)
+4. [Design System](#4-design-system)
+5. [Routing](#5-routing)
+6. [Layouts](#6-layouts)
+7. [Pages](#7-pages)
+8. [Components](#8-components)
+9. [Composables & Utils](#9-composables--utils)
+10. [AI Tooling — Prompts & Instructions](#10-ai-tooling--prompts--instructions)
+11. [Deployment](#11-deployment)
+12. [Versioning](#12-versioning)
+13. [Dependencies](#13-dependencies)
 
 ---
 
-## 🧩 Ready-to-Use Components
+## 1. Overview
 
-**Build modern interfaces in minutes.** This template includes a complete library of production-ready, accessible, and fully customizable UI components designed to accelerate your development workflow.
+SB-Template Nuxt is designed to provide a solid and opinionated starting structure for building new web applications. It ships with a pre-configured design system (CSS custom properties + Tailwind v4 utilities), reusable UI components, i18n, dark/light theme, a notification system and layouts so that developers can focus on building features rather than scaffolding.
 
-### 🎨 Form Components
+The template is meant to be cloned and initialised for a specific project (via the `init-project` prompt), progressively replacing placeholder pages and components with real ones while keeping the underlying conventions and tooling intact.
 
-#### **BaseButton**
-Full-featured button component with multiple variants and states.
-
-**Variants:** `primary`, `secondary`, `outline`
-**Types:** `button`, `submit`, `reset`, `link`
-**States:** loading, disabled
-**Features:** Icon support, accessible, keyboard navigation
-
-```vue
-<BaseButton variant="primary" :is-loading="false">
-  <Icon name="lucide:send" class="size-5 mr-2" />
-  Send Message
-</BaseButton>
-
-<BaseButton variant="outline" type="link" to="/about">
-  Learn More
-</BaseButton>
-```
-
-#### **BaseInput**
-Text input with label, hints, error states, and prefix icons.
-
-**Types:** `text`, `email`, `password`, `number`
-**Features:** Validation states, accessible, auto-focus, prefix icons
-
-```vue
-<BaseInput
-  id="email"
-  v-model:input="email"
-  type="email"
-  label="Email Address"
-  placeholder="user@example.com"
-  prefix-icon="lucide:mail"
-  hint="We'll never share your email"
-  :error="emailError"
-/>
-```
-
-#### **BaseTextarea**
-Multi-line text input with character counter.
-
-**Features:** Character limit, auto-resize, validation states
-
-```vue
-<BaseTextarea
-  id="message"
-  v-model:input="message"
-  label="Your Message"
-  :max-length="500"
-  :rows="4"
-  placeholder="Type your message..."
-/>
-```
-
-#### **BaseCheckbox**
-Custom checkbox with label slot.
-
-**Features:** Custom styling, accessible, label slot
-
-```vue
-<BaseCheckbox id="terms" v-model:input="acceptTerms">
-  I agree to the terms and conditions
-</BaseCheckbox>
-```
-
-#### **BaseCombobox**
-Advanced select component with single/multiple selection.
-
-**Types:** `single`, `multiple`
-**Features:** Searchable, keyboard navigation, floating UI, custom icons
-
-```vue
-<BaseCombobox
-  id="country"
-  v-model:input="selectedCountries"
-  type="multiple"
-  :items="countries"
-  label="Select Countries"
-  prefix-icon="lucide:globe"
-  placeholder="Choose countries..."
-/>
-```
-
-#### **BaseChip**
-Compact label component for tags, badges, and status indicators.
-
-**Variants:** `accent`, `primary`, `secondary`
-**Features:** Icon support, rounded design, responsive sizing
-
-```vue
-<!-- Simple chip -->
-<BaseChip text="Featured" variant="accent" />
-
-<!-- Chip with icon -->
-<BaseChip
-  icon="lucide:star"
-  text="Premium"
-  variant="accent"
-/>
-
-<!-- Use cases -->
-<BaseChip icon="lucide:code" text="Vue.js" variant="accent" />
-<BaseChip icon="lucide:check-circle" text="Active" variant="accent" />
-<BaseChip icon="lucide:folder" text="Design" variant="primary" />
-```
-
-### 📦 Layout Components
-
-#### **BaseCard**
-Flexible card container with slots for header, body, and footer.
-
-**Variants:** `dark`, `light`, `dark-hover`, `light-hover`
-**Alignment:** `left`, `center`, `right`
-**Slots:** `card-header`, `card-body`, `card-footer`, `default`
-
-```vue
-<BaseCard
-  title="Card Title"
-  subtitle="Card Subtitle"
-  paragraph="Card description text"
-  variant="dark-hover"
-  align="center"
->
-  <template #card-header>
-    <Icon name="lucide:star" class="size-6 text-app-accent" />
-  </template>
-
-  <template #card-footer>
-    <BaseButton variant="primary">Action</BaseButton>
-  </template>
-</BaseCard>
-
-<!-- Full custom content -->
-<BaseCard :full-custom-content="true">
-  <div class="custom-layout">
-    <!-- Your custom content -->
-  </div>
-</BaseCard>
-```
-
-#### **BaseDialog**
-Modal dialog with size variants and custom slots.
-
-**Sizes:** `sm`, `md`, `lg`, `full`
-**Features:** Scroll lock, keyboard (ESC), accessible, click outside to close
-
-```vue
-<BaseDialog
-  :is-open="isDialogOpen"
-  size="md"
-  title="Dialog Title"
-  subtitle="Dialog subtitle"
-  @close="isDialogOpen = false"
->
-  <template #header>
-    <div class="custom-header">
-      <!-- Optional custom header content -->
-    </div>
-  </template>
-
-  <p>Dialog content goes here</p>
-
-  <template #footer>
-    <BaseButton variant="outline" @click="isDialogOpen = false">
-      Cancel
-    </BaseButton>
-    <BaseButton variant="primary" @click="handleSave">
-      Save
-    </BaseButton>
-  </template>
-</BaseDialog>
-```
-
-### 🧭 Navigation Components
-
-#### **BaseIconMenu**
-Dropdown menu with floating UI and keyboard navigation.
-
-**Features:** Floating positioning, keyboard support, click outside to close
-
-```vue
-<BaseIconMenu
-  icon="lucide:menu"
-  :items="menuItems"
-  :selected-item-id="selectedId"
-  @select="handleSelect"
-/>
-
-<script setup>
-const menuItems = [
-  { code: 'profile', label: 'Profile', icon: 'lucide:user', iconType: 'nuxt-icon' },
-  { code: 'settings', label: 'Settings', icon: 'lucide:settings', iconType: 'nuxt-icon' },
-]
-</script>
-```
-
-### 🔔 Feedback Components
-
-#### **TheNotificationBanner**
-Toast notification system with multiple types.
-
-**Types:** `success`, `error`, `warning`, `info`
-**Features:** Auto-dismiss, manual close, stacking
-
-```vue
-<script setup>
-const { notify } = useAppNotifications()
-
-notify({
-  type: 'success',
-  title: 'Success!',
-  description: 'Your changes have been saved.',
-  duration: 5000,
-})
-</script>
-```
-
-### 🎯 Why These Components?
-
-✅ **Accessible** - ARIA attributes, keyboard navigation, focus management
-✅ **Responsive** - Mobile-first design with smooth transitions
-✅ **Customizable** - Full theme support with CSS variables
-✅ **Type-Safe** - Complete TypeScript support
-✅ **Production-Ready** - Battle-tested in real projects
-✅ **i18n Ready** - Internationalization support built-in
-
-**See all components in action:** Run `npm run dev` and visit the homepage for a complete showcase.
-
-### 🛠️ Developer Experience
-- **TypeScript** - Full type safety
-- **ESLint 9.39.1** - Code quality with stylistic rules
-- **VueUse 14.1.0** - Vue composition utilities
-- **Floating UI 1.1.9** - Tooltips, popovers, dropdowns
-- **Auto-imports** - Components and composables automatically imported
-- **Hot Module Replacement** - Lightning-fast development
-
-### 🖼️ Asset Optimization
-- **@nuxt/image 2.0.0** - Automatic image optimization
-- **Multiple Formats** - WebP, AVIF, PNG support
-- **Responsive Images** - Automatic srcset generation
-- **Cloudinary Ready** - Pre-configured provider
-- **@nuxt/icon 2.1.0** - SVG icon system with Lucide icon collection
-- **Icon Library** - 1000+ Lucide icons ready to use
-
-### ⚙️ CI/CD Ready
-- **GitHub Actions** - Pre-configured workflows
-- **Automated Testing** - Lint and build checks on PR
-- **Release Please** - Automated versioning and changelog
-- **Netlify Preset** - Optimized for Netlify deployment (easily switch to Vercel, Cloudflare, etc.)
+**Target audience:** Vue/Nuxt developers who want a clean, consistent foundation without bikeshedding on folder structure, naming conventions, or design tokens.
 
 ---
 
-## 🚀 Quick Start
+## 2. Getting Started
 
 ### Prerequisites
 
 - **Node.js** ≥ 24.11.0
-- **npm** / **pnpm** / **yarn**
+- **npm**
 
 ### Installation
 
@@ -337,723 +62,792 @@ notify({
 
 1. Click **"Use this template"** on GitHub
 2. Clone your new repository:
+
 ```bash
 git clone https://github.com/your-username/your-project.git
 cd your-project
 ```
 
-**Option 2: Clone Directly**
+**Option 2: Clone directly**
 
 ```bash
 git clone https://github.com/stefanoBid/sb-nuxt-template.git my-project
 cd my-project
-rm -rf .git && git init  # Start fresh
+rm -rf .git && git init
 ```
 
-### Setup
+### Project Initialisation
+
+After cloning, run the `init-project` prompt in Copilot Agent mode (see [AI Tooling](#10-ai-tooling--prompts--instructions)) to rename the project, update all config files, reset the version to `1.0.0` and sync the instruction files.
+
+Then install dependencies and start the dev server:
 
 ```bash
-# Install dependencies
 npm install
-
-# (Optional) Reset version to 0.1.0
-echo "# Changelog" > CHANGELOG.md
-npm version 0.1.0 --no-git-tag-version
-
-# Start development server
 npm run dev
 ```
 
-Visit **http://localhost:3000** 🎉
+Visit **http://localhost:3000**.
 
----
-
-## 📁 Project Structure
-
-```
-sb-template-nuxt/
-├── app/
-│   ├── assets/
-│   │   └── css/
-│   │       ├── main.css          # Main CSS entry point
-│   │       ├── theme.css         # CSS variables & design tokens
-│   │       ├── typography.css    # Typography utilities (ty-app-*)
-│   │       ├── animations.css    # Animation classes
-│   │       └── utilities.css     # Custom utility classes
-│   │
-│   ├── components/
-│   │   ├── base/
-│   │   │   ├── button/           # BaseButton.vue - Multi-variant button
-│   │   │   ├── card/             # BaseCard.vue - Flexible card container
-│   │   │   ├── checkbox/         # BaseCheckbox.vue - Custom checkbox
-│   │   │   ├── chip/             # BaseChip.vue - Tag/badge component
-│   │   │   ├── close-button/     # BaseCloseButton.vue - Accessible close button
-│   │   │   ├── combobox/         # BaseCombobox.vue - Select dropdown
-│   │   │   ├── dialog/           # BaseDialog.vue - Modal dialog
-│   │   │   ├── icon-menu/        # BaseIconMenu.vue - Dropdown menu
-│   │   │   ├── input/            # BaseInput.vue - Text input with validation
-│   │   │   └── textarea/         # BaseTextarea.vue - Multi-line input
-│   │   ├── the-footer/           # TheFooter.vue
-│   │   ├── the-header/           # TheHeader.vue & TheHeaderMenuToggle.vue
-│   │   └── the-notification/     # TheNotificationBanner.vue & Box
-│   │
-│   ├── composables/
-│   │   ├── useAppNotifications.ts  # Notification system
-│   │   ├── useFloatingUi.ts        # Floating UI helper
-│   │   ├── useLockScroll.ts        # Scroll lock utility
-│   │   └── useSanitize.ts          # HTML sanitization
-│   │
-│   ├── layouts/
-│   │   └── default.vue             # Default page layout
-│   │
-│   ├── pages/
-│   │   └── index.vue               # Homepage
-│   │
-│   ├── plugins/
-│   │   └── scrollToTop.client.ts   # Auto-scroll on route change
-│   │
-│   ├── types/
-│   │   └── global.d.ts             # Global TypeScript types
-│   │
-│   ├── utils/
-│   │   └── generateUuid.ts         # UUID generator
-│   │
-│   ├── app.vue                      # Root component
-│   └── error.vue                    # Error page
-│
-├── i18n/
-│   └── locales/
-│       ├── en.json                  # English translations
-│       └── it.json                  # Italian translations
-│
-├── public/
-│   ├── favicon.ico
-│   ├── robots.txt
-│   └── sitemap.xml                  # SEO sitemap template
-│
-├── nuxt.config.ts                   # Nuxt configuration
-├── tsconfig.json                    # TypeScript configuration
-├── eslint.config.mjs                # ESLint configuration
-└── package.json
-```
-
----
-
-## 🛠️ Available Scripts
+### Available Commands
 
 | Command | Description |
-|---------|-------------|
+|---|---|
 | `npm run dev` | Start development server at `http://localhost:3000` |
 | `npm run build` | Build for production (outputs to `.output/`) |
-| `npm run generate` | Generate static site (SSG mode) |
+| `npm run generate` | Generate static site |
 | `npm run preview` | Preview production build locally |
 | `npm run lint` | Check code quality with ESLint |
 | `npm run lint:fix` | Auto-fix ESLint issues |
 
 ---
 
-## 🎨 Customization
+## 3. Project Structure
 
-### 🎨 Theme & Styling
+This section shows the annotated directory tree. The project follows a feature-agnostic structure where each top-level folder has a single responsibility.
 
-#### Customize Design Tokens
-
-Edit `app/assets/css/theme.css` to change colors, fonts, and spacing:
-
-```css
-@theme {
-  /* Fonts */
-  --font-app-primary: 'Your Font', system-ui, sans-serif;
-  --font-app-secondary: 'Your Mono Font', monospace;
-
-  /* Colors */
-  --color-app-main: #f8f9fa;        /* Background */
-  --color-app-accent: #2563eb;      /* Primary accent */
-  --color-app-contrast: #1a1a1a;    /* Text color */
-  --color-app-error: #dc2626;       /* Error state */
-  /* ...more colors */
-}
 ```
-
-> **💡 Tip:** All CSS variables are prefixed with `app-` to avoid conflicts.
-
-#### Typography Utilities
-
-Pre-configured typography classes in `app/assets/css/typography.css`:
-
-| Class | Usage | Example |
-|-------|-------|---------|
-| `ty-app-hero` | Hero text (60px) | Landing page headlines |
-| `ty-app-title-xl` | Extra large title (48px) | Page titles |
-| `ty-app-title-lg` | Large title (36px) | Section headers |
-| `ty-app-title` | Regular title (24px) | Card headers |
-| `ty-app-subtitle-lg` | Large subtitle (20px) | Subheadings |
-| `ty-app-subtitle` | Regular subtitle (18px) | Small subheadings |
-| `ty-app-paragraph` | Body text (16px) | Paragraph content |
-| `ty-app-label` | Small label (14px) | Form labels, captions |
-| `ty-app-btn-label` | Button text (16px) | Button labels |
-
-**Example:**
-```vue
-<template>
-  <h1 class="ty-app-hero">Welcome to My App</h1>
-  <p class="ty-app-paragraph">This is a paragraph with proper styling.</p>
-</template>
+── nuxt.config.ts           ← Nuxt configuration (modules, SSR, runtimeConfig, routeRules, nitro, vite…)
+── package.json             ← dependencies and npm scripts
+── tsconfig.json            ← TypeScript config — extends .nuxt/tsconfig.app.json
+── eslint.config.mjs        ← ESLint flat config (extends @nuxt/eslint, stylistic rules)
+── .nvmrc                   ← pinned Node.js version (24.11.0)
+── public/
+     favicon.ico
+     robots.txt
+     sitemap.xml
+     logo.webp
+── i18n/
+     locales/
+       en.json              ← English translations (source of truth)
+       it.json              ← Italian translations
+── app/
+     app.vue               ← root entry point (NuxtLayout + NuxtPage)
+     error.vue             ← global error page
+     assets/
+       css/
+         main.css          ← entry point: imports all CSS layers in order
+         theme.css         ← @theme block: CSS custom properties + dark mode overrides
+         typography.css    ← @utility ty-app-* classes
+         utilities.css     ← @utility u-app-* classes
+         animations.css    ← Vue transition classes (fade, slide-down, scale-fade)
+     components/
+       base/               ← reusable design-system components (no business logic)
+         accordion/        BaseAccordion.vue
+         button/           BaseButton.vue
+         card/             BaseCard.vue
+         checkbox/         BaseCheckbox.vue
+         chip/             BaseChip.vue
+         close-button/     BaseCloseButton.vue
+         combobox/         BaseCombobox.vue
+         dialog/           BaseDialog.vue
+         icon-button/      BaseIconButton.vue
+         icon-menu/        BaseIconMenu.vue
+         input/            BaseInput.vue
+         media-carousel/   BaseMediaCarousel.vue
+         rich-text/        BaseRichText.vue
+         textarea/         BaseTextarea.vue
+       the-footer/         TheFooter.vue
+       the-header/         TheHeader.vue, TheHeaderMenuToggle.vue
+       the-notification/   TheNotificationBanner.vue, TheNotificationBox.vue
+       the-theme-toggle/   TheThemeToggle.vue
+     composables/
+       useAppNotifications.ts  ← global notification system (success/warning/error/info)
+       useFloatingUi.ts        ← @floating-ui/vue wrapper for dropdown positioning
+       useLockScroll.ts        ← scroll lock with multi-caller safety
+       useSanitize.ts          ← XSS-safe HTML sanitisation
+     layouts/
+       default.vue         ← main layout: TheHeader + <slot> + TheFooter + notifications
+     pages/
+       index.vue           ← homepage (component showcase)
+     plugins/
+       scrollToTop.client.ts
+     types/
+       global.d.ts         ← global TS interfaces (MenuItem, RouteItem, NotificationItem, RichBlock*)
+     utils/
+       blocksToHtml.ts     ← Strapi rich text → HTML string converter
+       generateUuid.ts     ← UUID v4 generator
 ```
-
-#### Custom Animations
-
-Use pre-defined animation classes from `app/assets/css/animations.css`:
-- `fade-in` / `fade-out`
-- `slide-in-up` / `slide-in-down`
-- `bounce-in`
 
 ---
 
-### 🌍 Internationalization
+## 4. Design System
 
-#### Add a New Language
+The design system lives entirely in `app/assets/css/` and provides a single source of truth for colours, typography, spacing and transitions. **Never use hardcoded values** — always reference the design tokens.
 
-**1. Register the locale in `nuxt.config.ts`:**
+### Colours — `--color-app-*`
 
-```typescript
-i18n: {
-  locales: [
-    { code: 'en', iso: 'en-US', name: 'English', file: 'en.json' },
-    { code: 'it', iso: 'it-IT', name: 'Italiano', file: 'it.json' },
-    { code: 'fr', iso: 'fr-FR', name: 'Français', file: 'fr.json' }, // ✅ New
+All colours are CSS custom properties defined in `theme.css` inside an `@theme` block, auto-mapped to Tailwind utilities. Dark mode is handled via variable overrides inside `.dark` — **never use `dark:` Tailwind variants**.
+
+| Token | Tailwind utility | Usage |
+|---|---|---|
+| `--color-app-main` | `bg-app-main` | Page background |
+| `--color-app-surface` | `bg-app-surface` | Card / elevated surface |
+| `--color-app-surface-2` | `bg-app-surface-2` | Nested surfaces, inputs |
+| `--color-app-border` | `border-app-border` | Default borders |
+| `--color-app-accent` | `bg-app-accent` / `text-app-accent` | Primary CTA, highlights |
+| `--color-app-accent-hover` | `hover:bg-app-accent-hover` | Hover state of accent |
+| `--color-app-accent-border` | `border-app-accent-border` | Border on accent elements |
+| `--color-app-contrast` | `text-app-contrast` | Primary text |
+| `--color-app-muted` | `text-app-muted` | Secondary / placeholder text |
+| `--color-app-success/warning/error/info` | `text-app-success` etc. | Status colours |
+| `--color-app-*-bg` | `bg-app-success-bg` etc. | Status background tints |
+
+Tailwind opacity modifiers are allowed: `bg-app-main/80`, `text-app-muted/70`.
+
+### Typography — `ty-app-*`
+
+Custom `@utility` classes defined in `typography.css`. Apply them as regular Tailwind classes alongside spacing, colour and layout utilities.
+
+| Class | Font | Usage |
+|---|---|---|
+| `ty-app-hero` | Poppins, uppercase | Full-bleed hero text |
+| `ty-app-impact` | Poppins, uppercase | Large display headings |
+| `ty-app-title-xl` | Poppins | Extra large titles (`text-4xl` → `text-7xl`) |
+| `ty-app-title-lg` | Poppins | Large section titles (`text-3xl` → `text-6xl`) |
+| `ty-app-title` | Poppins | Section titles (`text-2xl` → `text-4xl`) |
+| `ty-app-subtitle-xl` | Inter semibold | Extra large sub-headings |
+| `ty-app-subtitle-lg` | Inter semibold | Large sub-headings |
+| `ty-app-subtitle` | Inter semibold | Sub-headings |
+| `ty-app-paragraph` | Inter | Body text |
+| `ty-app-label` | Inter, uppercase, tracked | Form labels, tags |
+| `ty-app-btn-label` | Inter bold, uppercase | Button text |
+| `ty-app-caption` | Inter italic | Captions, secondary notes |
+
+```vue
+<h1 class="ty-app-title text-app-contrast">Welcome</h1>
+<p class="ty-app-paragraph text-app-muted">Some description.</p>
+```
+
+**Font families:**
+- `font-app-primary` → Poppins (headings, display)
+- `font-app-secondary` → Inter (body, UI)
+
+### Utility classes — `u-app-*`
+
+| Class | Effect |
+|---|---|
+| `u-app-soft-transition` | `transition-all duration-200 ease-in-out` |
+| `u-app-hard-transition` | `transition-all duration-500 ease-in-out` |
+| `u-app-focus` | `outline-none ring-app-contrast focus-visible:ring-2` |
+| `u-app-focus-within` | `outline-none ring-app-contrast focus-within:ring-2` |
+
+Always add `u-app-soft-transition` to interactive and themed elements so they animate on theme switch.
+
+### Animations — Vue `<Transition>`
+
+Named transition classes defined in `animations.css`. Use as the `name` prop on `<Transition>`.
+
+| Name | Effect | Duration |
+|---|---|---|
+| `fade` | Opacity + slight Y offset | 800ms |
+| `slide-down` | Opacity + slides from top | 200ms |
+| `scale-fade` | Opacity + scale from 0.95 | 200ms |
+
+```vue
+<Transition name="scale-fade">
+  <div v-if="isOpen">…</div>
+</Transition>
+```
+
+### Icons
+
+Always use the `<Icon>` component from `@nuxt/icon`. The collection prefix is mandatory.
+
+Available collections: `lucide` (UI icons), `flagpack` (country flags).
+
+```vue
+<Icon name="lucide:arrow-right" class="size-5 text-app-accent" />
+<Icon name="flagpack:it" class="size-5" />
+```
+
+Size via Tailwind: `size-4`, `size-5`, `size-6`. Colour via token: `text-app-contrast`, `text-app-muted`, `text-app-accent`. Always set `aria-label` on icon-only interactive elements.
+
+---
+
+## 5. Routing
+
+Routing is handled by Nuxt 4's file-based routing (vue-router under the hood). The file path inside `app/pages/` maps directly to the URL.
+
+### File → URL mapping
+
+| File path | URL | Notes |
+|---|---|---|
+| `app/pages/index.vue` | `/` | Homepage |
+| `app/pages/about.vue` | `/about` | Static page |
+| `app/pages/blog/index.vue` | `/blog` | Section index |
+| `app/pages/blog/[slug].vue` | `/blog/:slug` | Dynamic segment |
+| `app/pages/blog/[[slug]].vue` | `/blog` and `/blog/:slug` | Optional segment |
+| `app/pages/[...slug].vue` | `/anything/deep` | Catch-all |
+| `app/pages/(group)/page.vue` | `/page` | Route group (folder ignored) |
+
+### Adding a new page
+
+**Step 1 — Create the file** in `app/pages/` following the naming rules above.
+
+**Step 2 — Add `useHead()`** with translated meta tags.
+
+**Step 3 — Add translation keys** to both `i18n/locales/en.json` and `i18n/locales/it.json`.
+
+**Step 4 — Add a `routeRules` entry** in `nuxt.config.ts` if the page should be statically generated:
+
+```ts
+routeRules: {
+  '/about': { prerender: true },
+}
+```
+
+### i18n routing
+
+The strategy is `prefix_except_default`: `/about` is English, `/it/about` is Italian. Use `localePath()` for all navigation links:
+
+```vue
+<NuxtLink :to="localePath('/about')">About</NuxtLink>
+```
+
+---
+
+## 6. Layouts
+
+Layouts live in `app/layouts/`. A page is wrapped in a layout automatically via `NuxtLayout` in `app.vue`.
+
+### `default.vue`
+
+The main layout used by all pages. Structure: `TheHeader` → `<slot>` (page content) → `TheFooter` → `TheNotificationBanner` + `TheNotificationBox`.
+
+No props — all configuration is done at page level via `useHead()` and composables.
+
+### `TheHeader`
+
+Singleton top navigation bar. Renders the main nav links (`RouteItem[]` hardcoded in the component), the language switcher (`BaseIconMenu` with flag icons) and `TheThemeToggle`.
+
+On mobile it uses `TheHeaderMenuToggle` to open a drawer. Scroll position drives a subtle background transition.
+
+### `TheFooter`
+
+Singleton bottom section. Contains site links (`RouteItem[]`) and social links.
+
+### `TheThemeToggle`
+
+Icon button that toggles between light and dark mode via `@nuxtjs/color-mode`. No props.
+
+---
+
+## 7. Pages
+
+Pages live in `app/pages/`. Each file is a Vue SFC using `<script setup lang="ts">`. All user-facing strings go through `useI18n()` — never hardcode UI text in templates.
+
+### Minimal page template
+
+```vue
+<script setup lang="ts">
+// Dependencies
+const { t } = useI18n()
+
+// SEO
+useHead({
+  title: t('pageName.meta.title'),
+  meta: [
+    { name: 'description', content: t('pageName.meta.description') },
+    { property: 'og:title', content: t('pageName.meta.title') },
+    { property: 'og:description', content: t('pageName.meta.description') },
   ],
-}
-```
-
-**2. Create translation file `i18n/locales/fr.json`:**
-
-```json
-{
-  "welcome": "Bienvenue",
-  "nav": {
-    "home": "Accueil",
-    "about": "À propos"
-  }
-}
-```
-
-**3. Use translations in components:**
-
-```vue
-<template>
-  <h1>{{ $t('welcome') }}</h1>
-  <NuxtLink :to="localePath('/')">{{ $t('nav.home') }}</NuxtLink>
-</template>
-```
-
-#### Switch Languages Programmatically
-
-```vue
-<script setup>
-const { locale, setLocale } = useI18n()
-
-function changeLanguage(lang: string) {
-  setLocale(lang)
-}
-</script>
-
-<template>
-  <button @click="changeLanguage('it')">Italiano</button>
-  <button @click="changeLanguage('en')">English</button>
-</template>
-```
-
----
-
-### 🧩 Using Built-in Components
-
-#### Notification System
-
-```vue
-<script setup>
-const { notify } = useAppNotifications()
-
-function showSuccess() {
-  notify({
-    type: 'success',
-    title: 'Success!',
-    description: 'Your action was completed.',
-    duration: 5000, // Auto-dismiss after 5s
-  })
-}
-
-function showError() {
-  notify({
-    type: 'error',
-    title: 'Error!',
-    description: 'Something went wrong.',
-    duration: 0, // Manual dismiss only
-  })
-}
-</script>
-
-<template>
-  <button @click="showSuccess">Show Success</button>
-  <button @click="showError">Show Error</button>
-</template>
-```
-
-**Notification Types:** `success`, `error`, `warning`, `info`
-
-#### Icon Menu (Dropdown)
-
-```vue
-<template>
-  <BaseIconMenu>
-    <template #trigger="{ toggle }">
-      <button @click="toggle">
-        <Icon name="mdi:menu" />
-      </button>
-    </template>
-
-    <template #content>
-      <div class="p-4 bg-white rounded-lg shadow-lg">
-        <a href="/profile">Profile</a>
-        <a href="/settings">Settings</a>
-        <button @click="logout">Logout</button>
-      </div>
-    </template>
-  </BaseIconMenu>
-</template>
-```
-
----
-
-### 🔧 Composables Reference
-
-#### `useAppNotifications()`
-
-Manage toast notifications.
-
-```typescript
-const { notify, removeNotification, notifications } = useAppNotifications()
-
-// Show notification
-notify({
-  type: 'success',
-  title: 'Title',
-  description: 'Description',
-  duration: 5000, // ms (0 = manual dismiss)
 })
+</script>
 
-// Remove specific notification
-removeNotification(id)
+<template>
+  <!-- page content -->
+</template>
 ```
 
-#### `useFloatingUi(reference, floating, options)`
+### Available pages
 
-Position floating elements (tooltips, dropdowns).
+| Page | URL | Description |
+|---|---|---|
+| `index.vue` | `/` | Homepage — full component showcase |
 
-```typescript
-const reference = ref<HTMLElement>()
-const floating = ref<HTMLElement>()
+---
 
-const { floatingStyles } = useFloatingUi(reference, floating, {
+## 8. Components
+
+All reusable components live in `app/components/`. Component names must describe **what the component is**, not where it is used. All components use design system tokens — never hardcoded values.
+
+`Base` prefix: fully reusable, no business logic, no direct API calls.
+`The` prefix: singletons used once per layout (TheHeader, TheFooter, etc.).
+
+### `BaseButton`
+
+Full-featured action button with variants, loading state and link support.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | Visual style |
+| `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a target="_blank">` |
+| `to` | `string` | `undefined` | Required when `type='link'` |
+| `ariaLabel` | `string` | `undefined` | For icon-only usage |
+| `isDisabled` | `boolean` | `false` | |
+| `isLoading` | `boolean` | `false` | Shows spinner |
+
+Slot: `default` (button label / content)
+
+```vue
+<BaseButton variant="primary" :is-loading="isSaving" type="submit">Save</BaseButton>
+<BaseButton variant="outline" type="link" to="https://example.com">
+  <Icon name="lucide:external-link" class="size-4" /> Open
+</BaseButton>
+```
+
+### `BaseCard`
+
+Flexible card container with slots for header, body and footer.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `title` | `string` | `undefined` | |
+| `subtitle` | `string` | `undefined` | |
+| `paragraph` | `string` | `undefined` | |
+| `variant` | `'dark' \| 'dark-hover' \| 'light' \| 'light-hover'` | `'light'` | Background + hover behaviour |
+| `align` | `'left' \| 'center' \| 'right'` | `'left'` | Content alignment |
+| `fullCustomContent` | `boolean` | `false` | Disables built-in layout — use `default` slot only |
+
+Slots: `default`, `card-header`, `card-body`, `card-footer`
+
+```vue
+<BaseCard title="Card Title" subtitle="Subtitle" variant="dark-hover">
+  <template #card-header>
+    <Icon name="lucide:star" class="size-6 text-app-accent" />
+  </template>
+  <template #card-footer>
+    <BaseButton>Action</BaseButton>
+  </template>
+</BaseCard>
+```
+
+### `BaseInput`
+
+Text input with label, hints, error states and prefix icon.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `id` | `string` | — | Required |
+| `label` | `string` | `undefined` | |
+| `placeholder` | `string` | `'Insert a value...'` | |
+| `type` | `'text' \| 'password' \| 'email' \| 'number' \| 'search' \| 'tel' \| 'url'` | `'text'` | |
+| `hint` | `string` | `undefined` | |
+| `error` | `string \| null` | `null` | Shows error label and red border |
+| `prefixIcon` | `string` | `undefined` | Iconify name e.g. `lucide:search` |
+
+Model: `defineModel<string>('input')`
+
+```vue
+<BaseInput
+  id="email"
+  v-model:input="email"
+  type="email"
+  label="Email"
+  prefix-icon="lucide:mail"
+  :error="emailError"
+/>
+```
+
+### `BaseTextarea`
+
+Multi-line input with optional character counter.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `id` | `string` | — | Required |
+| `label` | `string` | `undefined` | |
+| `placeholder` | `string` | `'Insert a value...'` | |
+| `hint` | `string` | `undefined` | |
+| `error` | `string \| null` | `null` | |
+| `maxLength` | `number` | `undefined` | Shows character counter when set |
+
+Model: `defineModel<string>('input')`
+
+### `BaseCheckbox`
+
+Custom checkbox with label slot.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `id` | `string` | — | Required |
+| `label` | `string` | `undefined` | Shown if no `default` slot |
+| `error` | `string \| null` | `null` | |
+
+Model: `defineModel<boolean>('input')`
+Slot: `default` (custom label content)
+
+### `BaseCombobox`
+
+Generic select component with single/multiple selection and search.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `id` | `string` | — | Required |
+| `type` | `'single' \| 'multiple'` | `'single'` | Selection mode |
+| `items` | `{ label: string, value: T }[]` | — | Required |
+| `label` | `string` | `undefined` | |
+| `placeholder` | `string` | `'Insert a value...'` | |
+| `hint` | `string` | `undefined` | |
+| `error` | `string \| null` | `null` | |
+| `prefixIcon` | `string` | `undefined` | |
+
+Model: `defineModel<T[]>('input', { default: () => [] })`
+
+```vue
+<BaseCombobox
+  id="country"
+  v-model:input="selected"
+  type="multiple"
+  :items="countries"
+  label="Countries"
+  prefix-icon="lucide:globe"
+/>
+```
+
+### `BaseChip`
+
+Compact label for tags, badges and status indicators.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `text` | `string` | — | Required |
+| `icon` | `string` | `undefined` | Iconify name |
+| `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | |
+| `clickable` | `boolean` | `false` | Renders as `<button>` |
+| `linkable` | `{ href: string, target?: string }` | `undefined` | Renders as `<a>` |
+
+Emits: `chip-click` (only when `clickable: true`)
+
+```vue
+<BaseChip text="Vue.js" icon="lucide:code" variant="outline" />
+<BaseChip text="Active" icon="lucide:check-circle" variant="primary" :clickable="true" @chip-click="onSelect" />
+```
+
+### `BaseDialog`
+
+Modal dialog with size variants, scroll lock and focus trap.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `isOpen` | `boolean` | — | Required |
+| `title` | `string` | — | Required |
+| `subtitle` | `string` | `undefined` | |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'full'` | `'sm'` | |
+
+Emits: `(e: 'close', value: false): void`
+Slots: `default` (body), `header` (below title bar), `footer` (bottom actions)
+Behaviour: closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
+
+```vue
+<BaseDialog :is-open="isOpen" title="Confirm action" size="md" @close="isOpen = false">
+  <p>Are you sure you want to proceed?</p>
+  <template #footer>
+    <BaseButton variant="outline" @click="isOpen = false">Cancel</BaseButton>
+    <BaseButton @click="onConfirm">Confirm</BaseButton>
+  </template>
+</BaseDialog>
+```
+
+### `BaseAccordion`
+
+Collapsible section. Can be controlled externally or manage its own state.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `id` | `string` | — | Required |
+| `title` | `string` | — | Required |
+| `icon` | `string` | `undefined` | Iconify name shown in icon box |
+| `isOpen` | `boolean` | `undefined` | If omitted, accordion manages state internally |
+
+Emits: `toggle` (only when `isOpen` is controlled externally)
+Slot: `default` (body content)
+
+### `BaseIconButton`
+
+Icon-only button with active state styling.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `icon` | `string` | — | Required. Iconify name |
+| `ariaLabel` | `string` | `undefined` | Always set it |
+| `isActive` | `boolean` | `false` | Active/pressed state |
+
+Emits: `(e: 'click'): void`
+
+### `BaseIconMenu`
+
+Dropdown menu with floating positioning and keyboard navigation.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `icon` | `string` | — | Required. Trigger button icon |
+| `items` | `MenuItem[]` | — | Required |
+| `selectedItemId` | `string \| null` | `null` | Highlighted item |
+
+Emits: `(e: 'select', itemId: string): void`
+
+```vue
+<BaseIconMenu
+  icon="lucide:more-vertical"
+  :items="actions"
+  :selected-item-id="activeAction"
+  @select="onActionSelect"
+/>
+```
+
+### `BaseCloseButton`
+
+Accessible close button. No props.
+
+Emits: `(e: 'close', value: false): void`. Renders a `lucide:x` icon button.
+
+### `BaseMediaCarousel`
+
+Image/media carousel with navigation controls. See `app/components/base/media-carousel/BaseMediaCarousel.vue` for the full prop reference.
+
+### `BaseRichText`
+
+Renders a `RichBlock[]` array (Strapi rich text format) as sanitised HTML via `blocksToHtml` + `useSanitize`. Never write `v-html` directly — always use this component. See `app/components/base/rich-text/BaseRichText.vue` for the full prop reference.
+
+---
+
+## 9. Composables & Utils
+
+### `useAppNotifications()`
+
+Global notification system. State is shared across the app via `useState`.
+
+```ts
+const { notifications, success, warning, error, info, removeNotification, clearNotifications } = useAppNotifications()
+
+info({
+  title: 'Heads up',
+  message: 'Your session will expire soon.',
+  icon: 'lucide:bell',
+  dismissible: true,
+  autoClose: true,
+  duration: 5000,
+})
+```
+
+All four methods (`success`, `warning`, `error`, `info`) accept `Omit<NotificationItem, 'type' | 'id'>`. Must be called client-side only — the composable guards this internally.
+
+### `useFloatingUi(config?)`
+
+Wrapper around `@floating-ui/vue` for dropdown/tooltip positioning.
+
+```ts
+const { reference, floating, floatingStyles, open, toggleFloating } = useFloatingUi({
   placement: 'bottom-start',
   offset: 8,
+  strategy: 'absolute',
 })
 ```
 
-#### `useLockScroll()`
+Bind `reference` and `floating` via `ref` on the trigger and panel elements. Bind `floatingStyles` to `:style` on the floating panel.
 
-Lock/unlock body scroll (useful for modals).
+### `useLockScroll()`
 
-```typescript
-const { lockScroll, unlockScroll } = useLockScroll()
+Prevents page scroll. Multi-caller safe — each instance holds its own owner ID.
 
-// Lock scroll when modal opens
-onMounted(() => lockScroll())
+```ts
+const { lock, unlock, isLocked } = useLockScroll()
 
-// Unlock when modal closes
-onUnmounted(() => unlockScroll())
+lock()    // adds app-scroll-locked class to <html>
+unlock()  // removes it only when no other caller holds a lock
 ```
 
-#### `useSanitize(html)`
+### `useSanitize()`
 
-Sanitize HTML to prevent XSS attacks.
+XSS-safe HTML rendering via `isomorphic-dompurify`.
 
-```typescript
+```ts
 const { sanitizeHtml } = useSanitize()
-
-const cleanHtml = sanitizeHtml('<script>alert("xss")</script><p>Safe content</p>')
-// Result: '<p>Safe content</p>'
+const clean = sanitizeHtml(dirtyHtml) // use via v-html inside BaseRichText only
 ```
+
+Server-side: skips DOMPurify (content trusted from CMS), converts `\n` to `<br>`. Client-side: full DOMPurify sanitisation with allowlist of safe tags.
+
+### `generateUuid()`
+
+Returns a random UUID v4 string.
+
+```ts
+const id = generateUuid() // e.g. '550e8400-e29b-41d4-a716-446655440000'
+```
+
+### `blocksToHtml(blocks)`
+
+Converts a `RichBlock[]` array (Strapi rich text format) to an HTML string. Pair with `useSanitize().sanitizeHtml()` before passing to `v-html` — or use via `BaseRichText` directly.
 
 ---
 
-### 🖼️ Image Optimization
+## 10. AI Tooling — Prompts & Instructions
 
-#### Using Nuxt Image
+This repository ships with pre-configured [GitHub Copilot](https://github.com/features/copilot) context that makes the AI assistant aware of the project's conventions, design system and domain. All configuration lives under `.github/` and is versioned alongside the code.
 
-```vue
-<template>
-  <!-- Local images (from public/) -->
-  <NuxtImg
-    src="/images/hero.jpg"
-    alt="Hero image"
-    width="800"
-    height="600"
-    format="webp"
-    loading="lazy"
-  />
+### How GitHub Copilot is configured
 
-  <!-- Cloudinary images -->
-  <NuxtImg
-    provider="cloudinary"
-    src="/sample.jpg"
-    alt="Sample"
-    width="400"
-    height="300"
-  />
+| File / folder | Purpose |
+|---|---|
+| `.github/copilot-instructions.md` | Global rules: app context, response language, stack, naming conventions |
+| `.github/instructions/*.instructions.md` | Scoped rules loaded automatically per file type (e.g. only for `**/*.vue` files) |
+| `.github/prompts/*.prompt.md` | Reusable Agent-mode workflows triggered by a phrase or `#filename` syntax |
 
-  <!-- External images (requires domain whitelisting) -->
-  <NuxtImg
-    src="https://example.com/image.jpg"
-    alt="External"
-    width="600"
-    height="400"
-  />
-</template>
-```
+### Available prompts
 
-**Configure external domains in `nuxt.config.ts`:**
+| Prompt file | Trigger phrases | What it does |
+|---|---|---|
+| `init-project.prompt.md` | "Inizializziamo il progetto" · "Reset del progetto" | Collects project name and context; renames the app across all config files; resets version to `1.0.0`; audits and updates instruction files |
+| `update-docs.prompt.md` | "Aggiorna la documentazione" · "Aggiorna il README" | Compares README with the actual codebase and rewrites it as a structured documentation book |
+| `check-lint.prompt.md` | "Check del lint" · "Il progetto è pulito?" | Runs `eslint --fix`, reports remaining warnings and blocking errors |
+| `check-build.prompt.md` | "Check del build" · "Il progetto builda?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
+| `bump-version.prompt.md` | "Aggiornami il progetto alla versione X.Y.Z" | Detects changes via git, shows a CHANGELOG draft for approval, then updates `package.json` version, `CHANGELOG.md` and README badges |
+| `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
+| `check-gsc.prompt.md` | "Check GSC" · "Verifica la SEO" · "Il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
 
-```typescript
-image: {
-  domains: [
-    'https://api.example.com',
-    'https://cdn.yoursite.com',
-  ],
-}
-```
+### How to run a prompt
 
-#### Icons
+**Option A — Trigger phrase**
 
-```vue
-<template>
-  <!-- MDI icons -->
-  <Icon name="mdi:home" size="24" />
-  <Icon name="mdi:account-circle" size="32" color="blue" />
+1. Open the **Copilot Chat** panel in VS Code
+2. Switch to **Agent mode**
+3. Type one of the trigger phrases from the table above
 
-  <!-- Flag icons -->
-  <Icon name="flagpack:it" size="24" />
-  <Icon name="flagpack:us" size="24" />
-</template>
-```
+**Option B — Direct invocation**
 
-Browse available icons:
-- [MDI Icons](https://icon-sets.iconify.design/mdi/)
-- [Flagpack Icons](https://icon-sets.iconify.design/flagpack/)
+1. Open **Copilot Chat** in **Agent mode**
+2. Type `#` followed by the prompt filename (e.g. `#init-project.prompt.md`) and select it from the picker
+3. Send the message
+
+> All prompts require **Agent mode**. They will not work in Ask or Chat mode.
+
+### Instruction files
+
+| File | Applies to | Governs |
+|---|---|---|
+| `design-system.instructions.md` | `**/*.vue` | CSS tokens, colours, typography, utilities, animations, icons |
+| `components.instructions.md` | `**/components/**` | Full API catalogue for all `Base*` + `The*` components, creation rules |
+| `pages-layouts.instructions.md` | `**/pages/**`, `**/layouts/**` | Nuxt 4 file-based routing, page template, SEO, i18n, data fetching |
+| `composables-utils.instructions.md` | `**/composables/**` | Available composables, utils, global TypeScript types, SSR-safe patterns |
+| `project-config.instructions.md` | `nuxt.config.ts`, `package.json` | Complete `nuxt.config.ts` key reference, scripts, dependencies, env vars |
 
 ---
 
-### ⚙️ Environment Variables
+## 11. Deployment
 
-Create a `.env` file in the project root:
+### Netlify (default)
 
-```env
-# API Configuration
-NUXT_PUBLIC_API_URL=https://api.yoursite.com
+This template is pre-configured for Netlify. The Nitro preset is set to `netlify` in `nuxt.config.ts`.
 
-# Cloudinary
-NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud-name
-
-# CMS (Strapi, etc.)
-NUXT_PUBLIC_STRAPI_URL=https://cms.yoursite.com
-
-# Analytics
-NUXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-```
-
-**Access in your app:**
-
-```typescript
-const config = useRuntimeConfig()
-const apiUrl = config.public.apiUrl
-```
-
-> **⚠️ Important:** Only variables prefixed with `NUXT_PUBLIC_` are exposed to the client.
-
----
-
-## 📦 Deployment
-
-### Netlify (Default Configuration)
-
-This template is pre-configured for Netlify deployment.
-
-**1. Build your app:**
 ```bash
 npm run build
 ```
 
-**2. Deploy to Netlify:**
-- Connect your GitHub repository to Netlify
-- Build command: `npm run build`
-- Publish directory: `.output/public`
+Connect your GitHub repository to Netlify with:
+- **Build command:** `npm run build`
+- **Publish directory:** `.output/public`
 
-**3. Environment variables:**
-Add your `.env` variables in Netlify dashboard under **Site settings → Environment variables**.
+Add environment variables under **Site settings → Environment variables**.
 
----
+### Other targets
 
-### Vercel
+Change the `nitro.preset` in `nuxt.config.ts`:
 
-**1. Change preset in `nuxt.config.ts`:**
-```typescript
+| Target | Preset |
+|---|---|
+| Vercel | `'vercel'` |
+| Cloudflare Pages | `'cloudflare-pages'` |
+| Node.js server | `'node-server'` |
+
+```ts
 nitro: {
   preset: 'vercel',
 }
 ```
 
-**2. Deploy:**
-```bash
-npm run build
-vercel deploy
+Then run `npm run build` and deploy the `.output/` folder to your target.
+
+### Environment variables
+
+Create a `.env` file at the project root. All client-side variables must be prefixed with `NUXT_PUBLIC_`:
+
+```env
+NUXT_PUBLIC_API_URL=https://api.yoursite.com
 ```
+
+Access them in your app via `useRuntimeConfig()`. Declare public vars in `nuxt.config.ts → runtimeConfig.public`.
 
 ---
 
-### Cloudflare Pages
+## 12. Versioning
 
-**1. Change preset:**
-```typescript
-nitro: {
-  preset: 'cloudflare-pages',
-}
-```
+The project uses manual versioning via `package.json` and maintains a `CHANGELOG.md` following the [Keep a Changelog](https://keepachangelog.com) convention with Semantic Versioning.
 
-**2. Build and deploy:**
-```bash
-npm run build
-# Deploy .output/public to Cloudflare Pages
-```
-
----
-
-### Node.js Server
-
-**1. Change preset:**
-```typescript
-nitro: {
-  preset: 'node-server',
-}
-```
-
-**2. Build and run:**
-```bash
-npm run build
-node .output/server/index.mjs
-```
-
-> **📚 More deployment options:** [Nuxt Deployment Docs](https://nuxt.com/docs/getting-started/deployment)
-
----
-
-## 🔄 CI/CD Workflows
-
-This template includes **GitHub Actions** workflows for automated testing and releasing.
-
-### Continuous Integration (CI)
-
-**Triggers:**
-- Push to `main`, `develop`, `release/**` branches
-- Pull requests to `main`
-
-**Actions:**
-1. ✅ Checkout code
-2. ✅ Install dependencies (`npm ci`)
-3. ✅ Run linter (`npm run lint`)
-4. ✅ Build app (`npm run build`)
-
-**Smart Skip:** The workflow automatically skips heavy steps for **Release Please PRs** (only marks as passed).
-
-**Workflow file:** `.github/workflows/ci.yml`
-
----
-
-### Automated Versioning (Release Please)
-
-**Trigger:** Push to `main` branch
-
-**What it does:**
-1. Analyzes **conventional commits** (e.g., `feat:`, `fix:`, `chore:`)
-2. Creates/updates a **Release PR** with:
-   - Auto-generated changelog
-   - Version bump in `package.json`
-3. When merged, creates a **GitHub Release** with tags
-
-**Commit Message Format:**
-```bash
-# Features
-git commit -m "feat: add dark mode support"
-
-# Bug fixes
-git commit -m "fix: resolve navigation issue on mobile"
-
-# Breaking changes
-git commit -m "feat!: redesign authentication system"
-
-# Chores (no release)
-git commit -m "chore: update dependencies"
-```
-
-> **💡 Tip:** Use conventional commits to automate versioning!
-
-**Workflow file:** `.github/workflows/release-please.yml`
-
----
-
-### Starting Fresh
-
-If you want your project to start from **version 0.1.0** instead of inheriting the template's version:
+### Workflow — from bump to tag
 
 ```bash
-# Clear changelog
-echo "# Changelog" > CHANGELOG.md
+# 1. Update the version in package.json manually or via npm
+npm version patch   # 1.0.0 → 1.0.1
+npm version minor   # 1.0.0 → 1.1.0
+npm version major   # 1.0.0 → 2.0.0
 
-# Reset version
-npm version 0.1.0 --no-git-tag-version
+# 2. Update CHANGELOG.md with the new release section
 
-# Commit changes
-git add .
-git commit -m "chore: initialize project from template"
+# 3. Stage and commit
+git add package.json CHANGELOG.md
+git commit -m "chore: bump version to 1.0.1"
+
+# 4. Create an annotated tag
+git tag -a "v1.0.1" -m "Release v1.0.1"
+
+# 5. Push commit and tag
+git push origin main
+git push origin v1.0.1
 ```
 
----
+### Using the `bump-version` prompt
 
-## 🧪 What You Can Build
+The `bump-version` Copilot Agent prompt automates steps 1–5: it detects changes via `git log`, generates a CHANGELOG draft for approval, updates `package.json`, `CHANGELOG.md` and README badges, then creates the commit and tag. See [AI Tooling](#10-ai-tooling--prompts--instructions) for usage.
 
-This template is perfect for:
+### Tag naming convention
 
-✅ **Landing Pages** - Fast, SEO-optimized, multi-language
-✅ **Marketing Sites** - With optimized images and analytics ready
-✅ **Documentation Sites** - Custom styling and navigation
-✅ **SaaS Applications** - Notification system and user dashboards
-✅ **Portfolio Websites** - Dynamic routing and image galleries
-✅ **E-commerce Stores** - Product pages with i18n support
+| Pattern | Example | When to use |
+|---|---|---|
+| `vMAJOR.MINOR.PATCH` | `v1.2.0` | Every production release |
+| `vMAJOR.MINOR.PATCH-beta.N` | `v2.0.0-beta.1` | Pre-release / beta builds |
 
 ---
 
-## 💡 Best Practices
+## 13. Dependencies
 
-### File Organization
-
-- **Components:** Use `PascalCase` for component filenames
-- **Composables:** Prefix with `use` (e.g., `useAuth.ts`)
-- **Utils:** Pure functions in `app/utils/`
-- **Types:** Global types in `app/types/global.d.ts`
-
-### Code Style
-
-- Follow ESLint rules (run `npm run lint:fix` before committing)
-- Use TypeScript for type safety
-- Prefer composition API over options API
-- Use auto-imports instead of manual imports
-
-### Performance
-
-- Lazy load components with `<ClientOnly>` when not needed for SSR
-- Use `<NuxtImg>` instead of `<img>` for automatic optimization
-- Prerender static pages in `nuxt.config.ts` → `routeRules`
-- Keep bundle size small (check with `npm run build -- --analyze`)
-
----
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**Issue:** `Cannot find module 'isomorphic-dompurify'`
-**Solution:** This is expected during server builds. The module is excluded in `nuxt.config.ts` → `nitro.externals`.
-
-**Issue:** Icons not showing
-**Solution:** Make sure icon collections are installed: `npm i @iconify-json/mdi @iconify-json/flagpack`
-
-**Issue:** i18n routes not working
-**Solution:** Check `nuxt.config.ts` → `i18n.strategy` and ensure locale files exist in `i18n/locales/`
-
-**Issue:** Images not loading from external domains
-**Solution:** Add domain to `nuxt.config.ts` → `image.domains`
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how you can help:
-
-1. **Report bugs** - Open an issue with details
-2. **Suggest features** - Share your ideas
-3. **Submit PRs** - Fork, create a branch, and submit a pull request
-
-**Development Setup:**
-```bash
-git clone https://github.com/stefanoBid/sb-nuxt-template.git
-cd sb-nuxt-template
-npm install
-npm run dev
-```
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-Feel free to use it for personal or commercial projects.
-
----
-
-## 👤 Author
-
-**Stefano Biddau**
-
-📧 Email: biddau.stefano99@gmail.com
-
-🐙 GitHub: [@stefanoBid](https://github.com/stefanoBid)
-
-🌐 Website: [stefanobiddau.com](https://stefanobiddau.com)
-
----
-
-## 🎨 More Templates
-
-Looking for more starter templates? Check out the **SB Templates Project** collection!
-
-👉 **[Browse All Templates](https://stefanobiddau.com/my-projects)**
-
-Visit the website and navigate to the **SB TEMPLATES PROJECT** section to discover more production-ready templates for different frameworks and use cases.
-
----
-
-## 🌟 Show Your Support
-
-If this template helped you build faster, give it a ⭐️ on GitHub!
-
-Your support motivates me to maintain and improve this project.
-
----
-
-## 📚 Resources
-
-- [Nuxt 3 Documentation](https://nuxt.com/docs)
-- [Vue 3 Documentation](https://vuejs.org/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/)
-- [VueUse Documentation](https://vueuse.org/)
-- [Nuxt i18n Documentation](https://i18n.nuxtjs.org/)
+| Package | Version | Purpose |
+|---|---|---|
+| `nuxt` | ^4.x | Core framework |
+| `vue` | ^3.5.x | UI framework |
+| `vue-router` | ^5.x | Routing |
+| `tailwindcss` | ^4.x | Utility-first CSS |
+| `@tailwindcss/vite` | ^4.x | Tailwind v4 Vite plugin |
+| `@nuxt/icon` | ^2.x | SVG icon system (lucide + flagpack) |
+| `@nuxt/image` | ^2.x | Image optimisation (ipx + Cloudinary) |
+| `@nuxtjs/i18n` | ^10.x | Multi-language support |
+| `@nuxtjs/color-mode` | ^4.x | Dark/light theme |
+| `@vueuse/nuxt` | ^14.x | Vue composition utilities |
+| `@floating-ui/vue` | ^1.x | Floating element positioning |
+| `isomorphic-dompurify` | ^3.x | XSS-safe HTML sanitisation |
+| `@iconify-json/lucide` *(dev)* | ^1.x | Lucide icon set |
+| `@iconify-json/flagpack` *(dev)* | ^1.x | Flag icon set |
+| `@nuxt/eslint` *(dev)* | ^1.x | ESLint + stylistic rules |
+| `@types/node` *(dev)* | ^25.x | Node.js type definitions |
 
 ---
 
 <div align="center">
 
-**Happy coding! 🚀**
+Built with ❤️ by **Stefano Biddau**
 
-Built with ❤️ by developers, for developers.
+[stefanobiddau.com](https://stefanobiddau.com) · [@stefanoBid](https://github.com/stefanoBid)
 
 </div>

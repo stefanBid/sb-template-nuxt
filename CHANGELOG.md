@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.4.0] — 2026-04-03
+
+### Features
+- Enhance SEO readiness with updated meta tags, translations and new GSC check prompt
+- Add optimized dependencies for Vite configuration
+- Update icons in accordions on the home page
+- Add AI tooling support (Copilot instructions, prompt workflows) to improve developer experience
+
+### Changed
+- Add comprehensive documentation for components, composables, design system, pages, layouts and project configuration
+
+### Dependencies
+- Update dependencies and add dependency check workflow
+
 ## [2.3.1](https://github.com/stefanBid/sb-template-nuxt/compare/v2.3.0...v2.3.1) (2026-03-19)
 
 
