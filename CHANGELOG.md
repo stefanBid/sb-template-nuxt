@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.4.2] — 2026-04-03
+
+### Fixed
+- Add FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 environment variable to CI and release-please workflows to resolve Node.js 20 deprecation warning on GitHub Actions
+
 ## [2.4.0](https://github.com/stefanBid/sb-template-nuxt/compare/v2.3.1...v2.4.0) (2026-04-03)
 
 
