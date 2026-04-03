@@ -1,11 +1,9 @@
 # Changelog
 
-## [2.4.1](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.0...v2.4.1) (2026-04-03)
+## [2.4.2] — 2026-04-03
 
-
-### Bug Fixes
-
-* add FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 environment variable to CI workflows ([#83](https://github.com/stefanBid/sb-template-nuxt/issues/83)) ([3e5a0a7](https://github.com/stefanBid/sb-template-nuxt/commit/3e5a0a729cd615cc64c8ad9a091717aeaad51fcf))
+### Fixed
+- Add FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 environment variable to CI and release-please workflows to resolve Node.js 20 deprecation warning on GitHub Actions
 
 ## [2.4.0](https://github.com/stefanBid/sb-template-nuxt/compare/v2.3.1...v2.4.0) (2026-04-03)
 
