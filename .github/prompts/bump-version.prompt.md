@@ -73,11 +73,30 @@ Ask the user:
 
 ---
 
-## Step 4 — Apply all changes
+## Step 4 — Choose install strategy
 
-Once the user confirms, apply all changes.
+Before applying any change, ask the user:
 
-### 4a. Update `package.json`
+> "Vuoi fare un aggiornamento **soft** (`--package-lock-only`) o una **pulizia completa** (`rm -rf node_modules && npm i`)?"
+
+- **Soft** (default) → after updating `package.json`, run:
+  ```
+  npm install --package-lock-only
+  ```
+- **Pulizia completa** → after updating `package.json`, run:
+  ```
+  rm -rf node_modules package-lock.json && npm install
+  ```
+
+Wait for the user's answer before proceeding.
+
+---
+
+## Step 5 — Apply all changes
+
+Once the user confirms the CHANGELOG and the install strategy, apply all changes.
+
+### 5a. Update `package.json`
 
 Edit the `version` field in `package.json` directly:
 
@@ -85,12 +104,9 @@ Edit the `version` field in `package.json` directly:
 "version": "X.Y.Z"
 ```
 
-Then run to sync the lock file:
-```
-npm install --package-lock-only
-```
+Then run the install command chosen in Step 4.
 
-### 4b. Update `CHANGELOG.md`
+### 5b. Update `CHANGELOG.md`
 
 Prepend a new entry at the top of the changelog (below the `# Changelog` heading) following the Keep a Changelog format:
 
@@ -109,7 +125,7 @@ Prepend a new entry at the top of the changelog (below the `# Changelog` heading
 
 Use today's date in `YYYY-MM-DD` format. Only include sections that have entries.
 
-### 4c. Update version badges in `README.md`
+### 5c. Update version badges in `README.md`
 
 Find all version-related badges (e.g. `![Version](...)`, `![Nuxt](...)`, `![Node.js](...)`) and update any that reference the old version string to the new one.
 
@@ -120,7 +136,7 @@ If a generic version badge exists, update it:
 
 ---
 
-## Step 5 — Confirm to the user
+## Step 6 — Confirm to the user
 
 Provide a concise confirmation in Italian:
 - New version applied
