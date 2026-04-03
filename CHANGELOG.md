@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.3](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.2...v2.4.3) (2026-04-03)
+
+
+### Bug Fixes
+
+* remove unused dependencies from package-lock.json ([#87](https://github.com/stefanBid/sb-template-nuxt/issues/87)) ([6c451b0](https://github.com/stefanBid/sb-template-nuxt/commit/6c451b09684a4c4c722d1e32767412881d6b13fe))
+
 ## [2.4.3] — 2026-04-03
 
 ### Fixed
