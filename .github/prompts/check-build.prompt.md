@@ -29,6 +29,8 @@ Parse the output. Collect every type error with:
 
 If this command is not available (not installed), skip to Step 2.
 
+> **Note:** `vue-tsc` must be kept as a dev dependency to ensure `npx nuxt typecheck` works correctly. Do not remove it from `package.json`.
+
 ---
 
 ## Step 2 — Production build
