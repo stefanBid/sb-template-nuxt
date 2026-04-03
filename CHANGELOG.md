@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.2](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.1...v2.4.2) (2026-04-03)
+
+
+### Bug Fixes
+
+* template version ([#85](https://github.com/stefanBid/sb-template-nuxt/issues/85)) ([bb8160b](https://github.com/stefanBid/sb-template-nuxt/commit/bb8160bd3f90471bec9ae4584f2c9d63c8add875))
+
 ## [2.4.2] — 2026-04-03
 
 ### Fixed
