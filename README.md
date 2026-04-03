@@ -5,7 +5,7 @@
 
   # SB-Template Nuxt
 
-  ![Version](https://img.shields.io/badge/version-2.4.3-blue)
+  ![Version](https://img.shields.io/badge/version-2.4.4-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3-4FC08D?logo=vue.js)](https://vuejs.org)
@@ -707,6 +707,7 @@ This repository ships with pre-configured [GitHub Copilot](https://github.com/fe
 | `bump-version.prompt.md` | "Aggiornami il progetto alla versione X.Y.Z" | Detects changes via git, shows a CHANGELOG draft for approval, then updates `package.json` version, `CHANGELOG.md` and README badges |
 | `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
 | `check-gsc.prompt.md` | "Check GSC" · "Verifica la SEO" · "Il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
+| `full-checkup.prompt.md` | "Checkup completo" · "Full checkup" · "Controlla tutto" | Orchestrates all four checks (dependencies, SEO, build, lint) in sequence; auto-proposes a version bump based on findings; optionally updates documentation |
 
 ### How to run a prompt
 

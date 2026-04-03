@@ -274,6 +274,24 @@ Prompt files in `.github/prompts/` — require **Agent mode**. Invoke them by ty
 | `update-docs.prompt.md` | "aggiorna la documentazione" / "aggiorna il README" | Reads the full project and rewrites `README.md` as a structured documentation book |
 | `init-project.prompt.md` | "Inizializziamo il progetto" / "inizializza il progetto" / "reset del progetto" | Sets project name, app context, username; resets version and CHANGELOG; syncs instruction files |
 | `check-gsc.prompt.md` | "check GSC" / "verifica la SEO" / "controlla sitemap e meta tag" / "il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls |
+| `full-checkup.prompt.md` | "checkup completo" / "full checkup" / "fai un checkup del progetto" / "controlla tutto" | Orchestrates dependencies, SEO, build and lint checks in sequence; auto-bumps version; optionally updates docs |
+
+---
+
+## Documentation sync — mandatory rule
+
+> **Every change made to the project that creates a discrepancy with `README.md` MUST be followed by a documentation update in the same session.**
+
+This applies to any of the following changes:
+- Adding, removing or renaming a component, page, composable, utility or layout
+- Adding or removing a prompt file in `.github/prompts/`
+- Adding or removing an instruction file in `.github/instructions/`
+- Adding or removing a dependency (runtime or dev)
+- Changing `nuxt.config.ts` in a way that affects the documented configuration
+- Changing the project structure documented in the README tree
+- Changing naming conventions or global code rules
+
+**What to update:** locate the affected section(s) in `README.md` and edit only those sections — do not rewrite the full README unless explicitly asked. If the change is trivial (e.g. a patch version bump in a badge), a targeted edit to the relevant line is sufficient.
 
 ---
 

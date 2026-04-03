@@ -1,6 +1,6 @@
 {
   "name": "sb-nuxt-template",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "A simple Nuxt 4 template to start your projects quickly.",
   "author": "Stefano Biddau <biddau.stefano99@gmail.com>",
   "type": "module",
@@ -24,7 +24,7 @@
     "@tailwindcss/vite": "^4.2.2",
     "@vueuse/core": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",
-    "eslint": "^10.1.0",
+    "eslint": "^10.2.0",
     "isomorphic-dompurify": "^3.7.1",
     "nuxt": "^4.4.2",
     "tailwindcss": "^4.2.2",
@@ -34,7 +34,8 @@
   "devDependencies": {
     "@iconify-json/flagpack": "^1.2.7",
     "@iconify-json/lucide": "^1.2.101",
-    "@types/node": "^25.5.0"
+    "@types/node": "^25.5.2",
+    "vue-tsc": "^3.2.6"
   },
   "engines": {
     "node": ">=24.11.0"
