@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.4](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.3...v2.4.4) (2026-04-03)
+
+
+### Bug Fixes
+
+* build check process and improve AI prompts ([#89](https://github.com/stefanBid/sb-template-nuxt/issues/89)) ([5ddca1c](https://github.com/stefanBid/sb-template-nuxt/commit/5ddca1cb38644c3718dd04128544bd95a29975ac))
+
 ## [2.4.4] — 2026-04-04
 
 ### Dependencies
