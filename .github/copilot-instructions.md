@@ -135,6 +135,15 @@ Each file covers a specific area of the codebase. Read the relevant file with `r
 
 ## Global code conventions
 
+### npm install policy
+
+> **On the `main` branch, `npm install` (aliased as `npm i`) is FORBIDDEN. Always use `npm ci` instead.**
+
+- `npm ci` is the only permitted install command on `main` — it installs dependencies exactly as pinned in `package-lock.json` and never mutates it.
+- `npm install` is allowed on all other branches (feature, fix, develop, etc.) for adding/updating packages.
+- Use the `npm run si` script (defined in `package.json`) instead of bare `npm install` whenever you are unsure which branch you are on. The script auto-detects the branch, runs `npm ci` on `main` and `npm install` elsewhere.
+- When suggesting install commands in chat or generated scripts, always follow this policy.
+
 ### Vue & Nuxt 4
 - **All hardcoded strings and code comments must be in English.**
 - **`<script setup lang="ts">`** for all Vue SFCs — no Options API, no `defineComponent`.
