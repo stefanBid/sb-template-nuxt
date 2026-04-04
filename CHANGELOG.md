@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.4.5] — 2026-04-04
+
+### Fixed
+- Added `scripts/safe-install.sh` — script that runs `npm ci` on `main` and `npm install` on any other branch
+- Added `npm run si` script alias in `package.json` for convenient safe-install execution
+- Updated AI prompt files (`check-dependencies.prompt.md`, `bump-version.prompt.md`) to use `npm run si` instead of bare `npm install`
+- Updated `README.md` installation instructions to use `npm run si`
+
 ## [2.4.4](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.3...v2.4.4) (2026-04-03)
 
 
