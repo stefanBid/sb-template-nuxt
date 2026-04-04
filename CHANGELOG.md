@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.5](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.4...v2.4.5) (2026-04-04)
+
+
+### Bug Fixes
+
+* dependencies install script ([#91](https://github.com/stefanBid/sb-template-nuxt/issues/91)) ([de811e4](https://github.com/stefanBid/sb-template-nuxt/commit/de811e4b79f8a9c86c8daef7d09f4576d9bbfeb1))
+
 ## [2.4.5] — 2026-04-04
 
 ### Fixed
