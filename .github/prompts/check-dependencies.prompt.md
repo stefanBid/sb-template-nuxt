@@ -87,10 +87,10 @@ Do **not** run `npm update` as a substitute — it only changes `package-lock.js
 After all constraints are updated, run:
 
 ```
-npm install
+npm run si
 ```
 
-This resolves and locks the new versions in `package-lock.json`.
+This runs the safe-install script which automatically uses `npm ci` on `main` and `npm install` on other branches, ensuring a consistent and reproducible environment.
 
 ---
 

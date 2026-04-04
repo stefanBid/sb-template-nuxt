@@ -77,7 +77,7 @@ Ask the user:
 
 Before applying any change, ask the user:
 
-> "Vuoi fare un aggiornamento **soft** (`--package-lock-only`) o una **pulizia completa** (`rm -rf node_modules && npm i`)?"
+> "Vuoi fare un aggiornamento **soft** (`--package-lock-only`) o una **pulizia completa** (`rm -rf node_modules && npm run si`)?"
 
 - **Soft** (default) → after updating `package.json`, run:
   ```
@@ -85,7 +85,7 @@ Before applying any change, ask the user:
   ```
 - **Pulizia completa** → after updating `package.json`, run:
   ```
-  rm -rf node_modules package-lock.json && npm install
+  rm -rf node_modules && npm run si
   ```
 
 Wait for the user's answer before proceeding.

@@ -5,7 +5,7 @@
 
   # SB-Template Nuxt
 
-  ![Version](https://img.shields.io/badge/version-2.4.4-blue)
+  ![Version](https://img.shields.io/badge/version-2.4.5-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3-4FC08D?logo=vue.js)](https://vuejs.org)
@@ -99,6 +99,7 @@ Visit **http://localhost:3000**.
 | `npm run preview` | Preview production build locally |
 | `npm run lint` | Check code quality with ESLint |
 | `npm run lint:fix` | Auto-fix ESLint issues |
+| `npm run si` | Safe install dependencies (auto-detects branch, and run `npm install` or `npm ci`) |
 
 ---
 
