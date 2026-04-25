@@ -276,14 +276,13 @@ Prompt files in `.github/prompts/` — require **Agent mode**. Invoke them by ty
 
 | File | Trigger phrase | What it does |
 |---|---|---|
-| `bump-version.prompt.md` | "aggiornami il progetto alla versione X.Y.Z" | Updates `package.json` version, `CHANGELOG.md` entries and README badges |
 | `check-dependencies.prompt.md` | "verifichiamo le dipendenze" / "aggiorna le dipendenze" | Checks outdated packages, auto-updates safe ones, reports breaking changes, runs `npm audit` + `npm audit fix` |
 | `check-lint.prompt.md` | "check del lint" / "il progetto è pulito?" | Runs `eslint --fix`, then reports remaining warnings and blocking errors |
 | `check-build.prompt.md` | "check del build" / "il progetto builda?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
 | `update-docs.prompt.md` | "aggiorna la documentazione" / "aggiorna il README" | Reads the full project and rewrites `README.md` as a structured documentation book |
 | `init-project.prompt.md` | "Inizializziamo il progetto" / "inizializza il progetto" / "reset del progetto" | Sets project name, app context, username; resets version and CHANGELOG; syncs instruction files |
 | `check-gsc.prompt.md` | "check GSC" / "verifica la SEO" / "controlla sitemap e meta tag" / "il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls |
-| `full-checkup.prompt.md` | "checkup completo" / "full checkup" / "fai un checkup del progetto" / "controlla tutto" | Orchestrates dependencies, SEO, build and lint checks in sequence; auto-bumps version; optionally updates docs |
+| `full-checkup.prompt.md` | "checkup completo" / "full checkup" / "fai un checkup del progetto" / "controlla tutto" | Orchestrates dependencies, SEO, build and lint checks in sequence; optionally updates docs |
 
 ---
 
