@@ -705,10 +705,9 @@ This repository ships with pre-configured [GitHub Copilot](https://github.com/fe
 | `update-docs.prompt.md` | "Aggiorna la documentazione" · "Aggiorna il README" | Compares README with the actual codebase and rewrites it as a structured documentation book |
 | `check-lint.prompt.md` | "Check del lint" · "Il progetto è pulito?" | Runs `eslint --fix`, reports remaining warnings and blocking errors |
 | `check-build.prompt.md` | "Check del build" · "Il progetto builda?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
-| `bump-version.prompt.md` | "Aggiornami il progetto alla versione X.Y.Z" | Detects changes via git, shows a CHANGELOG draft for approval, then updates `package.json` version, `CHANGELOG.md` and README badges |
 | `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
 | `check-gsc.prompt.md` | "Check GSC" · "Verifica la SEO" · "Il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
-| `full-checkup.prompt.md` | "Checkup completo" · "Full checkup" · "Controlla tutto" | Orchestrates all four checks (dependencies, SEO, build, lint) in sequence; auto-proposes a version bump based on findings; optionally updates documentation |
+| `full-checkup.prompt.md` | "Checkup completo" · "Full checkup" · "Controlla tutto" | Orchestrates all four checks (dependencies, SEO, build, lint) in sequence; optionally updates documentation |
 
 ### How to run a prompt
 
@@ -786,33 +785,23 @@ Access them in your app via `useRuntimeConfig()`. Declare public vars in `nuxt.c
 
 ## 12. Versioning
 
-The project uses manual versioning via `package.json` and maintains a `CHANGELOG.md` following the [Keep a Changelog](https://keepachangelog.com) convention with Semantic Versioning.
+Versioning is fully automated via the [Release Please](https://github.com/googleapis/release-please) GitHub Action (`.github/workflows/release-please.yml`).
 
-### Workflow — from bump to tag
+### How it works
 
-```bash
-# 1. Update the version in package.json manually or via npm
-npm version patch   # 1.0.0 → 1.0.1
-npm version minor   # 1.0.0 → 1.1.0
-npm version major   # 1.0.0 → 2.0.0
+On every push to `main`, Release Please analyses the commit history following the [Conventional Commits](https://www.conventionalcommits.org) specification and automatically:
 
-# 2. Update CHANGELOG.md with the new release section
+1. Creates or updates a **Release PR** that bumps `package.json` version and prepends a new entry to `CHANGELOG.md`
+2. When the Release PR is merged, creates a **GitHub Release** with an annotated tag
 
-# 3. Stage and commit
-git add package.json CHANGELOG.md
-git commit -m "chore: bump version to 1.0.1"
+### Commit convention
 
-# 4. Create an annotated tag
-git tag -a "v1.0.1" -m "Release v1.0.1"
-
-# 5. Push commit and tag
-git push origin main
-git push origin v1.0.1
-```
-
-### Using the `bump-version` prompt
-
-The `bump-version` Copilot Agent prompt automates steps 1–5: it detects changes via `git log`, generates a CHANGELOG draft for approval, updates `package.json`, `CHANGELOG.md` and README badges, then creates the commit and tag. See [AI Tooling](#10-ai-tooling--prompts--instructions) for usage.
+| Commit prefix | Bump type | Example |
+|---|---|---|
+| `fix:` | `patch` | `fix: correct redirect on login` |
+| `feat:` | `minor` | `feat: add dark mode toggle` |
+| `feat!:` / `BREAKING CHANGE:` | `major` | `feat!: remove legacy API endpoint` |
+| `chore:`, `docs:`, `style:`, `refactor:`, `test:` | none | `chore: update dependencies` |
 
 ### Tag naming convention
 

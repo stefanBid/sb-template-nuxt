@@ -1,6 +1,6 @@
 ---
 agent: agent
-description: 'Run a full project health checkup: dependencies, SEO, build, lint — then auto-bump the version and optionally update docs.'
+description: 'Run a full project health checkup: dependencies, SEO, build, lint — and optionally update docs.'
 ---
 
 # Workflow — Full Project Checkup
@@ -17,9 +17,8 @@ description: 'Run a full project health checkup: dependencies, SEO, build, lint 
 ## Overview
 
 This workflow orchestrates the four specific check prompts in order, collects all their results, and then:
-1. Decides whether to bump the version (and which type: patch / minor / major)
-2. Decides whether to update the documentation
-3. Applies the version bump via the dedicated prompt — or stops and asks you to fix blockers first
+1. Decides whether to update the documentation
+2. Stops and asks you to fix blockers first if there are blocking errors
 
 **This prompt does not duplicate logic.** It delegates to the existing prompts and aggregates their outcomes.
 
@@ -77,7 +76,7 @@ After all four checks, evaluate the full results.
 ### If there are blocking errors (build errors or lint errors that could not be auto-fixed):
 
 > Stop the workflow. Report clearly to the user:
-> "Ci sono problemi bloccanti che non posso risolvere autonomamente. Correggili manualmente e poi richiedi 'full checkup' di nuovo — oppure avvia direttamente il bump della versione con 'aggiornami il progetto alla versione X.Y.Z'."
+> "Ci sono problemi bloccanti che non posso risolvere autonomamente. Correggili manualmente e poi richiedi 'full checkup' di nuovo."
 
 List each blocker with: file path, rule / error type, description.
 
@@ -85,37 +84,7 @@ List each blocker with: file path, rule / error type, description.
 
 ---
 
-## Step 6 — Decide version bump
-
-If no blockers, analyse all the changes made during this checkup to determine the appropriate bump type:
-
-| Bump type | When to use |
-|---|---|
-| `patch` | Only dependency updates, lint auto-fixes, SEO meta tag corrections — no new features or breaking changes |
-| `minor` | New features added during the checkup (e.g. new pages, components, composables discovered to be missing) |
-| `major` | Breaking changes (rare from a checkup, but possible if a major dependency migration was applied) |
-
-Read the current `version` field in `package.json` to compute the new version number.
-
-Then propose the version bump to the user:
-> "In base alle modifiche effettuate propongo di aggiornare il progetto alla versione X.Y.Z (patch/minor/major). Confermi?"
-
-**Wait for explicit confirmation before proceeding.**
-
----
-
-## Step 7 — Apply version bump
-
-Once confirmed, follow the full workflow defined in `bump-version.prompt.md` to apply the version bump.
-
-The CHANGELOG entry must summarise **all changes made in this checkup session**, grouped by type:
-- `Dependencies` — packages updated
-- `Fixed` — lint fixes, build fixes, SEO corrections
-- `Changed` — any other changes
-
----
-
-## Step 8 — Decide whether to update documentation
+## Step 6 — Decide whether to update documentation
 
 After the version bump, evaluate whether the README needs updating:
 
@@ -137,7 +106,7 @@ If not, explicitly state:
 
 ---
 
-## Step 9 — Final summary report
+## Step 7 — Final summary report
 
 Provide a concise final report in Italian:
 
@@ -156,10 +125,7 @@ Provide a concise final report in Italian:
 ### 🧹 Lint
 - <esito sintetico>
 
-### 🔢 Versione
-- Aggiornata da X.Y.Z a X.Y.Z (patch/minor/major)
-
-### 📄 Documentazione
+###  Documentazione
 - Aggiornata / Non richiede aggiornamenti
 
 ### 🎯 Stato finale
