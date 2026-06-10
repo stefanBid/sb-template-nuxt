@@ -139,14 +139,6 @@ export default defineNuxtConfig({
 
   image: {
     provider: 'ipx',
-    providers: {
-      cloudinary: {
-        name: 'cloudinary',
-        options: {
-          baseURL: process.env.NUXT_PUBLIC_CLOUDINARY_BASE,
-        },
-      },
-    },
     domains: [],
     quality: 80,
     format: ['webp', 'avif', 'png'],

@@ -18,7 +18,7 @@ const { notifications, removeNotification, info } = useAppNotifications()
 // State
 
 const routes = computed(() => [
-  { name: t('nav.home'), path: localePath('index') },
+  { name: t('nav.home'), path: localePath('index'), routeName: 'index' },
 ] as Array<RouteItem>)
 
 const langs = [

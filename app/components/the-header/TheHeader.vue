@@ -20,6 +20,14 @@ const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 const open = useState('header-drawer-open', () => false)
 const isMdUp = import.meta.client ? useMediaQuery('(min-width: 768px)') : ref(false)
 const currentRoute = useRoute()
+const getRouteBaseName = useRouteBaseName()
+
+const isActiveRoute = (r: RouteItem) => {
+  if (r.disabled) {
+    return false
+  }
+  return r.routeName ? getRouteBaseName(currentRoute) === r.routeName : currentRoute.path === r.path
+}
 
 // Data
 
@@ -105,9 +113,8 @@ watch(isMdUp, (newVal) => {
                 v-if="!r.disabled"
                 class="ty-app-btn-label normal-case! cursor-pointer u-app-soft-transition u-app-focus rounded"
                 :class="{
-                  'text-app-contrast/70 hover:text-app-contrast font-normal!': currentRoute.path !== r.path && !r.disabled,
-                  'text-app-accent font-bold!': currentRoute.path === r.path && !r.disabled,
-                  'opacity-50 cursor-not-allowed text-app-contrast/70': r.disabled,
+                  'text-app-contrast/70 hover:text-app-contrast font-normal!': !isActiveRoute(r),
+                  'text-app-accent font-bold!': isActiveRoute(r),
                 }"
                 :to="r.path"
               >
