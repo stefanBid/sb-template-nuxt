@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.8](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.7...v2.4.8) (2026-06-10)
+
+
+### Bug Fixes
+
+* update dependencies and devDependencies in package.json ([#97](https://github.com/stefanBid/sb-template-nuxt/issues/97)) ([060e289](https://github.com/stefanBid/sb-template-nuxt/commit/060e28984797ff1afd30ad1c1335dc513d072960))
+
 ## [2.4.7](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.6...v2.4.7) (2026-05-24)
 
 
