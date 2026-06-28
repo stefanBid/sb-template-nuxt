@@ -16,27 +16,27 @@
     "si": "bash scripts/safe-install.sh"
   },
   "dependencies": {
-    "@floating-ui/vue": "^1.1.11",
+    "@floating-ui/vue": "^2.0.0",
     "@nuxt/eslint": "^1.16.0",
-    "@nuxt/icon": "^2.2.3",
+    "@nuxt/icon": "^2.2.4",
     "@nuxt/image": "^2.0.0",
     "@nuxtjs/color-mode": "^4.0.1",
     "@nuxtjs/i18n": "^10.4.0",
-    "@tailwindcss/vite": "^4.3.0",
+    "@tailwindcss/vite": "^4.3.1",
     "@vueuse/core": "^14.3.0",
     "@vueuse/nuxt": "^14.3.0",
-    "eslint": "^10.4.1",
-    "isomorphic-dompurify": "^3.16.0",
+    "eslint": "^10.6.0",
+    "isomorphic-dompurify": "^3.18.0",
     "nuxt": "^4.4.8",
-    "tailwindcss": "^4.3.0",
-    "vue": "^3.5.35",
+    "tailwindcss": "^4.3.1",
+    "vue": "^3.5.39",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@iconify-json/flagpack": "^1.2.7",
-    "@iconify-json/lucide": "^1.2.111",
-    "@types/node": "^25.9.2",
-    "vue-tsc": "^3.3.4"
+    "@iconify-json/flagpack": "^1.2.8",
+    "@iconify-json/lucide": "^1.2.114",
+    "@types/node": "^26.0.1",
+    "vue-tsc": "^3.3.5"
   },
   "engines": {
     "node": ">=24.11.0"
