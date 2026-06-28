@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.9](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.8...v2.4.9) (2026-06-28)
+
+
+### Bug Fixes
+
+* monthly checkup June 2026 ([#99](https://github.com/stefanBid/sb-template-nuxt/issues/99)) ([27ded2c](https://github.com/stefanBid/sb-template-nuxt/commit/27ded2c9ae8342e45657658d44ccfdd138f94d31))
+
 ## [2.4.8](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.7...v2.4.8) (2026-06-10)
 
 
