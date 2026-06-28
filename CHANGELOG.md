@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.10](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.9...v2.4.10) (2026-06-28)
+
+
+### Bug Fixes
+
+* update notification box styles to improve pointer events handling ([#101](https://github.com/stefanBid/sb-template-nuxt/issues/101)) ([57b5c84](https://github.com/stefanBid/sb-template-nuxt/commit/57b5c84f6a8bf896e524f55dd329fffdd3ebbe37))
+
 ## [2.4.9](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.8...v2.4.9) (2026-06-28)
 
 
