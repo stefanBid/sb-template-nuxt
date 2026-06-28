@@ -56,11 +56,11 @@ jobs:
 
       - name: Checkout repository
         if: steps.detect_release_please.outputs.is_release_please != 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node 24.11.0
         if: steps.detect_release_please.outputs.is_release_please != 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 24.11.0
           cache: npm
