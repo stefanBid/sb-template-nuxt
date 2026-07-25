@@ -5,7 +5,7 @@
 
   # SB-Template Nuxt
 
-  ![Version](https://img.shields.io/badge/version-2.4.10-blue)
+  ![Version](https://img.shields.io/badge/version-2.4.11-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4.4.8-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3.5.39-4FC08D?logo=vue.js)](https://vuejs.org)
@@ -18,6 +18,11 @@
   A Nuxt 4 starter template with an opinionated design system, reusable UI components, i18n, dark mode and pre-configured AI tooling. Clone it, initialise it for your project, and start building features on day one.
 
 </div>
+
+---
+
+> **⚠️ `nuxt` pinned to `4.4.8` (exact, no caret) — do not bump.**
+> `nuxt@4.5.0` ships a regression in `@nuxt/vite-builder` that breaks the dev server: local `css:` entries in `nuxt.config.ts` 404 (`Failed to resolve import ".../main.css" from "virtual:nuxt:.nuxt%2Fcss.mjs"`), caused by inconsistent `@fs/` path prefixing in generated `<link>` tags. Reproduced independently of the Vite version (forcing `vite@8.1.0` via `overrides` does not fix it). Confirmed with a minimal `nuxi init` repro, unrelated to this project's config. Tracked upstream: [nuxt/nuxt#35831](https://github.com/nuxt/nuxt/issues/35831) (our report, with minimal reproduction) — related: [nuxt/nuxt#34766](https://github.com/nuxt/nuxt/issues/34766) (Windows-specific variant of the same bug). Remove the pin once a fixed Nuxt 4.5.x patch ships.
 
 ---
 
