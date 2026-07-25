@@ -2,6 +2,14 @@
 
 Nuxt 4 GitHub repository template. Production-ready SSR starting point with design system (CSS custom properties + Tailwind v4), base components, i18n, dark/light theme, notification system.
 
+This file is the **single source of AI context** for the project. It replaces the former `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md` and `.github/prompts/*.prompt.md` files — all their content has been merged here and those files have been removed.
+
+---
+
+## App context
+
+*(Placeholder — filled in by the "initialize project" workflow below with 2–4 sentences describing what the app does and who it's for. Until then, treat this as a generic template with no specific product context.)*
+
 ---
 
 ## Stack
@@ -9,7 +17,7 @@ Nuxt 4 GitHub repository template. Production-ready SSR starting point with desi
 - **Nuxt 4** (Vue 3, `<script setup>`, SSR enabled)
 - **Tailwind CSS v4** via `@tailwindcss/vite` — no config file, tokens in CSS `@theme`
 - **@nuxt/icon** — Iconify SVG mode (`lucide` + `flagpack`)
-- **@nuxt/image** — `ipx` local + Cloudinary provider
+- **@nuxt/image** — `ipx` local provider (Cloudinary provider can be added via `image.providers.cloudinary`)
 - **@nuxtjs/i18n** — `en` default, `it` secondary; `prefix_except_default`
 - **@nuxtjs/color-mode** — dark/light via `.dark` class on `<html>`
 - **@vueuse/nuxt**, **@floating-ui/vue**, **isomorphic-dompurify**
@@ -115,6 +123,7 @@ Nuxt 4 GitHub repository template. Production-ready SSR starting point with desi
 - Nuxt auto-imports: composables, utils, components, Vue APIs, Nuxt composables — no manual imports
 - `useRuntimeConfig()` for env vars — never `process.env` in components
 - Data fetching: `useFetch` / `useAsyncData` over `$fetch` in components
+- Server-only logic goes in `server/` (Nitro); never import server utilities in client components
 - `<ClientOnly>` for browser-only components
 
 ### `<script setup>` structure
@@ -143,11 +152,15 @@ const props = withDefaults(defineProps<MyComponentProps>(), {
 })
 ```
 
+Define a typed inline interface first, then pass it to `withDefaults`. Only list props that have a non-required default.
+
 ### defineModel
 
 ```ts
 const model = defineModel<string>('input')
 ```
+
+Always provide the model name string and the generic type.
 
 ### defineEmits — call-signature syntax
 
@@ -157,6 +170,8 @@ const emit = defineEmits<{
   (e: 'select', item: MyItem): void
 }>()
 ```
+
+Use the call-signature syntax inside the generic, not the object/tuple syntax.
 
 ### Function naming
 
@@ -191,7 +206,7 @@ const emit = defineEmits<{
 <Icon name="flagpack:it" class="size-5" />
 ```
 
-Collection prefix mandatory. Always `aria-label` on icon-only buttons.
+Collection prefix mandatory. Available collections: `lucide` (UI icons), `flagpack` (country flags). Size via Tailwind (`size-4`, `size-5`…), colour via token. Always `aria-label` on icon-only buttons.
 
 ### Accessibility
 
@@ -214,13 +229,17 @@ Always add keys to **both** `i18n/locales/en.json` and `i18n/locales/it.json` si
 
 ### ESLint
 
-No semicolons · single quotes · trailing commas · 2-space indent · `vue/attributes-order: alphabetical` · max 3 attributes per line
+No semicolons · single quotes · trailing commas · 2-space indent · `vue/attributes-order: alphabetical` · max 3 attributes per line (1 per line when multiline) · `no-console: warn` (error in production) · `no-debugger: error`.
+
+**Never silence an issue with `// eslint-disable` comments.** Fix the underlying code instead.
 
 ---
 
 ## Design system
 
 ### Colours (`--color-app-*`)
+
+All colours are CSS custom properties defined in `app/assets/css/theme.css` inside an `@theme` block and auto-mapped to Tailwind utilities. **Never hardcode raw hex values.**
 
 | Token | Tailwind utility | Usage |
 |---|---|---|
@@ -268,7 +287,7 @@ Font families: `font-app-primary` (Poppins), `font-app-secondary` (Inter).
 | `u-app-hard-transition` | `transition-all duration-500 ease-in-out` |
 | `u-app-focus` | `outline-none ring-app-contrast focus-visible:ring-2` |
 | `u-app-focus-within` | `outline-none ring-app-contrast focus-within:ring-2` |
-| `u-app-no-focus` | Removes all focus outlines |
+| `u-app-no-focus` | Removes all focus outlines (only on elements with custom focus handling) |
 
 Always add `u-app-soft-transition` to interactive and themed elements.
 
@@ -279,6 +298,12 @@ Always add `u-app-soft-transition` to interactive and themed elements.
 | `fade` | Opacity + slight Y offset | 800ms |
 | `slide-down` | Opacity + slides from top | 200ms |
 | `scale-fade` | Opacity + scale from 0.95 | 200ms |
+
+```vue
+<Transition name="scale-fade">
+  <div v-if="isOpen">...</div>
+</Transition>
+```
 
 ---
 
@@ -315,7 +340,7 @@ Slots: `default`, `card-header`, `card-body`, `card-footer`.
 | Prop | Type | Default |
 |---|---|---|
 | `id` | `string` | required |
-| `name` | `string` | `undefined` |
+| `name` | `string` | `undefined` (falls back to `${id}-name`) |
 | `label` | `string` | `undefined` |
 | `placeholder` | `string` | `'Insert a value...'` |
 | `type` | `'text' \| 'password' \| 'email' \| 'number' \| 'search' \| 'tel' \| 'url'` | `'text'` |
@@ -338,7 +363,7 @@ Model: `defineModel<string>('input')`.
 | `error` | `string \| null` | `null` |
 | `maxLength` | `number` | `undefined` |
 
-Model: `defineModel<string>('input')`.
+Model: `defineModel<string>('input')`. Shows a character counter when `maxLength` is set.
 
 ### `BaseCheckbox`
 
@@ -434,7 +459,7 @@ No props. Emits: `(e: 'close', value: false): void`. Renders `lucide:x` icon but
 |---|---|
 | `items` | `MediaItem[]` |
 
-`MediaItem`: `{ type: 'photo' | 'video', url: string, alternativeText?, caption?, previewUrl?, width?, height? }`.
+`MediaItem`: `{ type: 'photo' | 'video', url: string, alternativeText?, caption?, previewUrl?, width?, height? }`. Auto-plays, pauses on video playback.
 
 ### `BaseRichText`
 
@@ -442,7 +467,7 @@ No props. Emits: `(e: 'close', value: false): void`. Renders `lucide:x` icon but
 |---|---|
 | `blocks` | `RichBlock[]` |
 
-Converts `RichBlock[]` → sanitised HTML via `blocksToHtml` + `useSanitize`.
+Converts `RichBlock[]` → sanitised HTML via `blocksToHtml` + `useSanitize`. Never write `v-html` directly — always go through this component.
 
 ### `TheHeader`
 
@@ -467,11 +492,21 @@ Emits: `(e: 'change-lang', langCode: string): void`.
 
 ### `TheNotificationBanner`
 
-Driven by `useAppNotifications`. Do not instantiate manually.
+Driven by `useAppNotifications`. Do not instantiate manually — managed by `default.vue`.
 
 ### `TheThemeToggle`
 
 No props. Toggles dark/light mode via `@nuxtjs/color-mode`.
+
+### Creating a new component
+
+1. Create a folder in `app/components/base/` using kebab-case: `app/components/base/my-widget/`
+2. Create the file using PascalCase + prefix: `BaseMyWidget.vue`
+3. Structure `<script setup>` with the standard section order (Dependencies / Input-Output / Data / Events)
+4. `<script setup lang="ts">` only — no Options API
+5. Props: inline interface + `withDefaults`, only defaults for non-required props
+6. Use design system tokens for all styling — no raw hex values, no hardcoded sizes
+7. Add `u-app-soft-transition` to themed/interactive elements
 
 ---
 
@@ -493,7 +528,7 @@ info({
 ```
 
 Methods: `success()`, `warning()`, `error()`, `info()` — all accept `Omit<NotificationItem, 'type' | 'id'>`.
-`notifications` is `ComputedRef<NotificationItem[]>`.
+`notifications` is `ComputedRef<NotificationItem[]>`. State is shared across the app via `useState`.
 Must be called client-side only (`import.meta.client`) — composable guards internally.
 
 ### `useFloatingUi(config?)`
@@ -506,6 +541,8 @@ const { reference, floating, floatingStyles, open, toggleFloating } = useFloatin
 })
 ```
 
+`reference` / `floating` bind via `ref` on the trigger/panel elements. `floatingStyles` binds to `:style` on the floating panel.
+
 ### `useLockScroll()`
 
 ```ts
@@ -514,7 +551,7 @@ lock()   // adds app-scroll-locked to <html>
 unlock() // removes (only when no other owner holds lock)
 ```
 
-SSR-safe. `isLocked: ComputedRef<boolean>`.
+SSR-safe, multi-caller safe (each instance holds its own owner ID). `isLocked: ComputedRef<boolean>`.
 
 ### `useSanitize()`
 
@@ -523,7 +560,7 @@ const { sanitizeHtml } = useSanitize()
 const clean = sanitizeHtml(dirtyHtml)
 ```
 
-Client: full DOMPurify. Server: skips DOMPurify, converts `\n` → `<br>`.
+Client: full DOMPurify sanitisation with an allowlist of safe tags/attributes. Server: skips DOMPurify (content trusted from CMS), converts `\n` → `<br>`.
 Use only via `BaseRichText` — never write `v-html` directly with unsanitised content.
 
 ### Writing new composables
@@ -535,12 +572,29 @@ Use only via `BaseRichText` — never write `v-html` directly with unsanitised c
 5. Guard DOM access with `if (!import.meta.client) return`
 6. Private helpers use `_` prefix
 
+```ts
+export default function useMyFeature() {
+  // Internal state
+  const _cache = ref<Map<string, string>>(new Map())
+
+  // State (public)
+  const items = computed(() => [..._cache.value.values()])
+
+  // Methods
+  function add(key: string, value: string) {
+    _cache.value.set(key, value)
+  }
+
+  return { items, add }
+}
+```
+
 ---
 
 ## Utils
 
-- `generateUuid(): string` — random UUID v4
-- `blocksToHtml(blocks: RichBlock[]): string` — Strapi rich text → HTML; pair with `sanitizeHtml` before `v-html`
+- `generateUuid(): string` — random UUID v4. Used internally by `useAppNotifications` and `useLockScroll`.
+- `blocksToHtml(blocks: RichBlock[]): string` — Strapi rich text → HTML; pair with `sanitizeHtml` before `v-html`.
 
 ---
 
@@ -574,6 +628,10 @@ interface NotificationItem {
 }
 
 type RichBlock = RichBlockParagraph | RichBlockHeading | RichBlockList | RichBlockImage | RichBlockQuote | RichBlockCode | RichBlockDivider
+
+// Leaf nodes
+interface RichBlockText { type: 'text', text: string, bold?: boolean, italic?: boolean, underline?: boolean, strikethrough?: boolean, code?: boolean }
+interface RichBlockLink { type: 'link', url: string, children: RichBlockText[] }
 ```
 
 New shared types go in `global.d.ts` inside `declare global {}` — never inline in components.
@@ -593,6 +651,17 @@ New shared types go in `global.d.ts` inside `declare global {}` — never inline
 | `app/pages/blog/[[slug]].vue` | `/blog` and `/blog/:slug` |
 | `app/pages/[...slug].vue` | catch-all |
 | `app/pages/(group)/page.vue` | `/page` (group ignored) |
+
+Nested routes: a folder + `index.vue` creates a parent route; a folder + named file creates a child route (e.g. `account/index.vue` → `/account`, `account/settings.vue` → `/account/settings`).
+
+Named routes (generated from file path, used in `localePath()`): `index.vue` → `index`, `about.vue` → `about`, `blog/index.vue` → `blog`, `blog/[slug].vue` → `blog-slug`.
+
+### Creating a new page
+
+1. Create the `.vue` file inside `app/pages/` following the naming rules above
+2. Add `useHead()` with translated meta tags
+3. Add translation keys to both `i18n/locales/en.json` and `i18n/locales/it.json`
+4. If the page should be statically generated, add a `routeRules` entry in `nuxt.config.ts`
 
 ### Minimal page template
 
@@ -621,6 +690,8 @@ useHead({
 </template>
 ```
 
+For multi-locale head (html `lang`, canonical, alternate links) use `useLocaleHead()` — already handled in `app/layouts/default.vue`.
+
 ### i18n routing
 
 ```ts
@@ -645,7 +716,7 @@ const { data } = await useAsyncData('unique-key', () =>
 )
 ```
 
-`$fetch` only inside server routes.
+`useFetch` for straightforward calls, `useAsyncData` when a stable key or custom logic is needed. `$fetch` only inside server routes or event handlers.
 
 ### Layout system
 
@@ -657,6 +728,8 @@ Override on a page:
 definePageMeta({ layout: 'custom-layout-name' })
 </script>
 ```
+
+To create a new layout, add `app/layouts/my-layout.vue` and expose a `<slot>`.
 
 ### Route rules (rendering mode)
 
@@ -670,9 +743,13 @@ routeRules: {
 }
 ```
 
+For dynamic routes with static content (e.g. `/blog/[slug]`), use `nuxt generate` + prerender hooks instead of `prerender: true` on a wildcard.
+
 ---
 
 ## nuxt.config.ts reference
+
+The single source of truth for the entire Nuxt application setup. Every key has a specific purpose — never duplicate configuration across files.
 
 ### `modules`
 
@@ -680,7 +757,37 @@ routeRules: {
 modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxtjs/i18n', '@nuxtjs/color-mode', '@vueuse/nuxt']
 ```
 
+Add new Nuxt modules here. Order matters — modules initialise in sequence.
+
 ### `ssr: true` — never disable
+
+This template is designed for server-side rendering.
+
+### `devtools`
+
+```ts
+devtools: { enabled: process.env.NODE_ENV !== 'production' }
+```
+
+Active only in development. Do not change.
+
+### `app.head`
+
+Global HTML head applied to all pages; page-level `useHead()` calls merge with and override these values.
+
+| Meta | Value | Purpose |
+|---|---|---|
+| `viewport` | `width=device-width, initial-scale=1` | Mobile responsiveness |
+| `format-detection` | `telephone=no` | Disable iOS phone number detection |
+| `theme-color` | `#0f0f20` | Mobile browser bar colour |
+| `og:type` | `website` | Open Graph type |
+| `og:site_name` | placeholder — replace with real site name |
+| `og:image` | placeholder — replace with real OG image (1200×630px) |
+| `twitter:card` | `summary` (switch to `summary_large_image` for wide cards) |
+| `twitter:image` | placeholder — replace with real Twitter image |
+| `link[favicon]` | `/favicon.ico` |
+
+Replace all placeholder values before going to production.
 
 ### `css`
 
@@ -688,19 +795,41 @@ modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxtjs/i18n', '@nuxtjs/
 css: ['./app/assets/css/main.css']
 ```
 
-Never add more entries here — import inside `main.css`.
+Single entry point. `main.css` imports the full cascade in order: Tailwind → `theme.css` → `typography.css` → `utilities.css` → `animations.css` → global `html`/`body` styles. **Never add more entries here** — import inside `main.css` instead.
 
 ### `runtimeConfig`
 
 ```ts
 runtimeConfig: {
   public: {
-    apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3000/api',
+    siteUrl: 'https://www.yoursite.com',
   }
 }
 ```
 
-`NUXT_PUBLIC_MY_VAR` → auto-mapped to `runtimeConfig.public.myVar`.
+Keys under `public` are exposed to the client; keys at root level are server-only. Access via `useRuntimeConfig()` — never `process.env` in components.
+
+Convention: `NUXT_PUBLIC_MY_VAR` in `.env` → auto-mapped to `runtimeConfig.public.myVar`.
+
+### `routeRules`
+
+Per-route rendering strategy — see [Route rules](#route-rules-rendering-mode) above.
+
+### `sourcemap`
+
+```ts
+sourcemap: { client: false, server: false }
+```
+
+Disabled in all environments for security. Do not enable in production.
+
+### `compatibilityDate`
+
+```ts
+compatibilityDate: '2025-07-15'
+```
+
+Locks Nuxt behaviour to a specific feature snapshot. Update only intentionally when upgrading Nuxt.
 
 ### `nitro`
 
@@ -711,6 +840,8 @@ nitro: {
 }
 ```
 
+`preset: 'netlify'` — deployment target, change to `'vercel'`, `'node-server'`, etc. when deploying elsewhere. `isomorphic-dompurify` is excluded from the server bundle because it requires `jsdom`, incompatible with the Netlify serverless runtime — it's used client-side only.
+
 ### `vite`
 
 ```ts
@@ -718,6 +849,14 @@ vite: { plugins: [tailwindcss()] }
 ```
 
 No `tailwind.config.js` — all tokens in `theme.css` via `@theme`.
+
+### `eslint`
+
+```ts
+eslint: { config: { stylistic: true } }
+```
+
+Enables stylistic formatting rules via `@nuxt/eslint`. Full rule set in `eslint.config.mjs`.
 
 ### `i18n`
 
@@ -735,6 +874,8 @@ i18n: {
 }
 ```
 
+`detectBrowserLanguage: false` is intentional — prevents unexpected redirects. To add a new locale: add an entry to `locales[]`, create `i18n/locales/<code>.json`, add the code to `setLocale` type hints in the codebase.
+
 ### `icon`
 
 ```ts
@@ -746,22 +887,35 @@ icon: {
 }
 ```
 
-To add a collection: `npm install @iconify-json/<name>`.
+`fallbackToApi: false` — only locally installed collections are used. To add a collection: `npm install @iconify-json/<name>`.
 
 ### `image`
 
 ```ts
 image: {
   provider: 'ipx',
-  providers: {
-    cloudinary: { name: 'cloudinary', options: { baseURL: process.env.NUXT_PUBLIC_CLOUDINARY_BASE } }
-  },
   domains: [],
   quality: 80,
   format: ['webp', 'avif', 'png'],
   screens: { sm: 640, md: 768, lg: 1024, xl: 1280, '2xl': 1536 }
 }
 ```
+
+Default provider is `ipx` (local). To use Cloudinary for remote images, add a `providers.cloudinary` block (`{ name: 'cloudinary', options: { baseURL: process.env.NUXT_PUBLIC_CLOUDINARY_BASE } }`) and pass `provider="cloudinary"` to `<NuxtImg>`. To allow images from an external domain (e.g. a CMS), add it to `domains[]`.
+
+### `tsconfig.json`
+
+```json
+{
+  "files": [],
+  "references": [
+    { "path": "./.nuxt/tsconfig.app.json" },
+    { "path": "./.nuxt/tsconfig.server.json" }
+  ]
+}
+```
+
+Fully delegated to the auto-generated `.nuxt/tsconfig.app.json` (strict mode, path aliases, Vue types). Never manually add `compilerOptions` here unless for a very specific override — run `nuxt prepare` to regenerate after changes.
 
 ---
 
@@ -776,8 +930,118 @@ image: {
 | `postinstall` | `nuxt prepare` |
 | `lint` | `eslint .` |
 | `lint:fix` | `eslint . --fix` |
+| `si` | `bash scripts/safe-install.sh` — auto-detects branch, runs `npm ci` on `main` / `npm install` elsewhere |
 
 Node.js version: **24.11.0** (`.nvmrc`). Use `nvm use`.
+
+### Dependencies
+
+Keep this table in sync with `package.json` — versions drift, treat `package.json` as authoritative.
+
+| Package | Purpose |
+|---|---|
+| `nuxt` | Core framework |
+| `vue`, `vue-router` | UI framework / routing |
+| `tailwindcss`, `@tailwindcss/vite` | Utility-first CSS (v4, Vite plugin) |
+| `@nuxt/eslint` | ESLint integration |
+| `@nuxt/icon` | Icon system |
+| `@nuxt/image` | Image optimisation |
+| `@nuxtjs/i18n` | Internationalisation |
+| `@nuxtjs/color-mode` | Dark/light mode |
+| `@vueuse/core`, `@vueuse/nuxt` | Vue composition utilities |
+| `@floating-ui/vue` | Floating element positioning |
+| `isomorphic-dompurify` | HTML sanitisation (client-side) |
+| `eslint` | Linter |
+| `@iconify-json/lucide` *(dev)* | Lucide icon collection |
+| `@iconify-json/flagpack` *(dev)* | Flag icon collection |
+| `@types/node` *(dev)* | Node.js types |
+| `vue-tsc` *(dev)* | Powers `nuxt typecheck` — never remove |
+
+---
+
+## Workflows
+
+These are recurring maintenance/setup routines carried over from the former `.github/prompts/*.prompt.md` files. They're not slash commands — just documented procedures to follow when the user asks for one of these things (any clearly equivalent phrasing works, English or Italian).
+
+### Initialize / reset the project
+
+Trigger: "initialize the project", "reset the project", "inizializza il progetto".
+
+1. Ask the user (single batch): new project name; a 2–4 sentence app context (purpose + audience) to store in the [App context](#app-context) section above; any changes to the conventions in this file compared to the template defaults.
+2. Update `package.json`: `name` (kebab-case of the project name), `description`.
+3. Update `nuxt.config.ts`: `og:site_name` meta value.
+4. Update `README.md`: main heading and tagline.
+5. Reset `package.json` version to `1.0.0`; reset the version badge in `README.md` if present.
+6. Reset `CHANGELOG.md` to a clean [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) skeleton with an `[Unreleased]` section and a `[1.0.0] - <today>` entry ("Initial release").
+7. Analyse the `app/` directory (assets/css, components, composables, layouts, pages, types, utils) and check that every catalogue in this file (component API tables, composables list, design tokens, pages list, config reference) still matches reality. Report discrepancies briefly, then update this file to fix them — don't delete still-valid entries.
+8. Report: app context saved, project renamed, files touched (with exact changes), and any inconsistency found but not auto-resolved.
+
+### Update documentation
+
+Trigger: "update the documentation", "update the README", "aggiorna la documentazione".
+
+1. Read in parallel: `README.md`, `package.json`, `nuxt.config.ts`, this `CLAUDE.md`, the full `app/` directory (components, composables, pages, layouts), `i18n/locales/en.json`.
+2. Compare the README against the actual codebase: outdated sections, missing sections (new components/composables/pages/conventions), incorrect versions, broken links. Report the differences briefly, then proceed without waiting for approval.
+3. Rewrite `README.md` (English), keeping its existing 13-section structure (Overview, Getting Started, Project Structure, Design System, Routing, Layouts, Pages, Components, Composables & Utils, AI Tooling, Deployment, Versioning, Dependencies). Sections **AI Tooling** and **Deployment** are mandatory — always present. Don't invent information; mark unverifiable details as TBD.
+4. Confirm what changed and note any TBD sections that need user input.
+
+### Full project checkup
+
+Trigger: "full checkup", "run a full checkup", "checkup completo".
+
+Orchestrates the checks below in order and aggregates results — doesn't duplicate their logic:
+
+1. Dependency check (below)
+2. SEO/GSC readiness check (below)
+3. Build & type check (below)
+4. Lint check (below)
+5. If there are blocking errors (build errors or lint errors that can't be auto-fixed): **stop**, report each blocker (file, rule/error type, description), and ask the user to fix them manually before re-running.
+6. If no blockers: decide whether `README.md` needs updating (new/updated dependency, new component/page/composable/util, significant config change) and run the "Update documentation" workflow if so.
+7. Final summary: dependencies, SEO, build, lint, docs status, overall result.
+
+### Build & type check
+
+Trigger: "check the build", "does the project build?", "check del build".
+
+1. Run `npx nuxt typecheck` (requires `vue-tsc` as a dev dependency — never remove it). Collect every type error (file, line, error code, description).
+2. Run `npm run build`. Collect every error (type: TypeScript / Vite / Nitro / Module not found / SSR / Other; file; message).
+3. Categorise: **TypeScript errors** (may not block the build but indicate type-safety issues), **Build errors** (blocking — hard failures), **Build warnings** (non-blocking, worth reviewing).
+4. Report each category concisely. On failure, suggest a fix direction without auto-applying it.
+
+### Lint check
+
+Trigger: "check the lint", "is the project clean?", "check del lint".
+
+1. Run `npm run lint:fix`. Note which files were modified.
+2. Run `npm run lint`. Categorise remaining diagnostics: **warnings** (non-blocking) and **errors** (blocking — do not auto-fix these, list them for manual review).
+3. Never silence an issue with `// eslint-disable` — fix the code.
+4. Report files auto-fixed, remaining warnings, remaining errors.
+
+### Dependency check & update
+
+Trigger: "check dependencies", "update dependencies", "verifichiamo le dipendenze".
+
+This is a delicate process — never auto-update a package with a major version bump without verifying it won't break the project.
+
+1. Read `package.json` for current `dependencies`/`devDependencies` and `engines.node`.
+2. Run `npm outdated`. For each outdated package, note Current / Wanted / Latest.
+3. Classify:
+   - **Safe to auto-update**: Latest has the same major as the declared constraint (minor/patch only). Do a quick changelog/release-notes check first for new required config, renamed/removed APIs used in this project, or peer-dependency changes (especially `nuxt`, `vue`, `vite`) — if a concern surfaces, move it to "needs attention" even with the same major.
+   - **Needs attention**: Latest has a different major, or the changelog check revealed a concern.
+4. For safe updates, edit `package.json` directly (update the `^` constraint) — don't rely on `npm update` alone, it doesn't touch declared constraints. Then run `npm run si`.
+5. Vulnerability check: `npm fund` (informational), `npm audit` (classify severity/package/via/fix-availability), `npm audit fix` (auto-resolve what's within semver range). **Never run `npm audit fix --force`** — it can silently introduce breaking major bumps. If a vulnerability needs `--force`, stop and report it (package, advisory, severity) for the user to decide. Re-run `npm audit` after fixing to confirm final state.
+6. Report: auto-updated packages (old → new version), packages needing attention (with reason + changelog link), vulnerabilities resolved vs remaining (and whether the fix depends on this project or on upstream maintainers), funding notices.
+
+### GSC / SEO readiness check
+
+Trigger: "check SEO", "check GSC readiness", "verifica la SEO".
+
+1. Read `nuxt.config.ts` for `i18n.baseUrl` (production domain), `routeRules` (prerendered vs SSR routes), `app.head.meta` (global defaults), and `i18n.locales` (codes + hreflang values).
+2. Check `public/robots.txt`: `User-Agent: *`, `Allow: /`, a `Sitemap:` directive pointing at the production domain (not `localhost`), matching `i18n.baseUrl`.
+3. Check `public/sitemap.xml`: valid XML with `urlset` + `xmlns:xhtml` namespaces, all `<loc>` URLs on the production domain, `<lastmod>`/`<changefreq>`/`<priority>` per URL, `<xhtml:link>` alternates for every locale, correct `x-default`, hreflang values matching `i18n.locales[].iso`, and all prerendered routes represented.
+4. Check global meta tags aren't placeholders (`yourdomain.com`, `Your Site Name`, etc.) — flag any that still are.
+5. Scan `app/pages/**/*.vue` for `useHead`/`useSeoMeta`: each page should set `title`, `description`/`ogDescription`, `ogTitle`, `ogImage`, all via `t()`/`$t()` (no hardcoded strings, no `TODO`/`…` placeholders). Flag pages with no head call at all — they inherit only global defaults.
+6. Report per check (robots.txt, sitemap.xml, global meta, per-page table) plus a summary of blockers vs warnings vs OK.
 
 ---
 
@@ -785,6 +1049,6 @@ Node.js version: **24.11.0** (`.nvmrc`). Use `nvm use`.
 
 > Every change that creates a discrepancy with `README.md` must be followed by a documentation update in the same session.
 
-Applies to: adding/removing/renaming components, pages, composables, utils, layouts, prompt files, instruction files, dependencies, `nuxt.config.ts` changes affecting documented config, structure changes, naming/convention changes.
+Applies to: adding/removing/renaming components, pages, composables, utils, layouts, dependencies, `nuxt.config.ts` changes affecting documented config, structure changes, naming/convention changes.
 
 Edit only the affected section — do not rewrite the full README unless asked.

@@ -83,7 +83,7 @@ rm -rf .git && git init
 
 ### Project Initialisation
 
-After cloning, run the `init-project` prompt in Copilot Agent mode (see [AI Tooling](#10-ai-tooling--prompts--instructions)) to rename the project, update all config files, reset the version to `1.0.0` and sync the instruction files.
+After cloning, ask your AI coding assistant to "initialize the project" (see [AI Tooling](#10-ai-tooling--prompts--instructions)) to rename the project, update all config files, reset the version to `1.0.0` and sync `CLAUDE.md` with the codebase.
 
 Then install dependencies and start the dev server:
 
@@ -692,53 +692,33 @@ Converts a `RichBlock[]` array (Strapi rich text format) to an HTML string. Pair
 
 ## 10. AI Tooling — Prompts & Instructions
 
-This repository ships with pre-configured [GitHub Copilot](https://github.com/features/copilot) context that makes the AI assistant aware of the project's conventions, design system and domain. All configuration lives under `.github/` and is versioned alongside the code.
+This repository ships with a single [`CLAUDE.md`](./CLAUDE.md) file at the project root that gives any AI coding assistant (Claude Code, GitHub Copilot, etc.) full context on the project's conventions, design system, component catalogue and domain. There is no separate scoped-instructions setup — `CLAUDE.md` is always loaded in full.
 
-### How GitHub Copilot is configured
+> Earlier versions of this template split AI context across `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md` and `.github/prompts/*.prompt.md`. Those files have been removed and their content merged into `CLAUDE.md`.
 
-| File / folder | Purpose |
+### How AI context is configured
+
+| File | Purpose |
 |---|---|
-| `.github/copilot-instructions.md` | Global rules: app context, response language, stack, naming conventions |
-| `.github/instructions/*.instructions.md` | Scoped rules loaded automatically per file type (e.g. only for `**/*.vue` files) |
-| `.github/prompts/*.prompt.md` | Reusable Agent-mode workflows triggered by a phrase or `#filename` syntax |
+| `CLAUDE.md` | Everything: stack, naming conventions, code conventions, design system tokens, full component API catalogue, composables/utils/types reference, pages & layouts conventions, `nuxt.config.ts` reference, and the workflows below |
 
-### Available prompts
+### Available workflows
 
-| Prompt file | Trigger phrases | What it does |
+Documented inside `CLAUDE.md` under **## Workflows**. They aren't slash commands — just ask the assistant using one of the trigger phrases (or any clearly equivalent wording) and it follows the documented steps.
+
+| Workflow | Trigger phrases | What it does |
 |---|---|---|
-| `init-project.prompt.md` | "Inizializziamo il progetto" · "Reset del progetto" | Collects project name and context; renames the app across all config files; resets version to `1.0.0`; audits and updates instruction files |
-| `update-docs.prompt.md` | "Aggiorna la documentazione" · "Aggiorna il README" | Compares README with the actual codebase and rewrites it as a structured documentation book |
-| `check-lint.prompt.md` | "Check del lint" · "Il progetto è pulito?" | Runs `eslint --fix`, reports remaining warnings and blocking errors |
-| `check-build.prompt.md` | "Check del build" · "Il progetto builda?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
-| `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
-| `check-gsc.prompt.md` | "Check GSC" · "Verifica la SEO" · "Il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
-| `full-checkup.prompt.md` | "Checkup completo" · "Full checkup" · "Controlla tutto" | Orchestrates all four checks (dependencies, SEO, build, lint) in sequence; optionally updates documentation |
+| Initialize / reset the project | "initialize the project" · "reset the project" | Collects project name and app context; renames the app across config files; resets version to `1.0.0` and the changelog; audits `CLAUDE.md` against the actual `app/` directory |
+| Update documentation | "update the documentation" · "update the README" | Compares README with the actual codebase and rewrites it as a structured documentation book |
+| Lint check | "check the lint" · "is the project clean?" | Runs `eslint --fix`, reports remaining warnings and blocking errors |
+| Build & type check | "check the build" · "does the project build?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
+| Dependency check & update | "check dependencies" · "update dependencies" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
+| GSC / SEO readiness check | "check SEO" · "check GSC readiness" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
+| Full project checkup | "full checkup" · "run a full checkup" | Orchestrates all four checks (dependencies, SEO, build, lint) in sequence; optionally updates documentation |
 
-### How to run a prompt
+### How to run a workflow
 
-**Option A — Trigger phrase**
-
-1. Open the **Copilot Chat** panel in VS Code
-2. Switch to **Agent mode**
-3. Type one of the trigger phrases from the table above
-
-**Option B — Direct invocation**
-
-1. Open **Copilot Chat** in **Agent mode**
-2. Type `#` followed by the prompt filename (e.g. `#init-project.prompt.md`) and select it from the picker
-3. Send the message
-
-> All prompts require **Agent mode**. They will not work in Ask or Chat mode.
-
-### Instruction files
-
-| File | Applies to | Governs |
-|---|---|---|
-| `design-system.instructions.md` | `**/*.vue` | CSS tokens, colours, typography, utilities, animations, icons |
-| `components.instructions.md` | `**/components/**` | Full API catalogue for all `Base*` + `The*` components, creation rules |
-| `pages-layouts.instructions.md` | `**/pages/**`, `**/layouts/**` | Nuxt 4 file-based routing, page template, SEO, i18n, data fetching |
-| `composables-utils.instructions.md` | `**/composables/**` | Available composables, utils, global TypeScript types, SSR-safe patterns |
-| `project-config.instructions.md` | `nuxt.config.ts`, `package.json` | Complete `nuxt.config.ts` key reference, scripts, dependencies, env vars |
+Open a chat with your AI coding assistant in the project root (so `CLAUDE.md` is picked up as context) and type one of the trigger phrases above, or describe the task in your own words — the assistant follows the matching workflow section in `CLAUDE.md`.
 
 ---
 
