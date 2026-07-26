@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.12](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.11...v2.4.12) (2026-07-26)
+
+
+### Bug Fixes
+
+* import CSS error ([#105](https://github.com/stefanBid/sb-template-nuxt/issues/105)) ([4f88380](https://github.com/stefanBid/sb-template-nuxt/commit/4f883807048b0224f5452dd425745fc2cbfe93e1))
+
 ## [2.4.11](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.10...v2.4.11) (2026-07-25)
 
 
