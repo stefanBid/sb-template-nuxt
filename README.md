@@ -1,7 +1,8 @@
 <div align="center">
   <div style="background: white; padding: 20px; border-radius: 12px; display: inline-block;">
-    <img src="https://stunning-confidence-0ce6b255c4.media.strapiapp.com/sb_template_nuxt_logo_cd2c1f9652.webp" alt="SB-Template Nuxt Logo" width="200">
+    <img src="https://i.ibb.co/v4B0Js1m/sb-template-nuxt.jpg" alt="SB-Template Nuxt Logo" width="300" style="border-radius: 12px;">
   </div>
+
 
   # SB-Template Nuxt
 
@@ -27,9 +28,7 @@
 
 ### ⚠️ Active — `nuxt` pinned to `4.4.8` (exact, no caret) — do not bump
 
-`nuxt@4.5.0` ships a regression in `@nuxt/vite-builder` that breaks the dev server: local `css:` entries in `nuxt.config.ts` 404 (`Failed to resolve import ".../main.css" from "virtual:nuxt:.nuxt%2Fcss.mjs"`), caused by inconsistent `@fs/` path prefixing in generated `<link>` tags. Reproduced independently of the Vite version (forcing `vite@8.1.0` via `overrides` does not fix it). Confirmed with a minimal `nuxi init` repro, unrelated to this project's config. Tracked upstream: [nuxt/nuxt#35831](https://github.com/nuxt/nuxt/issues/35831) (our report, with minimal reproduction) — related: [nuxt/nuxt#34766](https://github.com/nuxt/nuxt/issues/34766) (Windows-specific variant of the same bug).
-
-`4.5.0` also bundles Vite 8, unhead v3 (type-narrowing on `useHead`, breaking for looser v2 typings) and unctx v3 — several major upgrades landing in a single minor release. Even once the `#35831` regression is patched, re-test on a feature branch (`npm install`, not `npm ci`) with `npx nuxt typecheck` + `npm run build` before merging to `main`. Remove the pin once a fixed Nuxt 4.5.x patch ships and the branch test is clean.
+`4.5.0` bundles Vite 8, unhead v3 (type-narrowing on `useHead`, breaking for looser v2 typings) and unctx v3 — several major upgrades landing in a single minor release. Re-test on a feature branch (`npm install`, not `npm ci`) with `npx nuxt typecheck` + `npm run build` before merging to `main`. Remove the pin once the branch test is clean.
 
 ### ✅ Resolved — `NUXT_B2005` false positive on `check-if-page-unused.js`
 
