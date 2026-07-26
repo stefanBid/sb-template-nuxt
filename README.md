@@ -5,7 +5,7 @@
 
   # SB-Template Nuxt
 
-  ![Version](https://img.shields.io/badge/version-2.4.11-blue)
+  ![Version](https://img.shields.io/badge/version-2.4.12-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4.4.8-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3.5.40-4FC08D?logo=vue.js)](https://vuejs.org)
@@ -21,8 +21,19 @@
 
 ---
 
-> **⚠️ `nuxt` pinned to `4.4.8` (exact, no caret) — do not bump.**
-> `nuxt@4.5.0` ships a regression in `@nuxt/vite-builder` that breaks the dev server: local `css:` entries in `nuxt.config.ts` 404 (`Failed to resolve import ".../main.css" from "virtual:nuxt:.nuxt%2Fcss.mjs"`), caused by inconsistent `@fs/` path prefixing in generated `<link>` tags. Reproduced independently of the Vite version (forcing `vite@8.1.0` via `overrides` does not fix it). Confirmed with a minimal `nuxi init` repro, unrelated to this project's config. Tracked upstream: [nuxt/nuxt#35831](https://github.com/nuxt/nuxt/issues/35831) (our report, with minimal reproduction) — related: [nuxt/nuxt#34766](https://github.com/nuxt/nuxt/issues/34766) (Windows-specific variant of the same bug). Remove the pin once a fixed Nuxt 4.5.x patch ships.
+## Developer Notes
+
+> Internal knowledge base for contributors: known issues, gotchas and version decisions that aren't obvious from the code alone. Not part of the numbered docs below — update this section whenever something like this is discovered or resolved.
+
+### ⚠️ Active — `nuxt` pinned to `4.4.8` (exact, no caret) — do not bump
+
+`nuxt@4.5.0` ships a regression in `@nuxt/vite-builder` that breaks the dev server: local `css:` entries in `nuxt.config.ts` 404 (`Failed to resolve import ".../main.css" from "virtual:nuxt:.nuxt%2Fcss.mjs"`), caused by inconsistent `@fs/` path prefixing in generated `<link>` tags. Reproduced independently of the Vite version (forcing `vite@8.1.0` via `overrides` does not fix it). Confirmed with a minimal `nuxi init` repro, unrelated to this project's config. Tracked upstream: [nuxt/nuxt#35831](https://github.com/nuxt/nuxt/issues/35831) (our report, with minimal reproduction) — related: [nuxt/nuxt#34766](https://github.com/nuxt/nuxt/issues/34766) (Windows-specific variant of the same bug).
+
+`4.5.0` also bundles Vite 8, unhead v3 (type-narrowing on `useHead`, breaking for looser v2 typings) and unctx v3 — several major upgrades landing in a single minor release. Even once the `#35831` regression is patched, re-test on a feature branch (`npm install`, not `npm ci`) with `npx nuxt typecheck` + `npm run build` before merging to `main`. Remove the pin once a fixed Nuxt 4.5.x patch ships and the branch test is clean.
+
+### ✅ Resolved — `NUXT_B2005` false positive on `check-if-page-unused.js`
+
+Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.4.8` (current pinned version) — if it resurfaces after a future version bump, treat it as a regression tied to that version rather than a project config issue.
 
 ---
 
