@@ -38,63 +38,7 @@ This file is the **single source of AI context** for the project. It replaces th
 
 ## Project structure
 
-```
-── nuxt.config.ts
-── package.json
-── tsconfig.json
-── eslint.config.mjs
-── .nvmrc                   ← Node 24.11.0
-── public/
-     favicon.ico, robots.txt, sitemap.xml, logo.webp, example.jpg
-── i18n/locales/
-     en.json                ← source of truth
-     it.json
-── app/
-     app.vue                ← NuxtLayout + NuxtPage
-     error.vue
-     assets/css/
-       main.css             ← imports all CSS in cascade order
-       theme.css            ← @theme: CSS vars + dark mode overrides
-       typography.css       ← ty-app-* @utility classes
-       utilities.css        ← u-app-* @utility classes
-       animations.css       ← Vue transition classes
-     components/
-       base/
-         accordion/         BaseAccordion.vue
-         button/            BaseButton.vue
-         card/              BaseCard.vue
-         checkbox/          BaseCheckbox.vue
-         chip/              BaseChip.vue
-         close-button/      BaseCloseButton.vue
-         combobox/          BaseCombobox.vue
-         dialog/            BaseDialog.vue
-         icon-button/       BaseIconButton.vue
-         icon-menu/         BaseIconMenu.vue
-         input/             BaseInput.vue
-         media-carousel/    BaseMediaCarousel.vue
-         rich-text/         BaseRichText.vue
-         textarea/          BaseTextarea.vue
-       the-footer/          TheFooter.vue
-       the-header/          TheHeader.vue, TheHeaderMenuToggle.vue
-       the-notification/    TheNotificationBanner.vue, TheNotificationBox.vue
-       the-theme-toggle/    TheThemeToggle.vue
-     composables/
-       useAppNotifications.ts
-       useFloatingUi.ts
-       useLockScroll.ts
-       useSanitize.ts
-     layouts/
-       default.vue          ← TheHeader + <slot> + TheFooter + notifications
-     pages/
-       index.vue
-     plugins/
-       scrollToTop.client.ts
-     types/
-       global.d.ts          ← MenuItem, RouteItem, NotificationItem, RichBlock*
-     utils/
-       blocksToHtml.ts
-       generateUuid.ts
-```
+Standard Nuxt 4 layout (`app/` source directory: `assets`, `components/base|the-*`, `composables`, `layouts`, `pages`, `plugins`, `types`, `utils`) plus root-level config files and `i18n/locales/`. Explore with `ls`/`find` — the naming conventions below explain how new files should be named.
 
 ---
 
@@ -475,9 +419,17 @@ Converts `RichBlock[]` → sanitised HTML via `blocksToHtml` + `useSanitize`. Ne
 |---|---|
 | `routes` | `RouteItem[]` |
 | `langs` | `MenuItem[]` |
-| `selectedLangId` | `string` |
+| `selectedLangId` | `string \| null` |
 
 Emits: `(e: 'change-lang', langCode: string): void`.
+
+### `TheHeaderMenuToggle`
+
+| Prop | Type |
+|---|---|
+| `open` | `boolean` |
+
+Emits: `(e: 'toggle', newOpenValue: boolean): void`.
 
 ### `TheFooter`
 
@@ -497,6 +449,10 @@ Driven by `useAppNotifications`. Do not instantiate manually — managed by `def
 ### `TheThemeToggle`
 
 No props. Toggles dark/light mode via `@nuxtjs/color-mode`.
+
+### `TheNotificationBox`
+
+No props. Fixed-position wrapper (`<div class="fixed ...">` with a `default` slot) used alongside `TheNotificationBanner` in `default.vue`.
 
 ### Creating a new component
 
@@ -600,39 +556,7 @@ export default function useMyFeature() {
 
 ## Global TypeScript types (`app/types/global.d.ts`)
 
-All globally declared — no import needed.
-
-```ts
-interface MenuItem {
-  code: string
-  label: string
-  iconType: 'nuxt-icon' | 'custom'
-  icon: string
-}
-
-interface RouteItem {
-  name: string
-  path: string
-  disabled?: true
-}
-
-interface NotificationItem {
-  id: string
-  type: 'success' | 'warning' | 'error' | 'info'
-  icon?: string | null
-  title?: string | null
-  message: string
-  dismissible?: boolean
-  autoClose?: boolean
-  duration?: number
-}
-
-type RichBlock = RichBlockParagraph | RichBlockHeading | RichBlockList | RichBlockImage | RichBlockQuote | RichBlockCode | RichBlockDivider
-
-// Leaf nodes
-interface RichBlockText { type: 'text', text: string, bold?: boolean, italic?: boolean, underline?: boolean, strikethrough?: boolean, code?: boolean }
-interface RichBlockLink { type: 'link', url: string, children: RichBlockText[] }
-```
+All globally declared — no import needed. See the file for the current type list (`MenuItem`, `RouteItem`, `NotificationItem`, `RichBlock*`).
 
 New shared types go in `global.d.ts` inside `declare global {}` — never inline in components.
 
@@ -642,19 +566,7 @@ New shared types go in `global.d.ts` inside `declare global {}` — never inline
 
 ### File-name → URL mapping
 
-| File | URL |
-|---|---|
-| `app/pages/index.vue` | `/` |
-| `app/pages/about.vue` | `/about` |
-| `app/pages/blog/index.vue` | `/blog` |
-| `app/pages/blog/[slug].vue` | `/blog/:slug` |
-| `app/pages/blog/[[slug]].vue` | `/blog` and `/blog/:slug` |
-| `app/pages/[...slug].vue` | catch-all |
-| `app/pages/(group)/page.vue` | `/page` (group ignored) |
-
-Nested routes: a folder + `index.vue` creates a parent route; a folder + named file creates a child route (e.g. `account/index.vue` → `/account`, `account/settings.vue` → `/account/settings`).
-
-Named routes (generated from file path, used in `localePath()`): `index.vue` → `index`, `about.vue` → `about`, `blog/index.vue` → `blog`, `blog/[slug].vue` → `blog-slug`.
+Standard Nuxt 4 file-based routing (`app/pages/`) — dynamic `[param]`, optional `[[param]]`, catch-all `[...slug]`, ignored `(group)` folders, nested index routes. Named routes for `localePath()` are generated from the file path (e.g. `blog/[slug].vue` → `blog-slug`).
 
 ### Creating a new page
 
@@ -749,187 +661,18 @@ For dynamic routes with static content (e.g. `/blog/[slug]`), use `nuxt generate
 
 ## nuxt.config.ts reference
 
-The single source of truth for the entire Nuxt application setup. Every key has a specific purpose — never duplicate configuration across files.
+The single source of truth for the entire Nuxt application setup — never duplicate configuration across files. Its own header comment block documents every section and the rationale behind non-obvious choices (sourcemaps disabled for security, `isomorphic-dompurify` excluded from the server bundle, `detectBrowserLanguage: false` being intentional, etc.) — read it directly rather than this file, which will drift out of sync with it over time.
 
-### `modules`
-
-```ts
-modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxtjs/i18n', '@nuxtjs/color-mode', '@vueuse/nuxt']
-```
-
-Add new Nuxt modules here. Order matters — modules initialise in sequence.
-
-### `ssr: true` — never disable
-
-This template is designed for server-side rendering.
-
-### `devtools`
-
-```ts
-devtools: { enabled: process.env.NODE_ENV !== 'production' }
-```
-
-Active only in development. Do not change.
-
-### `app.head`
-
-Global HTML head applied to all pages; page-level `useHead()` calls merge with and override these values.
-
-| Meta | Value | Purpose |
-|---|---|---|
-| `viewport` | `width=device-width, initial-scale=1` | Mobile responsiveness |
-| `format-detection` | `telephone=no` | Disable iOS phone number detection |
-| `theme-color` | `#0f0f20` | Mobile browser bar colour |
-| `og:type` | `website` | Open Graph type |
-| `og:site_name` | placeholder — replace with real site name |
-| `og:image` | placeholder — replace with real OG image (1200×630px) |
-| `twitter:card` | `summary` (switch to `summary_large_image` for wide cards) |
-| `twitter:image` | placeholder — replace with real Twitter image |
-| `link[favicon]` | `/favicon.ico` |
-
-Replace all placeholder values before going to production.
-
-### `css`
-
-```ts
-css: ['./app/assets/css/main.css']
-```
-
-Single entry point. `main.css` imports the full cascade in order: Tailwind → `theme.css` → `typography.css` → `utilities.css` → `animations.css` → global `html`/`body` styles. **Never add more entries here** — import inside `main.css` instead.
-
-### `runtimeConfig`
-
-```ts
-runtimeConfig: {
-  public: {
-    siteUrl: 'https://www.yoursite.com',
-  }
-}
-```
-
-Keys under `public` are exposed to the client; keys at root level are server-only. Access via `useRuntimeConfig()` — never `process.env` in components.
-
-Convention: `NUXT_PUBLIC_MY_VAR` in `.env` → auto-mapped to `runtimeConfig.public.myVar`.
-
-### `routeRules`
-
-Per-route rendering strategy — see [Route rules](#route-rules-rendering-mode) above.
-
-### `sourcemap`
-
-```ts
-sourcemap: { client: false, server: false }
-```
-
-Disabled in all environments for security. Do not enable in production.
-
-### `compatibilityDate`
-
-```ts
-compatibilityDate: '2025-07-15'
-```
-
-Locks Nuxt behaviour to a specific feature snapshot. Update only intentionally when upgrading Nuxt.
-
-### `nitro`
-
-```ts
-nitro: {
-  preset: 'netlify',
-  externals: { external: ['isomorphic-dompurify'] }
-}
-```
-
-`preset: 'netlify'` — deployment target, change to `'vercel'`, `'node-server'`, etc. when deploying elsewhere. `isomorphic-dompurify` is excluded from the server bundle because it requires `jsdom`, incompatible with the Netlify serverless runtime — it's used client-side only.
-
-### `vite`
-
-```ts
-vite: { plugins: [tailwindcss()] }
-```
-
-No `tailwind.config.js` — all tokens in `theme.css` via `@theme`.
-
-### `eslint`
-
-```ts
-eslint: { config: { stylistic: true } }
-```
-
-Enables stylistic formatting rules via `@nuxt/eslint`. Full rule set in `eslint.config.mjs`.
-
-### `i18n`
-
-```ts
-i18n: {
-  baseUrl: 'https://www.yoursite.com',  // replace before going live
-  strategy: 'prefix_except_default',
-  defaultLocale: 'en',
-  locales: [
-    { code: 'en', iso: 'en-US', language: 'en-US', name: 'English', file: 'en.json' },
-    { code: 'it', iso: 'it-IT', language: 'it-IT', name: 'Italiano', file: 'it.json' },
-  ],
-  langDir: 'locales/',
-  detectBrowserLanguage: false,
-}
-```
-
-`detectBrowserLanguage: false` is intentional — prevents unexpected redirects. To add a new locale: add an entry to `locales[]`, create `i18n/locales/<code>.json`, add the code to `setLocale` type hints in the codebase.
-
-### `icon`
-
-```ts
-icon: {
-  mode: 'svg',
-  serverBundle: 'local',
-  fallbackToApi: false,
-  clientBundle: { scan: true, includeCustomCollections: true, sizeLimitKb: 256 }
-}
-```
-
-`fallbackToApi: false` — only locally installed collections are used. To add a collection: `npm install @iconify-json/<name>`.
-
-### `image`
-
-```ts
-image: {
-  provider: 'ipx',
-  domains: [],
-  quality: 80,
-  format: ['webp', 'avif', 'png'],
-  screens: { sm: 640, md: 768, lg: 1024, xl: 1280, '2xl': 1536 }
-}
-```
-
-Default provider is `ipx` (local). To use Cloudinary for remote images, add a `providers.cloudinary` block (`{ name: 'cloudinary', options: { baseURL: process.env.NUXT_PUBLIC_CLOUDINARY_BASE } }`) and pass `provider="cloudinary"` to `<NuxtImg>`. To allow images from an external domain (e.g. a CMS), add it to `domains[]`.
-
-### `tsconfig.json`
-
-```json
-{
-  "files": [],
-  "references": [
-    { "path": "./.nuxt/tsconfig.app.json" },
-    { "path": "./.nuxt/tsconfig.server.json" }
-  ]
-}
-```
-
-Fully delegated to the auto-generated `.nuxt/tsconfig.app.json` (strict mode, path aliases, Vue types). Never manually add `compilerOptions` here unless for a very specific override — run `nuxt prepare` to regenerate after changes.
+`tsconfig.json` is fully delegated to the auto-generated `.nuxt/tsconfig.*.json` references (strict mode, path aliases, Vue types) — never manually add `compilerOptions` there; run `nuxt prepare` to regenerate after changes.
 
 ---
 
 ## package.json scripts
 
+Standard Nuxt/ESLint scripts (`dev`, `build`, `generate`, `preview`, `postinstall`, `lint`, `lint:fix`) — see `package.json`. One non-standard script:
+
 | Script | Command |
 |---|---|
-| `dev` | `nuxt dev` |
-| `build` | `nuxt build` |
-| `generate` | `nuxt generate` |
-| `preview` | `nuxt preview` |
-| `postinstall` | `nuxt prepare` |
-| `lint` | `eslint .` |
-| `lint:fix` | `eslint . --fix` |
 | `si` | `bash scripts/safe-install.sh` — auto-detects branch, runs `npm ci` on `main` / `npm install` elsewhere |
 
 Node.js version: **24.11.0** (`.nvmrc`). Use `nvm use`.
@@ -961,87 +704,17 @@ Keep this table in sync with `package.json` — versions drift, treat `package.j
 
 ## Workflows
 
-These are recurring maintenance/setup routines carried over from the former `.github/prompts/*.prompt.md` files. They're not slash commands — just documented procedures to follow when the user asks for one of these things (any clearly equivalent phrasing works, English or Italian).
+Recurring maintenance/setup routines, each implemented as a skill under `.claude/skills/` — invoke by name or by the trigger phrases below (English or Italian both work):
 
-### Initialize / reset the project
-
-Trigger: "initialize the project", "reset the project", "inizializza il progetto".
-
-1. Ask the user (single batch): new project name; a 2–4 sentence app context (purpose + audience) to store in the [App context](#app-context) section above; any changes to the conventions in this file compared to the template defaults.
-2. Update `package.json`: `name` (kebab-case of the project name), `description`.
-3. Update `nuxt.config.ts`: `og:site_name` meta value.
-4. Update `README.md`: main heading and tagline.
-5. Reset `package.json` version to `1.0.0`; reset the version badge in `README.md` if present.
-6. Reset `CHANGELOG.md` to a clean [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) skeleton with an `[Unreleased]` section and a `[1.0.0] - <today>` entry ("Initial release").
-7. Analyse the `app/` directory (assets/css, components, composables, layouts, pages, types, utils) and check that every catalogue in this file (component API tables, composables list, design tokens, pages list, config reference) still matches reality. Report discrepancies briefly, then update this file to fix them — don't delete still-valid entries.
-8. Report: app context saved, project renamed, files touched (with exact changes), and any inconsistency found but not auto-resolved.
-
-### Update documentation
-
-Trigger: "update the documentation", "update the README", "aggiorna la documentazione".
-
-1. Read in parallel: `README.md`, `package.json`, `nuxt.config.ts`, this `CLAUDE.md`, the full `app/` directory (components, composables, pages, layouts), `i18n/locales/en.json`.
-2. Compare the README against the actual codebase: outdated sections, missing sections (new components/composables/pages/conventions), incorrect versions, broken links. Report the differences briefly, then proceed without waiting for approval.
-3. Rewrite `README.md` (English), keeping its existing 13-section structure (Overview, Getting Started, Project Structure, Design System, Routing, Layouts, Pages, Components, Composables & Utils, AI Tooling, Deployment, Versioning, Dependencies). Sections **AI Tooling** and **Deployment** are mandatory — always present. Don't invent information; mark unverifiable details as TBD.
-4. Confirm what changed and note any TBD sections that need user input.
-
-### Full project checkup
-
-Trigger: "full checkup", "run a full checkup", "checkup completo".
-
-Orchestrates the checks below in order and aggregates results — doesn't duplicate their logic:
-
-1. Dependency check (below)
-2. SEO/GSC readiness check (below)
-3. Build & type check (below)
-4. Lint check (below)
-5. If there are blocking errors (build errors or lint errors that can't be auto-fixed): **stop**, report each blocker (file, rule/error type, description), and ask the user to fix them manually before re-running.
-6. If no blockers: decide whether `README.md` needs updating (new/updated dependency, new component/page/composable/util, significant config change) and run the "Update documentation" workflow if so.
-7. Final summary: dependencies, SEO, build, lint, docs status, overall result.
-
-### Build & type check
-
-Trigger: "check the build", "does the project build?", "check del build".
-
-1. Run `npx nuxt typecheck` (requires `vue-tsc` as a dev dependency — never remove it). Collect every type error (file, line, error code, description).
-2. Run `npm run build`. Collect every error (type: TypeScript / Vite / Nitro / Module not found / SSR / Other; file; message).
-3. Categorise: **TypeScript errors** (may not block the build but indicate type-safety issues), **Build errors** (blocking — hard failures), **Build warnings** (non-blocking, worth reviewing).
-4. Report each category concisely. On failure, suggest a fix direction without auto-applying it.
-
-### Lint check
-
-Trigger: "check the lint", "is the project clean?", "check del lint".
-
-1. Run `npm run lint:fix`. Note which files were modified.
-2. Run `npm run lint`. Categorise remaining diagnostics: **warnings** (non-blocking) and **errors** (blocking — do not auto-fix these, list them for manual review).
-3. Never silence an issue with `// eslint-disable` — fix the code.
-4. Report files auto-fixed, remaining warnings, remaining errors.
-
-### Dependency check & update
-
-Trigger: "check dependencies", "update dependencies", "verifichiamo le dipendenze".
-
-This is a delicate process — never auto-update a package with a major version bump without verifying it won't break the project.
-
-1. Read `package.json` for current `dependencies`/`devDependencies` and `engines.node`.
-2. Run `npm outdated`. For each outdated package, note Current / Wanted / Latest.
-3. Classify:
-   - **Safe to auto-update**: Latest has the same major as the declared constraint (minor/patch only). Do a quick changelog/release-notes check first for new required config, renamed/removed APIs used in this project, or peer-dependency changes (especially `nuxt`, `vue`, `vite`) — if a concern surfaces, move it to "needs attention" even with the same major.
-   - **Needs attention**: Latest has a different major, or the changelog check revealed a concern.
-4. For safe updates, edit `package.json` directly (update the `^` constraint) — don't rely on `npm update` alone, it doesn't touch declared constraints. Then run `npm run si`.
-5. Vulnerability check: `npm fund` (informational), `npm audit` (classify severity/package/via/fix-availability), `npm audit fix` (auto-resolve what's within semver range). **Never run `npm audit fix --force`** — it can silently introduce breaking major bumps. If a vulnerability needs `--force`, stop and report it (package, advisory, severity) for the user to decide. Re-run `npm audit` after fixing to confirm final state.
-6. Report: auto-updated packages (old → new version), packages needing attention (with reason + changelog link), vulnerabilities resolved vs remaining (and whether the fix depends on this project or on upstream maintainers), funding notices.
-
-### GSC / SEO readiness check
-
-Trigger: "check SEO", "check GSC readiness", "verifica la SEO".
-
-1. Read `nuxt.config.ts` for `i18n.baseUrl` (production domain), `routeRules` (prerendered vs SSR routes), `app.head.meta` (global defaults), and `i18n.locales` (codes + hreflang values).
-2. Check `public/robots.txt`: `User-Agent: *`, `Allow: /`, a `Sitemap:` directive pointing at the production domain (not `localhost`), matching `i18n.baseUrl`.
-3. Check `public/sitemap.xml`: valid XML with `urlset` + `xmlns:xhtml` namespaces, all `<loc>` URLs on the production domain, `<lastmod>`/`<changefreq>`/`<priority>` per URL, `<xhtml:link>` alternates for every locale, correct `x-default`, hreflang values matching `i18n.locales[].iso`, and all prerendered routes represented.
-4. Check global meta tags aren't placeholders (`yourdomain.com`, `Your Site Name`, etc.) — flag any that still are.
-5. Scan `app/pages/**/*.vue` for `useHead`/`useSeoMeta`: each page should set `title`, `description`/`ogDescription`, `ogTitle`, `ogImage`, all via `t()`/`$t()` (no hardcoded strings, no `TODO`/`…` placeholders). Flag pages with no head call at all — they inherit only global defaults.
-6. Report per check (robots.txt, sitemap.xml, global meta, per-page table) plus a summary of blockers vs warnings vs OK.
+| Skill | Trigger phrases |
+|---|---|
+| `init` | "initialize the project", "reset the project", "inizializza il progetto" |
+| `docs-update` | "update the documentation", "update the README", "aggiorna la documentazione" |
+| `full-checkup` | "full checkup", "run a full checkup", "checkup completo" |
+| `build-check` | "check the build", "does the project build?", "check del build" |
+| `lint-check` | "check the lint", "is the project clean?", "check del lint" |
+| `dependency-check` | "check dependencies", "update dependencies", "verifichiamo le dipendenze" |
+| `seo-check` | "check SEO", "check GSC readiness", "verifica la SEO" |
 
 ---
 
