@@ -7,9 +7,9 @@
   # SB-Template Nuxt
 
   ![Version](https://img.shields.io/badge/version-2.4.12-blue)
-  [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
-  [![Nuxt](https://img.shields.io/badge/nuxt-4.4.8-00DC82?logo=nuxt.js)](https://nuxt.com)
-  [![Vue](https://img.shields.io/badge/vue-3.5.40-4FC08D?logo=vue.js)](https://vuejs.org)
+  [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
+  [![Nuxt](https://img.shields.io/badge/nuxt-4.5.2-00DC82?logo=nuxt.js)](https://nuxt.com)
+  [![Vue](https://img.shields.io/badge/vue-3.5.41-4FC08D?logo=vue.js)](https://vuejs.org)
   [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
   ![License](https://img.shields.io/badge/license-MIT-green)
@@ -26,13 +26,13 @@
 
 > Internal knowledge base for contributors: known issues, gotchas and version decisions that aren't obvious from the code alone. Not part of the numbered docs below — update this section whenever something like this is discovered or resolved.
 
-### ⚠️ Active — `nuxt` pinned to `4.4.8` (exact, no caret) — do not bump
+### ✅ Resolved — `nuxt` bumped to `4.5.2` (was pinned to `4.4.8`)
 
-`4.5.0` bundles Vite 8, unhead v3 (type-narrowing on `useHead`, breaking for looser v2 typings) and unctx v3 — several major upgrades landing in a single minor release. Re-test on a feature branch (`npm install`, not `npm ci`) with `npx nuxt typecheck` + `npm run build` before merging to `main`. Remove the pin once the branch test is clean.
+`4.5.0` bundles Vite 8, unhead v3 and unctx v3. Re-tested on a feature branch per the note that used to live here: `npx nuxt typecheck` and `npm run build` both pass clean on `4.5.2`. The one real fallout was a peer-dependency conflict — `@intlify/bundle-utils` (pulled in by `@nuxtjs/i18n`) depends on an older `esbuild` range than `vite@8` requires, which broke strict npm peer resolution (`ERESOLVE`). Fixed with a targeted `overrides.esbuild` pin in `package.json` (see [Dependencies](#13-dependencies)) instead of a blanket `legacy-peer-deps` flag, so peer-dep checks stay strict for everything else.
 
 ### ✅ Resolved — `NUXT_B2005` false positive on `check-if-page-unused.js`
 
-Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.4.8` (current pinned version) — if it resurfaces after a future version bump, treat it as a regression tied to that version rather than a project config issue.
+Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on both `nuxt@4.4.8` and the current `4.5.2` — if it resurfaces after a future version bump, treat it as a regression tied to that version rather than a project config issue.
 
 ---
 
@@ -68,7 +68,7 @@ The template is meant to be cloned and initialised for a specific project (via t
 
 ### Prerequisites
 
-- **Node.js** ≥ 24.11.0
+- **Node.js** ≥ 24.19.0
 - **npm**
 
 ### Installation
@@ -115,6 +115,7 @@ Visit **http://localhost:3000**.
 | `npm run lint` | Check code quality with ESLint |
 | `npm run lint:fix` | Auto-fix ESLint issues |
 | `npm run si` | Safe install dependencies (auto-detects branch, and run `npm install` or `npm ci`) |
+| `npm run analyze` | Bundle size report (`nuxi analyze`) |
 
 ---
 
@@ -124,21 +125,26 @@ This section shows the annotated directory tree. The project follows a feature-a
 
 ```
 ── nuxt.config.ts           ← Nuxt configuration (modules, SSR, runtimeConfig, routeRules, nitro, vite…)
+── netlify.toml             ← versioned Netlify build settings (command, publish dir, Node version)
+── .env.example             ← documented NUXT_PUBLIC_* env vars — copy to .env
 ── package.json             ← dependencies and npm scripts
 ── tsconfig.json            ← TypeScript config — extends .nuxt/tsconfig.app.json
 ── eslint.config.mjs        ← ESLint flat config (extends @nuxt/eslint, stylistic rules)
-── .nvmrc                   ← pinned Node.js version (24.11.0)
+── .nvmrc                   ← pinned Node.js version (24.19.0)
 ── public/
      favicon.ico
-     robots.txt
      sitemap.xml
      logo.webp
+── server/
+     routes/
+       robots.txt.ts        ← dynamic robots.txt — disallows indexing outside Netlify production
 ── i18n/
      locales/
        en.json              ← English translations (source of truth)
        it.json              ← Italian translations
 ── app/
      app.vue               ← root entry point (NuxtLayout + NuxtPage)
+     app.config.ts         ← public build-time branding config (site name, theme colour, social links)
      error.vue             ← global error page
      assets/
        css/
@@ -723,7 +729,7 @@ Documented inside `CLAUDE.md` under **## Workflows**. They aren't slash commands
 | Lint check | "check the lint" · "is the project clean?" | Runs `eslint --fix`, reports remaining warnings and blocking errors |
 | Build & type check | "check the build" · "does the project build?" | Runs `nuxt typecheck` + `nuxt build`, reports type and build errors |
 | Dependency check & update | "check dependencies" · "update dependencies" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
-| GSC / SEO readiness check | "check SEO" · "check GSC readiness" | Validates `sitemap.xml`, `robots.txt`, global meta tags in `nuxt.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
+| GSC / SEO readiness check | "check SEO" · "check GSC readiness" | Validates `sitemap.xml`, the dynamic `server/routes/robots.txt.ts`, global meta/brand values in `nuxt.config.ts` and `app/app.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
 | Full project checkup | "full checkup" · "run a full checkup" | Orchestrates all four checks (dependencies, SEO, build, lint) in sequence; optionally updates documentation |
 
 ### How to run a workflow
@@ -736,17 +742,21 @@ Open a chat with your AI coding assistant in the project root (so `CLAUDE.md` is
 
 ### Netlify (default)
 
-This template is pre-configured for Netlify. The Nitro preset is set to `netlify` in `nuxt.config.ts`.
+This template is pre-configured for Netlify. The Nitro preset is set to `netlify` in `nuxt.config.ts`, and build settings are versioned in [`netlify.toml`](./netlify.toml) rather than left only in the Netlify dashboard:
+
+```toml
+[build]
+  command = "npm run build"
+  publish = "dist"
+```
 
 ```bash
 npm run build
 ```
 
-Connect your GitHub repository to Netlify with:
-- **Build command:** `npm run build`
-- **Publish directory:** `.output/public`
+The `netlify` preset builds static assets to `dist/` and the SSR function to `.netlify/functions-internal/` — Netlify picks up both automatically from `netlify.toml`.
 
-Add environment variables under **Site settings → Environment variables**.
+Add environment variables under **Site settings → Environment variables** (see [Environment variables](#environment-variables) below). A `hooks['build:before']` guard in `nuxt.config.ts` fails the production build (`CONTEXT === 'production'`) if `NUXT_PUBLIC_SITE_URL` is missing or still the template placeholder.
 
 ### Other targets
 
@@ -768,13 +778,15 @@ Then run `npm run build` and deploy the `.output/` folder to your target.
 
 ### Environment variables
 
-Create a `.env` file at the project root. All client-side variables must be prefixed with `NUXT_PUBLIC_`:
+Copy [`.env.example`](./.env.example) to `.env` at the project root and fill in real values. All client-side variables must be prefixed with `NUXT_PUBLIC_`:
 
 ```env
-NUXT_PUBLIC_API_URL=https://api.yoursite.com
+NUXT_PUBLIC_SITE_URL=https://www.yoursite.com
 ```
 
 Access them in your app via `useRuntimeConfig()`. Declare public vars in `nuxt.config.ts → runtimeConfig.public`.
+
+For non-secret, rarely-changing branding values (site name, theme colour, social links) that don't need an env-var override, use `app/app.config.ts` and `useAppConfig()` instead — see [Project Structure](#3-project-structure).
 
 ---
 
@@ -818,6 +830,7 @@ On every push to `main`, Release Please analyses the commit history following th
 | `@tailwindcss/vite` | ^4.x | Tailwind v4 Vite plugin |
 | `@nuxt/icon` | ^2.x | SVG icon system (lucide + flagpack) |
 | `@nuxt/image` | ^2.x | Image optimisation (ipx + Cloudinary) |
+| `@nuxt/fonts` | ^0.x | Self-hosted web fonts (Poppins, Inter) |
 | `@nuxtjs/i18n` | ^10.x | Multi-language support |
 | `@nuxtjs/color-mode` | ^4.x | Dark/light theme |
 | `@vueuse/nuxt` | ^14.x | Vue composition utilities |
@@ -827,6 +840,7 @@ On every push to `main`, Release Please analyses the commit history following th
 | `@iconify-json/flagpack` *(dev)* | ^1.x | Flag icon set |
 | `@nuxt/eslint` *(dev)* | ^1.x | ESLint + stylistic rules |
 | `@types/node` *(dev)* | ^25.x | Node.js type definitions |
+| `esbuild` *(via `overrides`)* | ^0.28.x | Not a direct dependency — pinned to a single version across the tree because `@intlify/bundle-utils` (from `@nuxtjs/i18n`) depends on an older `esbuild` range than `vite@8` requires; without the override, strict npm peer resolution fails with `ERESOLVE` |
 
 ---
 

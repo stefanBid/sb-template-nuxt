@@ -17,7 +17,8 @@ This file is the **single source of AI context** for the project. It replaces th
 - **Nuxt 4** (Vue 3, `<script setup>`, SSR enabled)
 - **Tailwind CSS v4** via `@tailwindcss/vite` — no config file, tokens in CSS `@theme`
 - **@nuxt/icon** — Iconify SVG mode (`lucide` + `flagpack`)
-- **@nuxt/image** — `ipx` local provider (Cloudinary provider can be added via `image.providers.cloudinary`)
+- **@nuxt/image** — `ipx` local provider (Cloudinary provider can be added via `image.providers.cloudinary`; `provider="none"` is pre-registered for arbitrary external URLs, e.g. CMS media)
+- **@nuxt/fonts** — self-hosted Poppins/Inter, explicitly declared in `fonts.families` (not auto-detected, since the family names only appear inside CSS custom properties in `theme.css`)
 - **@nuxtjs/i18n** — `en` default, `it` secondary; `prefix_except_default`
 - **@nuxtjs/color-mode** — dark/light via `.dark` class on `<html>`
 - **@vueuse/nuxt**, **@floating-ui/vue**, **isomorphic-dompurify**
@@ -33,12 +34,15 @@ This file is the **single source of AI context** for the project. It replaces th
 - `npm ci` installs exactly as pinned, never mutates `package-lock.json`
 - `npm install` allowed on feature/fix/develop branches
 - Use `npm run si` when unsure — auto-detects branch
+- `package.json` pins `esbuild` via `overrides` (`^0.28.0`) to keep a single version across the tree — `@intlify/bundle-utils` depends on an older `esbuild` range than `vite@8` requires, which otherwise breaks strict peer resolution. Update the override's range together whenever `vite` or `@nuxtjs/i18n` bump their `esbuild` requirement.
 
 ---
 
 ## Project structure
 
-Standard Nuxt 4 layout (`app/` source directory: `assets`, `components/base|the-*`, `composables`, `layouts`, `pages`, `plugins`, `types`, `utils`) plus root-level config files and `i18n/locales/`. Explore with `ls`/`find` — the naming conventions below explain how new files should be named.
+Standard Nuxt 4 layout (`app/` source directory: `assets`, `components/base|the-*`, `composables`, `layouts`, `pages`, `plugins`, `types`, `utils`, plus `app.config.ts` at its root) and a top-level `server/routes/` for Nitro server routes (e.g. `robots.txt.ts`), alongside root-level config files and `i18n/locales/`. Explore with `ls`/`find` — the naming conventions below explain how new files should be named.
+
+`app/app.config.ts` holds public, build-time, non-secret branding config (`site.*` — name, title template, theme colour, OG/Twitter image; `social.*` — email, phone, social links) consumed via `useAppConfig()`. It's distinct from `runtimeConfig` in `nuxt.config.ts`: `app.config.ts` values aren't overridable by environment variables and are meant to change rarely, while `runtimeConfig.public.*` is for values that vary per deploy (see `.env.example`).
 
 ---
 
@@ -463,6 +467,7 @@ No props. Fixed-position wrapper (`<div class="fixed ...">` with a `default` slo
 5. Props: inline interface + `withDefaults`, only defaults for non-required props
 6. Use design system tokens for all styling — no raw hex values, no hardcoded sizes
 7. Add `u-app-soft-transition` to themed/interactive elements
+8. For a heavy or below-the-fold component used conditionally in a real page (not the `index.vue` showcase, which intentionally renders every component at once), prefer Nuxt's `Lazy` prefix (`<LazyBaseDialog v-if="isOpen" />`) or `hydrate-on-visible` to defer loading/hydration instead of bundling it into the initial page chunk
 
 ---
 
@@ -647,10 +652,10 @@ To create a new layout, add `app/layouts/my-layout.vue` and expose a `<slot>`.
 
 ```ts
 routeRules: {
-  '/': { prerender: true },    // static
-  '/it': { prerender: true },
+  '/': { isr: 3600 },    // incremental static regen, refreshes without a redeploy
+  '/it': { isr: 3600 },
   // omit = SSR (default)
-  // { isr: 60 } = ISR
+  // { prerender: true } = fully static at build time — only once content is truly frozen
   // { ssr: false } = SPA
 }
 ```
@@ -663,19 +668,28 @@ For dynamic routes with static content (e.g. `/blog/[slug]`), use `nuxt generate
 
 The single source of truth for the entire Nuxt application setup — never duplicate configuration across files. Its own header comment block documents every section and the rationale behind non-obvious choices (sourcemaps disabled for security, `isomorphic-dompurify` excluded from the server bundle, `detectBrowserLanguage: false` being intentional, etc.) — read it directly rather than this file, which will drift out of sync with it over time.
 
+Environment profiles use Nuxt's native `$development`/`$production` keys (activated by `NODE_ENV`, or explicitly via `nuxt build --envName <name>`) instead of scattered `process.env.NODE_ENV` checks — currently only `devtools.enabled` differs between them. Key order inside `defineNuxtConfig({...})` is enforced by `nuxt/nuxt-config-keys-order` (part of the `@nuxt/eslint` config) — run `npm run lint:fix` after adding a new top-level key rather than guessing its position.
+
+Brand-specific values (site name, theme colour, OG/Twitter image, social links) live in `app/app.config.ts`, not here — `nuxt.config.ts`'s `app.head` only carries structural meta (viewport, favicon, `og:type`, `twitter:card`).
+
+A `hooks['build:before']` guard fails a Netlify production build (`process.env.CONTEXT === 'production'`) if `NUXT_PUBLIC_SITE_URL` is missing or still the template placeholder — see `.env.example`.
+
 `tsconfig.json` is fully delegated to the auto-generated `.nuxt/tsconfig.*.json` references (strict mode, path aliases, Vue types) — never manually add `compilerOptions` there; run `nuxt prepare` to regenerate after changes.
 
 ---
 
 ## package.json scripts
 
-Standard Nuxt/ESLint scripts (`dev`, `build`, `generate`, `preview`, `postinstall`, `lint`, `lint:fix`) — see `package.json`. One non-standard script:
+Standard Nuxt/ESLint scripts (`dev`, `build`, `generate`, `preview`, `postinstall`, `lint`, `lint:fix`) — see `package.json`. Non-standard scripts:
 
 | Script | Command |
 |---|---|
 | `si` | `bash scripts/safe-install.sh` — auto-detects branch, runs `npm ci` on `main` / `npm install` elsewhere |
+| `analyze` | `nuxi analyze` — bundle size report, run when a component/dependency feels heavier than expected |
 
-Node.js version: **24.11.0** (`.nvmrc`). Use `nvm use`.
+Node.js version: **24.19.0** (`.nvmrc`). Use `nvm use`.
+
+Environment variables: copy `.env.example` to `.env` and fill in real values — every `NUXT_PUBLIC_*` var maps to `runtimeConfig.public.*`. Netlify build settings (build command, publish dir, Node version) are versioned in `netlify.toml` — update it, not just the Netlify dashboard, if the build changes.
 
 ### Dependencies
 
@@ -689,6 +703,7 @@ Keep this table in sync with `package.json` — versions drift, treat `package.j
 | `@nuxt/eslint` | ESLint integration |
 | `@nuxt/icon` | Icon system |
 | `@nuxt/image` | Image optimisation |
+| `@nuxt/fonts` | Self-hosted web fonts |
 | `@nuxtjs/i18n` | Internationalisation |
 | `@nuxtjs/color-mode` | Dark/light mode |
 | `@vueuse/core`, `@vueuse/nuxt` | Vue composition utilities |
@@ -698,6 +713,7 @@ Keep this table in sync with `package.json` — versions drift, treat `package.j
 | `@iconify-json/lucide` *(dev)* | Lucide icon collection |
 | `@iconify-json/flagpack` *(dev)* | Flag icon collection |
 | `@types/node` *(dev)* | Node.js types |
+| `typescript` *(dev)* | Explicit peer of `vue-tsc` — required, not auto-installed by npm's default peer resolution |
 | `vue-tsc` *(dev)* | Powers `nuxt typecheck` — never remove |
 
 ---
