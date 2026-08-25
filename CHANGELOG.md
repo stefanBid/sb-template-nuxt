@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.5.0](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.12...v2.5.0) (2026-08-25)
+
+
+### Features
+
+* add .env.example and app configuration ([944db86](https://github.com/stefanBid/sb-template-nuxt/commit/944db86bffda65db51762148177e82f9d396866f))
+* remove robots.txt and implement dynamic route ([944db86](https://github.com/stefanBid/sb-template-nuxt/commit/944db86bffda65db51762148177e82f9d396866f))
+
+
+### Bug Fixes
+
+* August 2026 checkup ([#108](https://github.com/stefanBid/sb-template-nuxt/issues/108)) ([944db86](https://github.com/stefanBid/sb-template-nuxt/commit/944db86bffda65db51762148177e82f9d396866f))
+
 ## [2.4.12](https://github.com/stefanBid/sb-template-nuxt/compare/v2.4.11...v2.4.12) (2026-07-26)
 
 
