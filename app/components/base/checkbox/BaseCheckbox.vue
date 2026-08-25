@@ -29,7 +29,6 @@ const model = defineModel<boolean>('input')
       u-app-soft-transition cursor-pointer
       appearance-none
       outline-none
-      bg-app-surface-2
       checked:bg-app-accent-hover
       checked:border-app-contrast
       focus-visible:ring-2
@@ -40,7 +39,6 @@ const model = defineModel<boolean>('input')
       before:flex before:items-center before:justify-center
       before:text-app-contrast before:text-lg
       before:content-['✓'] before:opacity-0
-      checked:before:opacity-100
     "
       :class="props.error ? 'border-app-error' : 'border-app-border'"
       :name="props.name || `${props.id}-name`"

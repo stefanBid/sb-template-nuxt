@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "analyze": "nuxi analyze",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -17,28 +18,33 @@
   },
   "dependencies": {
     "@floating-ui/vue": "^2.0.1",
-    "@nuxt/eslint": "^1.16.0",
-    "@nuxt/icon": "^2.3.1",
-    "@nuxt/image": "^2.0.0",
+    "@nuxt/eslint": "^1.17.0",
+    "@nuxt/fonts": "^0.14.0",
+    "@nuxt/icon": "^2.5.1",
+    "@nuxt/image": "^2.1.0",
     "@nuxtjs/color-mode": "^4.0.1",
-    "@nuxtjs/i18n": "^10.5.0",
+    "@nuxtjs/i18n": "^10.6.0",
     "@tailwindcss/vite": "^4.3.3",
-    "@vueuse/core": "^14.3.0",
-    "@vueuse/nuxt": "^14.3.0",
-    "eslint": "^10.8.0",
-    "isomorphic-dompurify": "^3.19.0",
-    "nuxt": "4.4.8",
+    "@vueuse/core": "^14.4.0",
+    "@vueuse/nuxt": "^14.4.0",
+    "eslint": "^10.9.1",
+    "isomorphic-dompurify": "^3.23.0",
+    "nuxt": "4.5.2",
     "tailwindcss": "^4.3.3",
-    "vue": "^3.5.40",
+    "vue": "^3.5.41",
     "vue-router": "^5.2.0"
   },
   "devDependencies": {
     "@iconify-json/flagpack": "^1.2.8",
-    "@iconify-json/lucide": "^1.2.120",
-    "@types/node": "^26.1.1",
-    "vue-tsc": "^3.3.8"
+    "@iconify-json/lucide": "^1.2.126",
+    "@types/node": "^26.3.0",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.11"
   },
   "engines": {
-    "node": ">=24.11.0"
+    "node": ">=24.19.0"
+  },
+  "overrides": {
+    "esbuild": "^0.28.0"
   }
 }

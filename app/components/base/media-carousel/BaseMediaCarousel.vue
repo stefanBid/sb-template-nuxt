@@ -81,11 +81,12 @@ onUnmounted(() => {
       :class="currentItem.type === 'photo' ? 'aspect-video md:aspect-21/9 bg-app-muted/10' : 'h-125 md:h-150 bg-app-surface-2 flex items-center justify-center'"
     >
       <!-- Image -->
-      <img
+      <NuxtImg
         v-if="currentItem.type === 'photo'"
         :alt="currentItem.alternativeText || `Media ${currentIndex + 1}`"
         class="w-full h-full object-cover"
         loading="lazy"
+        provider="none"
         :src="currentItem.url"
       />
 
@@ -154,21 +155,23 @@ onUnmounted(() => {
         @click="onGoToIndex(index)"
       >
         <!-- Photo Thumbnail -->
-        <img
+        <NuxtImg
           v-if="item.type === 'photo'"
           :alt="item.alternativeText || `Thumbnail ${index + 1}`"
           class="w-full h-full object-cover u-app-soft-transition"
           loading="lazy"
+          provider="none"
           :src="item.url"
         />
 
         <!-- Video Thumbnail with Play Icon -->
         <div v-else-if="item.type === 'video'" class="relative w-full h-full">
-          <img
+          <NuxtImg
             v-if="item.previewUrl"
             :alt="item.alternativeText || `Thumbnail video ${index + 1}`"
             class="w-full h-full object-cover u-app-soft-transition"
             loading="lazy"
+            provider="none"
             :src="item.previewUrl"
           />
           <div v-else class="w-full h-full bg-app-muted/20 flex items-center justify-center u-app-soft-transition">

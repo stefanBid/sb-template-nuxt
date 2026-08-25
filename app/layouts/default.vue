@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const appConfig = useAppConfig()
+
 const i18nHead = useLocaleHead({
   dir: true,
   seo: true,
@@ -6,9 +8,15 @@ const i18nHead = useLocaleHead({
 
 useHead(() => ({
   htmlAttrs: i18nHead.value.htmlAttrs,
-  meta: i18nHead.value.meta,
+  meta: [
+    ...i18nHead.value.meta,
+    { name: 'theme-color', content: appConfig.site.themeColor },
+    { property: 'og:site_name', content: appConfig.site.name },
+    { property: 'og:image', content: appConfig.site.ogImage },
+    { name: 'twitter:image', content: appConfig.site.twitterImage },
+  ],
   link: i18nHead.value.link,
-  titleTemplate: '%s -  Your Website',
+  titleTemplate: appConfig.site.titleTemplate,
 }))
 
 const { t, setLocale, locale } = useI18n()
@@ -64,11 +72,11 @@ onMounted(() => {
       </div>
     </main>
     <TheFooter
-      email="your.email@example.com"
-      github-url="https://github.com/stefanBid"
-      instagram-url="https://www.instagram.com/stefano_bid/"
-      linkedin-url="https://www.linkedin.com/in/stefano-biddau/"
-      phone="+39 123 456 7890"
+      :email="appConfig.social.email"
+      :github-url="appConfig.social.githubUrl"
+      :instagram-url="appConfig.social.instagramUrl"
+      :linkedin-url="appConfig.social.linkedinUrl"
+      :phone="appConfig.social.phone"
       :quick-links="routes"
     />
     <ClientOnly>

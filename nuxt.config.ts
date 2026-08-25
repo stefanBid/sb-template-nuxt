@@ -1,67 +1,23 @@
-// * ============================================================
-// * nuxt.config.ts — sb-template-nuxt
-// * https://nuxt.com/docs/api/configuration/nuxt-config
-// * ============================================================
-//
-// * MODULES
-// * @nuxt/eslint        — linting and stylistic formatting
-// * @nuxt/icon          — SVG icon system via Iconify (lucide + flagpack)
-// * @nuxt/image         — image optimisation (ipx local + Cloudinary provider)
-// * @nuxtjs/i18n        — multi-language support (en default, it secondary)
-// * @nuxtjs/color-mode  — dark/light theme via .dark class on <html>
-// * @vueuse/nuxt        — Vue composition utilities auto-import
-//
-// * APP.HEAD — global meta applied to all pages (overridable per-page via useHead)
-// !   og:site_name, og:image, twitter:image → replace with real values before going live
-// !   theme-color → update to match your brand colour
-//
-// * CSS — single entry point: ./app/assets/css/main.css
-// *   imports cascade in order: tailwind → theme → typography → utilities → animations → global styles
-//
-// * RUNTIME CONFIG — env vars via useRuntimeConfig()
-// ?   add public vars here: NUXT_PUBLIC_* in .env → runtimeConfig.public.*
-//
-// * ROUTE RULES — per-route rendering strategy
-// *   prerender:true  → static HTML at build time
-// *   ssr:false       → SPA mode (client-only)
-// *   isr:N           → incremental static regen every N seconds
-//
-// * NITRO — server engine
-// *   preset:'netlify' → change to 'vercel' or 'node-server' for other targets
-// *   isomorphic-dompurify excluded from server bundle (client-side only, jsdom incompatible with serverless)
-//
-// * I18N
-// !   baseUrl → replace with production domain before going live
-// *   strategy:'prefix_except_default' → /page (en), /it/page (it)
-// *   detectBrowserLanguage:false → intentional, prevents unexpected redirects
-//
-// * ICON — SVG mode, local bundle only (fallbackToApi:false)
-// ?   to add a collection: npm install @iconify-json/<name>
-//
-// * IMAGE — default provider ipx (local); cloudinary available via provider="cloudinary" on <NuxtImg>
-// ?   to allow external image domains, add them to image.domains[]
-// * ============================================================
-
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxtjs/i18n', '@nuxtjs/color-mode', '@vueuse/nuxt'],
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxt/fonts', '@nuxtjs/i18n', '@nuxtjs/color-mode', '@vueuse/nuxt'],
+
+  $development: {
+    devtools: { enabled: true },
+  },
 
   ssr: true,
 
-  devtools: { enabled: process.env.NODE_ENV !== 'production' },
+  devtools: { enabled: false },
 
   app: {
     head: {
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'format-detection', content: 'telephone=no' },
-        { name: 'theme-color', content: '#0f0f20' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:site_name', content: 'Your Site Name' },
-        { property: 'og:image', content: 'https://www.yoursite.com/og-image.jpg' },
         { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:image', content: 'https://www.yoursite.com/twitter-image.jpg' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -71,6 +27,12 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  colorMode: {
+    classSuffix: '',
+    preference: 'system',
+    fallback: 'dark',
+  },
+
   runtimeConfig: {
     public: {
       siteUrl: 'https://www.yoursite.com',
@@ -78,8 +40,8 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { prerender: true },
-    '/it': { prerender: true },
+    '/': { isr: 3600 },
+    '/it': { isr: 3600 },
   },
 
   sourcemap: {
@@ -108,10 +70,31 @@ export default defineNuxtConfig({
     },
   },
 
+  hooks: {
+    'build:before': () => {
+      const isNetlifyProduction = process.env.CONTEXT === 'production'
+      const siteUrl = process.env.NUXT_PUBLIC_SITE_URL
+
+      if (isNetlifyProduction && (!siteUrl || siteUrl === 'https://www.yoursite.com')) {
+        throw new Error(
+          'NUXT_PUBLIC_SITE_URL is missing or still the template placeholder (https://www.yoursite.com). '
+          + 'Set the real production URL as a Netlify environment variable before deploying.',
+        )
+      }
+    },
+  },
+
   eslint: {
     config: {
       stylistic: true,
     },
+  },
+
+  fonts: {
+    families: [
+      { name: 'Poppins', provider: 'google', weights: [400, 500, 600, 700, 800] },
+      { name: 'Inter', provider: 'google', weights: [300, 400, 500, 600, 700] },
+    ],
   },
 
   i18n: {
@@ -143,5 +126,10 @@ export default defineNuxtConfig({
     quality: 80,
     format: ['webp', 'avif', 'png'],
     screens: { 'sm': 640, 'md': 768, 'lg': 1024, 'xl': 1280, '2xl': 1536 },
+    providers: {
+      // registers the built-in pass-through provider so `<NuxtImg provider="none">` type-checks —
+      // used for arbitrary external URLs (e.g. CMS media) not covered by image.domains
+      none: {},
+    },
   },
 })
