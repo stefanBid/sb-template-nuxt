@@ -1,15 +1,14 @@
 export default defineEventHandler((event) => {
   setHeader(event, 'Content-Type', 'text/plain')
 
-  // Netlify sets CONTEXT to 'production' only for the production deploy context —
-  // deploy previews and branch deploys get 'deploy-preview' / 'branch-deploy' and must stay unindexable.
-  const isProduction = process.env.CONTEXT === 'production'
+  // Netlify's CONTEXT env var ('production' vs 'deploy-preview' / 'branch-deploy') is only
+  // available at build time, not in the Function runtime — read the build-time-resolved value
+  // from runtimeConfig (set in nuxt.config.ts) instead of process.env.CONTEXT here.
+  const { public: { siteUrl, isProduction } } = useRuntimeConfig(event)
 
   if (!isProduction) {
     return 'User-Agent: *\nDisallow: /\n'
   }
-
-  const { public: { siteUrl } } = useRuntimeConfig(event)
 
   return `User-Agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`
 })

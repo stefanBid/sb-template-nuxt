@@ -1,17 +1,32 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
+  // ---------------------------------------------------------------------------
+  // Modules
+  // ---------------------------------------------------------------------------
   modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxt/fonts', '@nuxtjs/i18n', '@nuxtjs/color-mode', '@vueuse/nuxt'],
 
+  // ---------------------------------------------------------------------------
+  // Environment overrides — merged in based on the actual Nuxt CLI command
+  // (`nuxt dev` → $development, `nuxt build`/`generate` → $production), not `process.env.NODE_ENV`
+  // ---------------------------------------------------------------------------
   $development: {
     devtools: { enabled: true },
   },
+  $production: {
+    devtools: { enabled: false },
+  },
 
+  // ---------------------------------------------------------------------------
+  // Rendering
+  // ---------------------------------------------------------------------------
   ssr: true,
 
-  devtools: { enabled: false },
-
+  // ---------------------------------------------------------------------------
+  // App & Head
+  // ---------------------------------------------------------------------------
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -24,40 +39,43 @@ export default defineNuxtConfig({
       ],
     },
   },
-
   css: ['~/assets/css/main.css'],
-
   colorMode: {
     classSuffix: '',
     preference: 'system',
     fallback: 'dark',
   },
 
+  // ---------------------------------------------------------------------------
+  // Runtime config & routing
+  // ---------------------------------------------------------------------------
   runtimeConfig: {
     public: {
+      isProduction: process.env.CONTEXT === 'production',
       siteUrl: 'https://www.yoursite.com',
     },
   },
-
   routeRules: {
     '/': { isr: 3600 },
     '/it': { isr: 3600 },
+    // Dynamic, must run per-request — never prerender
+    '/robots.txt': { prerender: false },
   },
 
+  // ---------------------------------------------------------------------------
+  // Build & server
+  // ---------------------------------------------------------------------------
   sourcemap: {
     client: false,
     server: false,
   },
-
   compatibilityDate: '2025-07-15',
-
   nitro: {
     preset: 'netlify',
     externals: {
       external: ['isomorphic-dompurify'],
     },
   },
-
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
@@ -69,7 +87,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-
   hooks: {
     'build:before': () => {
       const isNetlifyProduction = process.env.CONTEXT === 'production'
@@ -83,20 +100,17 @@ export default defineNuxtConfig({
       }
     },
   },
-
   eslint: {
     config: {
       stylistic: true,
     },
   },
-
   fonts: {
     families: [
       { name: 'Poppins', provider: 'google', weights: [400, 500, 600, 700, 800] },
       { name: 'Inter', provider: 'google', weights: [300, 400, 500, 600, 700] },
     ],
   },
-
   i18n: {
     baseUrl: 'https://www.yoursite.com',
     strategy: 'prefix_except_default',
@@ -108,7 +122,6 @@ export default defineNuxtConfig({
     langDir: 'locales/',
     detectBrowserLanguage: false,
   },
-
   icon: {
     mode: 'svg',
     serverBundle: 'local',
@@ -119,7 +132,6 @@ export default defineNuxtConfig({
       sizeLimitKb: 256,
     },
   },
-
   image: {
     provider: 'ipx',
     domains: [],
