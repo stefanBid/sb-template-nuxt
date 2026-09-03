@@ -51,6 +51,7 @@ export default defineNuxtConfig({
   // ---------------------------------------------------------------------------
   runtimeConfig: {
     public: {
+      isProduction: process.env.CONTEXT === 'production',
       siteUrl: 'https://www.yoursite.com',
     },
   },
