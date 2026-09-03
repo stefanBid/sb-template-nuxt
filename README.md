@@ -9,7 +9,7 @@
   ![Version](https://img.shields.io/badge/version-2.5.0-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4.5.2-00DC82?logo=nuxt.js)](https://nuxt.com)
-  [![Vue](https://img.shields.io/badge/vue-3.5.41-4FC08D?logo=vue.js)](https://vuejs.org)
+  [![Vue](https://img.shields.io/badge/vue-3.5.42-4FC08D?logo=vue.js)](https://vuejs.org)
   [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
   ![License](https://img.shields.io/badge/license-MIT-green)
