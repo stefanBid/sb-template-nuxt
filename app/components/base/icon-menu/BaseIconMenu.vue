@@ -2,12 +2,13 @@
 interface BaseIconMenuProps {
   icon: string
   items: Array<MenuItem>
+  ariaLabel?: string
   selectedItemId?: string | null
-
 }
 
 // Input / Output
 const props = withDefaults(defineProps<BaseIconMenuProps>(), {
+  ariaLabel: undefined,
   selectedItemId: null,
 })
 
@@ -75,6 +76,7 @@ watch(open, (newVal) => {
       <BaseIconButton
         :aria-expanded="open ? 'true' : 'false'"
         aria-haspopup="menu"
+        :aria-label="props.ariaLabel"
         :icon="props.icon"
         :is-active="open"
         @click="toggleFloating(!open)"
@@ -87,18 +89,18 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-100 rounded-xl border border-app-border bg-app-surface w-fit shadow-[0_12px_32px_var(--color-app-shadow)]"
+          class="z-100 rounded-md border border-app-border bg-app-surface w-fit shadow-[0_20px_44px_-18px_var(--color-app-shadow),0_2px_8px_var(--color-app-shadow)]"
           :style="floatingStyles"
         >
           <ul
             ref="menu"
-            class="p-2 outline-none space-y-2"
+            class="p-2 outline-none space-y-2 mb-0"
             role="menu"
           >
             <li v-for="item in props.items" :key="item.code">
               <button
                 :aria-current="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 text-app-contrast ty-app-label normal-case! gap-2 u-app-focus u-app-soft-transition"
+                class="group inline-flex items-center w-full text-left rounded-sm px-3 py-2 md:px-3.5 md:py-2.5 text-app-contrast normal-case! gap-2 u-app-focus u-app-soft-transition"
                 :class="{
                   'bg-app-surface-2': props.selectedItemId === item.code,
                   'hover:bg-app-surface-2 cursor-pointer': props.selectedItemId !== item.code,
@@ -107,7 +109,6 @@ watch(open, (newVal) => {
                 type="button"
                 @click="onSelect(item.code)"
               >
-                <span class="truncate flex-1">{{ item.label }}</span>
                 <Icon
                   v-if="item.iconType === 'nuxt-icon'"
                   class="size-4 shrink-0"
@@ -118,6 +119,12 @@ watch(open, (newVal) => {
                   alt=""
                   class="size-4 shrink-0"
                   :src="item.icon"
+                />
+                <span class="truncate flex-1 ty-app-small">{{ item.label }}</span>
+                <Icon
+                  v-if="item.code === props.selectedItemId"
+                  class="size-4 text-app-accent shrink-0"
+                  name="lucide:check"
                 />
               </button>
             </li>

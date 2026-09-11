@@ -26,7 +26,13 @@ const { notifications, removeNotification, info } = useAppNotifications()
 // State
 
 const routes = computed(() => [
-  { name: t('nav.home'), path: localePath('index'), routeName: 'index' },
+  { name: t('nav.sections.buttons'), path: `${localePath('index')}#buttons` },
+  { name: t('nav.sections.cards'), path: `${localePath('index')}#cards` },
+  { name: t('nav.sections.accordion'), path: `${localePath('index')}#accordion` },
+  { name: t('nav.sections.form'), path: `${localePath('index')}#form` },
+  { name: t('nav.sections.dialog'), path: `${localePath('index')}#dialog` },
+  { name: t('nav.sections.components'), path: `${localePath('index')}#components` },
+  { name: t('nav.sections.responsive'), path: `${localePath('index')}#responsive` },
 ] as Array<RouteItem>)
 
 const langs = [

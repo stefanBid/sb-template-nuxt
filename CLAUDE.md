@@ -54,7 +54,7 @@ Standard Nuxt 4 layout (`app/` source directory: `assets`, `components/base|the-
 | Vue file | PascalCase + prefix | `BaseButton.vue`, `TheHeader.vue` |
 | Composable file | camelCase + `use` | `useAppNotifications.ts` |
 | Utility / type file | camelCase | `generateUuid.ts` |
-| CSS utility | `ty-app-*` / `u-app-*` | `ty-app-title`, `u-app-soft-transition` |
+| CSS utility | `ty-app-*` / `u-app-*` | `ty-app-h3`, `u-app-soft-transition` |
 | CSS variable | `--color-app-*`, `--font-app-*` | `--color-app-accent` |
 
 - `Base` prefix: fully reusable, no business logic, no API calls
@@ -140,7 +140,7 @@ Use the call-signature syntax inside the generic, not the object/tuple syntax.
 
 - Default: inline Tailwind utilities in template — no custom CSS classes unless requested
 - Colours: `text-app-contrast`, `bg-app-surface`, `border-app-border` (from `--color-app-*`)
-- Typography: `ty-app-title`, `ty-app-paragraph`, etc.
+- Typography: `ty-app-h3`, `ty-app-p`, etc. — pick the class matching the element's actual weight in its container, not its HTML tag
 - Transitions: `u-app-soft-transition` (200ms), `u-app-hard-transition` (500ms)
 - Focus: `u-app-focus`, `u-app-focus-within`
 - **No `dark:` Tailwind variants** — dark mode via CSS variables only
@@ -208,22 +208,35 @@ Opacity modifiers allowed: `bg-app-main/80`, `text-app-muted/70`.
 
 Dark mode: handled via CSS variable overrides in `.dark` class — never use `dark:` variants.
 
+### Radius (`--radius-*`)
+
+Defined in `theme.css`'s `@theme` block, overriding Tailwind's default `rounded-sm`/`rounded-md`/`rounded-lg` scale — a semantic radius hierarchy instead of an arbitrary per-component choice. `rounded-full` (pills, dots, avatars) is Tailwind's own default and needs no override.
+
+| Token | Value | Tailwind utility | Usage |
+|---|---|---|---|
+| `--radius-sm` | `10px` | `rounded-sm` | Buttons, inputs, icon blocks, small chips/menu items |
+| `--radius-md` | `14px` | `rounded-md` | Standard cards, dropdown/menu panels |
+| `--radius-lg` | `22px` | `rounded-lg` | Dialogs, hero/feature panels, page-level elevated blocks |
+
+Always use the canonical `rounded-sm` / `rounded-md` / `rounded-lg` classes — never `rounded-[var(--radius-*)]` arbitrary syntax.
+
 ### Typography (`ty-app-*`)
 
 | Class | Font | Usage |
 |---|---|---|
-| `ty-app-hero` | Poppins, uppercase | Full-bleed hero |
-| `ty-app-impact` | Poppins, uppercase | Large display headings |
-| `ty-app-title` | Poppins | Section titles (responsive `text-2xl`→`text-4xl`) |
-| `ty-app-title-lg` | Poppins | Large titles (`text-3xl`→`text-6xl`) |
-| `ty-app-title-xl` | Poppins | Extra large titles (`text-4xl`→`text-7xl`) |
-| `ty-app-subtitle` | Inter semibold | Sub-headings (`text-base`→`text-xl`) |
-| `ty-app-subtitle-lg` | Inter semibold | Large sub-headings (`text-lg`→`text-2xl`) |
-| `ty-app-subtitle-xl` | Inter semibold | Extra large sub-headings (`text-xl`→`text-3xl`) |
-| `ty-app-paragraph` | Inter | Body text (`text-sm`→`text-lg`) |
-| `ty-app-label` | Inter uppercase tracked | Form labels, tags |
+| `ty-app-h1` | Poppins | Biggest heading — hero titles, `--fs-app-h1` |
+| `ty-app-h2` | Poppins | Large section headlines, `--fs-app-h2` |
+| `ty-app-h3` | Poppins | Standard titles (cards, dialogs, brand mark), `--fs-app-h3` |
+| `ty-app-h4` | Poppins semibold | Smallest heading — subtitles, notification titles, `--fs-app-h4` |
+| `ty-app-p` | Inter | Body text, `--fs-app-p` |
+| `ty-app-span` | Inter | Inline text at body size, for non-`<p>` elements |
+| `ty-app-label` | Inter uppercase tracked | Form labels, tags, eyebrows |
+| `ty-app-small` | Inter | Fine print |
+| `ty-app-code` | Monospace | Inline code |
 | `ty-app-btn-label` | Inter bold uppercase | Button text |
 | `ty-app-caption` | Inter italic | Captions, secondary notes |
+
+`ty-app-h1`–`ty-app-p` mirror the `--fs-app-h1`–`--fs-app-p` modular scale (ratio `--fs-app-scale-ratio`, 1.25) in `theme.css`, and reset `margin: 0` — matching raw `<h1>`–`<p>` tags in visual weight, but with spacing left entirely to Tailwind (`mt-*`/`space-y-*`) instead of the browser default. **Always pick the class for the element's actual weight in its container** (e.g. a card's own title is `ty-app-h3` even though the page's h2 section headline is bigger) — matching two different-weight headings to the same class is what makes a compact card or toast look oversized. Raw `<h1>`–`<h4>`/`<p>` tags (e.g. inside `BaseRichText`'s sanitised HTML) get sized the same way via `@layer base`, but keep the browser's default bottom margin for prose flow.
 
 Font families: `font-app-primary` (Poppins), `font-app-secondary` (Inter).
 
@@ -261,7 +274,8 @@ Always add `u-app-soft-transition` to interactive and themed elements.
 
 | Prop | Type | Default |
 |---|---|---|
-| `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` |
+| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'danger'` | `'primary'` |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` |
 | `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` |
 | `to` | `string` | `undefined` |
 | `ariaLabel` | `string` | `undefined` |
@@ -324,6 +338,41 @@ Model: `defineModel<string>('input')`. Shows a character counter when `maxLength
 
 Model: `defineModel<boolean>('input')`. Slot: `default` (custom label).
 
+### `BaseRadio`
+
+| Prop | Type | Default |
+|---|---|---|
+| `id` | `string` | required |
+| `name` | `string` | required |
+| `value` | `string` | required |
+| `label` | `string` | `undefined` |
+
+Model: `defineModel<string>('input')`. Multiple instances sharing `name` + the same model form a native radio group.
+
+### `BaseSwitch`
+
+| Prop | Type | Default |
+|---|---|---|
+| `id` | `string` | required |
+| `name` | `string` | `undefined` (falls back to `${id}-name`) |
+| `label` | `string` | `undefined` |
+
+Model: `defineModel<boolean>('input')`.
+
+### `BaseSelect`
+
+| Prop | Type | Default |
+|---|---|---|
+| `id` | `string` | required |
+| `options` | `{ label: string, value: string }[]` | required |
+| `name` | `string` | `undefined` |
+| `label` | `string` | `undefined` |
+| `placeholder` | `string` | `undefined` |
+| `hint` | `string` | `undefined` |
+| `error` | `string \| null` | `null` |
+
+Model: `defineModel<string>('input')`. Native `<select>` wrapper with a themed chevron overlay.
+
 ### `BaseCombobox`
 
 Generic (`<script setup lang="ts" generic="T">`).
@@ -354,6 +403,16 @@ Model: `defineModel<T[]>('input', { default: () => [] })`.
 
 Emits: `chip-click` (when `clickable: true`).
 
+### `BaseBadge`
+
+| Prop | Type | Default |
+|---|---|---|
+| `text` | `string` | required |
+| `variant` | `'accent' \| 'success' \| 'warning' \| 'error' \| 'info' \| 'outline'` | `'accent'` |
+| `dot` | `boolean` | `false` |
+
+Non-interactive status label (pairs with `BaseChip` for the selectable/removable case).
+
 ### `BaseDialog`
 
 | Prop | Type | Default |
@@ -362,6 +421,8 @@ Emits: `chip-click` (when `clickable: true`).
 | `title` | `string` | required |
 | `subtitle` | `string` | `undefined` |
 | `size` | `'sm' \| 'md' \| 'lg' \| 'full'` | `'sm'` |
+
+`title`'s typography and the header/body/footer padding scale with `size` (sm→`ty-app-h4`, md→`ty-app-h3`, lg→`ty-app-h2`, full→`ty-app-h1`) so a bigger dialog doesn't end up with a disproportionately small title, or vice versa — pick `size` to match how much content the dialog actually holds, not just its width.
 
 Emits: `(e: 'close', value: false): void`. Slots: `default`, `header`, `footer`.
 Closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
@@ -393,9 +454,10 @@ Emits: `(e: 'click'): void`.
 |---|---|---|
 | `icon` | `string` | required |
 | `items` | `MenuItem[]` | required |
+| `ariaLabel` | `string` | `undefined` |
 | `selectedItemId` | `string \| null` | `null` |
 
-Emits: `(e: 'select', itemId: string): void`. Uses `useFloatingUi` with `placement: 'bottom-start'`.
+Emits: `(e: 'select', itemId: string): void`. Uses `useFloatingUi` with `placement: 'bottom-start'`. Selected item gets a trailing `lucide:check` mark.
 
 ### `BaseCloseButton`
 

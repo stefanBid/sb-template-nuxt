@@ -11,6 +11,16 @@
   --font-mono: initial;
 
   /* =======================================
+     RADIUS SCALE
+     Overrides Tailwind's default rounded-sm/md/lg so the whole app's
+     radius hierarchy matches the design system (radius-pill uses
+     Tailwind's default rounded-full, no override needed).
+     ======================================= */
+  --radius-sm: 10px;  /* buttons, inputs, icon blocks, chips' focus ring */
+  --radius-md: 14px;  /* standard cards */
+  --radius-lg: 22px;  /* feature cards, dialogs, hero/footer panels */
+
+  /* =======================================
      BASE COLORS - LIGHT MODE
      ======================================= */
   --color-app-main: #f8faf9;          /* main background: soft white with subtle green tint */
@@ -41,6 +51,23 @@
   --color-app-warning-bg: #fef3c7;  /* light amber background */
   --color-app-error-bg: #fee2e2;    /* light red background */
   --color-app-info-bg: #dbeafe;     /* light blue background */
+}
+
+:root {
+  /* Modular scale: each step is the previous one × ratio, chained
+     off a single fluid base so the whole scale grows together
+     across the viewport instead of each tag having its own clamp(). */
+  --fs-app-scale-ratio: 1.25; /* major third */
+
+  --fs-app-p: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16px -> 18px */
+
+  --fs-app-h4: calc(var(--fs-app-p) * var(--fs-app-scale-ratio));  /* ratio^1, ~20px -> 22.5px */
+  --fs-app-h3: calc(var(--fs-app-h4) * var(--fs-app-scale-ratio)); /* ratio^2, ~25px -> 28px */
+  --fs-app-h2: calc(var(--fs-app-h3) * var(--fs-app-scale-ratio)); /* ratio^3, ~31px -> 35px */
+  --fs-app-h1: calc(var(--fs-app-h2) * var(--fs-app-scale-ratio)); /* ratio^4, ~39px -> 44px */
+
+  --fs-app-small: 0.75rem;     /* 12px, base */
+  --fs-app-small-lg: 0.875rem; /* 14px, md+ */
 }
 
 

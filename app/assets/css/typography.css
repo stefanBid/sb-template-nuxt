@@ -1,65 +1,177 @@
-/* app/styles/utilities.css */
+/* app/assets/css/typography.css
+   ============================================================
+   Owns the entire typography domain: both the @layer base
+   defaults for raw text tags AND the ty-app-* utilities that
+   override them when a non-semantic element needs the same
+   look. Same --fs-app-* tokens (theme.css) drive both halves,
+   so a utility class always renders pixel-identical to its
+   matching tag.
+   ============================================================ */
 
-/* ======================= TYPOGRAPHY UTILITIES ======================= */
+@layer base {
+  h1 {
+    font-family: var(--font-app-primary);
+    font-size: var(--fs-app-h1);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
 
-@utility ty-app-hero {
-  @apply font-app-primary uppercase tracking-tight leading-none text-center;
-  @apply text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem];
+  h2 {
+    font-family: var(--font-app-primary);
+    font-size: var(--fs-app-h2);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-family: var(--font-app-primary);
+    font-size: var(--fs-app-h3);
+    line-height: 1.25;
+  }
+
+  /* h5/h6 kept at the same visual level as h4 — no dedicated
+     size step, they only exist so unexpected deeper markdown
+     headings from BaseRichText don't fall back to the browser
+     default. Bumped weight: at this size Poppins needs it to
+     still read as a heading rather than body text. */
+  h4, h5, h6 {
+    font-family: var(--font-app-primary);
+    font-weight: 600;
+    font-size: var(--fs-app-h4);
+    line-height: 1.35;
+  }
+
+  p {
+    font-family: var(--font-app-secondary);
+    font-size: var(--fs-app-p);
+    line-height: 1.6;
+  }
+
+  span {
+    font-family: var(--font-app-secondary);
+    font-size: var(--fs-app-p);
+    line-height: 1.5;
+  }
+
+  label {
+    font-family: var(--font-app-secondary);
+    font-size: var(--fs-app-small);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  small {
+    font-size: var(--fs-app-small);
+  }
+
+  code {
+    font-family: ui-monospace, monospace;
+    font-size: var(--fs-app-small);
+    background-color: var(--color-app-surface-2);
+    border-radius: 0.25rem;
+    padding: 0.125rem 0.375rem;
+  }
+
+  h1, h2, h3, h4, p, ul, ol, blockquote {
+    margin: 0 0 1em;
+  }
+
+  h1:last-child, h2:last-child, h3:last-child, h4:last-child, p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* label/small step up to --fs-app-small-lg at md+ — the only
+     two tags small enough that a fluid clamp() would round to
+     the same pixel value on mobile and desktop anyway. */
+  @media (width >= 48rem) {
+    label, small {
+      font-size: var(--fs-app-small-lg);
+    }
+  }
 }
 
-@utility ty-app-impact {
-  @apply font-app-primary tracking-tight leading-none uppercase;
-  @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl;
-}
+/* =======================================
+   UTILITIES — same tokens, for elements that
+   aren't semantically the matching tag.
+   ======================================= */
 
-@utility ty-app-title {
+/* margin: 0 on every ty-app-* heading/paragraph utility is deliberate: the
+   @layer base rules above give raw h1-p tags a default 1em bottom margin for
+   prose-like content (e.g. BaseRichText), but components that opt into these
+   utilities control their own spacing explicitly via Tailwind's mt- and
+   space-y- utilities — without this reset, the base margin stacks on top of that spacing and
+   every heading ends up with a disproportionate gap below it. */
+
+@utility ty-app-h1 {
   @apply font-app-primary leading-tight;
-  @apply text-2xl sm:text-3xl md:text-4xl;
+  letter-spacing: -0.01em;
+  font-size: var(--fs-app-h1);
+  margin: 0;
 }
 
-/* === Title variants === */
-@utility ty-app-title-lg {
+@utility ty-app-h2 {
   @apply font-app-primary leading-tight;
-  @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+  letter-spacing: -0.01em;
+  font-size: var(--fs-app-h2);
+  margin: 0;
 }
 
-@utility ty-app-title-xl {
+@utility ty-app-h3 {
   @apply font-app-primary leading-tight;
-  @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
+  font-size: var(--fs-app-h3);
+  margin: 0;
 }
 
-@utility ty-app-subtitle {
-  @apply font-app-secondary font-semibold leading-snug;
-  @apply text-base sm:text-lg md:text-xl;
+@utility ty-app-h4 {
+  @apply font-app-primary font-semibold leading-snug;
+  font-size: var(--fs-app-h4);
+  margin: 0;
 }
 
-/* === Subtitle variants === */
-@utility ty-app-subtitle-lg {
-  @apply font-app-secondary font-semibold leading-snug;
-  @apply text-lg sm:text-xl md:text-2xl;
-}
-
-@utility ty-app-subtitle-xl {
-  @apply font-app-secondary font-semibold leading-snug;
-  @apply text-xl sm:text-2xl md:text-3xl;
-}
-
-@utility ty-app-paragraph {
+@utility ty-app-p {
   @apply font-app-secondary leading-relaxed;
-  @apply text-sm sm:text-base md:text-lg;
+  font-size: var(--fs-app-p);
+  margin: 0;
+}
+
+@utility ty-app-span {
+  @apply font-app-secondary leading-normal;
+  font-size: var(--fs-app-p);
 }
 
 @utility ty-app-label {
   @apply font-app-secondary uppercase tracking-wide;
-  @apply text-xs sm:text-sm;
+  font-size: var(--fs-app-small);
+
+  @media (width >= 48rem) {
+    font-size: var(--fs-app-small-lg);
+  }
 }
 
+@utility ty-app-small {
+  @apply font-app-secondary;
+  font-size: var(--fs-app-small);
+
+  @media (width >= 48rem) {
+    font-size: var(--fs-app-small-lg);
+  }
+}
+
+@utility ty-app-code {
+  @apply rounded-sm px-1 py-0.5;
+  font-family: ui-monospace, monospace;
+  font-size: var(--fs-app-small);
+  background-color: var(--color-app-surface-2);
+}
+
+/* Sits level with p: bold + uppercase + tracking already gives
+   it presence, no need for a dedicated size step above body. */
 @utility ty-app-btn-label {
   @apply font-app-secondary font-bold uppercase tracking-wide;
-  @apply text-sm sm:text-base;
+  font-size: var(--fs-app-p);
 }
 
 @utility ty-app-caption {
   @apply font-app-secondary italic;
-  @apply text-xs sm:text-sm;
+  font-size: var(--fs-app-small);
 }

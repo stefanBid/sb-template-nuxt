@@ -26,7 +26,7 @@ const htmlContent = computed(() => {
 <style scoped>
 /* Typography styles conformi al progetto */
 
-/* h1 = ty-app-title-xl */
+/* h1 = ty-app-h1 */
 .rich-text :deep(h1) {
   font-family: var(--font-app-primary);
   line-height: 1.375; /* leading-tight */
@@ -57,7 +57,7 @@ const htmlContent = computed(() => {
   }
 }
 
-/* h2 = ty-app-title-lg */
+/* h2 = ty-app-h2 */
 .rich-text :deep(h2) {
   font-family: var(--font-app-primary);
   line-height: 1.375; /* leading-tight */
@@ -88,7 +88,7 @@ const htmlContent = computed(() => {
   }
 }
 
-/* h3 = ty-app-title */
+/* h3 = ty-app-h3 */
 .rich-text :deep(h3) {
   font-family: var(--font-app-primary);
   line-height: 1.375; /* leading-tight */
@@ -113,7 +113,7 @@ const htmlContent = computed(() => {
   }
 }
 
-/* h4-h6 = ty-app-subtitle */
+/* h4-h6 = ty-app-h4 */
 .rich-text :deep(h4),
 .rich-text :deep(h5),
 .rich-text :deep(h6) {
@@ -147,7 +147,7 @@ const htmlContent = computed(() => {
   }
 }
 
-/* p, ul, ol = ty-app-paragraph */
+/* p, ul, ol = ty-app-p */
 .rich-text :deep(p) {
   font-family: var(--font-app-secondary);
   line-height: 1.625; /* leading-relaxed */
@@ -204,7 +204,7 @@ const htmlContent = computed(() => {
   list-style-type: decimal;
 }
 
-/* blockquote = ty-app-paragraph + italic */
+/* blockquote = ty-app-p + italic */
 .rich-text :deep(blockquote) {
   font-family: var(--font-app-secondary);
   line-height: 1.625; /* leading-relaxed */
@@ -231,15 +231,9 @@ const htmlContent = computed(() => {
 .rich-text :deep(pre) {
   margin: 1rem 0;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 0.375rem;
+  background-color: var(--color-app-surface-2);
+  border-radius: var(--radius-sm);
   overflow-x: auto;
-}
-
-@media (prefers-color-scheme: dark) {
-  .rich-text :deep(pre) {
-    background-color: rgba(255, 255, 255, 0.05);
-  }
 }
 
 .rich-text :deep(code) {

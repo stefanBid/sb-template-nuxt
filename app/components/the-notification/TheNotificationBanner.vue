@@ -42,7 +42,7 @@ onMounted(() => {
   <div
     :aria-live="props.type === 'error' ? 'assertive' : 'polite'"
     :class="[
-      'w-full sm:w-lg p-4 md:p-6 rounded-xl border u-app-soft-transition pointer-events-auto',
+      'w-full sm:w-lg p-4 md:p-6 rounded-md border u-app-soft-transition pointer-events-auto',
       'shadow-[0_4px_20px_var(--color-app-shadow)]',
       {
         'bg-app-success-bg border-app-success': props.type === 'success',
@@ -58,7 +58,7 @@ onMounted(() => {
       <div
         v-if="props.icon"
         :class="[
-          'shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl u-app-soft-transition',
+          'shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-sm u-app-soft-transition',
           {
             'bg-app-surface text-app-success': props.type === 'success',
             'bg-app-surface text-app-warning': props.type === 'warning',
@@ -74,7 +74,7 @@ onMounted(() => {
       <div class="flex-1 min-w-0">
         <h3
           v-if="props.title"
-          class="ty-app-subtitle text-app-contrast u-app-soft-transition"
+          class="ty-app-h4 text-app-contrast mb-1 u-app-soft-transition"
         >
           {{ props.title }}
         </h3>

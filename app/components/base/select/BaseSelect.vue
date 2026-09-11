@@ -1,29 +1,31 @@
 <script setup lang="ts">
-interface BaseInputProps {
+interface BaseSelectOption {
+  label: string
+  value: string
+}
+
+interface BaseSelectProps {
   id: string
   name?: string
   label?: string
+  options: BaseSelectOption[]
   placeholder?: string
-  type?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'
   hint?: string
   error?: string | null
-  autocomplete?: string
-  prefixIcon?: string
 }
+
 // Input / Output
-const props = withDefaults(defineProps<BaseInputProps>(), {
-  label: undefined,
-  placeholder: 'Insert a value...',
-  type: 'text',
+const props = withDefaults(defineProps<BaseSelectProps>(), {
   name: undefined,
-  autocomplete: 'off',
+  label: undefined,
+  placeholder: undefined,
   hint: undefined,
   error: null,
-  prefixIcon: undefined,
 })
 
 const model = defineModel<string>('input')
 
+// Data
 const describedBy = computed(() => {
   const ids: string[] = []
   if (props.hint) {
@@ -42,29 +44,34 @@ const describedBy = computed(() => {
       v-if="props.label"
       class="ty-app-label block text-app-muted mb-2 md:mb-3 u-app-soft-transition"
       :for="props.id"
-    >{{ props.label }}</label>
+    >
+      {{ props.label }}
+    </label>
+
     <div class="relative">
-      <span v-if="props.prefixIcon" class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-app-muted/70 u-app-soft-transition pointer-events-none">
-        <Icon class="size-5" :name="props.prefixIcon" />
-      </span>
-      <input
+      <select
         :id="props.id"
         v-model="model"
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
-        :autocomplete="props.autocomplete"
-        class="w-full rounded-sm bg-app-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-app-contrast ty-app-p focus:outline-none focus:ring-2 focus:ring-app-accent truncate"
-        :class="{
-          'border-app-error': props.error,
-          'border-app-border': !props.error,
-          'pl-10! md:pl-11!': props.prefixIcon,
-        }
-        "
+        class="w-full appearance-none rounded-sm bg-app-surface-2 border pl-3 pr-10 py-1.5 md:pl-4 md:pr-11 md:py-2
+               text-app-contrast ty-app-p focus:outline-none focus:ring-2 focus:ring-app-accent cursor-pointer"
+        :class="props.error ? 'border-app-error' : 'border-app-border'"
         :name="props.name || `${props.id}-name`"
-        :placeholder="props.placeholder"
-        :type="props.type"
-      />
+      >
+        <option v-if="props.placeholder" disabled value="">
+          {{ props.placeholder }}
+        </option>
+        <option v-for="option in props.options" :key="option.value" :value="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+
+      <span class="absolute top-1/2 right-3 md:right-4 -translate-y-1/2 text-app-muted/70 pointer-events-none">
+        <Icon class="size-5" name="lucide:chevron-down" />
+      </span>
     </div>
+
     <!-- Hint -->
     <p
       v-if="props.hint"

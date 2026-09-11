@@ -50,7 +50,7 @@ const onClick = () => {
 <template>
   <component
     :is="componentTag"
-    class="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full u-app-soft-transition"
+    class="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full u-app-soft-transition u-app-focus"
     :class="{
       'bg-app-accent text-white': props.variant === 'primary',
       'bg-app-surface border border-app-border text-app-contrast': props.variant === 'secondary',

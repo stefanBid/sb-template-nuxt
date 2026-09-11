@@ -17,7 +17,7 @@ const model = defineModel<boolean>('input')
 </script>
 
 <template>
-  <div class="inline-flex h-fit items-center gap-2">
+  <div class="flex w-fit h-fit items-center gap-2">
     <input
       :id="props.id"
       v-model="model"
@@ -25,7 +25,7 @@ const model = defineModel<boolean>('input')
       autocomplete="on"
       class="
       relative
-      peer size-4.5 md:size-5 shrink-0 rounded-md border
+      peer size-4.5 md:size-5 shrink-0 rounded-sm border
       u-app-soft-transition cursor-pointer
       appearance-none
       outline-none

@@ -145,6 +145,7 @@ This section shows the annotated directory tree. The project follows a feature-a
 ── app/
      app.vue               ← root entry point (NuxtLayout + NuxtPage)
      app.config.ts         ← public build-time branding config (site name, theme colour, social links)
+     router.options.ts     ← custom scrollBehavior — smooth-scrolls to a route's #hash (in-page anchor nav)
      error.vue             ← global error page
      assets/
        css/
@@ -156,6 +157,7 @@ This section shows the annotated directory tree. The project follows a feature-a
      components/
        base/               ← reusable design-system components (no business logic)
          accordion/        BaseAccordion.vue
+         badge/            BaseBadge.vue
          button/           BaseButton.vue
          card/             BaseCard.vue
          checkbox/         BaseCheckbox.vue
@@ -167,7 +169,10 @@ This section shows the annotated directory tree. The project follows a feature-a
          icon-menu/        BaseIconMenu.vue
          input/            BaseInput.vue
          media-carousel/   BaseMediaCarousel.vue
+         radio/            BaseRadio.vue
          rich-text/        BaseRichText.vue
+         select/           BaseSelect.vue
+         switch/           BaseSwitch.vue
          textarea/         BaseTextarea.vue
        the-footer/         TheFooter.vue
        the-header/         TheHeader.vue, TheHeaderMenuToggle.vue
@@ -217,29 +222,44 @@ All colours are CSS custom properties defined in `theme.css` inside an `@theme` 
 
 Tailwind opacity modifiers are allowed: `bg-app-main/80`, `text-app-muted/70`.
 
+### Radius — `--radius-*`
+
+Defined in `theme.css`'s `@theme` block, these **override Tailwind's default `rounded-sm`/`rounded-md`/`rounded-lg` scale** so the whole app's corner-radius hierarchy is a semantic signal rather than an arbitrary per-component choice (`rounded-full`, used for pills/dots/avatars, is Tailwind's own default and needs no override).
+
+| Token | Value | Tailwind utility | Usage |
+|---|---|---|---|
+| `--radius-sm` | `10px` | `rounded-sm` | Buttons, inputs, icon blocks, small chips/menu items |
+| `--radius-md` | `14px` | `rounded-md` | Standard cards, dropdown/menu panels |
+| `--radius-lg` | `22px` | `rounded-lg` | Dialogs, hero/feature panels, page-level elevated blocks |
+
+Always use the canonical `rounded-sm` / `rounded-md` / `rounded-lg` classes (never `rounded-[var(--radius-*)]` arbitrary syntax) so the token override applies.
+
 ### Typography — `ty-app-*`
 
 Custom `@utility` classes defined in `typography.css`. Apply them as regular Tailwind classes alongside spacing, colour and layout utilities.
 
 | Class | Font | Usage |
 |---|---|---|
-| `ty-app-hero` | Poppins, uppercase | Full-bleed hero text |
-| `ty-app-impact` | Poppins, uppercase | Large display headings |
-| `ty-app-title-xl` | Poppins | Extra large titles (`text-4xl` → `text-7xl`) |
-| `ty-app-title-lg` | Poppins | Large section titles (`text-3xl` → `text-6xl`) |
-| `ty-app-title` | Poppins | Section titles (`text-2xl` → `text-4xl`) |
-| `ty-app-subtitle-xl` | Inter semibold | Extra large sub-headings |
-| `ty-app-subtitle-lg` | Inter semibold | Large sub-headings |
-| `ty-app-subtitle` | Inter semibold | Sub-headings |
-| `ty-app-paragraph` | Inter | Body text |
-| `ty-app-label` | Inter, uppercase, tracked | Form labels, tags |
+| `ty-app-h1` | Poppins | Biggest heading — hero titles (`--fs-app-h1`) |
+| `ty-app-h2` | Poppins | Large section headlines (`--fs-app-h2`) |
+| `ty-app-h3` | Poppins | Standard titles — cards, dialogs, brand mark (`--fs-app-h3`) |
+| `ty-app-h4` | Poppins semibold | Smallest heading — subtitles, notification titles (`--fs-app-h4`) |
+| `ty-app-p` | Inter | Body text (`--fs-app-p`) |
+| `ty-app-span` | Inter | Inline text at body size, for non-`<p>` elements |
+| `ty-app-label` | Inter, uppercase, tracked | Form labels, tags, eyebrows |
+| `ty-app-small` | Inter | Fine print |
+| `ty-app-code` | Monospace | Inline code |
 | `ty-app-btn-label` | Inter bold, uppercase | Button text |
 | `ty-app-caption` | Inter italic | Captions, secondary notes |
 
+`ty-app-h1`–`ty-app-p` mirror the `--fs-app-h1`–`--fs-app-p` modular scale in `theme.css` (ratio `--fs-app-scale-ratio`, `1.25`) and reset `margin: 0`, leaving spacing entirely to Tailwind (`mt-*`, `space-y-*`) instead of a hidden default margin. **Pick the class for the element's actual weight in its container, not its HTML tag** — a card's own title is `ty-app-h3` even on a page whose main section headline is `ty-app-h2`; matching two different-weight headings to the same class is what makes a compact card or toast notification look oversized next to the rest of the page.
+
 ```vue
-<h1 class="ty-app-title text-app-contrast">Welcome</h1>
-<p class="ty-app-paragraph text-app-muted">Some description.</p>
+<h2 class="ty-app-h3 text-app-contrast">Card title</h2>
+<p class="ty-app-p text-app-muted mt-2">Some description.</p>
 ```
+
+Raw `<h1>`–`<h4>`/`<p>` tags (e.g. inside content rendered by `BaseRichText`) are sized the same way via `@layer base` in `typography.css`, but keep the browser's default bottom margin — appropriate for prose flow where you don't want to hand-manage every paragraph's spacing.
 
 **Font families:**
 - `font-app-primary` → Poppins (headings, display)
@@ -319,13 +339,41 @@ routeRules: {
 }
 ```
 
-### i18n routing
+### i18n
 
-The strategy is `prefix_except_default`: `/about` is English, `/it/about` is Italian. Use `localePath()` for all navigation links:
+Every user-facing string in the app goes through `@nuxtjs/i18n` — **never hardcode text in a template or script, no exceptions.** The homepage's "Two languages" section demonstrates this live (switch language from the header toggle and watch the whole page update).
+
+**Locale files** — `i18n/locales/en.json` (source of truth) and `i18n/locales/it.json`, nested plain JSON objects keyed by feature (`pages.home.hero.title`, `footer.tagline`, etc.). Adding a string means adding the same key to **both** files in the same change — nothing renders in the language you forgot.
+
+**Reading translations:**
 
 ```vue
-<NuxtLink :to="localePath('/about')">About</NuxtLink>
+<script setup lang="ts">
+const { t, locale, setLocale } = useI18n()
+</script>
+
+<template>
+  <h1>{{ t('pages.home.hero.title') }}</h1>
+</template>
 ```
+
+`$t(...)` also works directly in templates without destructuring `t` first.
+
+**Routing** — configured in `nuxt.config.ts` under `i18n`: strategy `prefix_except_default` (`en` is the default locale and gets no prefix, `/about`; every other locale is prefixed, `/it/about`), `detectBrowserLanguage: false` (deliberate — the app always starts in the default locale rather than guessing from browser headers, so SSR output is deterministic). Always build links with `localePath()`, never a raw string, so the current locale's prefix is added automatically:
+
+```vue
+<script setup lang="ts">
+const localePath = useLocalePath()
+</script>
+
+<template>
+  <NuxtLink :to="localePath('index')">Home</NuxtLink>
+</template>
+```
+
+`useLocaleHead({ dir: true, seo: true })` (already wired in `app/layouts/default.vue`) generates the `<html lang>`, canonical and `hreflang` alternate `<link>` tags for every page automatically.
+
+**Switching language** — `TheHeader`'s language control is a `BaseIconMenu` fed by `langs: MenuItem[]` (flag icons via the `flagpack` collection); selecting one emits `change-lang`, which `default.vue` forwards to `setLocale(langCode)`. Add a third locale by adding an entry to `i18n.locales` in `nuxt.config.ts`, a matching `<code>.json` file in `i18n/locales/`, and a `langs` entry in `default.vue`.
 
 ---
 
@@ -341,7 +389,7 @@ No props — all configuration is done at page level via `useHead()` and composa
 
 ### `TheHeader`
 
-Singleton top navigation bar. Renders the main nav links (`RouteItem[]` hardcoded in the component), the language switcher (`BaseIconMenu` with flag icons) and `TheThemeToggle`.
+Singleton top navigation bar. Renders the nav links it receives via the `routes: RouteItem[]` prop (built in `default.vue` — currently a set of same-page anchor links into the homepage's sections), the language switcher (`BaseIconMenu` with flag icons) and `TheThemeToggle`. The brand mark always links to the localised homepage regardless of what `routes` contains.
 
 On mobile it uses `TheHeaderMenuToggle` to open a drawer. Scroll position drives a subtle background transition.
 
@@ -386,7 +434,7 @@ useHead({
 
 | Page | URL | Description |
 |---|---|---|
-| `index.vue` | `/` | Homepage — full component showcase |
+| `index.vue` | `/` | Homepage — Fern UI–style single-page demo (hero, i18n, Buttons, Badges & Chips, Cards, Accordion, Form, Dialog, Components, Responsive), most sections anchored and linked from `TheHeader`'s nav |
 
 ---
 
@@ -403,7 +451,8 @@ Full-featured action button with variants, loading state and link support.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | Visual style |
+| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'danger'` | `'primary'` | Visual style |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Controls padding |
 | `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a target="_blank">` |
 | `to` | `string` | `undefined` | Required when `type='link'` |
 | `ariaLabel` | `string` | `undefined` | For icon-only usage |
@@ -500,6 +549,51 @@ Custom checkbox with label slot.
 Model: `defineModel<boolean>('input')`
 Slot: `default` (custom label content)
 
+### `BaseRadio`
+
+Single radio input for a native radio group. Multiple instances sharing the same `name` and bound to the same `v-model` form a group.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `id` | `string` | — | Required |
+| `name` | `string` | — | Required — groups radios together |
+| `value` | `string` | — | Required — value set on the shared model when selected |
+| `label` | `string` | `undefined` | |
+
+Model: `defineModel<string>('input')` (bind the same ref across all radios in the group)
+
+```vue
+<BaseRadio id="vis-private" v-model:input="visibility" name="visibility" value="private" label="Private" />
+<BaseRadio id="vis-team" v-model:input="visibility" name="visibility" value="team" label="Team" />
+```
+
+### `BaseSwitch`
+
+Toggle switch backed by a native checkbox input, styled via `accent`-free custom track/thumb spans.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `id` | `string` | — | Required |
+| `name` | `string` | `undefined` | Falls back to `${id}-name` |
+| `label` | `string` | `undefined` | Shown next to the switch |
+
+Model: `defineModel<boolean>('input')`
+
+### `BaseSelect`
+
+Native `<select>` wrapper with label, hint, error state and a themed chevron.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `id` | `string` | — | Required |
+| `options` | `{ label: string, value: string }[]` | — | Required |
+| `label` | `string` | `undefined` | |
+| `placeholder` | `string` | `undefined` | Rendered as a disabled first `<option>` |
+| `hint` | `string` | `undefined` | |
+| `error` | `string \| null` | `null` | |
+
+Model: `defineModel<string>('input')`
+
 ### `BaseCombobox`
 
 Generic select component with single/multiple selection and search.
@@ -547,6 +641,21 @@ Emits: `chip-click` (only when `clickable: true`)
 <BaseChip text="Active" icon="lucide:check-circle" variant="primary" :clickable="true" @chip-click="onSelect" />
 ```
 
+### `BaseBadge`
+
+Non-interactive status label — pairs with `BaseChip` (which is selectable/removable) for the "status vs. selection" distinction from the design system.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `text` | `string` | — | Required |
+| `variant` | `'accent' \| 'success' \| 'warning' \| 'error' \| 'info' \| 'outline'` | `'accent'` | |
+| `dot` | `boolean` | `false` | Shows a leading status dot |
+
+```vue
+<BaseBadge text="Completed" variant="success" />
+<BaseBadge text="In progress" variant="accent" :dot="true" />
+```
+
 ### `BaseDialog`
 
 Modal dialog with size variants, scroll lock and focus trap.
@@ -556,7 +665,7 @@ Modal dialog with size variants, scroll lock and focus trap.
 | `isOpen` | `boolean` | — | Required |
 | `title` | `string` | — | Required |
 | `subtitle` | `string` | `undefined` | |
-| `size` | `'sm' \| 'md' \| 'lg' \| 'full'` | `'sm'` | |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'full'` | `'sm'` | Also scales `title`'s typography (sm→`ty-app-h4` … full→`ty-app-h1`) and the padding, so a bigger dialog doesn't end up with a disproportionately small title, or vice versa |
 
 Emits: `(e: 'close', value: false): void`
 Slots: `default` (body), `header` (below title bar), `footer` (bottom actions)
@@ -606,7 +715,8 @@ Dropdown menu with floating positioning and keyboard navigation.
 |---|---|---|---|
 | `icon` | `string` | — | Required. Trigger button icon |
 | `items` | `MenuItem[]` | — | Required |
-| `selectedItemId` | `string \| null` | `null` | Highlighted item |
+| `ariaLabel` | `string` | `undefined` | Forwarded to the trigger's `BaseIconButton` |
+| `selectedItemId` | `string \| null` | `null` | Highlighted item, marked with a trailing checkmark |
 
 Emits: `(e: 'select', itemId: string): void`
 

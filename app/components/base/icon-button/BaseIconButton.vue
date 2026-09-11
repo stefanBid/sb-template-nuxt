@@ -25,7 +25,7 @@ const onClick = () => {
 <template>
   <button
     :aria-label="props.ariaLabel"
-    class="group relative inline-flex items-center justify-center rounded-lg border border-app-border u-app-soft-transition u-app-focus cursor-pointer size-7 md:size-8"
+    class="group relative inline-flex items-center justify-center rounded-sm border border-app-border u-app-soft-transition u-app-focus cursor-pointer size-7 md:size-8"
     :class="{
       'bg-app-surface-2': props.isActive,
       'bg-app-surface border hover:bg-app-surface-2': !props.isActive,
