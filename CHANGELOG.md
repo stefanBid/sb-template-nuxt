@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/stefanBid/sb-template-nuxt/compare/v2.5.1...v3.0.0) (2026-09-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* redesign template with Fern UI design system (v3.0.0) ([#113](https://github.com/stefanBid/sb-template-nuxt/issues/113))
+
+### Features
+
+* redesign template with Fern UI design system (v3.0.0) ([#113](https://github.com/stefanBid/sb-template-nuxt/issues/113)) ([25be379](https://github.com/stefanBid/sb-template-nuxt/commit/25be379cc0be3eb464a54aab2b6d9cc3dcead31a))
+
 ## [2.5.1](https://github.com/stefanBid/sb-template-nuxt/compare/v2.5.0...v2.5.1) (2026-09-03)
 
 
