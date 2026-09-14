@@ -96,7 +96,7 @@ useSeoMeta({
             <BaseButton size="lg" variant="primary">
               {{ t('pages.home.hero.cta-primary') }}
             </BaseButton>
-            <BaseButton size="lg" variant="outline">
+            <BaseButton size="lg" variant="outline" type="link" :to="githubRepoUrl">
               {{ t('pages.home.hero.cta-secondary') }}
             </BaseButton>
           </div>
