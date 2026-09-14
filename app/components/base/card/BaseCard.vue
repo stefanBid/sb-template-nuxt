@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
 
 <template>
   <div
-    class="flex flex-col justify-center rounded-xl border border-app-border shadow-[0_4px_20px_var(--color-app-shadow)] u-app-soft-transition"
+    class="flex flex-col justify-center rounded-md border border-app-border shadow-[0_1px_2px_var(--color-app-shadow)] u-app-soft-transition"
     :class="{
       'p-4 md:p-6': props.fullCustomContent,
       'bg-app-surface': props.variant === 'dark',
@@ -65,7 +65,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
         <template v-else>
           <h2
             v-if="props.title"
-            class="ty-app-title u-app-soft-transition"
+            class="ty-app-h3 u-app-soft-transition"
             :class="{
               'text-center md:text-left': props.align === 'left',
               'text-center': props.align === 'center',
@@ -76,7 +76,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           </h2>
           <p
             v-if="props.subtitle"
-            class="ty-app-subtitle text-app-muted mt-1 u-app-soft-transition"
+            class="ty-app-h4 text-app-muted mt-1 u-app-soft-transition"
             :class="{
               'text-center md:text-left': props.align === 'left',
               'text-center': props.align === 'center',
@@ -87,7 +87,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           </p>
           <p
             v-if="props.paragraph"
-            class="ty-app-paragraph text-justify mt-3 md:mt-4 u-app-soft-transition"
+            class="ty-app-p text-justify mt-3 md:mt-4 u-app-soft-transition"
           >
             {{ props.paragraph }}
           </p>

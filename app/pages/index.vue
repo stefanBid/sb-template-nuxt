@@ -1,124 +1,34 @@
 <script setup lang="ts">
 // Dependencies
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const route = useRoute()
 const config = useRuntimeConfig()
 
-// State for dialogs
-const isSimpleDialogOpen = ref(false)
-const isMediumDialogOpen = ref(false)
-const isLargeDialogOpen = ref(false)
-const isHeaderDialogOpen = ref(false)
-const isFooterDialogOpen = ref(false)
-const isConfirmDialogOpen = ref(false)
+// Data
+const isSmDialogOpen = ref(false)
+const isMdDialogOpen = ref(false)
+const isLgDialogOpen = ref(false)
+const isFullDialogOpen = ref(false)
 
-// State for inputs
-const textInput = ref('')
-const emailInput = ref('')
-const passwordInput = ref('')
-const numberInput = ref('')
-const textareaInput = ref('')
-const checkboxInput = ref(false)
-const comboboxInput = ref<string[]>([])
-const multiComboboxInput = ref<string[]>([])
+const githubRepoUrl = 'https://github.com/stefanBid/sb-template-nuxt'
+const personalWebsiteUrl = 'https://stefanobiddau.com/'
+const otherTemplatesUrl = 'https://stefanobiddau.com/my-projects/sb-templates'
 
-const comboboxItems = [
-  { label: 'Option 1', value: 'option-1' },
-  { label: 'Option 2', value: 'option-2' },
-  { label: 'Option 3', value: 'option-3' },
-  { label: 'Option 4', value: 'option-4' },
+const carouselItems = [
+  { type: 'photo' as const, url: '/example.jpg', alternativeText: 'Example image 1' },
+  { type: 'photo' as const, url: '/example.jpg', alternativeText: 'Example image 2' },
+  { type: 'photo' as const, url: '/example.jpg', alternativeText: 'Example image 3' },
 ]
 
-// Handlers for chip interactions
-const handleChipClick = (chipName: string) => {
-  // eslint-disable-next-line no-console
-  console.log(`${chipName} clicked!`)
-}
-
-// Rich Text example data
-const richTextBlocks: RichBlock[] = [
+const richTextBlocks = computed<RichBlock[]>(() => [
   {
     type: 'heading',
-    level: 1,
-    children: [
-      {
-        type: 'text',
-        text: 'Rich Text Component',
-      },
-    ],
+    level: 3,
+    children: [{ type: 'text', text: t('pages.home.components.rich-text-heading') }],
   },
   {
     type: 'paragraph',
-    children: [
-      {
-        type: 'text',
-        text: 'The ',
-      },
-      {
-        type: 'text',
-        text: 'BaseRichText',
-        bold: true,
-      },
-      {
-        type: 'text',
-        text: ' component allows you to display dynamically formatted content. It supports various text styles such as ',
-      },
-      {
-        type: 'text',
-        text: 'bold',
-        bold: true,
-      },
-      {
-        type: 'text',
-        text: ', ',
-      },
-      {
-        type: 'text',
-        text: 'italic',
-        italic: true,
-      },
-      {
-        type: 'text',
-        text: ', ',
-      },
-      {
-        type: 'text',
-        text: 'underlined',
-        underline: true,
-      },
-      {
-        type: 'text',
-        text: ', ',
-      },
-      {
-        type: 'text',
-        text: 'strikethrough',
-        strikethrough: true,
-      },
-      {
-        type: 'text',
-        text: ', and ',
-      },
-      {
-        type: 'text',
-        text: 'inline code',
-        code: true,
-      },
-      {
-        type: 'text',
-        text: '.',
-      },
-    ],
-  },
-  {
-    type: 'heading',
-    level: 2,
-    children: [
-      {
-        type: 'text',
-        text: 'Key Features',
-      },
-    ],
+    children: [{ type: 'text', text: t('pages.home.components.rich-text-intro') }],
   },
   {
     type: 'list',
@@ -126,188 +36,34 @@ const richTextBlocks: RichBlock[] = [
     children: [
       {
         type: 'list-item',
-        children: [
-          {
-            type: 'text',
-            text: 'Support for headings at various levels (H1-H6)',
-          },
-        ],
+        children: [{ type: 'text', text: t('pages.home.components.rich-text-list-item-1') }],
       },
       {
         type: 'list-item',
-        children: [
-          {
-            type: 'text',
-            text: 'Paragraphs with advanced formatting',
-          },
-        ],
-      },
-      {
-        type: 'list-item',
-        children: [
-          {
-            type: 'text',
-            text: 'Ordered and unordered lists',
-          },
-        ],
-      },
-      {
-        type: 'list-item',
-        children: [
-          {
-            type: 'text',
-            text: 'Quotes and code blocks',
-          },
-        ],
-      },
-      {
-        type: 'list-item',
-        children: [
-          {
-            type: 'link',
-            url: 'https://nuxt.com',
-            children: [
-              {
-                type: 'text',
-                text: 'External links',
-              },
-            ],
-          },
-        ],
+        children: [{ type: 'text', text: t('pages.home.components.rich-text-list-item-2') }],
       },
     ],
   },
-  {
-    type: 'heading',
-    level: 3,
-    children: [
-      {
-        type: 'text',
-        text: 'Ordered List Example',
-      },
-    ],
-  },
-  {
-    type: 'list',
-    format: 'ordered',
-    children: [
-      {
-        type: 'list-item',
-        children: [
-          {
-            type: 'text',
-            text: 'First item',
-            bold: true,
-          },
-        ],
-      },
-      {
-        type: 'list-item',
-        children: [
-          {
-            type: 'text',
-            text: 'Second item with ',
-          },
-          {
-            type: 'text',
-            text: 'formatted text',
-            italic: true,
-          },
-        ],
-      },
-      {
-        type: 'list-item',
-        children: [
-          {
-            type: 'text',
-            text: 'Third item',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: 'quote',
-    children: [
-      {
-        type: 'text',
-        text: 'This is an example quote. Quotes are useful for highlighting important concepts or citing external sources.',
-        italic: true,
-      },
-    ],
-  },
-  {
-    type: 'code',
-    children: [
-      {
-        type: 'text',
-        text: 'const example = {\n  component: "BaseRichText",\n  blocks: richTextBlocks\n}',
-      },
-    ],
-  },
-  {
-    type: 'paragraph',
-    children: [
-      {
-        type: 'text',
-        text: 'The component uses the ',
-      },
-      {
-        type: 'text',
-        text: 'useSanitize()',
-        code: true,
-      },
-      {
-        type: 'text',
-        text: ' composable to ensure the generated HTML content is safe. For more information, visit the ',
-      },
-      {
-        type: 'link',
-        url: 'https://nuxt.com/docs',
-        children: [
-          {
-            type: 'text',
-            text: 'Nuxt documentation',
-            bold: true,
-          },
-        ],
-      },
-      {
-        type: 'text',
-        text: '.',
-      },
-    ],
-  },
-]
+])
 
-// Media Carousel example data
-const carouselItems = [
-  {
-    type: 'photo' as const,
-    url: '/example.jpg',
-    alternativeText: 'Example image 1',
-  },
-  {
-    type: 'photo' as const,
-    url: '/example.jpg',
-    alternativeText: 'Example image 2',
-  },
-  {
-    type: 'photo' as const,
-    url: '/example.jpg',
-    alternativeText: 'Example image 3',
-  },
-  {
-    type: 'photo' as const,
-    url: '/example.jpg',
-    alternativeText: 'Example image 4',
-  },
-  {
-    type: 'photo' as const,
-    url: '/example.jpg',
-    alternativeText: 'Example image 5',
-  },
-]
+const projectName = ref('')
+const emailValue = ref('invalid@')
+const descriptionValue = ref('')
+
+const teamOptions = computed(() => [
+  { label: t('pages.home.form.team.frontend'), value: 'frontend' },
+  { label: t('pages.home.form.team.backend'), value: 'backend' },
+  { label: t('pages.home.form.team.design'), value: 'design' },
+])
+const selectedTeam = ref('frontend')
+
+const emailNotifications = ref(true)
+const weeklyReport = ref(false)
+
+const visibility = ref('private')
+
+const acceptTerms = ref(true)
+const newsletter = ref(false)
 
 useSeoMeta({
   // LOCALIZED
@@ -324,997 +80,644 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="min-h-screen bg-app-main text-app-contrast py-20">
-    <div class="space-y-16">
-      <!-- Typography Section -->
-      <section class="space-y-8">
-        <h2 class="ty-app-title-xl text-app-accent mb-8">
-          Typography
-        </h2>
-
-        <div class="space-y-6">
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Hero Text
-            </p>
-            <h1 class="ty-app-hero text-app-contrast">
-              HERO
-            </h1>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Impact Text
-            </p>
-            <h2 class="ty-app-impact text-app-contrast">
-              IMPACT
-            </h2>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Title XL
-            </p>
-            <h3 class="ty-app-title-xl text-app-contrast">
-              Title Extra Large
-            </h3>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Title LG
-            </p>
-            <h4 class="ty-app-title-lg text-app-contrast">
-              Title Large
-            </h4>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Title
-            </p>
-            <h5 class="ty-app-title text-app-contrast">
-              Title Standard
-            </h5>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Subtitle XL
-            </p>
-            <p class="ty-app-subtitle-xl text-app-contrast">
-              Subtitle Extra Large
-            </p>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Subtitle LG
-            </p>
-            <p class="ty-app-subtitle-lg text-app-contrast">
-              Subtitle Large
-            </p>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Subtitle
-            </p>
-            <p class="ty-app-subtitle text-app-contrast">
-              Subtitle Standard
-            </p>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Paragraph
-            </p>
-            <p class="ty-app-paragraph text-app-contrast">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-            </p>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Label
-            </p>
-            <span class="ty-app-label text-app-contrast">Label Text</span>
-          </div>
-
-          <div class="p-6 bg-app-surface rounded-lg border border-app-border">
-            <p class="ty-app-caption text-app-accent mb-2">
-              Caption
-            </p>
-            <span class="ty-app-caption text-app-contrast">Caption text in italic style</span>
+  <div class="py-10 md:py-14">
+    <!-- Hero -->
+    <section class="pb-16 md:pb-20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        <div>
+          <BaseBadge dot :text="t('pages.home.hero.badge')" variant="accent" />
+          <h1 class="ty-app-h1 text-app-contrast mt-4">
+            {{ t('pages.home.hero.title') }}
+          </h1>
+          <p class="ty-app-p text-app-muted mt-4 max-w-xl">
+            {{ t('pages.home.hero.lead') }}
+          </p>
+          <div class="flex flex-wrap gap-3 mt-7">
+            <BaseButton size="lg" variant="primary">
+              {{ t('pages.home.hero.cta-primary') }}
+            </BaseButton>
+            <BaseButton
+              size="lg"
+              :to="githubRepoUrl"
+              type="link"
+              variant="outline"
+            >
+              {{ t('pages.home.hero.cta-secondary') }}
+            </BaseButton>
           </div>
         </div>
-      </section>
 
-      <!-- Cards Section -->
-      <section class="space-y-8">
-        <h2 class="ty-app-title-xl text-app-accent mb-8">
-          Cards
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Card 1 - Simple Dark -->
-          <BaseCard
-            :paragraph="t('pages.home.cards.simple-dark.paragraph')"
-            :subtitle="t('pages.home.cards.simple-dark.subtitle')"
-            :title="t('pages.home.cards.simple-dark.title')"
-            variant="dark"
-          />
-
-          <!-- Card 2 - Simple Light -->
-          <BaseCard
-            :paragraph="t('pages.home.cards.simple-light.paragraph')"
-            :title="t('pages.home.cards.simple-light.title')"
-            variant="light"
-          />
-
-          <!-- Card 3 - Dark Hover -->
-          <BaseCard
-            :paragraph="t('pages.home.cards.dark-hover.paragraph')"
-            :subtitle="t('pages.home.cards.dark-hover.subtitle')"
-            :title="t('pages.home.cards.dark-hover.title')"
-            variant="dark-hover"
-          />
-
-          <!-- Card 4 - Light Hover -->
-          <BaseCard
-            :paragraph="t('pages.home.cards.light-hover.paragraph')"
-            :title="t('pages.home.cards.light-hover.title')"
-            variant="light-hover"
-          />
-
-          <!-- Card 5 - With Header Icon -->
-          <BaseCard
-            :paragraph="t('pages.home.cards.with-icon.paragraph')"
-            :subtitle="t('pages.home.cards.with-icon.subtitle')"
-            :title="t('pages.home.cards.with-icon.title')"
-            variant="dark"
-          >
-            <template #card-header>
-              <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center">
-                <Icon class="size-6 text-app-accent" name="lucide:star" />
-              </div>
-            </template>
-          </BaseCard>
-
-          <!-- Card 6 - With Footer Button -->
-          <BaseCard
-            :paragraph="t('pages.home.cards.with-action.paragraph')"
-            :subtitle="t('pages.home.cards.with-action.subtitle')"
-            :title="t('pages.home.cards.with-action.title')"
-            variant="light-hover"
-          >
-            <template #card-footer>
-              <BaseButton variant="primary">
-                <Icon class="size-5 mr-2" name="lucide:arrow-right" />
-                {{ t('pages.home.cards.with-action.button') }}
-              </BaseButton>
-            </template>
-          </BaseCard>
-
-          <!-- Card 7 - Center Aligned -->
-          <BaseCard
-            align="center"
-            :paragraph="t('pages.home.cards.center-aligned.paragraph')"
-            :subtitle="t('pages.home.cards.center-aligned.subtitle')"
-            :title="t('pages.home.cards.center-aligned.title')"
-            variant="dark"
-          />
-
-          <!-- Card 8 - Right Aligned -->
-          <BaseCard
-            align="right"
-            :paragraph="t('pages.home.cards.right-aligned.paragraph')"
-            :subtitle="t('pages.home.cards.right-aligned.subtitle')"
-            :title="t('pages.home.cards.right-aligned.title')"
-            variant="light"
-          />
-
-          <!-- Card 9 - Complete Example -->
-          <BaseCard
-            align="left"
-            :paragraph="t('pages.home.cards.complete.paragraph')"
-            :subtitle="t('pages.home.cards.complete.subtitle')"
-            :title="t('pages.home.cards.complete.title')"
-            variant="dark-hover"
-          >
-            <template #card-header>
-              <div class="w-12 h-12 bg-app-accent/20 rounded-lg flex items-center justify-center">
-                <Icon class="size-6 text-app-accent" name="lucide:zap" />
-              </div>
-            </template>
-            <template #card-footer>
-              <BaseButton variant="outline">
-                {{ t('pages.home.cards.complete.button') }}
-              </BaseButton>
-            </template>
-          </BaseCard>
-
-          <!-- Card 10 - Full Custom Content -->
-          <BaseCard :full-custom-content="true" variant="dark">
-            <div class="text-center space-y-4">
-              <div class="w-16 h-16 bg-app-accent/20 rounded-full flex items-center justify-center mx-auto">
-                <Icon class="size-8 text-app-accent" name="lucide:heart" />
-              </div>
-              <h3 class="ty-app-title">
-                {{ t('pages.home.cards.full-custom.title') }}
-              </h3>
-              <p class="ty-app-paragraph text-app-muted">
-                {{ t('pages.home.cards.full-custom.paragraph') }}
-              </p>
-              <div class="flex gap-2 justify-center pt-4">
-                <BaseButton variant="primary">
-                  <Icon class="size-5 mr-2" name="lucide:thumbs-up" />
-                  {{ t('pages.home.cards.full-custom.like-button') }}
-                </BaseButton>
-                <BaseButton variant="secondary">
-                  <Icon class="size-5 mr-2" name="lucide:share-2" />
-                  {{ t('pages.home.cards.full-custom.share-button') }}
-                </BaseButton>
-              </div>
+        <!-- Token panel: mirrors the hero token-panel from the Fern UI preview -->
+        <div class="rounded-lg border border-app-border bg-app-surface p-6 md:p-7 shadow-[0_20px_44px_-18px_var(--color-app-shadow),0_2px_8px_var(--color-app-shadow)]">
+          <div class="flex items-center justify-between mb-4">
+            <div aria-hidden="true" class="flex gap-1.5">
+              <span class="size-2 rounded-full bg-app-border"></span>
+              <span class="size-2 rounded-full bg-app-border"></span>
+              <span class="size-2 rounded-full bg-app-border"></span>
             </div>
-          </BaseCard>
+            <code class="ty-app-caption text-app-accent not-italic">{{ t('pages.home.hero.panel-filename') }}</code>
+          </div>
 
-          <!-- Card 11 - Multiple Buttons -->
-          <BaseCard
-            :paragraph="t('pages.home.cards.multi-action.paragraph')"
-            :subtitle="t('pages.home.cards.multi-action.subtitle')"
-            :title="t('pages.home.cards.multi-action.title')"
-            variant="light-hover"
-          >
-            <template #card-footer>
-              <div class="flex gap-2">
-                <BaseButton variant="primary">
-                  {{ t('pages.home.cards.multi-action.save-button') }}
-                </BaseButton>
-                <BaseButton variant="outline">
-                  {{ t('pages.home.cards.multi-action.cancel-button') }}
-                </BaseButton>
+          <div class="grid grid-cols-6 gap-2 mb-4">
+            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-accent)"></div>
+            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-accent-hover)"></div>
+            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-success)"></div>
+            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-warning)"></div>
+            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-error)"></div>
+            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-info)"></div>
+          </div>
+
+          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+            <span class="flex items-center gap-2">
+              <span aria-hidden="true" class="size-2.5 rounded-xs shrink-0" style="background: var(--color-app-accent)"></span>
+              {{ t('pages.home.hero.token-lines.accent') }}
+            </span>
+            <span class="text-app-contrast font-medium">#009F5D</span>
+          </div>
+          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+            <span>{{ t('pages.home.hero.token-lines.font-primary') }}</span>
+            <span class="text-app-contrast font-medium">Poppins</span>
+          </div>
+          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+            <span>{{ t('pages.home.hero.token-lines.font-secondary') }}</span>
+            <span class="text-app-contrast font-medium">Inter</span>
+          </div>
+          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+            <span>{{ t('pages.home.hero.token-lines.scale-ratio') }}</span>
+            <span class="text-app-contrast font-medium">1.25</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- i18n -->
+    <section class="py-16 md:py-20 border-t border-app-border">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        <div>
+          <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.i18n.eyebrow') }}</span>
+          <h2 class="ty-app-h2 text-app-contrast">
+            {{ t('pages.home.i18n.heading') }}
+          </h2>
+          <p class="ty-app-p text-app-muted mt-3">
+            {{ t('pages.home.i18n.description') }}
+          </p>
+          <p class="ty-app-label normal-case! text-app-muted mt-4 flex items-center gap-2">
+            <Icon class="size-4 text-app-accent shrink-0" name="lucide:languages" />
+            {{ t('pages.home.i18n.hint') }}
+          </p>
+        </div>
+
+        <div class="rounded-lg border border-app-border bg-app-surface p-6 md:p-7 shadow-[0_20px_44px_-18px_var(--color-app-shadow),0_2px_8px_var(--color-app-shadow)]">
+          <div class="flex items-center justify-between mb-4">
+            <div aria-hidden="true" class="flex gap-1.5">
+              <span class="size-2 rounded-full bg-app-border"></span>
+              <span class="size-2 rounded-full bg-app-border"></span>
+              <span class="size-2 rounded-full bg-app-border"></span>
+            </div>
+            <code class="ty-app-caption text-app-accent not-italic">{{ t('pages.home.i18n.panel-filename') }}</code>
+          </div>
+
+          <div class="flex items-center justify-between py-2 ty-app-caption not-italic text-app-muted">
+            <span>{{ t('pages.home.i18n.locale-label') }}</span>
+            <BaseBadge dot :text="locale" variant="accent" />
+          </div>
+          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+            <span>{{ t('pages.home.i18n.strategy-label') }}</span>
+            <span class="text-app-contrast font-medium">{{ t('pages.home.i18n.strategy-value') }}</span>
+          </div>
+          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+            <span>{{ t('pages.home.i18n.files-label') }}</span>
+            <span class="text-app-contrast font-medium">{{ t('pages.home.i18n.files-value') }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section id="buttons" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+      <div class="max-w-2xl mb-8">
+        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.buttons.eyebrow') }}</span>
+        <h2 class="ty-app-h2 text-app-contrast">
+          {{ t('pages.home.buttons.heading') }}
+        </h2>
+        <p class="ty-app-p text-app-muted mt-2">
+          {{ t('pages.home.buttons.description') }}
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <BaseButton variant="primary">
+          {{ t('pages.home.buttons.save') }}
+        </BaseButton>
+        <BaseButton variant="outline">
+          {{ t('pages.home.buttons.cancel') }}
+        </BaseButton>
+        <BaseButton variant="ghost">
+          {{ t('pages.home.buttons.learn-more') }}
+        </BaseButton>
+        <BaseButton variant="danger">
+          {{ t('pages.home.buttons.delete-account') }}
+        </BaseButton>
+        <BaseButton :is-disabled="true" variant="primary">
+          {{ t('pages.home.buttons.unavailable') }}
+        </BaseButton>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <BaseButton size="sm" variant="primary">
+          {{ t('pages.home.buttons.small') }}
+        </BaseButton>
+        <BaseButton size="md" variant="primary">
+          {{ t('pages.home.buttons.medium') }}
+        </BaseButton>
+        <BaseButton size="lg" variant="primary">
+          {{ t('pages.home.buttons.large') }}
+        </BaseButton>
+      </div>
+    </section>
+
+    <!-- Badges & Chips -->
+    <section id="badges" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+      <div class="max-w-2xl mb-8">
+        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.badges.eyebrow') }}</span>
+        <h2 class="ty-app-h2 text-app-contrast">
+          {{ t('pages.home.badges.heading') }}
+        </h2>
+        <p class="ty-app-p text-app-muted mt-2">
+          {{ t('pages.home.badges.description') }}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p class="ty-app-label text-app-muted mb-3">
+            {{ t('pages.home.badges.badges-label') }}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <BaseBadge dot :text="t('pages.home.badges.in-progress')" variant="accent" />
+            <BaseBadge :text="t('pages.home.badges.completed')" variant="success" />
+            <BaseBadge :text="t('pages.home.badges.pending')" variant="warning" />
+            <BaseBadge :text="t('pages.home.badges.failed')" variant="error" />
+            <BaseBadge :text="t('pages.home.badges.new')" variant="info" />
+            <BaseBadge :text="t('pages.home.badges.draft')" variant="outline" />
+          </div>
+        </div>
+
+        <div>
+          <p class="ty-app-label text-app-muted mb-3">
+            {{ t('pages.home.badges.chips-label') }}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <BaseChip :text="t('pages.home.badges.all')" variant="primary" />
+            <BaseChip :text="t('pages.home.badges.frontend')" variant="secondary" />
+            <BaseChip :text="t('pages.home.badges.backend')" variant="secondary" />
+            <BaseChip icon="lucide:x" :text="t('pages.home.badges.design')" variant="secondary" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cards -->
+    <section id="cards" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+      <div class="max-w-2xl mb-8">
+        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.cards.eyebrow') }}</span>
+        <h2 class="ty-app-h2 text-app-contrast">
+          {{ t('pages.home.cards.heading') }}
+        </h2>
+        <p class="ty-app-p text-app-muted mt-2">
+          {{ t('pages.home.cards.description') }}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr_1fr] gap-5">
+        <!-- Feature card -->
+        <BaseCard :full-custom-content="true" variant="dark">
+          <div class="flex flex-col justify-between h-full">
+            <div>
+              <div class="size-11 rounded-sm bg-app-accent text-white flex items-center justify-center ty-app-h3 font-bold mb-4">
+                01
               </div>
-            </template>
-          </BaseCard>
+              <h3 class="ty-app-h3 text-app-contrast">
+                {{ t('pages.home.cards.feature.title') }}
+              </h3>
+              <p class="ty-app-p text-app-muted mt-2">
+                {{ t('pages.home.cards.feature.paragraph') }}
+              </p>
+            </div>
+            <BaseButton class="self-start mt-5" size="sm" variant="outline">
+              {{ t('pages.home.cards.feature.button') }}
+            </BaseButton>
+          </div>
+        </BaseCard>
 
-          <!-- Card 12 - Loading State -->
-          <BaseCard
-            :paragraph="t('pages.home.cards.loading-state.paragraph')"
-            :subtitle="t('pages.home.cards.loading-state.subtitle')"
-            :title="t('pages.home.cards.loading-state.title')"
-            variant="dark"
-          >
-            <template #card-footer>
-              <BaseButton :is-loading="true" variant="primary">
-                {{ t('pages.home.cards.loading-state.button') }}
-              </BaseButton>
-            </template>
-          </BaseCard>
-        </div>
-      </section>
-
-      <!-- Media Carousel Section -->
-      <section class="space-y-8">
-        <h2 class="ty-app-title-xl text-app-accent mb-8">
-          {{ t('pages.home.media-carousel.section-title') }}
-        </h2>
-
-        <div class="max-w-5xl">
-          <BaseMediaCarousel :items="carouselItems" />
-        </div>
-
-        <div class="space-y-2 max-w-4xl">
-          <p class="ty-app-paragraph text-app-muted">
-            {{ t('pages.home.media-carousel.description', { component: 'BaseMediaCarousel' }) }}
+        <!-- Stat card -->
+        <BaseCard :full-custom-content="true" variant="light">
+          <p class="ty-app-label text-app-muted">
+            {{ t('pages.home.cards.stat.label') }}
           </p>
-          <ul class="ty-app-paragraph text-app-muted list-disc list-inside space-y-1">
-            <li>{{ t('pages.home.media-carousel.features.autoplay') }}</li>
-            <li>{{ t('pages.home.media-carousel.features.navigation') }}</li>
-            <li>{{ t('pages.home.media-carousel.features.thumbnails') }}</li>
-            <li>{{ t('pages.home.media-carousel.features.counter') }}</li>
-            <li>{{ t('pages.home.media-carousel.features.media-support') }}</li>
-            <li>{{ t('pages.home.media-carousel.features.responsive') }}</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Accordion Section -->
-      <section class="space-y-8">
-        <h2 class="ty-app-title-xl text-app-accent mb-8">
-          {{ t('pages.home.accordion.section-title') }}
-        </h2>
-
-        <div class="space-y-2 max-w-4xl mb-8">
-          <p class="ty-app-paragraph text-app-muted">
-            {{ t('pages.home.accordion.description', { component: 'BaseAccordion' }) }}
+          <p class="ty-app-h2 text-app-contrast mt-1">
+            128
           </p>
-        </div>
+          <p class="ty-app-label normal-case! font-semibold! text-app-success">
+            {{ t('pages.home.cards.stat.delta') }}
+          </p>
+        </BaseCard>
 
-        <div class="space-y-4 max-w-4xl">
-          <!-- Accordion 1 - With Icon -->
-          <BaseAccordion
-            id="accordion-1"
-            icon="lucide:rocket"
-            :title="t('pages.home.accordion.items.getting-started.title')"
-          >
-            <p class="ty-app-paragraph">
-              {{ t('pages.home.accordion.items.getting-started.content') }}
-            </p>
-          </BaseAccordion>
+        <!-- List card -->
+        <BaseCard :full-custom-content="true" variant="light">
+          <p class="ty-app-label text-app-muted mb-3">
+            {{ t('pages.home.cards.list.label') }}
+          </p>
+          <div class="flex flex-col divide-y divide-app-border">
+            <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
+              <span class="flex items-center gap-2.5 ty-app-p text-app-contrast">
+                <span class="size-7 rounded-full bg-app-surface-2 flex items-center justify-center ty-app-label normal-case! text-app-muted shrink-0">Bt</span>
+                {{ t('pages.home.cards.list.button.name') }}
+              </span>
+              <BaseBadge :text="t('pages.home.cards.list.button.status')" variant="success" />
+            </div>
+            <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
+              <span class="flex items-center gap-2.5 ty-app-p text-app-contrast">
+                <span class="size-7 rounded-full bg-app-surface-2 flex items-center justify-center ty-app-label normal-case! text-app-muted shrink-0">Dg</span>
+                {{ t('pages.home.cards.list.dialog.name') }}
+              </span>
+              <BaseBadge :text="t('pages.home.cards.list.dialog.status')" variant="success" />
+            </div>
+            <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
+              <span class="flex items-center gap-2.5 ty-app-p text-app-contrast">
+                <span class="size-7 rounded-full bg-app-surface-2 flex items-center justify-center ty-app-label normal-case! text-app-muted shrink-0">Ac</span>
+                {{ t('pages.home.cards.list.accordion.name') }}
+              </span>
+              <BaseBadge :text="t('pages.home.cards.list.accordion.status')" variant="warning" />
+            </div>
+          </div>
+        </BaseCard>
+      </div>
+    </section>
 
-          <!-- Accordion 2 - With Icon -->
-          <BaseAccordion
-            id="accordion-2"
-            icon="lucide:sparkles"
-            :title="t('pages.home.accordion.items.features.title')"
-          >
-            <p class="ty-app-paragraph">
-              {{ t('pages.home.accordion.items.features.content') }}
-            </p>
-          </BaseAccordion>
-
-          <!-- Accordion 3 - With Icon -->
-          <BaseAccordion
-            id="accordion-3"
-            icon="lucide:palette"
-            :title="t('pages.home.accordion.items.customization.title')"
-          >
-            <p class="ty-app-paragraph">
-              {{ t('pages.home.accordion.items.customization.content') }}
-            </p>
-          </BaseAccordion>
-
-          <!-- Accordion 4 - With Icon and Open by Default -->
-          <BaseAccordion
-            id="accordion-4"
-            icon="lucide:lightbulb"
-            :is-open="true"
-            :title="t('pages.home.accordion.items.use-cases.title')"
-          >
-            <p class="ty-app-paragraph">
-              {{ t('pages.home.accordion.items.use-cases.content') }}
-            </p>
-          </BaseAccordion>
-        </div>
-      </section>
-
-      <!-- Inputs Section -->
-      <section class="space-y-8">
-        <h2 class="ty-app-title-xl text-app-accent mb-8">
-          {{ t('pages.home.inputs.section-title') }}
+    <!-- Accordion -->
+    <section id="accordion" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+      <div class="max-w-2xl mb-8">
+        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.accordion.eyebrow') }}</span>
+        <h2 class="ty-app-h2 text-app-contrast">
+          {{ t('pages.home.accordion.heading') }}
         </h2>
+        <p class="ty-app-p text-app-muted mt-2">
+          {{ t('pages.home.accordion.description') }}
+        </p>
+      </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
-          <!-- Text Input -->
+      <div class="max-w-3xl space-y-3">
+        <BaseAccordion
+          id="accordion-theme-colors"
+          :is-open="true"
+          :title="t('pages.home.accordion.items.theme-colors.title')"
+        >
+          <p class="ty-app-p">
+            {{ t('pages.home.accordion.items.theme-colors.content') }}
+          </p>
+        </BaseAccordion>
+
+        <BaseAccordion
+          id="accordion-nuxt-compat"
+          :title="t('pages.home.accordion.items.nuxt-compat.title')"
+        >
+          <p class="ty-app-p">
+            {{ t('pages.home.accordion.items.nuxt-compat.content') }}
+          </p>
+        </BaseAccordion>
+
+        <BaseAccordion
+          id="accordion-dark-mode"
+          :title="t('pages.home.accordion.items.dark-mode.title')"
+        >
+          <p class="ty-app-p">
+            {{ t('pages.home.accordion.items.dark-mode.content') }}
+          </p>
+        </BaseAccordion>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <section id="form" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+      <div class="max-w-2xl mb-8">
+        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.form.eyebrow') }}</span>
+        <h2 class="ty-app-h2 text-app-contrast">
+          {{ t('pages.home.form.heading') }}
+        </h2>
+        <p class="ty-app-p text-app-muted mt-2">
+          {{ t('pages.home.form.description') }}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-6 max-w-4xl">
+        <div class="space-y-6">
           <BaseInput
-            id="text-input"
-            v-model:input="textInput"
-            :hint="t('pages.home.inputs.text.hint')"
-            :label="t('pages.home.inputs.text.label')"
-            :placeholder="t('pages.home.inputs.text.placeholder')"
+            id="form-project-name"
+            v-model:input="projectName"
+            :label="t('pages.home.form.project-name.label')"
+            :placeholder="t('pages.home.form.project-name.placeholder')"
             type="text"
           />
 
-          <!-- Email Input with Icon -->
           <BaseInput
-            id="email-input"
-            v-model:input="emailInput"
-            :hint="t('pages.home.inputs.email.hint')"
-            :label="t('pages.home.inputs.email.label')"
-            :placeholder="t('pages.home.inputs.email.placeholder')"
-            prefix-icon="lucide:mail"
+            id="form-email"
+            v-model:input="emailValue"
+            :error="t('pages.home.form.email.error')"
+            :label="t('pages.home.form.email.label')"
             type="email"
           />
 
-          <!-- Password Input with Icon -->
-          <BaseInput
-            id="password-input"
-            v-model:input="passwordInput"
-            :hint="t('pages.home.inputs.password.hint')"
-            :label="t('pages.home.inputs.password.label')"
-            :placeholder="t('pages.home.inputs.password.placeholder')"
-            prefix-icon="lucide:lock"
-            type="password"
-          />
-
-          <!-- Number Input with Icon -->
-          <BaseInput
-            id="number-input"
-            v-model:input="numberInput"
-            :hint="t('pages.home.inputs.number.hint')"
-            :label="t('pages.home.inputs.number.label')"
-            :placeholder="t('pages.home.inputs.number.placeholder')"
-            prefix-icon="lucide:hash"
-            type="number"
-          />
-
-          <!-- Single Select Combobox -->
-          <BaseCombobox
-            id="combobox-single"
-            v-model:input="comboboxInput"
-            :hint="t('pages.home.inputs.combobox.hint')"
-            :items="comboboxItems"
-            :label="t('pages.home.inputs.combobox.label')"
-            :placeholder="t('pages.home.inputs.combobox.placeholder')"
-            prefix-icon="lucide:list"
-            type="single"
-          />
-
-          <!-- Multiple Select Combobox -->
-          <BaseCombobox
-            id="combobox-multiple"
-            v-model:input="multiComboboxInput"
-            :hint="t('pages.home.inputs.combobox-multiple.hint')"
-            :items="comboboxItems"
-            :label="t('pages.home.inputs.combobox-multiple.label')"
-            :placeholder="t('pages.home.inputs.combobox-multiple.placeholder')"
-            prefix-icon="lucide:list-checks"
-            type="multiple"
-          />
-
-          <!-- Textarea -->
           <BaseTextarea
-            id="textarea-input"
-            v-model:input="textareaInput"
-            class="md:col-span-2"
-            :hint="t('pages.home.inputs.textarea.hint')"
-            :label="t('pages.home.inputs.textarea.label')"
-            :max-length="200"
-            :placeholder="t('pages.home.inputs.textarea.placeholder')"
-            :rows="4"
+            id="form-description"
+            v-model:input="descriptionValue"
+            :label="t('pages.home.form.description-field.label')"
+            :placeholder="t('pages.home.form.description-field.placeholder')"
           />
 
-          <!-- Checkbox -->
-          <BaseCheckbox
-            id="checkbox-input"
-            v-model:input="checkboxInput"
-            :label="t('pages.home.inputs.checkbox.label')"
-          >
-            {{ t('pages.home.inputs.checkbox.text') }}
-          </BaseCheckbox>
-
-          <!-- Input with Error -->
-          <BaseInput
-            id="error-input"
-            :error="t('pages.home.inputs.error.message')"
-            :label="t('pages.home.inputs.error.label')"
-            :placeholder="t('pages.home.inputs.error.placeholder')"
-            prefix-icon="lucide:alert-circle"
-            type="text"
+          <BaseSelect
+            id="form-team"
+            v-model:input="selectedTeam"
+            :label="t('pages.home.form.team.label')"
+            :options="teamOptions"
           />
         </div>
-      </section>
 
-      <!-- Chips Section -->
-      <section class="space-y-8">
-        <h2 class="ty-app-title-xl text-app-accent mb-8">
-          {{ t('pages.home.chips.section-title') }}
-        </h2>
-
-        <div class="space-y-8 max-w-4xl">
-          <!-- Primary Chips -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.chips.primary.title') }}
-            </h3>
-            <div class="flex flex-wrap gap-3">
-              <BaseChip
-                :text="t('pages.home.chips.primary.simple')"
-                variant="primary"
+        <div class="space-y-6">
+          <div>
+            <p class="ty-app-label text-app-muted mb-3">
+              {{ t('pages.home.form.notifications-title') }}
+            </p>
+            <div class="space-y-3">
+              <BaseSwitch
+                id="form-email-notifications"
+                v-model:input="emailNotifications"
+                :label="t('pages.home.form.email-notifications')"
               />
-              <BaseChip
-                icon="lucide:star"
-                :text="t('pages.home.chips.primary.with-icon')"
-                variant="primary"
-              />
-              <BaseChip
-                icon="lucide:zap"
-                :text="t('pages.home.chips.primary.featured')"
-                variant="primary"
+              <BaseSwitch
+                id="form-weekly-report"
+                v-model:input="weeklyReport"
+                :label="t('pages.home.form.weekly-report')"
               />
             </div>
           </div>
 
-          <!-- Secondary Chips -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.chips.secondary.title') }}
-            </h3>
-            <div class="flex flex-wrap gap-3">
-              <BaseChip
-                :text="t('pages.home.chips.secondary.simple')"
-                variant="secondary"
+          <div>
+            <p class="ty-app-label text-app-muted mb-3">
+              {{ t('pages.home.form.visibility-title') }}
+            </p>
+            <div class="space-y-2.5">
+              <BaseRadio
+                id="form-visibility-private"
+                v-model:input="visibility"
+                :label="t('pages.home.form.visibility-private')"
+                name="visibility"
+                value="private"
               />
-              <BaseChip
-                icon="lucide:tag"
-                :text="t('pages.home.chips.secondary.with-icon')"
-                variant="secondary"
+              <BaseRadio
+                id="form-visibility-team"
+                v-model:input="visibility"
+                :label="t('pages.home.form.visibility-team')"
+                name="visibility"
+                value="team"
               />
-              <BaseChip
-                icon="lucide:bookmark"
-                :text="t('pages.home.chips.secondary.category')"
-                variant="secondary"
-              />
-            </div>
-          </div>
-
-          <!-- Outline Chips -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.chips.outline.title') }}
-            </h3>
-            <div class="flex flex-wrap gap-3">
-              <BaseChip
-                :text="t('pages.home.chips.outline.simple')"
-                variant="outline"
-              />
-              <BaseChip
-                icon="lucide:info"
-                :text="t('pages.home.chips.outline.with-icon')"
-                variant="outline"
-              />
-              <BaseChip
-                icon="lucide:clock"
-                :text="t('pages.home.chips.outline.status')"
-                variant="outline"
+              <BaseRadio
+                id="form-visibility-public"
+                v-model:input="visibility"
+                :label="t('pages.home.form.visibility-public')"
+                name="visibility"
+                value="public"
               />
             </div>
           </div>
 
-          <!-- Use Cases Example -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.chips.use-cases.title') }}
-            </h3>
-            <div class="space-y-4">
-              <!-- Tags -->
-              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
-                <p class="ty-app-label text-app-muted mb-3">
-                  {{ t('pages.home.chips.use-cases.tags-label') }}
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <BaseChip icon="lucide:code" text="Vue.js" variant="primary" />
-                  <BaseChip icon="lucide:code" text="Nuxt" variant="primary" />
-                  <BaseChip icon="lucide:code" text="TypeScript" variant="primary" />
-                  <BaseChip icon="lucide:code" text="Tailwind" variant="primary" />
-                </div>
-              </div>
-
-              <!-- Status -->
-              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
-                <p class="ty-app-label text-app-muted mb-3">
-                  {{ t('pages.home.chips.use-cases.status-label') }}
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <BaseChip icon="lucide:check-circle" :text="t('pages.home.chips.use-cases.active')" variant="primary" />
-                  <BaseChip icon="lucide:clock" :text="t('pages.home.chips.use-cases.pending')" variant="secondary" />
-                  <BaseChip icon="lucide:alert-circle" :text="t('pages.home.chips.use-cases.warning')" variant="outline" />
-                </div>
-              </div>
-
-              <!-- Categories -->
-              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
-                <p class="ty-app-label text-app-muted mb-3">
-                  {{ t('pages.home.chips.use-cases.categories-label') }}
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <BaseChip icon="lucide:folder" :text="t('pages.home.chips.use-cases.design')" variant="primary" />
-                  <BaseChip icon="lucide:folder" :text="t('pages.home.chips.use-cases.development')" variant="primary" />
-                  <BaseChip icon="lucide:folder" :text="t('pages.home.chips.use-cases.marketing')" variant="primary" />
-                </div>
-              </div>
-
-              <!-- Interactive - Clickable -->
-              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
-                <p class="ty-app-label text-app-muted mb-3">
-                  Interactive - Clickable (button)
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <BaseChip
-                    :clickable="true"
-                    text="Click me (Primary)"
-                    variant="primary"
-                    @chip-click="() => handleChipClick('Primary Chip')"
-                  />
-                  <BaseChip
-                    :clickable="true"
-                    icon="lucide:x"
-                    text="Remove (Primary)"
-                    variant="primary"
-                    @chip-click="() => handleChipClick('Remove Chip')"
-                  />
-                  <BaseChip
-                    :clickable="true"
-                    icon="lucide:filter"
-                    text="Filter (Secondary)"
-                    variant="secondary"
-                    @chip-click="() => handleChipClick('Filter Chip')"
-                  />
-                </div>
-              </div>
-
-              <!-- Interactive - Linkable -->
-              <div class="p-4 bg-app-surface rounded-lg border border-app-border">
-                <p class="ty-app-label text-app-muted mb-3">
-                  Interactive - Linkable (anchor)
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  <BaseChip
-                    icon="lucide:github"
-                    :linkable="{
-                      href: 'https://github.com',
-                      target: '_blank',
-                      rel: 'noopener noreferrer',
-                    }"
-                    text="GitHub"
-                    variant="primary"
-                  />
-                  <BaseChip
-                    icon="lucide:external-link"
-                    :linkable="{
-                      href: 'https://nuxt.com',
-                      target: '_blank',
-                      rel: 'noopener noreferrer',
-                    }"
-                    text="Documentation"
-                    variant="outline"
-                  />
-                  <BaseChip
-                    icon="lucide:mail"
-                    :linkable="{
-                      href: 'mailto:example@email.com',
-                    }"
-                    text="Email"
-                    variant="secondary"
-                  />
-                </div>
-              </div>
+          <div>
+            <p class="ty-app-label text-app-muted mb-3">
+              {{ t('pages.home.form.preferences-title') }}
+            </p>
+            <div class="space-y-2.5">
+              <BaseCheckbox
+                id="form-accept-terms"
+                v-model:input="acceptTerms"
+                :label="t('pages.home.form.accept-terms')"
+              />
+              <BaseCheckbox
+                id="form-newsletter"
+                v-model:input="newsletter"
+                :label="t('pages.home.form.subscribe-newsletter')"
+              />
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Buttons Section -->
-      <section class="space-y-8 pb-16">
-        <h2 class="ty-app-title-xl text-app-accent mb-8">
-          {{ t('pages.home.buttons.section-title') }}
+    <!-- Dialog -->
+    <section id="dialog" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+      <div class="max-w-2xl mb-8">
+        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.dialog.eyebrow') }}</span>
+        <h2 class="ty-app-h2 text-app-contrast">
+          {{ t('pages.home.dialog.heading') }}
         </h2>
+        <p class="ty-app-p text-app-muted mt-2">
+          {{ t('pages.home.dialog.description') }}
+        </p>
+      </div>
 
-        <div class="space-y-8">
-          <!-- Primary Buttons -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.buttons.primary.title') }}
-            </h3>
-            <div class="flex flex-wrap gap-4">
-              <BaseButton variant="primary">
-                {{ t('pages.home.buttons.primary.button') }}
-              </BaseButton>
-              <BaseButton :is-disabled="true" variant="primary">
-                {{ t('pages.home.buttons.primary.disabled') }}
-              </BaseButton>
-              <BaseButton :is-loading="true" variant="primary">
-                {{ t('pages.home.buttons.primary.loading') }}
-              </BaseButton>
-              <BaseButton type="submit" variant="primary">
-                {{ t('pages.home.buttons.primary.submit') }}
-              </BaseButton>
-            </div>
-          </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <BaseButton size="sm" variant="outline" @click="isSmDialogOpen = true">
+          {{ t('pages.home.dialog.sm.trigger') }}
+        </BaseButton>
+        <BaseButton size="md" variant="outline" @click="isMdDialogOpen = true">
+          {{ t('pages.home.dialog.md.trigger') }}
+        </BaseButton>
+        <BaseButton size="lg" variant="outline" @click="isLgDialogOpen = true">
+          {{ t('pages.home.dialog.lg.trigger') }}
+        </BaseButton>
+        <BaseButton size="lg" variant="outline" @click="isFullDialogOpen = true">
+          {{ t('pages.home.dialog.full.trigger') }}
+        </BaseButton>
+      </div>
+    </section>
 
-          <!-- Secondary Buttons -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.buttons.secondary.title') }}
-            </h3>
-            <div class="flex flex-wrap gap-4">
-              <BaseButton variant="secondary">
-                {{ t('pages.home.buttons.secondary.button') }}
-              </BaseButton>
-              <BaseButton :is-disabled="true" variant="secondary">
-                {{ t('pages.home.buttons.secondary.disabled') }}
-              </BaseButton>
-              <BaseButton :is-loading="true" variant="secondary">
-                {{ t('pages.home.buttons.secondary.loading') }}
-              </BaseButton>
-            </div>
-          </div>
+    <!-- Small: destructive confirmation -->
+    <BaseDialog
+      :is-open="isSmDialogOpen"
+      size="sm"
+      :title="t('pages.home.dialog.sm.title')"
+      @close="isSmDialogOpen = false"
+    >
+      <p class="ty-app-p">
+        {{ t('pages.home.dialog.sm.content') }}
+      </p>
+      <template #footer>
+        <BaseButton size="sm" variant="ghost" @click="isSmDialogOpen = false">
+          {{ t('pages.home.dialog.cancel-button') }}
+        </BaseButton>
+        <BaseButton size="sm" variant="danger" @click="isSmDialogOpen = false">
+          {{ t('pages.home.dialog.sm.confirm-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
 
-          <!-- Outline Buttons -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.buttons.outline.title') }}
-            </h3>
-            <div class="flex flex-wrap gap-4">
-              <BaseButton variant="outline">
-                {{ t('pages.home.buttons.outline.button') }}
-              </BaseButton>
-              <BaseButton :is-disabled="true" variant="outline">
-                {{ t('pages.home.buttons.outline.disabled') }}
-              </BaseButton>
-              <BaseButton :is-loading="true" variant="outline">
-                {{ t('pages.home.buttons.outline.loading') }}
-              </BaseButton>
-            </div>
-          </div>
+    <!-- Medium: invite form-style content -->
+    <BaseDialog
+      :is-open="isMdDialogOpen"
+      size="md"
+      :subtitle="t('pages.home.dialog.md.subtitle')"
+      :title="t('pages.home.dialog.md.title')"
+      @close="isMdDialogOpen = false"
+    >
+      <p class="ty-app-p">
+        {{ t('pages.home.dialog.md.content') }}
+      </p>
+      <template #footer>
+        <BaseButton variant="ghost" @click="isMdDialogOpen = false">
+          {{ t('pages.home.dialog.cancel-button') }}
+        </BaseButton>
+        <BaseButton variant="primary" @click="isMdDialogOpen = false">
+          {{ t('pages.home.dialog.md.confirm-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
 
-          <!-- Link Buttons -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.buttons.link.title') }}
-            </h3>
-            <div class="flex flex-wrap gap-4">
-              <BaseButton to="https://github.com" type="link" variant="primary">
-                {{ t('pages.home.buttons.link.primary') }}
-              </BaseButton>
-              <BaseButton to="https://nuxt.com" type="link" variant="secondary">
-                {{ t('pages.home.buttons.link.secondary') }}
-              </BaseButton>
-              <BaseButton to="https://tailwindcss.com" type="link" variant="outline">
-                {{ t('pages.home.buttons.link.outline') }}
-              </BaseButton>
-            </div>
-          </div>
+    <!-- Large: release notes -->
+    <BaseDialog
+      :is-open="isLgDialogOpen"
+      size="lg"
+      :subtitle="t('pages.home.dialog.lg.subtitle')"
+      :title="t('pages.home.dialog.lg.title')"
+      @close="isLgDialogOpen = false"
+    >
+      <p class="ty-app-p">
+        {{ t('pages.home.dialog.lg.content') }}
+      </p>
+      <template #footer>
+        <BaseButton size="lg" variant="primary" @click="isLgDialogOpen = false">
+          {{ t('pages.home.dialog.lg.confirm-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
 
-          <!-- Buttons with Icons -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.buttons.with-icons.title') }}
-            </h3>
-            <div class="flex flex-wrap gap-4 items-center">
-              <BaseButton variant="primary">
-                <Icon class="size-5 mr-2" name="lucide:send" />
-                {{ t('pages.home.buttons.with-icons.send') }}
-              </BaseButton>
-              <BaseButton variant="secondary">
-                <Icon class="size-5 mr-2" name="lucide:download" />
-                {{ t('pages.home.buttons.with-icons.download') }}
-              </BaseButton>
-              <BaseButton variant="outline">
-                <Icon class="size-5 mr-2" name="lucide:heart" />
-                {{ t('pages.home.buttons.with-icons.like') }}
-              </BaseButton>
-            </div>
-          </div>
+    <!-- Full: long-form content -->
+    <BaseDialog
+      :is-open="isFullDialogOpen"
+      size="full"
+      :subtitle="t('pages.home.dialog.full.subtitle')"
+      :title="t('pages.home.dialog.full.title')"
+      @close="isFullDialogOpen = false"
+    >
+      <p class="ty-app-p">
+        {{ t('pages.home.dialog.full.content') }}
+      </p>
+      <template #footer>
+        <BaseButton size="lg" variant="ghost" @click="isFullDialogOpen = false">
+          {{ t('pages.home.dialog.cancel-button') }}
+        </BaseButton>
+        <BaseButton size="lg" variant="primary" @click="isFullDialogOpen = false">
+          {{ t('pages.home.dialog.full.confirm-button') }}
+        </BaseButton>
+      </template>
+    </BaseDialog>
 
-          <!-- All States Demo -->
-          <div class="space-y-4">
-            <h3 class="ty-app-subtitle text-app-contrast">
-              {{ t('pages.home.buttons.states.title') }}
-            </h3>
-            <div class="flex flex-wrap gap-4">
-              <BaseButton variant="primary">
-                {{ t('pages.home.buttons.states.normal') }}
-              </BaseButton>
-              <BaseButton :is-loading="true" variant="primary">
-                {{ t('pages.home.buttons.states.loading') }}
-              </BaseButton>
-              <BaseButton :is-disabled="true" variant="primary">
-                {{ t('pages.home.buttons.states.disabled') }}
-              </BaseButton>
-            </div>
-          </div>
+    <!-- Complex components -->
+    <section id="components" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+      <div class="max-w-2xl mb-8">
+        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.components.eyebrow') }}</span>
+        <h2 class="ty-app-h2 text-app-contrast">
+          {{ t('pages.home.components.heading') }}
+        </h2>
+        <p class="ty-app-p text-app-muted mt-2">
+          {{ t('pages.home.components.description') }}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <p class="ty-app-label text-app-muted mb-3">
+            {{ t('pages.home.components.carousel-label') }}
+          </p>
+          <BaseMediaCarousel :items="carouselItems" />
         </div>
-      </section>
 
-      <!-- Rich Text Section -->
-      <section class="space-y-8 pb-16">
-        <h2 class="ty-app-title-xl text-app-accent mb-8">
-          Rich Text
-        </h2>
-
-        <div class="max-w-4xl">
-          <div class="p-8 bg-app-surface rounded-lg border border-app-border">
+        <div>
+          <p class="ty-app-label text-app-muted mb-3">
+            {{ t('pages.home.components.rich-text-label') }}
+          </p>
+          <div class="rounded-md border border-app-border bg-app-surface p-5 md:p-6">
             <BaseRichText :blocks="richTextBlocks" />
           </div>
-
-          <div class="mt-6 p-6 bg-app-main rounded-lg border border-app-border">
-            <h3 class="ty-app-subtitle text-app-contrast mb-4">
-              Utilizzo
-            </h3>
-            <pre class="ty-app-label text-app-muted overflow-x-auto"><code>&lt;BaseRichText :blocks="richTextBlocks" /&gt;</code></pre>
-          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Dialogs Section -->
-      <section class="space-y-8 pb-16">
-        <h2 class="ty-app-title-xl text-app-accent mb-8">
-          {{ t('pages.home.dialogs.section-title') }}
+    <!-- Responsive -->
+    <section id="responsive" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+      <div class="max-w-2xl mb-8">
+        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.responsive.eyebrow') }}</span>
+        <h2 class="ty-app-h2 text-app-contrast">
+          {{ t('pages.home.responsive.heading') }}
         </h2>
+        <p class="ty-app-p text-app-muted mt-2">
+          {{ t('pages.home.responsive.description') }}
+        </p>
+      </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Simple Dialog (Small) -->
-          <BaseCard
-            :paragraph="t('pages.home.dialogs.simple.content')"
-            :subtitle="t('pages.home.dialogs.simple.subtitle')"
-            :title="t('pages.home.dialogs.simple.title')"
-            variant="dark"
-          >
-            <template #card-footer>
-              <BaseButton variant="primary" @click="isSimpleDialogOpen = true">
-                {{ t('pages.home.dialogs.trigger-button') }}
-              </BaseButton>
-            </template>
-          </BaseCard>
-
-          <!-- Medium Dialog -->
-          <BaseCard
-            :paragraph="t('pages.home.dialogs.medium.content')"
-            :subtitle="t('pages.home.dialogs.medium.subtitle')"
-            :title="t('pages.home.dialogs.medium.title')"
-            variant="light"
-          >
-            <template #card-footer>
-              <BaseButton variant="secondary" @click="isMediumDialogOpen = true">
-                {{ t('pages.home.dialogs.trigger-button') }}
-              </BaseButton>
-            </template>
-          </BaseCard>
-
-          <!-- Large Dialog -->
-          <BaseCard
-            :paragraph="t('pages.home.dialogs.large.content')"
-            :subtitle="t('pages.home.dialogs.large.subtitle')"
-            :title="t('pages.home.dialogs.large.title')"
-            variant="dark-hover"
-          >
-            <template #card-footer>
-              <BaseButton variant="outline" @click="isLargeDialogOpen = true">
-                {{ t('pages.home.dialogs.trigger-button') }}
-              </BaseButton>
-            </template>
-          </BaseCard>
-
-          <!-- Dialog with Custom Header -->
-          <BaseCard
-            :paragraph="t('pages.home.dialogs.with-header.content')"
-            :subtitle="t('pages.home.dialogs.with-header.subtitle')"
-            :title="t('pages.home.dialogs.with-header.title')"
-            variant="light-hover"
-          >
-            <template #card-footer>
-              <BaseButton variant="primary" @click="isHeaderDialogOpen = true">
-                {{ t('pages.home.dialogs.trigger-button') }}
-              </BaseButton>
-            </template>
-          </BaseCard>
-
-          <!-- Dialog with Footer Actions -->
-          <BaseCard
-            :paragraph="t('pages.home.dialogs.with-footer.content')"
-            :subtitle="t('pages.home.dialogs.with-footer.subtitle')"
-            :title="t('pages.home.dialogs.with-footer.title')"
-            variant="dark"
-          >
-            <template #card-footer>
-              <BaseButton variant="secondary" @click="isFooterDialogOpen = true">
-                {{ t('pages.home.dialogs.trigger-button') }}
-              </BaseButton>
-            </template>
-          </BaseCard>
-
-          <!-- Confirmation Dialog -->
-          <BaseCard
-            :paragraph="t('pages.home.dialogs.confirmation.content')"
-            :subtitle="t('pages.home.dialogs.confirmation.subtitle')"
-            :title="t('pages.home.dialogs.confirmation.title')"
-            variant="light"
-          >
-            <template #card-footer>
-              <BaseButton variant="outline" @click="isConfirmDialogOpen = true">
-                {{ t('pages.home.dialogs.trigger-button') }}
-              </BaseButton>
-            </template>
-          </BaseCard>
+      <!-- Device frames: purely decorative mockups proving the same tokens scale down, not real breakpoints -->
+      <div aria-hidden="true" class="flex flex-wrap items-end gap-6 mb-10">
+        <div class="flex flex-col items-center gap-2">
+          <div class="w-20 h-36 rounded-md border-2 border-app-border bg-app-surface p-1.5 flex flex-col gap-1">
+            <div class="h-2 rounded-full bg-app-accent w-1/2"></div>
+            <div class="flex-1 rounded-sm bg-app-surface-2"></div>
+            <div class="h-1.5 rounded-full bg-app-border"></div>
+            <div class="h-1.5 rounded-full bg-app-border w-2/3"></div>
+          </div>
+          <span class="ty-app-label text-app-muted">{{ t('pages.home.responsive.mobile-label') }}</span>
         </div>
-      </section>
-    </div>
 
-    <!-- Dialog Components -->
-    <BaseDialog
-      :is-open="isSimpleDialogOpen"
-      size="sm"
-      :subtitle="t('pages.home.dialogs.simple.subtitle')"
-      :title="t('pages.home.dialogs.simple.title')"
-      @close="isSimpleDialogOpen = false"
-    >
-      <p>{{ t('pages.home.dialogs.simple.content') }}</p>
-      <template #footer>
-        <BaseButton variant="primary" @click="isSimpleDialogOpen = false">
-          {{ t('pages.home.dialogs.simple.close-button') }}
-        </BaseButton>
-      </template>
-    </BaseDialog>
-
-    <BaseDialog
-      :is-open="isMediumDialogOpen"
-      size="md"
-      :subtitle="t('pages.home.dialogs.medium.subtitle')"
-      :title="t('pages.home.dialogs.medium.title')"
-      @close="isMediumDialogOpen = false"
-    >
-      <p>{{ t('pages.home.dialogs.medium.content') }}</p>
-      <template #footer>
-        <BaseButton variant="secondary" @click="isMediumDialogOpen = false">
-          {{ t('pages.home.dialogs.medium.close-button') }}
-        </BaseButton>
-      </template>
-    </BaseDialog>
-
-    <BaseDialog
-      :is-open="isLargeDialogOpen"
-      size="lg"
-      :subtitle="t('pages.home.dialogs.large.subtitle')"
-      :title="t('pages.home.dialogs.large.title')"
-      @close="isLargeDialogOpen = false"
-    >
-      <p>{{ t('pages.home.dialogs.large.content') }}</p>
-      <template #footer>
-        <BaseButton variant="outline" @click="isLargeDialogOpen = false">
-          {{ t('pages.home.dialogs.large.close-button') }}
-        </BaseButton>
-      </template>
-    </BaseDialog>
-
-    <BaseDialog
-      :is-open="isHeaderDialogOpen"
-      size="md"
-      :subtitle="t('pages.home.dialogs.with-header.subtitle')"
-      :title="t('pages.home.dialogs.with-header.title')"
-      @close="isHeaderDialogOpen = false"
-    >
-      <template #header>
-        <div class="p-4 bg-app-accent/10 rounded-lg border border-app-accent/20">
-          <p class="ty-app-paragraph text-app-accent">
-            <Icon class="size-5 inline-block mr-2" name="lucide:alert-circle" />
-            {{ t('pages.home.dialogs.with-header.header-content') }}
-          </p>
+        <div class="flex flex-col items-center gap-2">
+          <div class="w-36 h-28 rounded-md border-2 border-app-border bg-app-surface p-2 flex flex-col gap-1.5">
+            <div class="h-2 rounded-full bg-app-accent w-1/3"></div>
+            <div class="flex-1 grid grid-cols-2 gap-1.5">
+              <div class="rounded-sm bg-app-surface-2"></div>
+              <div class="rounded-sm bg-app-surface-2"></div>
+            </div>
+          </div>
+          <span class="ty-app-label text-app-muted">{{ t('pages.home.responsive.tablet-label') }}</span>
         </div>
-      </template>
-      <p>{{ t('pages.home.dialogs.with-header.content') }}</p>
-      <template #footer>
-        <BaseButton variant="primary" @click="isHeaderDialogOpen = false">
-          {{ t('pages.home.dialogs.with-header.close-button') }}
-        </BaseButton>
-      </template>
-    </BaseDialog>
 
-    <BaseDialog
-      :is-open="isFooterDialogOpen"
-      size="md"
-      :subtitle="t('pages.home.dialogs.with-footer.subtitle')"
-      :title="t('pages.home.dialogs.with-footer.title')"
-      @close="isFooterDialogOpen = false"
-    >
-      <p>{{ t('pages.home.dialogs.with-footer.content') }}</p>
-      <template #footer>
-        <BaseButton variant="outline" @click="isFooterDialogOpen = false">
-          {{ t('pages.home.dialogs.with-footer.cancel-button') }}
-        </BaseButton>
-        <BaseButton variant="primary" @click="isFooterDialogOpen = false">
-          {{ t('pages.home.dialogs.with-footer.save-button') }}
-        </BaseButton>
-      </template>
-    </BaseDialog>
+        <div class="flex flex-col items-center gap-2">
+          <div class="w-56 h-32 rounded-md border-2 border-app-border bg-app-surface p-2.5 flex flex-col gap-2">
+            <div class="h-2 rounded-full bg-app-accent w-1/4"></div>
+            <div class="flex-1 grid grid-cols-3 gap-2">
+              <div class="rounded-sm bg-app-surface-2"></div>
+              <div class="rounded-sm bg-app-surface-2"></div>
+              <div class="rounded-sm bg-app-surface-2"></div>
+            </div>
+          </div>
+          <span class="ty-app-label text-app-muted">{{ t('pages.home.responsive.desktop-label') }}</span>
+        </div>
+      </div>
 
-    <BaseDialog
-      :is-open="isConfirmDialogOpen"
-      size="sm"
-      :subtitle="t('pages.home.dialogs.confirmation.subtitle')"
-      :title="t('pages.home.dialogs.confirmation.title')"
-      @close="isConfirmDialogOpen = false"
-    >
-      <p>{{ t('pages.home.dialogs.confirmation.content') }}</p>
-      <template #footer>
-        <BaseButton variant="outline" @click="isConfirmDialogOpen = false">
-          {{ t('pages.home.dialogs.confirmation.cancel-button') }}
-        </BaseButton>
-        <BaseButton variant="primary" @click="isConfirmDialogOpen = false">
-          {{ t('pages.home.dialogs.confirmation.confirm-button') }}
-        </BaseButton>
-      </template>
-    </BaseDialog>
+      <div class="rounded-lg border border-app-border bg-app-surface-2 p-6 md:p-8">
+        <h3 class="ty-app-h4 text-app-contrast mb-4">
+          {{ t('pages.home.responsive.links-heading') }}
+        </h3>
+        <div class="flex flex-wrap gap-3">
+          <BaseButton :to="githubRepoUrl" type="link" variant="primary">
+            <Icon class="size-4.5 mr-2" name="lucide:github" />
+            {{ t('pages.home.responsive.github-link') }}
+          </BaseButton>
+          <BaseButton :to="personalWebsiteUrl" type="link" variant="outline">
+            <Icon class="size-4.5 mr-2" name="lucide:user" />
+            {{ t('pages.home.responsive.website-link') }}
+          </BaseButton>
+          <BaseButton :to="otherTemplatesUrl" type="link" variant="outline">
+            <Icon class="size-4.5 mr-2" name="lucide:layout-template" />
+            {{ t('pages.home.responsive.templates-link') }}
+          </BaseButton>
+        </div>
+      </div>
+    </section>
   </div>
 </template>

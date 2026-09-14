@@ -1,9 +1,17 @@
 {
   "announcement": {},
   "nav": {
-    "home": "Home",
     "privacy-policy": "Informativa sulla Privacy",
-    "terms-and-conditions": "Termini e Condizioni"
+    "terms-and-conditions": "Termini e Condizioni",
+    "sections": {
+      "buttons": "Bottoni",
+      "cards": "Card",
+      "accordion": "Accordion",
+      "form": "Modulo",
+      "dialog": "Dialog",
+      "components": "Componenti",
+      "responsive": "Responsive"
+    }
   },
   "meta": {
     "home": {
@@ -13,272 +21,204 @@
   },
   "header": {
     "route-section": "Menu",
-    "settings-section": "Impostazioni"
+    "settings-section": "Impostazioni",
+    "change-lang": "Cambia lingua"
   },
   "pages": {
     "home": {
-      "cards": {
-        "simple-dark": {
-          "title": "Card Scura Semplice",
-          "subtitle": "Con sottotitolo",
-          "paragraph": "Una card base con variante scura, titolo, sottotitolo e paragrafo. Perfetta per contenuti semplici."
-        },
-        "simple-light": {
-          "title": "Card Chiara Semplice",
-          "paragraph": "Card con variante chiara con solo titolo e paragrafo, senza sottotitolo."
-        },
-        "dark-hover": {
-          "title": "Card Scura con Hover",
-          "subtitle": "Variante interattiva",
-          "paragraph": "Card con effetto hover che cambia lo sfondo al passaggio del mouse."
-        },
-        "light-hover": {
-          "title": "Card Chiara con Hover",
-          "paragraph": "Card chiara con effetto hover interattivo."
-        },
-        "with-icon": {
-          "title": "Card con Icona",
-          "subtitle": "Usando lo slot card-header",
-          "paragraph": "Card con icona nell'header utilizzando lo slot card-header."
-        },
-        "with-action": {
-          "title": "Card con Azione",
-          "subtitle": "Usando lo slot card-footer",
-          "paragraph": "Card con bottone nel footer utilizzando lo slot card-footer.",
-          "button": "Leggi di più"
-        },
-        "center-aligned": {
-          "title": "Allineata al Centro",
-          "subtitle": "Allineamento testo al centro",
-          "paragraph": "Card con allineamento centrale per tutti i contenuti testuali."
-        },
-        "right-aligned": {
-          "title": "Allineata a Destra",
-          "subtitle": "Allineamento testo a destra",
-          "paragraph": "Card con allineamento a destra per desktop e centro per mobile."
-        },
-        "complete": {
-          "title": "Card Completa",
-          "subtitle": "Con tutte le funzionalità",
-          "paragraph": "Card completa con icona nell'header, bottone nel footer e tutti gli elementi disponibili.",
-          "button": "Scopri di più"
-        },
-        "full-custom": {
-          "title": "Completamente Personalizzata",
-          "paragraph": "Card con contenuto completamente personalizzato usando la prop fullCustomContent.",
-          "like-button": "Mi piace",
-          "share-button": "Condividi"
-        },
-        "multi-action": {
-          "title": "Card Multi-Azione",
-          "subtitle": "Più bottoni nel footer",
-          "paragraph": "Card con più azioni nel footer per scenari complessi.",
-          "save-button": "Salva",
-          "cancel-button": "Annulla"
-        },
-        "loading-state": {
-          "title": "Stato di Caricamento",
-          "subtitle": "Bottone con caricamento",
-          "paragraph": "Card che mostra lo stato di caricamento nel bottone.",
-          "button": "Elaborazione"
+      "hero": {
+        "badge": "Nuxt 4 · Tailwind v4",
+        "title": "Un template di base per interfacce coerenti, non un altro kit di card uguali.",
+        "lead": "Fern UI è il punto di partenza per i tuoi prossimi progetti: token di colore e tipografia già definiti, componenti pronti all'uso, dark mode inclusa di serie.",
+        "cta-primary": "Esplora i componenti",
+        "cta-secondary": "Vedi su GitHub",
+        "panel-filename": "theme.css",
+        "token-lines": {
+          "accent": "--color-app-accent",
+          "font-primary": "--font-app-primary",
+          "font-secondary": "--font-app-secondary",
+          "scale-ratio": "--fs-app-scale-ratio"
         }
+      },
+      "i18n": {
+        "eyebrow": "i18n",
+        "heading": "Due lingue, pronte fin da subito",
+        "description": "Ogni stringa dell'app passa da useI18n() — i file di traduzione sono l'unica fonte di verità, inglese e italiano fianco a fianco, già pronti all'uso.",
+        "panel-filename": "locales/*.json",
+        "locale-label": "--i18n-locale",
+        "strategy-label": "--i18n-strategy",
+        "strategy-value": "prefix_except_default",
+        "files-label": "--i18n-locales",
+        "files-value": "en, it",
+        "hint": "Cambia lingua dal toggle nell'header per vedere tutta la pagina aggiornarsi dal vivo."
       },
       "buttons": {
-        "section-title": "Bottoni",
-        "primary": {
-          "title": "Bottoni Primari",
-          "button": "Bottone Primario",
-          "disabled": "Disabilitato",
-          "loading": "Caricamento",
-          "submit": "Bottone Invio"
-        },
-        "secondary": {
-          "title": "Bottoni Secondari",
-          "button": "Bottone Secondario",
-          "disabled": "Disabilitato",
-          "loading": "Caricamento"
-        },
-        "outline": {
-          "title": "Bottoni Outline",
-          "button": "Bottone Outline",
-          "disabled": "Disabilitato",
-          "loading": "Caricamento"
-        },
-        "link": {
-          "title": "Bottoni Link",
-          "primary": "Link Primario",
-          "secondary": "Link Secondario",
-          "outline": "Link Outline"
-        },
-        "with-icons": {
-          "title": "Bottoni con Contenuto Personalizzato",
-          "send": "Invia Messaggio",
-          "download": "Scarica",
-          "like": "Mi piace"
-        },
-        "states": {
-          "title": "Demo Stati Completi",
-          "normal": "Normale",
-          "loading": "Caricamento",
-          "disabled": "Disabilitato"
-        }
+        "eyebrow": "Bottoni",
+        "heading": "Azioni chiare, per ogni contesto",
+        "description": "Quattro varianti semantiche e tre dimensioni, pensate per coprire dalla toolbar alla call to action principale.",
+        "save": "Salva modifiche",
+        "cancel": "Annulla",
+        "learn-more": "Scopri di più",
+        "delete-account": "Elimina account",
+        "unavailable": "Non disponibile",
+        "sizes-title": "Dimensioni",
+        "small": "Piccolo",
+        "medium": "Medio",
+        "large": "Grande"
       },
-      "dialogs": {
-        "section-title": "Dialog",
-        "trigger-button": "Apri Dialog",
-        "simple": {
-          "title": "Dialog Semplice",
-          "subtitle": "Dialog di piccole dimensioni",
-          "content": "Questo è un dialog semplice con contenuto di base. I dialog sono utili per visualizzare informazioni o richiedere input dall'utente senza navigare via dalla pagina corrente.",
-          "close-button": "Chiudi"
-        },
-        "medium": {
-          "title": "Dialog Medio",
-          "subtitle": "Dialog di medie dimensioni",
-          "content": "Questo dialog ha dimensioni medie, perfetto per form o contenuti più dettagliati. Puoi aggiungere qualsiasi contenuto tu voglia nello slot del body.",
-          "close-button": "Chiudi"
-        },
-        "large": {
-          "title": "Dialog Grande",
-          "subtitle": "Dialog di grandi dimensioni",
-          "content": "Questo è un dialog grande che fornisce più spazio per contenuti complessi. È ideale per visualizzare informazioni dettagliate, form lunghi o contenuti multimediali.",
-          "close-button": "Chiudi"
-        },
-        "with-header": {
-          "title": "Dialog con Header Personalizzato",
-          "subtitle": "Usando lo slot header",
-          "header-content": "Questa è una sezione header personalizzata che appare tra il titolo e il body. Puoi aggiungere qualsiasi contenuto personalizzato qui.",
-          "content": "Il contenuto del body va qui. Lo slot header personalizzato è utile per aggiungere avvisi, alert o informazioni aggiuntive.",
-          "close-button": "Chiudi"
-        },
-        "with-footer": {
-          "title": "Dialog con Azioni nel Footer",
-          "subtitle": "Usando lo slot footer",
-          "content": "Questo dialog dimostra lo slot footer dove puoi aggiungere bottoni di azione. È perfetto per form o dialog di conferma.",
-          "cancel-button": "Annulla",
-          "save-button": "Salva Modifiche"
-        },
-        "confirmation": {
-          "title": "Conferma Azione",
-          "subtitle": "Sei sicuro?",
-          "content": "Questa azione non può essere annullata. Per favore conferma che vuoi procedere con questa operazione.",
-          "cancel-button": "Annulla",
-          "confirm-button": "Conferma"
-        }
+      "badges": {
+        "eyebrow": "Badge & Chip",
+        "heading": "Stato e selezione a colpo d'occhio",
+        "description": "I badge comunicano uno stato non interattivo; le chip sono selezionabili o rimovibili, utili per filtri e tag.",
+        "badges-label": "Badge di stato",
+        "chips-label": "Chip filtro",
+        "in-progress": "In lavorazione",
+        "completed": "Completato",
+        "pending": "In attesa",
+        "failed": "Fallito",
+        "new": "Nuovo",
+        "draft": "Bozza",
+        "all": "Tutti",
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "design": "Design"
       },
-      "inputs": {
-        "section-title": "Campi di Input",
-        "text": {
-          "label": "Input di Testo",
-          "placeholder": "Inserisci testo...",
-          "hint": "Questo è un campo di testo"
+      "cards": {
+        "eyebrow": "Card",
+        "heading": "Contenitori con gerarchia, non tutti uguali",
+        "description": "Tre trattamenti diversi in base al peso del contenuto: una card in evidenza, una numerica e un elenco compatto.",
+        "feature": {
+          "title": "Design system pronto",
+          "paragraph": "Colori, tipografia e spaziature derivano dagli stessi token, in light e dark mode, senza doverli ridefinire per ogni componente.",
+          "button": "Vedi i token"
         },
-        "email": {
-          "label": "Input Email",
-          "placeholder": "email{'@'}esempio.it",
-          "hint": "Inserisci un indirizzo email valido"
+        "stat": {
+          "label": "Progetti avviati con questo starter",
+          "delta": "+12 questo mese"
         },
-        "password": {
-          "label": "Input Password",
-          "placeholder": "••••••••",
-          "hint": "Minimo 8 caratteri"
-        },
-        "number": {
-          "label": "Input Numerico",
-          "placeholder": "123",
-          "hint": "Inserisci un valore numerico"
-        },
-        "combobox": {
-          "label": "Seleziona Opzione",
-          "placeholder": "Scegli una...",
-          "hint": "Combobox a selezione singola"
-        },
-        "combobox-multiple": {
-          "label": "Selezione Multipla",
-          "placeholder": "Scegli multiple...",
-          "hint": "Combobox a selezione multipla"
-        },
-        "textarea": {
-          "label": "Area di Testo",
-          "placeholder": "Inserisci il tuo messaggio...",
-          "hint": "Massimo 200 caratteri"
-        },
-        "checkbox": {
-          "label": "Checkbox",
-          "text": "Accetto i termini e le condizioni"
-        },
-        "error": {
-          "label": "Input con Errore",
-          "placeholder": "Questo campo ha un errore",
-          "message": "Questo campo è obbligatorio"
-        }
-      },
-      "media-carousel": {
-        "section-title": "Carosello Media",
-        "description": "Il componente {component} permette di visualizzare una collezione di immagini o video in un carosello interattivo con controlli di navigazione e miniature.",
-        "features": {
-          "autoplay": "Funzionalità di auto-play con intervalli di 5 secondi",
-          "navigation": "Frecce di navigazione Precedente/Successivo",
-          "thumbnails": "Navigazione tramite miniature di anteprima",
-          "counter": "Badge contatore che mostra la posizione corrente",
-          "media-support": "Supporto per immagini e video",
-          "responsive": "Design responsive con dimensionamento ottimizzato"
-        }
-      },
-      "accordion": {
-        "section-title": "Accordion",
-        "description": "Il componente {component} permette di organizzare contenuti in sezioni richiudibili, perfetto per FAQ, pannelli di impostazioni o qualsiasi contenuto che deve essere nascosto/mostrato.",
-        "items": {
-          "getting-started": {
-            "title": "Come Iniziare",
-            "content": "Il componente accordion è facile da usare e altamente personalizzabile. Passa semplicemente il titolo e il contenuto come props, e opzionalmente aggiungi un'icona per renderlo più accattivante visivamente."
+        "list": {
+          "label": "Ultimi componenti aggiunti",
+          "button": {
+            "name": "Button",
+            "status": "Stabile"
           },
-          "features": {
-            "title": "Caratteristiche Principali",
-            "content": "Questo componente supporta stati controllati e non controllati, animazioni fluide, icone personalizzate e completa accessibilità da tastiera. È completamente responsive e segue i moderni pattern di design."
+          "dialog": {
+            "name": "Dialog",
+            "status": "Stabile"
           },
-          "customization": {
-            "title": "Opzioni di Personalizzazione",
-            "content": "Puoi personalizzare l'accordion con icone diverse, controllare il suo stato aperto/chiuso programmaticamente, oppure lasciare che gestisca il proprio stato. Il design si adatta perfettamente al tuo tema."
-          },
-          "use-cases": {
-            "title": "Casi d'Uso Comuni",
-            "content": "Gli accordion sono perfetti per FAQ, sezioni di documentazione, dettagli prodotto, pannelli di impostazioni e qualsiasi scenario in cui è necessario presentare informazioni in modo efficiente per lo spazio."
+          "accordion": {
+            "name": "Accordion",
+            "status": "Beta"
           }
         }
       },
-      "chips": {
-        "section-title": "Chip",
-        "primary": {
-          "title": "Chip Primary",
-          "simple": "Primary",
-          "with-icon": "In evidenza",
-          "featured": "Nuovo"
-        },
-        "secondary": {
-          "title": "Chip Secondary",
-          "simple": "Secondary",
-          "with-icon": "Etichetta",
-          "category": "Salvato"
-        },
-        "outline": {
-          "title": "Chip Outline",
-          "simple": "Outline",
-          "with-icon": "Info",
-          "status": "In attesa"
-        },
-        "use-cases": {
-          "title": "Casi d'uso",
-          "tags-label": "Tag Tecnologie",
-          "status-label": "Indicatori di Stato",
-          "categories-label": "Categorie Progetto",
-          "active": "Attivo",
-          "pending": "In attesa",
-          "warning": "Revisione richiesta",
-          "design": "Design",
-          "development": "Sviluppo",
-          "marketing": "Marketing"
+      "accordion": {
+        "eyebrow": "Accordion",
+        "heading": "Domande frequenti sullo starter",
+        "description": "Pannelli espandibili con animazione dell'altezza e stato di apertura persistente.",
+        "items": {
+          "theme-colors": {
+            "title": "Come cambio i colori del tema?",
+            "content": "Modifica le variabili in theme.css: ogni componente le legge automaticamente, sia in light che in dark mode."
+          },
+          "nuxt-compat": {
+            "title": "I componenti funzionano con Nuxt 4?",
+            "content": "Sì, ogni componente è un Single File Component Vue, senza dipendenze esterne oltre a Tailwind v4."
+          },
+          "dark-mode": {
+            "title": "Posso disattivare la dark mode?",
+            "content": "Sì, basta non applicare la classe .dark sull'elemento html: i componenti restano nel tema chiaro."
+          }
         }
+      },
+      "form": {
+        "eyebrow": "Modulo",
+        "heading": "Tutti i controlli di un form",
+        "description": "Testo, area di testo, select, checkbox, radio e switch, con stati di focus ed errore coerenti.",
+        "project-name": {
+          "label": "Nome progetto",
+          "placeholder": "Es. Dashboard clienti"
+        },
+        "email": {
+          "label": "Email",
+          "error": "Inserisci un indirizzo email valido"
+        },
+        "description-field": {
+          "label": "Descrizione",
+          "placeholder": "Descrivi brevemente il progetto..."
+        },
+        "team": {
+          "label": "Team",
+          "frontend": "Frontend",
+          "backend": "Backend",
+          "design": "Design"
+        },
+        "notifications-title": "Notifiche",
+        "email-notifications": "Notifiche via email",
+        "weekly-report": "Report settimanale",
+        "visibility-title": "Visibilità progetto",
+        "visibility-private": "Privato",
+        "visibility-team": "Team",
+        "visibility-public": "Pubblico",
+        "preferences-title": "Preferenze",
+        "accept-terms": "Accetto i termini di servizio",
+        "subscribe-newsletter": "Iscrivimi alla newsletter"
+      },
+      "dialog": {
+        "eyebrow": "Dialog",
+        "heading": "Conferme che non spezzano il flusso",
+        "description": "Titolo e azioni si adattano alla dimensione del dialog, da una piccola conferma a un pannello a tutto schermo.",
+        "cancel-button": "Annulla",
+        "sm": {
+          "trigger": "Piccolo",
+          "title": "Eliminare questo progetto?",
+          "content": "L'azione è permanente: tutti i file e le impostazioni associate andranno persi.",
+          "confirm-button": "Elimina definitivamente"
+        },
+        "md": {
+          "trigger": "Medio",
+          "title": "Invita un collega",
+          "subtitle": "Riceverà un invito via email",
+          "content": "Aggiungi un collega tramite email per dargli accesso a questo progetto. Puoi cambiare il suo ruolo in qualsiasi momento dalle impostazioni.",
+          "confirm-button": "Invia invito"
+        },
+        "lg": {
+          "trigger": "Grande",
+          "title": "Novità nella v2.6",
+          "subtitle": "Note di rilascio",
+          "content": "Questa release aggiunge quattro nuovi componenti form (switch, radio, select, badge), una scala di radius semantica e un pannello i18n completo nella homepage. Vedi il changelog per l'elenco completo delle correzioni.",
+          "confirm-button": "Capito"
+        },
+        "full": {
+          "trigger": "Full",
+          "title": "Termini di Servizio",
+          "subtitle": "Leggi prima di continuare",
+          "content": "Questo template è fornito così com'è, per uso in progetti personali e commerciali. Sei libero di modificarlo, estenderlo e ridistribuirlo come parte del tuo lavoro. Nessuna garanzia è fornita — consulta la licenza del repository per i termini completi.",
+          "confirm-button": "Accetta e continua"
+        }
+      },
+      "components": {
+        "eyebrow": "Componenti",
+        "heading": "Pensato per contenuti reali",
+        "description": "Oltre a bottoni e form — un carosello media per gallerie e un renderer di rich text sanificato per contenuti da CMS.",
+        "carousel-label": "Carosello media",
+        "rich-text-label": "Rich text",
+        "rich-text-heading": "Rendering rich text",
+        "rich-text-intro": "BaseRichText converte un array di blocchi in HTML sanificato, con la stessa tipografia del resto dell'app — sicuro da usare direttamente con contenuti da CMS.",
+        "rich-text-list-item-1": "Titoli, paragrafi e formattazione inline",
+        "rich-text-list-item-2": "Liste ordinate e non ordinate, citazioni e blocchi di codice"
+      },
+      "responsive": {
+        "eyebrow": "Responsive",
+        "heading": "A posto su ogni schermo",
+        "description": "Gli stessi token e componenti si adattano da mobile a desktop, senza breakpoint separati da mantenere a mano.",
+        "mobile-label": "Mobile",
+        "tablet-label": "Tablet",
+        "desktop-label": "Desktop",
+        "links-heading": "Open source, gratuito da usare",
+        "github-link": "Vedi su GitHub",
+        "website-link": "Altro di Stefano Biddau",
+        "templates-link": "Sfoglia altri template"
       }
     }
   },

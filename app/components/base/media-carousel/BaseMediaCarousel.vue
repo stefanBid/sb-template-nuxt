@@ -146,7 +146,7 @@ onUnmounted(() => {
       <button
         v-for="(item, index) in props.items"
         :key="index"
-        class="relative shrink-0 size-16 md:size-20 rounded-lg overflow-hidden border-2 u-app-soft-transition u-app-focus"
+        class="relative shrink-0 size-16 md:size-20 rounded-sm overflow-hidden border-2 u-app-soft-transition u-app-focus"
         :class="{
           'border-app-accent': currentIndex === index,
           'border-app-border hover:border-app-contrast/30': currentIndex !== index,

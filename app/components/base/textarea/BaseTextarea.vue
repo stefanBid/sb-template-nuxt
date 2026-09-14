@@ -50,7 +50,7 @@ const lengths = computed(() => ({
       v-model="model"
       :aria-describedby="describedBy"
       :aria-invalid="props.error ? 'true' : 'false'"
-      class="w-full rounded-lg bg-app-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-app-contrast ty-app-paragraph focus:outline-none focus:ring-2 focus:ring-app-accent resize-y min-h-38"
+      class="w-full rounded-sm bg-app-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-app-contrast ty-app-p focus:outline-none focus:ring-2 focus:ring-app-accent resize-y min-h-38"
       :class="props.error ? 'border-app-error' : 'border-app-border'"
       :name="props.name || `${props.id}-name`"
       :placeholder="props.placeholder"
@@ -60,7 +60,7 @@ const lengths = computed(() => ({
       v-if="props.maxLength"
       class="ty-app-caption text-app-muted u-app-soft-transition text-right mt-1"
     >
-      <span :class="lengths.current > lengths.max ? 'text-red-500!' : 'text-app-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
+      <span :class="lengths.current > lengths.max ? 'text-app-error!' : 'text-app-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
     </p>
     <!-- Hint -->
     <p
@@ -74,7 +74,7 @@ const lengths = computed(() => ({
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-app-label normal-case! text-red-500 mt-1 md:mt-1.5 u-app-soft-transition"
+      class="ty-app-label normal-case! text-app-error mt-1 md:mt-1.5 u-app-soft-transition"
       role="alert"
     >
       {{ props.error }}

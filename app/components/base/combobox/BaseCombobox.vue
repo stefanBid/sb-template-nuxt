@@ -200,7 +200,7 @@ watch(open, (newVal) => {
         ref="reference"
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
-        class="w-full rounded-xl bg-app-surface-2 border pl-3 pr-11 py-1.5 md:pl-4 md:pr-12 md:py-2 text-app-contrast ty-app-paragraph focus:outline-none focus:ring-2 focus:ring-app-accent truncate"
+        class="w-full rounded-sm bg-app-surface-2 border pl-3 pr-11 py-1.5 md:pl-4 md:pr-12 md:py-2 text-app-contrast ty-app-p focus:outline-none focus:ring-2 focus:ring-app-accent truncate"
         :class="{
           'border-app-error': props.error,
           'border-app-border': !props.error,
@@ -240,7 +240,7 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-300 rounded-xl border border-app-border/60 bg-app-surface shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
+          class="z-300 rounded-md border border-app-border/60 bg-app-surface shadow-[0_20px_44px_-18px_var(--color-app-shadow),0_2px_8px_var(--color-app-shadow)]"
           :style="[
             floatingStyles,
             { width: menuWidth ? menuWidth : 'auto' },
