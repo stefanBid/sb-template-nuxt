@@ -793,6 +793,7 @@ Recurring maintenance/setup routines, each implemented as a skill under `.claude
 | `lint-check` | "check the lint", "is the project clean?", "check del lint" |
 | `dependency-check` | "check dependencies", "update dependencies", "verifichiamo le dipendenze" |
 | `seo-check` | "check SEO", "check GSC readiness", "verifica la SEO" |
+| `fern-ui-migration` | "apply Fern UI", "migrate to Fern", "restyle this component with Fern UI" |
 
 ---
 

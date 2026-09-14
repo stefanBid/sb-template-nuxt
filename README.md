@@ -26,6 +26,10 @@
 
 > Internal knowledge base for contributors: known issues, gotchas and version decisions that aren't obvious from the code alone. Not part of the numbered docs below — update this section whenever something like this is discovered or resolved.
 
+### ✅ Resolved — `3.0.0`: Fern UI design system redesign
+
+Every component in `app/components/` was recomposed around a new design language ("Fern UI") — new colour tokens, a semantic radius hierarchy (`--radius-sm/md/lg`), accent-tinted shadows (`var(--color-app-shadow)` instead of neutral black), and recurring structural motifs (icon-in-a-block, badge-dot separators, section-tag eyebrows, two-tier surface stacking). This is a breaking visual change for anyone who forked the template pre-`3.0.0` and customised component markup directly, hence the major bump. The canonical reference for the new tokens/motifs is `app/assets/design-system/fern-ui-preview.html` (live preview) and `.claude/skills/fern-ui-migration/references/fern-ui-tokens.md` (the AI-facing spec used to recompose components) — read the latter before hand-styling any new component so it stays consistent with the rest of the system.
+
 ### ✅ Resolved — `nuxt` bumped to `4.5.2` (was pinned to `4.4.8`)
 
 `4.5.0` bundles Vite 8, unhead v3 and unctx v3. Re-tested on a feature branch per the note that used to live here: `npx nuxt typecheck` and `npm run build` both pass clean on `4.5.2`. The one real fallout was a peer-dependency conflict — `@intlify/bundle-utils` (pulled in by `@nuxtjs/i18n`) depends on an older `esbuild` range than `vite@8` requires, which broke strict npm peer resolution (`ERESOLVE`). Fixed with a targeted `overrides.esbuild` pin in `package.json` (see [Dependencies](#13-dependencies)) instead of a blanket `legacy-peer-deps` flag, so peer-dep checks stay strict for everything else.
@@ -56,7 +60,9 @@ Build/dev warning `Plugin .../check-if-page-unused.js has no default export and 
 
 ## 1. Overview
 
-SB-Template Nuxt is designed to provide a solid and opinionated starting structure for building new web applications. It ships with a pre-configured design system (CSS custom properties + Tailwind v4 utilities), reusable UI components, i18n, dark/light theme, a notification system and layouts so that developers can focus on building features rather than scaffolding.
+SB-Template Nuxt is designed to provide a solid and opinionated starting structure for building new web applications. It ships with **Fern UI** — a pre-configured design system (CSS custom properties + Tailwind v4 utilities) covering colours, radius hierarchy, tinted shadows and typography — plus reusable UI components, i18n, dark/light theme, a notification system and layouts, so that developers can focus on building features rather than scaffolding.
+
+> **v3.0.0** is a from-scratch visual redesign: every component was recomposed around the Fern UI tokens (new colour palette, semantic radius scale, accent-tinted shadows, icon-in-a-block and section-tag motifs). See [Developer Notes](#developer-notes) and [Design System](#4-design-system) below.
 
 The template is meant to be cloned and initialised for a specific project (via the `init-project` prompt), progressively replacing placeholder pages and components with real ones while keeping the underlying conventions and tooling intact.
 
@@ -200,7 +206,7 @@ This section shows the annotated directory tree. The project follows a feature-a
 
 ## 4. Design System
 
-The design system lives entirely in `app/assets/css/` and provides a single source of truth for colours, typography, spacing and transitions. **Never use hardcoded values** — always reference the design tokens.
+The design system ("Fern UI") lives entirely in `app/assets/css/` and provides a single source of truth for colours, typography, spacing and transitions. **Never use hardcoded values** — always reference the design tokens. For a live view of every token and structural motif in one place, see `app/assets/design-system/fern-ui-preview.html`; for the AI-facing spec used when recomposing a component, see `.claude/skills/fern-ui-migration/references/fern-ui-tokens.md`.
 
 ### Colours — `--color-app-*`
 
@@ -212,6 +218,7 @@ All colours are CSS custom properties defined in `theme.css` inside an `@theme` 
 | `--color-app-surface` | `bg-app-surface` | Card / elevated surface |
 | `--color-app-surface-2` | `bg-app-surface-2` | Nested surfaces, inputs |
 | `--color-app-border` | `border-app-border` | Default borders |
+| `--color-app-shadow` | `shadow-[0_4px_20px_var(--color-app-shadow)]` | Accent-tinted shadow colour — always used via `var()`, never a neutral black shadow |
 | `--color-app-accent` | `bg-app-accent` / `text-app-accent` | Primary CTA, highlights |
 | `--color-app-accent-hover` | `hover:bg-app-accent-hover` | Hover state of accent |
 | `--color-app-accent-border` | `border-app-accent-border` | Border on accent elements |
@@ -841,6 +848,7 @@ Documented inside `CLAUDE.md` under **## Workflows**. They aren't slash commands
 | Dependency check & update | "check dependencies" · "update dependencies" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
 | GSC / SEO readiness check | "check SEO" · "check GSC readiness" | Validates `sitemap.xml`, the dynamic `server/routes/robots.txt.ts`, global meta/brand values in `nuxt.config.ts` and `app/app.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
 | Full project checkup | "full checkup" · "run a full checkup" | Orchestrates all four checks (dependencies, SEO, build, lint) in sequence; optionally updates documentation |
+| Fern UI migration | "apply Fern UI" · "migrate to Fern" · "restyle this component with Fern UI" | Recomposes an existing component's markup/classes around the Fern UI tokens and structural motifs (radius hierarchy, tinted shadow, icon-in-a-block, section-tag) instead of a plain class swap |
 
 ### How to run a workflow
 
