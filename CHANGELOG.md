@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/stefanBid/sb-template-nuxt/compare/v3.0.1...v3.1.0) (2026-10-12)
+
+
+### Features
+
+* add plugin e inti skill ([#117](https://github.com/stefanBid/sb-template-nuxt/issues/117)) ([1ae30e1](https://github.com/stefanBid/sb-template-nuxt/commit/1ae30e1705bd25a89d054362965f7d0eb210f36e))
+
 ## [3.0.1](https://github.com/stefanBid/sb-template-nuxt/compare/v3.0.0...v3.0.1) (2026-10-12)
 
 
