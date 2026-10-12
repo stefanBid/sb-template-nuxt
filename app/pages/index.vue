@@ -107,7 +107,7 @@ useSeoMeta({
           </div>
         </div>
 
-        <!-- Token panel: mirrors the hero token-panel from the Fern UI preview -->
+        <!-- Token panel: shows the design-system tokens -->
         <div class="rounded-lg border border-border bg-surface p-6 md:p-7 shadow-lg">
           <div class="flex items-center justify-between mb-4">
             <div aria-hidden="true" class="flex gap-1.5">

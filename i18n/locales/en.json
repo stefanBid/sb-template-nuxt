@@ -29,7 +29,7 @@
       "hero": {
         "badge": "Nuxt 4 · Tailwind v4",
         "title": "A base template for consistent interfaces, not another kit of identical cards.",
-        "lead": "Fern UI is the starting point for your next projects: color and typography tokens already defined, ready-to-use components, dark mode included by default.",
+        "lead": "SB Template Nuxt UI is the starting point for your next projects: color and typography tokens already defined, ready-to-use components, dark mode included by default.",
         "cta-primary": "Explore components",
         "cta-secondary": "View on GitHub",
         "panel-filename": "theme.css",
