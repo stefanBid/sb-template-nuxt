@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<TheHeaderProps>(), {
   selectedLangId: null,
 })
 
-// eslint-disable-next-line no-unused-vars
 const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 
 // Data
@@ -23,23 +22,40 @@ const open = useState('header-drawer-open', () => false)
 const isMdUp = import.meta.client ? useMediaQuery('(min-width: 768px)') : ref(false)
 const currentRoute = useRoute()
 const getRouteBaseName = useRouteBaseName()
+const appConfig = useAppConfig()
+const { activeId, pin } = useScrollSpy(() => props.routes.flatMap(r => r.sectionIds ?? []))
 
 const isActiveRoute = (r: RouteItem) => {
   if (r.disabled) {
     return false
   }
-  if (!r.routeName) {
-    return currentRoute.path === r.path
+  // In-page anchors: the section being read decides, the router only knows the page
+  if (r.sectionIds?.length) {
+    return activeId.value !== null && r.sectionIds.includes(activeId.value)
   }
-  const baseName = String(getRouteBaseName(currentRoute) ?? '')
-  return baseName === r.routeName || baseName.startsWith(`${r.routeName}-`)
+  // Real pages: compare the locale-agnostic route name
+  if (r.routeName) {
+    const baseName = String(getRouteBaseName(currentRoute) ?? '')
+    return baseName === r.routeName || baseName.startsWith(`${r.routeName}-`)
+  }
+  return currentRoute.path === r.path
 }
+
+// Exactly one item is current: the first match wins, every other item is false
+const activeRoutePath = computed(() => props.routes.find(r => isActiveRoute(r))?.path ?? null)
 
 const currentLang = computed(() =>
   props.langs.find(l => l.code === props.selectedLangId) ?? props.langs[0] ?? null,
 )
 
 // Events
+const onSelectRoute = (r: RouteItem) => {
+  const sectionId = r.path.split('#')[1]
+  if (sectionId) {
+    pin(sectionId)
+  }
+}
+
 const onKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Escape') {
     e.preventDefault()
@@ -90,32 +106,35 @@ watch(isMdUp, (newVal) => {
   <div class="relative z-50">
     <!-- HEADER BAR -->
     <header
-      class="fixed top-0 inset-x-0 h-16 border-b border-app-border backdrop-blur px-6 md:px-10 u-app-soft-transition"
+      class="fixed top-0 inset-x-0 h-16 border-b border-border backdrop-blur px-6 md:px-10 sb-transition"
       :class="{
-        'bg-app-main': open,
-        'bg-app-main/80 supports-backdrop-filter:bg-app-main/60': !open,
+        'bg-bg': open,
+        'bg-bg/80 supports-backdrop-filter:bg-bg/60': !open,
       }"
     >
       <div class="h-full flex items-center max-w-350 mx-auto justify-between gap-4">
         <!-- Brand -->
         <NuxtLink
-          class="inline-flex items-center gap-2.5 shrink-0 u-app-focus u-app-soft-transition rounded-sm cursor-pointer group"
+          class="inline-flex items-center gap-2.5 shrink-0 sb-focus sb-transition rounded-sm cursor-pointer group"
           :to="localePath('index')"
         >
           <span
             class="inline-flex items-center justify-center size-9 md:size-10 rounded-sm
-                   bg-app-surface-2 border border-app-border overflow-hidden shrink-0 u-app-soft-transition"
+                   bg-surface-2 border border-border overflow-hidden shrink-0 sb-transition"
           >
-            <NuxtImg
-              alt="Logo"
+            <img
+              alt=""
+              aria-hidden="true"
               class="object-contain size-6 md:size-7"
               fetchpriority="high"
+              height="797"
               loading="eager"
-              src="/logo.webp"
+              src="/logo.svg"
+              width="682"
             />
           </span>
-          <span class="ty-app-h3 tracking-tight text-app-contrast normal-case! u-app-soft-transition">
-            Your Website
+          <span class="sb-h3 tracking-tight text-ink sb-transition">
+            {{ appConfig.site.name }}
           </span>
         </NuxtLink>
 
@@ -124,20 +143,23 @@ watch(isMdUp, (newVal) => {
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
-              class="relative px-3 py-2 normal-case! font-medium! cursor-pointer u-app-soft-transition u-app-focus rounded-sm"
-              :class="isActiveRoute(r) ? 'text-app-accent' : 'text-app-muted hover:text-app-contrast'"
+              :aria-current="activeRoutePath === r.path ? 'location' : undefined"
+              class="relative px-3 py-2 cursor-pointer sb-transition sb-focus rounded-sm"
+              :class="activeRoutePath === r.path ? 'text-primary' : 'text-ink-muted hover:text-ink'"
               :to="r.path"
+              @click="onSelectRoute(r)"
             >
               {{ r.name }}
               <span
                 aria-hidden="true"
-                class="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-app-accent origin-left transition-transform duration-200"
-                :class="isActiveRoute(r) ? 'scale-x-100' : 'scale-x-0'"
+                class="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-primary origin-left transition-transform duration-200"
+                :class="activeRoutePath === r.path ? 'scale-x-100' : 'scale-x-0'"
               ></span>
             </NuxtLink>
             <span
               v-else
-              class="px-3 py-2 ty-app-btn-label normal-case! font-medium! cursor-not-allowed opacity-40 text-app-muted"
+              aria-disabled="true"
+              class="px-3 py-2 sb-body-strong cursor-not-allowed opacity-40 text-ink-muted"
             >
               {{ r.name }}
             </span>
@@ -145,17 +167,17 @@ watch(isMdUp, (newVal) => {
         </nav>
 
         <!-- Desktop controls -->
-        <div class="hidden md:flex items-center gap-1 p-1 rounded-sm border border-app-border bg-app-surface u-app-soft-transition">
+        <div class="hidden md:flex items-center gap-1 p-1 rounded-sm border border-border bg-surface sb-transition">
           <ClientOnly>
             <TheThemeToggle />
             <template #fallback>
               <BaseIconButton
-                aria-label="Loading theme"
+                :aria-label="t('ui.loading-theme')"
                 icon="lucide:ellipsis"
               />
             </template>
           </ClientOnly>
-          <span aria-hidden="true" class="w-px h-5 bg-app-border mx-0.5"></span>
+          <span aria-hidden="true" class="w-px h-5 bg-border mx-0.5"></span>
           <BaseIconMenu
             v-if="currentLang"
             :aria-label="t('header.change-lang')"
@@ -179,7 +201,7 @@ watch(isMdUp, (newVal) => {
     <div class="md:hidden">
       <div
         aria-hidden="true"
-        class="fixed inset-0 top-16 bg-app-main/80 backdrop-blur-sm transition-opacity duration-200"
+        class="fixed inset-0 top-16 bg-bg/80 backdrop-blur-sm transition-opacity duration-200"
         :class="open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
         @click.stop="onClose()"
       ></div>
@@ -187,51 +209,53 @@ watch(isMdUp, (newVal) => {
       <aside
         id="mobile-drawer"
         :aria-modal="open ? 'true' : undefined"
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-app-surface border-r border-app-border shadow-[0_20px_60px_var(--color-app-shadow)] transition-transform duration-300 will-change-transform flex flex-col"
+        class="fixed left-0 top-16 h-[calc(100dvh-4rem)] w-72 max-w-[85vw] bg-surface border-r border-border shadow-lg transition-transform duration-300 will-change-transform flex flex-col"
         :class="open ? 'translate-x-0' : '-translate-x-full'"
         :inert="!open"
         :role="open ? 'dialog' : undefined"
       >
-        <div class="px-6 py-4 border-b border-app-border">
-          <span class="ty-app-label text-app-muted u-app-soft-transition">{{ t('header.route-section') }}</span>
+        <div class="px-6 py-4 border-b border-border">
+          <span class="sb-overline text-ink-muted sb-transition">{{ t('header.route-section') }}</span>
         </div>
 
         <nav class="flex flex-col gap-1 p-4 flex-1 overflow-y-auto">
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
-              class="rounded-sm px-4 py-3 ty-app-btn-label normal-case! cursor-pointer u-app-soft-transition u-app-focus"
-              :class="isActiveRoute(r)
-                ? 'bg-app-accent text-white font-bold!'
-                : 'text-app-contrast/80 font-medium! hover:bg-app-surface-2'"
+              :aria-current="activeRoutePath === r.path ? 'location' : undefined"
+              class="rounded-sm px-4 py-3 sb-body-strong cursor-pointer sb-transition sb-focus"
+              :class="activeRoutePath === r.path
+                ? 'bg-primary text-on-primary font-bold!'
+                : 'text-ink/80 hover:bg-surface-2'"
               :to="r.path"
-              @click="onClose()"
+              @click="onSelectRoute(r); onClose()"
             >
               {{ r.name }}
             </NuxtLink>
             <span
               v-else
-              class="rounded-sm px-4 py-3 ty-app-btn-label normal-case! font-medium! cursor-not-allowed opacity-40 text-app-contrast/70"
+              aria-disabled="true"
+              class="rounded-sm px-4 py-3 sb-body-strong cursor-not-allowed opacity-40 text-ink/70"
             >
               {{ r.name }}
             </span>
           </template>
         </nav>
 
-        <div class="px-6 py-3 border-t border-app-border">
-          <span class="ty-app-label text-app-muted u-app-soft-transition">{{ t('header.settings-section') }}</span>
+        <div class="px-6 py-3 border-t border-border">
+          <span class="sb-overline text-ink-muted sb-transition">{{ t('header.settings-section') }}</span>
         </div>
-        <div class="p-4 flex items-center gap-1 border-t border-app-border">
+        <div class="p-4 flex items-center gap-1 border-t border-border">
           <ClientOnly>
             <TheThemeToggle />
             <template #fallback>
               <BaseIconButton
-                aria-label="Loading theme"
+                :aria-label="t('ui.loading-theme')"
                 icon="lucide:ellipsis"
               />
             </template>
           </ClientOnly>
-          <span aria-hidden="true" class="w-px h-5 bg-app-border mx-1"></span>
+          <span aria-hidden="true" class="w-px h-5 bg-border mx-1"></span>
           <BaseIconMenu
             v-if="currentLang"
             :aria-label="t('header.change-lang')"

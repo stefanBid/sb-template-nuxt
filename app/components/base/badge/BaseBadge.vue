@@ -14,14 +14,14 @@ const props = withDefaults(defineProps<BaseBadgeProps>(), {
 
 <template>
   <span
-    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm ty-app-label normal-case! font-semibold! u-app-soft-transition"
+    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm sb-overline sb-transition"
     :class="{
-      'bg-app-surface-2 text-app-accent': props.variant === 'accent',
-      'bg-app-success-bg text-app-success': props.variant === 'success',
-      'bg-app-warning-bg text-app-warning': props.variant === 'warning',
-      'bg-app-error-bg text-app-error': props.variant === 'error',
-      'bg-app-info-bg text-app-info': props.variant === 'info',
-      'bg-transparent border border-app-border text-app-muted': props.variant === 'outline',
+      'bg-primary-soft text-primary': props.variant === 'accent',
+      'bg-success-soft text-success': props.variant === 'success',
+      'bg-warning-soft text-warning': props.variant === 'warning',
+      'bg-error-soft text-error': props.variant === 'error',
+      'bg-info-soft text-info': props.variant === 'info',
+      'bg-transparent border border-border text-ink-muted': props.variant === 'outline',
     }"
   >
     <span

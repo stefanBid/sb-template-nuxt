@@ -2,10 +2,12 @@
 interface TheHeaderMenuToggleProps {
   open: boolean
 }
+// Dependencies
+const { t } = useI18n()
+
+// Input / Output
 const props = defineProps<TheHeaderMenuToggleProps>()
 const emit = defineEmits<{
-
-  // eslint-disable-next-line no-unused-vars
   (e: 'toggle', newOpenValue: boolean): void
 }>()
 
@@ -16,14 +18,13 @@ const onToggle = () => emit('toggle', !props.open)
   <button
     aria-controls="mobile-drawer"
     :aria-expanded="open ? 'true' : 'false'"
-    :aria-label="open ? 'Close menu' : 'Open menu'"
-    class="inline-flex group items-center rounded-sm p-1 u-app-focus cursor-pointer"
+    :aria-label="open ? t('header.close-menu') : t('header.open-menu')"
+    class="inline-flex group items-center rounded-sm p-1 sb-focus cursor-pointer"
     @click="onToggle()"
   >
     <svg
       aria-hidden="true"
       class="size-7"
-      :class="open ? 'is-x' : 'is-burger'"
       fill="none"
       stroke="currentColor"
       stroke-linecap="round"
@@ -33,21 +34,24 @@ const onToggle = () => emit('toggle', !props.open)
     >
 
       <line
-        class="top"
+        class="origin-[12px_12px] transition-[translate,rotate,opacity] duration-(--sb-duration-base) ease-standard"
+        :class="open ? 'rotate-45' : '-translate-y-[5px]'"
         x1="4"
         x2="20"
         y1="12"
         y2="12"
       />
       <line
-        class="middle"
+        class="origin-[12px_12px] transition-[translate,rotate,opacity] duration-(--sb-duration-base) ease-standard"
+        :class="open ? 'opacity-0' : 'opacity-100'"
         x1="4"
         x2="20"
         y1="12"
         y2="12"
       />
       <line
-        class="bottom"
+        class="origin-[12px_12px] transition-[translate,rotate,opacity] duration-(--sb-duration-base) ease-standard"
+        :class="open ? '-rotate-45' : 'translate-y-[5px]'"
         x1="4"
         x2="20"
         y1="12"
@@ -56,21 +60,3 @@ const onToggle = () => emit('toggle', !props.open)
     </svg>
   </button>
 </template>
-
-<style scoped>
-svg { transition: transform .25s ease; }
-line {
-  transition: transform .25s ease, opacity .2s ease;
-  transform-origin: 12px 12px; /* centro dell'icona */
-}
-
-/* stato CHIUSO (hamburger): posiziona le barre sopra/sotto */
-svg.is-burger .top    { transform: translateY(-5px); }
-svg.is-burger .middle { opacity: 1; }
-svg.is-burger .bottom { transform: translateY( 5px); }
-
-/* stato APERTO (X): ruota le barre sul centro */
-svg.is-x .top    { transform: rotate(45deg); }
-svg.is-x .middle { opacity: 0; }
-svg.is-x .bottom { transform: rotate(-45deg); }
-</style>

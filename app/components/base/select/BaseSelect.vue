@@ -12,6 +12,7 @@ interface BaseSelectProps {
   placeholder?: string
   hint?: string
   error?: string | null
+  isDisabled?: boolean
 }
 
 // Input / Output
@@ -21,6 +22,7 @@ const props = withDefaults(defineProps<BaseSelectProps>(), {
   placeholder: undefined,
   hint: undefined,
   error: null,
+  isDisabled: false,
 })
 
 const model = defineModel<string>('input')
@@ -42,7 +44,7 @@ const describedBy = computed(() => {
   <div>
     <label
       v-if="props.label"
-      class="ty-app-label block text-app-muted mb-2 md:mb-3 u-app-soft-transition"
+      class="sb-label block text-ink-muted mb-2 md:mb-3 sb-transition"
       :for="props.id"
     >
       {{ props.label }}
@@ -54,9 +56,10 @@ const describedBy = computed(() => {
         v-model="model"
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
-        class="w-full appearance-none rounded-sm bg-app-surface-2 border pl-3 pr-10 py-1.5 md:pl-4 md:pr-11 md:py-2
-               text-app-contrast ty-app-p focus:outline-none focus:ring-2 focus:ring-app-accent cursor-pointer"
-        :class="props.error ? 'border-app-error' : 'border-app-border'"
+        class="w-full appearance-none rounded-sm bg-surface-2 border pl-3 pr-10 py-1.5 md:pl-4 md:pr-11 md:py-2
+               text-ink sb-body focus:outline-none focus:ring-2 focus:ring-focus-ring cursor-pointer disabled:opacity-45 disabled:cursor-not-allowed"
+        :class="props.error ? 'border-error' : 'border-border-strong'"
+        :disabled="props.isDisabled"
         :name="props.name || `${props.id}-name`"
       >
         <option v-if="props.placeholder" disabled value="">
@@ -67,7 +70,7 @@ const describedBy = computed(() => {
         </option>
       </select>
 
-      <span class="absolute top-1/2 right-3 md:right-4 -translate-y-1/2 text-app-muted/70 pointer-events-none">
+      <span class="absolute top-1/2 right-3 md:right-4 -translate-y-1/2 text-ink-muted pointer-events-none">
         <Icon class="size-5" name="lucide:chevron-down" />
       </span>
     </div>
@@ -76,7 +79,7 @@ const describedBy = computed(() => {
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="ty-app-label normal-case! text-app-muted mt-1 md:mt-1.5 u-app-soft-transition"
+      class="sb-small text-ink-muted mt-1 md:mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -85,7 +88,7 @@ const describedBy = computed(() => {
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-app-label normal-case! text-app-error mt-1 md:mt-1.5 u-app-soft-transition"
+      class="sb-small text-error mt-1 md:mt-1.5 sb-transition"
       role="alert"
     >
       {{ props.error }}

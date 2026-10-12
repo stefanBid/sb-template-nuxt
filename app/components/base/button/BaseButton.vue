@@ -9,6 +9,9 @@ interface BaseButtonProps {
   isLoading?: boolean
 }
 
+// Dependencies
+const { t } = useI18n()
+
 // Input / Output
 const props = withDefaults(defineProps<BaseButtonProps>(), {
   variant: 'primary',
@@ -21,6 +24,7 @@ const props = withDefaults(defineProps<BaseButtonProps>(), {
 })
 
 const sizeClasses = computed(() => ({
+  'pointer-coarse:min-h-11': true,
   'px-3 py-1.5 md:px-3.5 md:py-2': props.size === 'sm',
   'px-4 py-2 md:px-6 md:py-3': props.size === 'md',
   'px-6 py-3 md:px-8 md:py-4': props.size === 'lg',
@@ -34,42 +38,49 @@ const isInteractive = computed(() => {
 <template>
   <a
     v-if="props.type === 'link'"
+    :aria-busy="props.isLoading ? 'true' : undefined"
+    :aria-disabled="!isInteractive ? 'true' : undefined"
     :aria-label="props.ariaLabel"
-    class="ty-app-btn-label border rounded-sm u-app-soft-transition inline-flex items-center u-app-focus"
+    class="sb-body-strong border rounded-sm sb-transition inline-flex items-center sb-focus"
     :class="[
       sizeClasses,
+      !isInteractive ? 'opacity-45 pointer-events-none' : '',
 
       // Variants
       props.variant === 'primary'
-        ? 'bg-app-accent hover:bg-app-accent-hover border-app-accent-border text-white'
+        ? 'bg-primary hover:bg-primary-hover border-primary text-on-primary'
         : '',
 
       props.variant === 'secondary'
-        ? 'bg-app-surface hover:bg-app-surface-2 border-app-border text-app-contrast'
+        ? 'bg-surface hover:bg-surface-2 border-border text-ink'
         : '',
 
       props.variant === 'outline'
-        ? 'bg-transparent border-app-accent text-app-accent hover:bg-app-accent hover:text-white'
+        ? 'bg-transparent border-primary text-primary hover:bg-primary hover:text-on-primary'
         : '',
 
       props.variant === 'ghost'
-        ? 'bg-transparent border-transparent text-app-muted hover:bg-app-surface-2 hover:text-app-contrast'
+        ? 'bg-transparent border-transparent text-ink-muted hover:bg-surface-2 hover:text-ink'
         : '',
 
       props.variant === 'danger'
-        ? 'bg-app-error-bg border-transparent text-app-error hover:bg-app-error hover:text-white'
+        ? 'bg-error-soft border-error text-error hover:bg-error hover:text-on-error'
         : '',
     ]"
-    :href="props.to"
+    :href="isInteractive ? props.to : undefined"
     rel="noopener noreferrer"
+    :tabindex="isInteractive ? undefined : -1"
     target="_blank"
   >
     <slot></slot>
+    <span class="sr-only">{{ t('ui.opens-new-tab') }}</span>
+    <Icon v-if="props.isLoading" class="inline-block size-5 md:size-6 ml-2 animate-spin" name="lucide:loader-circle" />
   </a>
   <button
     v-else
+    :aria-busy="props.isLoading ? 'true' : undefined"
     :aria-label="props.ariaLabel"
-    class="ty-app-btn-label border rounded-sm u-app-soft-transition inline-flex items-center u-app-focus"
+    class="sb-body-strong border rounded-sm sb-transition inline-flex items-center sb-focus"
 
     :class="[
       sizeClasses,
@@ -80,32 +91,32 @@ const isInteractive = computed(() => {
       // Variants
       props.variant === 'primary'
         ? isInteractive
-          ? 'bg-app-accent hover:bg-app-accent-hover border-app-accent-border text-white'
-          : 'bg-app-accent border-app-accent-border text-white'
+          ? 'bg-primary hover:bg-primary-hover border-primary text-on-primary'
+          : 'bg-primary border-primary text-on-primary'
         : '',
 
       props.variant === 'secondary'
         ? isInteractive
-          ? 'bg-app-surface hover:bg-app-surface-2 border-app-border text-app-contrast'
-          : 'bg-app-surface border-app-border text-app-contrast'
+          ? 'bg-surface hover:bg-surface-2 border-border text-ink'
+          : 'bg-surface border-border text-ink'
         : '',
 
       props.variant === 'outline'
         ? isInteractive
-          ? 'bg-transparent border-app-accent text-app-accent hover:bg-app-accent hover:text-white'
-          : 'bg-transparent border-app-accent text-app-accent'
+          ? 'bg-transparent border-primary text-primary hover:bg-primary hover:text-on-primary'
+          : 'bg-transparent border-primary text-primary'
         : '',
 
       props.variant === 'ghost'
         ? isInteractive
-          ? 'bg-transparent border-transparent text-app-muted hover:bg-app-surface-2 hover:text-app-contrast'
-          : 'bg-transparent border-transparent text-app-muted'
+          ? 'bg-transparent border-transparent text-ink-muted hover:bg-surface-2 hover:text-ink'
+          : 'bg-transparent border-transparent text-ink-muted'
         : '',
 
       props.variant === 'danger'
         ? isInteractive
-          ? 'bg-app-error-bg border-transparent text-app-error hover:bg-app-error hover:text-white'
-          : 'bg-app-error-bg border-transparent text-app-error'
+          ? 'bg-error-soft border-error text-error hover:bg-error hover:text-on-error'
+          : 'bg-error-soft border-error text-error'
         : '',
     ]"
     :disabled="props.isDisabled || props.isLoading"

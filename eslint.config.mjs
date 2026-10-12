@@ -50,7 +50,9 @@ export default withNuxt({
     // ------------------------------------------------------------
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
     'no-debugger': 'error',
-    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    // The base rule flags parameter names in TypeScript call signatures (e.g. defineEmits), so the TS-aware rule replaces it
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'eqeqeq': 'error',
     'curly': 'error',
 

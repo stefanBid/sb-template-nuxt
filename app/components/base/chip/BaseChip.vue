@@ -9,6 +9,7 @@ interface BaseChipProps {
     target?: string
     rel?: string
   }
+  isDisabled?: boolean
 }
 
 // Input / Output
@@ -17,10 +18,10 @@ const props = withDefaults(defineProps<BaseChipProps>(), {
   variant: 'primary',
   clickable: false,
   linkable: undefined,
+  isDisabled: false,
 })
 
 const emit = defineEmits<{
-  // eslint-disable-next-line no-unused-vars
   (e: 'chip-click'): void
 }>()
 
@@ -36,12 +37,12 @@ const componentTag = computed(() => {
 })
 
 const isInteractive = computed(() => {
-  return props.clickable || props.linkable
+  return (props.clickable || props.linkable) && !props.isDisabled
 })
 
 // Events
 const onClick = () => {
-  if (props.clickable) {
+  if (props.clickable && !props.isDisabled) {
     emit('chip-click')
   }
 }
@@ -50,17 +51,21 @@ const onClick = () => {
 <template>
   <component
     :is="componentTag"
-    class="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full u-app-soft-transition u-app-focus"
+    :aria-disabled="props.isDisabled && props.linkable ? 'true' : undefined"
+    class="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full sb-transition sb-focus"
     :class="{
-      'bg-app-accent text-white': props.variant === 'primary',
-      'bg-app-surface border border-app-border text-app-contrast': props.variant === 'secondary',
-      'bg-transparent border border-app-accent text-app-accent': props.variant === 'outline',
+      'opacity-45 cursor-not-allowed pointer-events-none': props.isDisabled,
+      'bg-primary text-on-primary': props.variant === 'primary',
+      'bg-surface border border-border text-ink': props.variant === 'secondary',
+      'bg-transparent border border-primary text-primary': props.variant === 'outline',
       'cursor-pointer hover:scale-105 active:scale-95': isInteractive && props.variant === 'primary',
-      'cursor-pointer hover:bg-app-surface-2 active:bg-app-border': isInteractive && props.variant === 'secondary',
-      'cursor-pointer hover:bg-app-accent hover:text-white active:opacity-90': isInteractive && props.variant === 'outline',
+      'cursor-pointer hover:bg-surface-2 active:bg-border': isInteractive && props.variant === 'secondary',
+      'cursor-pointer hover:bg-primary hover:text-on-primary active:opacity-90': isInteractive && props.variant === 'outline',
     }"
+    :disabled="props.isDisabled && props.clickable && !props.linkable ? true : undefined"
     :href="props.linkable?.href"
     :rel="props.linkable?.rel"
+    :tabindex="props.isDisabled && props.linkable ? -1 : undefined"
     :target="props.linkable?.target"
     :type="props.clickable ? 'button' : undefined"
     @click="onClick"
@@ -70,6 +75,6 @@ const onClick = () => {
       class="size-3.5 md:size-4"
       :name="props.icon"
     />
-    <span class="ty-app-label truncate">{{ props.text }}</span>
+    <span class="sb-label truncate">{{ props.text }}</span>
   </component>
 </template>

@@ -1,101 +1,147 @@
+/* ==========================================================================
+   theme.css — colors, shadows, radii, breakpoints
+   Prefix "sb". Literal colors live ONLY in this file.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Raw values per theme
+   Light on :root (applies before color-mode writes data-theme),
+   dark on [data-theme="dark"].
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Surfaces: depth comes from lightness, not from shadows */
+  --sb-bg: #f8faf9;            /* page: soft white with a green tint */
+  --sb-surface: #ffffff;       /* cards, panels */
+  --sb-surface-2: #f1f5f3;     /* nested surfaces, inputs */
+
+  /* Borders: decorative and control borders are two different roles */
+  --sb-border: #d4e4dc;        /* dividers, card borders (no contrast requirement) */
+  --sb-border-strong: #7a8f84; /* input and control borders: 3:1 on surface */
+
+  /* Text */
+  --sb-ink: #1a1a1a;
+  --sb-ink-muted: #5a6c62;
+
+  /* Primary: actions, links, selection */
+  --sb-primary: #00804a;
+  --sb-primary-hover: #007041;
+  --sb-on-primary: #ffffff;
+  --sb-primary-soft: #e9f6ef;
+
+  /* States: always paired with their soft tint */
+  --sb-success: #166534;
+  --sb-success-soft: #d1fae5;
+  --sb-warning: #b45309;
+  --sb-warning-soft: #fef3c7;
+  --sb-error: #b91c1c;
+  --sb-error-soft: #fee2e2;
+  --sb-on-error: #ffffff;
+  --sb-info: #1d4ed8;
+  --sb-info-soft: #dbeafe;
+
+  --sb-focus-ring: var(--sb-ink);
+
+  /* Shadows: low, tinted with the ink */
+  --sb-shadow-sm: 0 1px 2px rgba(26, 26, 26, 0.06), 0 1px 1px rgba(26, 26, 26, 0.04);
+  --sb-shadow-md: 0 6px 16px -4px rgba(26, 26, 26, 0.1), 0 2px 4px rgba(26, 26, 26, 0.05);
+  --sb-shadow-lg: 0 18px 40px -12px rgba(26, 26, 26, 0.18);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* In dark mode surfaces get lighter as they come toward the viewer */
+  --sb-bg: #0d0f0e;
+  --sb-surface: #161918;
+  --sb-surface-2: #1f2522;
+
+  --sb-border: #2d3733;
+  --sb-border-strong: #5f7268;
+
+  --sb-ink: #f0f5f2;
+  --sb-ink-muted: #94a89e;
+
+  /* The brand gets lighter; the text on top becomes ink, not white */
+  --sb-primary: #00c975;
+  --sb-primary-hover: #00e085;
+  --sb-on-primary: #0d0f0e;
+  --sb-primary-soft: #0f2b1e;
+
+  /* Soft tints become deep */
+  --sb-success: #4ade80;
+  --sb-success-soft: #14532d;
+  --sb-warning: #fdba74;
+  --sb-warning-soft: #78350f;
+  --sb-error: #fca5a5;
+  --sb-error-soft: #7f1d1d;
+  --sb-on-error: #0d0f0e;
+  --sb-info: #93c5fd;
+  --sb-info-soft: #1e3a8a;
+
+  --sb-focus-ring: var(--sb-ink);
+
+  /* Shadows need more density to be visible */
+  --sb-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sb-shadow-md: 0 8px 20px -6px rgba(0, 0, 0, 0.55);
+  --sb-shadow-lg: 0 20px 44px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   2. Tailwind tokens that change with the theme
+   inline: utilities read var(--sb-*) on the element, so they follow a
+   nested data-theme. The reset closes the system.
+   -------------------------------------------------------------------------- */
+@theme inline {
+  --color-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+
+  --color-bg: var(--sb-bg);
+  --color-surface: var(--sb-surface);
+  --color-surface-2: var(--sb-surface-2);
+  --color-border: var(--sb-border);
+  --color-border-strong: var(--sb-border-strong);
+  --color-ink: var(--sb-ink);
+  --color-ink-muted: var(--sb-ink-muted);
+  --color-primary: var(--sb-primary);
+  --color-primary-hover: var(--sb-primary-hover);
+  --color-on-primary: var(--sb-on-primary);
+  --color-primary-soft: var(--sb-primary-soft);
+  --color-success: var(--sb-success);
+  --color-success-soft: var(--sb-success-soft);
+  --color-warning: var(--sb-warning);
+  --color-warning-soft: var(--sb-warning-soft);
+  --color-error: var(--sb-error);
+  --color-error-soft: var(--sb-error-soft);
+  --color-on-error: var(--sb-on-error);
+  --color-info: var(--sb-info);
+  --color-info-soft: var(--sb-info-soft);
+  --color-focus-ring: var(--sb-focus-ring);
+
+  --shadow-sm: var(--sb-shadow-sm);
+  --shadow-md: var(--sb-shadow-md);
+  --shadow-lg: var(--sb-shadow-lg);
+}
+
+/* --------------------------------------------------------------------------
+   3. Fixed tokens: radii and breakpoints
+   rounded-none and rounded-full are always available.
+   -------------------------------------------------------------------------- */
 @theme {
-  /* =======================================
-     FONT FAMILIES
-     ======================================= */
-  --font-app-primary: 'Poppins', sans-serif;
-  --font-app-secondary: 'Inter', sans-serif;
+  --radius-*: initial;
+  --radius-sm: 10px;  /* buttons, inputs, icon blocks, small chips */
+  --radius-md: 14px;  /* standard cards, menu panels */
+  --radius-lg: 22px;  /* dialogs, hero/feature panels */
 
-  /* Remove default Tailwind fonts */
-  --font-sans: initial;
-  --font-serif: initial;
-  --font-mono: initial;
+  --spacing: 0.25rem;
 
-  /* =======================================
-     RADIUS SCALE
-     Overrides Tailwind's default rounded-sm/md/lg so the whole app's
-     radius hierarchy matches the design system (radius-pill uses
-     Tailwind's default rounded-full, no override needed).
-     ======================================= */
-  --radius-sm: 10px;  /* buttons, inputs, icon blocks, chips' focus ring */
-  --radius-md: 14px;  /* standard cards */
-  --radius-lg: 22px;  /* feature cards, dialogs, hero/footer panels */
-
-  /* =======================================
-     BASE COLORS - LIGHT MODE
-     ======================================= */
-  --color-app-main: #f8faf9;          /* main background: soft white with subtle green tint */
-  --color-app-surface: #ffffff;       /* elevated surface: pure white for cards */
-  --color-app-surface-2: #f1f5f3;     /* nested surface: subtle green-gray for nested elements */
-  --color-app-shadow: rgba(0, 159, 93, 0.08); /* soft shadow with accent tint */
-  --color-app-border: #d4e4dc;        /* borders with subtle green tint */
-
-  /* =======================================
-     ACCENTS & CONTRAST - LIGHT MODE
-     ======================================= */
-  --color-app-accent: #009F5D;        /* primary accent: vibrant green */
-  --color-app-accent-hover: #00804a;  /* darker green for hover */
-  --color-app-accent-border: #007041; /* deeper green for borders */
-  --color-app-contrast: #1a1a1a;      /* main text on light backgrounds */
-  --color-app-muted: #5a6c62;         /* secondary text with green undertone */
-
-  /* =======================================
-     STATUS COLORS - LIGHT MODE
-     ======================================= */
-  --color-app-success: #16a34a;  /* success state: green */
-  --color-app-warning: #f59e0b;  /* warning state: amber */
-  --color-app-error: #dc2626;    /* error state: red */
-  --color-app-info: #3b82f6;     /* info state: blue */
-
-  /* Notification backgrounds */
-  --color-app-success-bg: #d1fae5;  /* light green background */
-  --color-app-warning-bg: #fef3c7;  /* light amber background */
-  --color-app-error-bg: #fee2e2;    /* light red background */
-  --color-app-info-bg: #dbeafe;     /* light blue background */
-}
-
-:root {
-  /* Modular scale: each step is the previous one × ratio, chained
-     off a single fluid base so the whole scale grows together
-     across the viewport instead of each tag having its own clamp(). */
-  --fs-app-scale-ratio: 1.25; /* major third */
-
-  --fs-app-p: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16px -> 18px */
-
-  --fs-app-h4: calc(var(--fs-app-p) * var(--fs-app-scale-ratio));  /* ratio^1, ~20px -> 22.5px */
-  --fs-app-h3: calc(var(--fs-app-h4) * var(--fs-app-scale-ratio)); /* ratio^2, ~25px -> 28px */
-  --fs-app-h2: calc(var(--fs-app-h3) * var(--fs-app-scale-ratio)); /* ratio^3, ~31px -> 35px */
-  --fs-app-h1: calc(var(--fs-app-h2) * var(--fs-app-scale-ratio)); /* ratio^4, ~39px -> 44px */
-
-  --fs-app-small: 0.75rem;     /* 12px, base */
-  --fs-app-small-lg: 0.875rem; /* 14px, md+ */
-}
-
-
-/* =======================================
-   DARK MODE OVERRIDES
-   ======================================= */
-.dark {
-  --color-app-main: #0d0f0e;              /* main background: very dark with green undertone */
-  --color-app-surface: #161918;           /* elevated surface: dark green-gray */
-  --color-app-surface-2: #1f2522;         /* nested surface: lighter dark green-gray */
-  --color-app-border: #2d3733;            /* borders with green tint */
-  --color-app-contrast: #f0f5f2;          /* main text color with subtle green tint */
-  --color-app-muted: #94a89e;             /* secondary/muted text with green undertone */
-  --color-app-shadow: rgba(0, 0, 0, 0.4); /* shadows */
-
-  --color-app-accent: #00C975;        /* brighter green for dark mode visibility */
-  --color-app-accent-hover: #00E085;  /* even brighter for hover */
-  --color-app-accent-border: #00B366; /* slightly darker for borders */
-
-  /* Status colors - optimized for dark mode */
-  --color-app-success: #22c55e;  /* success state: bright green */
-  --color-app-warning: #fb923c;  /* warning state: orange */
-  --color-app-error: #ef4444;    /* error state: red */
-  --color-app-info: #60a5fa;     /* info state: blue */
-
-  /* Notification backgrounds - dark mode */
-  --color-app-success-bg: #14532d;  /* dark green background */
-  --color-app-warning-bg: #78350f;  /* dark amber background */
-  --color-app-error-bg: #7f1d1d;    /* dark red background */
-  --color-app-info-bg: #1e3a8a;     /* dark blue background */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 40rem;  /* 640px */
+  --breakpoint-md: 48rem;  /* 768px */
+  --breakpoint-lg: 64rem;  /* 1024px: headings switch to desktop size */
+  --breakpoint-xl: 80rem;  /* 1280px */
 }

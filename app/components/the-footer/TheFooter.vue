@@ -11,6 +11,7 @@ interface TheFooterProps {
 // Dependencies
 const { t } = useI18n()
 const localePath = useLocalePath()
+const appConfig = useAppConfig()
 
 // Input / Output
 const props = withDefaults(defineProps<TheFooterProps>(), {
@@ -32,7 +33,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
       legal bar stays inside the same block but switches to surface-2,
       marking a second hierarchy tier without a second border.
     -->
-    <div class="border-t border-app-border bg-app-surface u-app-soft-transition">
+    <div class="border-t border-border bg-surface sb-transition">
       <div
         class="max-w-350 mx-auto grid gap-8 md:gap-10 grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)]
                items-start px-6 md:px-10 py-10 md:py-12"
@@ -40,34 +41,36 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         <!-- 1) Logo + descrizione -->
         <section class="space-y-4">
           <NuxtLink
-            class="inline-flex items-center gap-2.5 u-app-soft-transition u-app-focus rounded-sm hover:opacity-90"
+            class="inline-flex items-center gap-2.5 sb-transition sb-focus rounded-sm hover:opacity-90"
             :to="props.quickLinks[0]?.path || '/'"
           >
             <span
               class="inline-flex items-center justify-center size-9 sm:size-10 rounded-sm
-                       bg-app-surface-2 border border-app-border overflow-hidden shrink-0 u-app-soft-transition"
+                       bg-surface-2 border border-border overflow-hidden shrink-0 sb-transition"
             >
-              <NuxtImg
-                alt="Logo"
+              <img
+                alt=""
+                aria-hidden="true"
                 class="object-contain size-6 sm:size-7"
-                fetchpriority="high"
-                loading="eager"
-                src="/logo.webp"
+                height="797"
+                loading="lazy"
+                src="/logo.svg"
+                width="682"
               />
             </span>
-            <span class="ty-app-h3">
-              Your Website
+            <span class="sb-h3">
+              {{ appConfig.site.name }}
             </span>
           </NuxtLink>
 
-          <p class="ty-app-label normal-case! text-app-muted max-w-md u-app-soft-transition">
+          <p class="sb-small text-ink-muted max-w-md sb-transition">
             {{ t('footer.tagline') }}
           </p>
         </section>
 
         <!-- 2) Link veloci -->
         <section class="space-y-3.5">
-          <h2 class="ty-app-label text-app-accent tracking-normal u-app-soft-transition">
+          <h2 class="sb-overline text-primary sb-transition">
             {{ t('footer.route-section') }}
           </h2>
 
@@ -76,29 +79,29 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
               <template v-for="link in props.quickLinks" :key="link.path">
                 <NuxtLink
                   v-if="!link.disabled"
-                  class="group w-fit inline-flex items-center gap-2 ty-app-label normal-case! text-app-contrast/70
-                           hover:text-app-contrast u-app-soft-transition u-app-focus rounded-sm"
+                  class="group w-fit inline-flex items-center gap-2 sb-small text-ink/70
+                           hover:text-ink sb-transition sb-focus rounded-sm"
                   :to="link.path"
                 >
                   <span
-                    class="size-1 rounded-full bg-app-accent/0 group-hover:bg-app-accent
-                             scale-0 group-hover:scale-100 u-app-soft-transition shrink-0"
+                    class="size-1 rounded-full bg-primary/0 group-hover:bg-primary
+                             scale-0 group-hover:scale-100 sb-transition shrink-0"
                   ></span>
                   {{ link.name }}
                 </NuxtLink>
                 <span
                   v-else
-                  class="inline-flex items-center gap-2 ty-app-label normal-case! text-app-contrast/40
-                           cursor-not-allowed u-app-soft-transition"
+                  class="inline-flex items-center gap-2 sb-small text-ink/40
+                           cursor-not-allowed sb-transition"
                 >
-                  <span class="size-1 rounded-full bg-app-contrast/20 shrink-0"></span>
+                  <span class="size-1 rounded-full bg-ink/20 shrink-0"></span>
                   {{ link.name }}
                 </span>
               </template>
             </template>
             <p
               v-else
-              class="ty-app-caption text-app-muted/70 u-app-soft-transition"
+              class="sb-small text-ink-muted sb-transition"
             >
               {{ t('footer.route-fallback') }}
             </p>
@@ -107,24 +110,24 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
         <!-- 3) Contact + Social -->
         <section class="space-y-4">
-          <h2 class="ty-app-label text-app-accent tracking-normal u-app-soft-transition">
+          <h2 class="sb-overline text-primary sb-transition">
             {{ t('footer.contact-section') }}
           </h2>
 
           <div class="space-y-2.5">
             <span
               v-if="props.email"
-              class="ty-app-label normal-case! text-app-contrast/85 u-app-soft-transition flex items-center gap-2.5"
+              class="sb-small text-ink/85 sb-transition flex items-center gap-2.5"
             >
               <span
                 class="inline-flex items-center justify-center size-8 rounded-sm
-                         bg-app-surface-2 border border-app-border text-app-muted shrink-0 u-app-soft-transition"
+                         bg-surface-2 border border-border text-ink-muted shrink-0 sb-transition"
               >
                 <Icon class="size-4" name="lucide:mail" />
               </span>
               <a
-                class="underline underline-offset-4 decoration-app-border hover:text-app-accent hover:decoration-app-accent
-                         u-app-soft-transition u-app-focus rounded-sm"
+                class="underline underline-offset-4 decoration-border hover:text-primary hover:decoration-primary
+                         sb-transition sb-focus rounded-sm"
                 :href="`mailto:${props.email}`"
               >
                 {{ props.email }}
@@ -133,17 +136,17 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
             <span
               v-if="props.phone"
-              class="ty-app-label normal-case! text-app-contrast/85 u-app-soft-transition flex items-center gap-2.5"
+              class="sb-small text-ink/85 sb-transition flex items-center gap-2.5"
             >
               <span
                 class="inline-flex items-center justify-center size-8 rounded-sm
-                         bg-app-surface-2 border border-app-border text-app-muted shrink-0 u-app-soft-transition"
+                         bg-surface-2 border border-border text-ink-muted shrink-0 sb-transition"
               >
                 <Icon class="size-4" name="lucide:phone" />
               </span>
               <a
-                class="underline underline-offset-4 decoration-app-border hover:text-app-accent hover:decoration-app-accent
-                         u-app-soft-transition u-app-focus rounded-sm"
+                class="underline underline-offset-4 decoration-border hover:text-primary hover:decoration-primary
+                         sb-transition sb-focus rounded-sm"
                 :href="`tel:${props.phone}`"
               >
                 {{ props.phone }}
@@ -161,7 +164,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
                 target: '_blank',
                 rel: 'noopener noreferrer',
               }"
-              text="GitHub"
+              :text="t('footer.social.github')"
               variant="secondary"
             />
 
@@ -173,7 +176,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
                 target: '_blank',
                 rel: 'noopener noreferrer',
               }"
-              text="LinkedIn"
+              :text="t('footer.social.linkedin')"
               variant="secondary"
             />
 
@@ -185,7 +188,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
                 target: '_blank',
                 rel: 'noopener noreferrer',
               }"
-              text="Instagram"
+              :text="t('footer.social.instagram')"
               variant="secondary"
             />
           </div>
@@ -193,37 +196,37 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
       </div>
 
       <!-- Bottom bar -->
-      <div class="border-t border-app-border bg-app-surface-2 px-6 md:px-10 py-4 u-app-soft-transition">
+      <div class="border-t border-border bg-surface-2 px-6 md:px-10 py-4 sb-transition">
         <div
           class="max-w-350 mx-auto flex flex-col lg:flex-row items-center justify-between gap-2"
         >
           <!-- Left side: credit + made with -->
-          <div class="flex flex-col flex-1 items-center lg:items-start gap-1 ty-app-caption text-app-muted text-center lg:text-left u-app-soft-transition">
-            <p class=" ty-app-small">
+          <div class="flex flex-col flex-1 items-center lg:items-start gap-1 sb-small text-ink-muted text-center lg:text-left sb-transition">
+            <p class=" sb-small">
               {{ t('footer.credit-section', { year: new Date().getFullYear() }) }}
             </p>
 
-            <p class="text-app-muted/80 ty-app-small">
+            <p class="text-ink-muted/80 sb-small">
               {{ t('footer.made-with') }}
             </p>
           </div>
 
           <!-- Right side: legal links -->
-          <div class="flex flex-1 items-center justify-center lg:justify-end gap-3 ty-app-caption text-app-muted/80 not-italic text-center lg:text-right u-app-soft-transition">
+          <div class="flex flex-1 items-center justify-center lg:justify-end gap-3 sb-small text-ink-muted/80 text-center lg:text-right sb-transition">
             <!-- Privacy -->
             <NuxtLink
-              class="hover:text-app-accent underline underline-offset-4 decoration-app-border hover:decoration-app-accent u-app-focus rounded-sm w-fit u-app-soft-transition"
+              class="hover:text-primary underline underline-offset-4 decoration-border hover:decoration-primary sb-focus rounded-sm w-fit sb-transition"
               :to="localePath('index')"
             >
               {{ t('nav.privacy-policy') }}
             </NuxtLink>
 
             <!-- Separator: filled dot instead of a pipe, consistent with the system's badge-dot motif -->
-            <span class="size-1 rounded-full bg-app-muted/40 select-none shrink-0"></span>
+            <span class="size-1 rounded-full bg-ink-muted/40 select-none shrink-0"></span>
 
             <!-- Terms -->
             <NuxtLink
-              class="hover:text-app-accent underline underline-offset-4 decoration-app-border hover:decoration-app-accent u-app-focus rounded-sm w-fit u-app-soft-transition"
+              class="hover:text-primary underline underline-offset-4 decoration-border hover:decoration-primary sb-focus rounded-sm w-fit sb-transition"
               :to="localePath('index')"
             >
               {{ t('nav.terms-and-conditions') }}

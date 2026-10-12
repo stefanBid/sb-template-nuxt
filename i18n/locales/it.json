@@ -1,16 +1,41 @@
 {
   "announcement": {},
+  "ui": {
+    "close": "Chiudi",
+    "loading-theme": "Caricamento tema",
+    "empty": "Nessun risultato",
+    "placeholder": "Inserisci un valore...",
+    "carousel": {
+      "label": "Carosello multimediale",
+      "previous-photo": "Foto precedente",
+      "next-photo": "Foto successiva",
+      "previous-video": "Video precedente",
+      "next-video": "Video successivo",
+      "pause": "Metti in pausa la presentazione",
+      "play": "Avvia la presentazione",
+      "media-alt": "Contenuto {n}",
+      "thumbnail-alt": "Miniatura {n}",
+      "video-thumbnail-alt": "Miniatura video {n}",
+      "video-unsupported": "Questo browser non supporta il formato video."
+    },
+    "combobox": {
+      "selected-count": "{n} selezionati",
+      "selected-list": "Opzioni selezionate",
+      "remove": "Rimuovi {label}"
+    },
+    "opens-new-tab": "(si apre in una nuova scheda)",
+    "welcome-title": "Benvenuto",
+    "welcome-message": "Questa è una notifica informativa di benvenuto per gli utenti del sito."
+  },
   "nav": {
     "privacy-policy": "Informativa sulla Privacy",
     "terms-and-conditions": "Termini e Condizioni",
     "sections": {
-      "buttons": "Bottoni",
-      "cards": "Card",
-      "accordion": "Accordion",
-      "form": "Modulo",
-      "dialog": "Dialog",
-      "components": "Componenti",
-      "responsive": "Responsive"
+      "actions": "Azioni",
+      "content": "Card e Accordion",
+      "form": "Form",
+      "overlays": "Dialog e media",
+      "system": "Sistema"
     }
   },
   "meta": {
@@ -22,22 +47,24 @@
   "header": {
     "route-section": "Menu",
     "settings-section": "Impostazioni",
-    "change-lang": "Cambia lingua"
+    "change-lang": "Cambia lingua",
+    "open-menu": "Apri il menu",
+    "close-menu": "Chiudi il menu"
   },
   "pages": {
     "home": {
       "hero": {
         "badge": "Nuxt 4 · Tailwind v4",
-        "title": "Un template di base per interfacce coerenti, non un altro kit di card uguali.",
-        "lead": "Fern UI è il punto di partenza per i tuoi prossimi progetti: token di colore e tipografia già definiti, componenti pronti all'uso, dark mode inclusa di serie.",
+        "title": "Un template di base per interfacce coerenti, con token, componenti e dark mode già inclusi.",
+        "lead": "SB Template Nuxt UI è il punto di partenza per i tuoi prossimi progetti: token di colore e tipografia già definiti, componenti pronti all'uso, dark mode inclusa di serie.",
         "cta-primary": "Esplora i componenti",
         "cta-secondary": "Vedi su GitHub",
         "panel-filename": "theme.css",
         "token-lines": {
-          "accent": "--color-app-accent",
-          "font-primary": "--font-app-primary",
-          "font-secondary": "--font-app-secondary",
-          "scale-ratio": "--fs-app-scale-ratio"
+          "accent": "--sb-primary",
+          "font-primary": "--font-display",
+          "font-secondary": "--font-body",
+          "scale-ratio": "--text-body"
         }
       },
       "i18n": {
@@ -58,13 +85,15 @@
         "description": "Quattro varianti semantiche e tre dimensioni, pensate per coprire dalla toolbar alla call to action principale.",
         "save": "Salva modifiche",
         "cancel": "Annulla",
+        "duplicate": "Duplica",
         "learn-more": "Scopri di più",
         "delete-account": "Elimina account",
         "unavailable": "Non disponibile",
         "sizes-title": "Dimensioni",
         "small": "Piccolo",
         "medium": "Medio",
-        "large": "Grande"
+        "large": "Grande",
+        "loading": "Salvataggio…"
       },
       "badges": {
         "eyebrow": "Badge & Chip",
@@ -81,7 +110,8 @@
         "all": "Tutti",
         "frontend": "Frontend",
         "backend": "Backend",
-        "design": "Design"
+        "design": "Design",
+        "archived": "Archiviato"
       },
       "cards": {
         "eyebrow": "Card",
@@ -94,7 +124,8 @@
         },
         "stat": {
           "label": "Progetti avviati con questo starter",
-          "delta": "+12 questo mese"
+          "delta": "+12 questo mese",
+          "value": "128"
         },
         "list": {
           "label": "Ultimi componenti aggiunti",
@@ -162,7 +193,22 @@
         "visibility-public": "Pubblico",
         "preferences-title": "Preferenze",
         "accept-terms": "Accetto i termini di servizio",
-        "subscribe-newsletter": "Iscrivimi alla newsletter"
+        "subscribe-newsletter": "Iscrivimi alla newsletter",
+        "states-title": "Disabilitati e sola lettura",
+        "states": {
+          "disabled-label": "ID workspace",
+          "disabled-placeholder": "Bloccato dall'amministratore",
+          "readonly-label": "Slug del progetto",
+          "readonly-value": "sb-template-nuxt",
+          "disabled-switch": "Funzioni beta",
+          "disabled-checkbox": "Accetta i termini legacy",
+          "error-label": "Email di fatturazione",
+          "error-value": "fatturazione{'@'}"
+        },
+        "combobox": {
+          "single-label": "Team principale",
+          "multiple-label": "Team collaboratori"
+        }
       },
       "dialog": {
         "eyebrow": "Dialog",
@@ -206,15 +252,14 @@
         "rich-text-heading": "Rendering rich text",
         "rich-text-intro": "BaseRichText converte un array di blocchi in HTML sanificato, con la stessa tipografia del resto dell'app — sicuro da usare direttamente con contenuti da CMS.",
         "rich-text-list-item-1": "Titoli, paragrafi e formattazione inline",
-        "rich-text-list-item-2": "Liste ordinate e non ordinate, citazioni e blocchi di codice"
+        "rich-text-list-item-2": "Liste ordinate e non ordinate, citazioni e blocchi di codice",
+        "carousel-alt": "Immagine di esempio {n}"
       },
       "responsive": {
         "eyebrow": "Responsive",
         "heading": "A posto su ogni schermo",
         "description": "Gli stessi token e componenti si adattano da mobile a desktop, senza breakpoint separati da mantenere a mano.",
-        "mobile-label": "Mobile",
-        "tablet-label": "Tablet",
-        "desktop-label": "Desktop",
+        "specimen-sample": "La luce attraverso il vetro",
         "links-heading": "Open source, gratuito da usare",
         "github-link": "Vedi su GitHub",
         "website-link": "Altro di Stefano Biddau",
@@ -227,6 +272,11 @@
     "route-section": "Link Rapidi",
     "route-fallback": "Navigazione in arrivo",
     "contact-section": "Contatti & Social",
+    "social": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram"
+    },
     "credit-section": "© { year } [your name] - Tutti i diritti riservati.",
     "made-with": "Progettato e sviluppato con ❤ da Stefano Biddau"
   }

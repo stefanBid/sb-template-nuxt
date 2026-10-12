@@ -1,16 +1,41 @@
 {
   "announcement": {},
+  "ui": {
+    "close": "Close",
+    "loading-theme": "Loading theme",
+    "empty": "No results found",
+    "placeholder": "Insert a value...",
+    "carousel": {
+      "label": "Media carousel",
+      "previous-photo": "Previous photo",
+      "next-photo": "Next photo",
+      "previous-video": "Previous video",
+      "next-video": "Next video",
+      "pause": "Pause slideshow",
+      "play": "Start slideshow",
+      "media-alt": "Media {n}",
+      "thumbnail-alt": "Thumbnail {n}",
+      "video-thumbnail-alt": "Video thumbnail {n}",
+      "video-unsupported": "This browser does not support the video format."
+    },
+    "combobox": {
+      "selected-count": "{n} selected",
+      "selected-list": "Selected options",
+      "remove": "Remove {label}"
+    },
+    "opens-new-tab": "(opens in a new tab)",
+    "welcome-title": "Welcome",
+    "welcome-message": "This is an informational notification to welcome users to the website."
+  },
   "nav": {
     "privacy-policy": "Privacy Policy",
     "terms-and-conditions": "Terms & Conditions",
     "sections": {
-      "buttons": "Buttons",
-      "cards": "Cards",
-      "accordion": "Accordion",
+      "actions": "Actions",
+      "content": "Cards & Accordion",
       "form": "Form",
-      "dialog": "Dialog",
-      "components": "Components",
-      "responsive": "Responsive"
+      "overlays": "Dialogs & media",
+      "system": "System"
     }
   },
   "meta": {
@@ -22,22 +47,24 @@
   "header": {
     "route-section": "Menu",
     "settings-section": "Settings",
-    "change-lang": "Change language"
+    "change-lang": "Change language",
+    "open-menu": "Open menu",
+    "close-menu": "Close menu"
   },
   "pages": {
     "home": {
       "hero": {
         "badge": "Nuxt 4 · Tailwind v4",
-        "title": "A base template for consistent interfaces, not another kit of identical cards.",
-        "lead": "Fern UI is the starting point for your next projects: color and typography tokens already defined, ready-to-use components, dark mode included by default.",
+        "title": "A base template for consistent interfaces, with tokens, components and dark mode built in.",
+        "lead": "SB Template Nuxt UI is the starting point for your next projects: color and typography tokens already defined, ready-to-use components, dark mode included by default.",
         "cta-primary": "Explore components",
         "cta-secondary": "View on GitHub",
         "panel-filename": "theme.css",
         "token-lines": {
-          "accent": "--color-app-accent",
-          "font-primary": "--font-app-primary",
-          "font-secondary": "--font-app-secondary",
-          "scale-ratio": "--fs-app-scale-ratio"
+          "accent": "--sb-primary",
+          "font-primary": "--font-display",
+          "font-secondary": "--font-body",
+          "scale-ratio": "--text-body"
         }
       },
       "i18n": {
@@ -58,13 +85,15 @@
         "description": "Four semantic variants and three sizes, covering everything from toolbar actions to the main call to action.",
         "save": "Save changes",
         "cancel": "Cancel",
+        "duplicate": "Duplicate",
         "learn-more": "Learn more",
         "delete-account": "Delete account",
         "unavailable": "Not available",
         "sizes-title": "Sizes",
         "small": "Small",
         "medium": "Medium",
-        "large": "Large"
+        "large": "Large",
+        "loading": "Saving…"
       },
       "badges": {
         "eyebrow": "Badges & Chips",
@@ -81,7 +110,8 @@
         "all": "All",
         "frontend": "Frontend",
         "backend": "Backend",
-        "design": "Design"
+        "design": "Design",
+        "archived": "Archived"
       },
       "cards": {
         "eyebrow": "Cards",
@@ -94,7 +124,8 @@
         },
         "stat": {
           "label": "Projects started with this starter",
-          "delta": "+12 this month"
+          "delta": "+12 this month",
+          "value": "128"
         },
         "list": {
           "label": "Latest components added",
@@ -162,7 +193,22 @@
         "visibility-public": "Public",
         "preferences-title": "Preferences",
         "accept-terms": "I accept the terms of service",
-        "subscribe-newsletter": "Subscribe to the newsletter"
+        "subscribe-newsletter": "Subscribe to the newsletter",
+        "states-title": "Disabled and read-only",
+        "states": {
+          "disabled-label": "Workspace ID",
+          "disabled-placeholder": "Locked by your admin",
+          "readonly-label": "Project slug",
+          "readonly-value": "sb-template-nuxt",
+          "disabled-switch": "Beta features",
+          "disabled-checkbox": "Accept legacy terms",
+          "error-label": "Billing email",
+          "error-value": "billing{'@'}"
+        },
+        "combobox": {
+          "single-label": "Primary team",
+          "multiple-label": "Collaborating teams"
+        }
       },
       "dialog": {
         "eyebrow": "Dialog",
@@ -206,15 +252,14 @@
         "rich-text-heading": "Rich text rendering",
         "rich-text-intro": "BaseRichText converts a block array into sanitized HTML, styled with the same typography tokens as the rest of the app — safe to use directly with CMS content.",
         "rich-text-list-item-1": "Headings, paragraphs and inline formatting",
-        "rich-text-list-item-2": "Ordered and unordered lists, quotes and code blocks"
+        "rich-text-list-item-2": "Ordered and unordered lists, quotes and code blocks",
+        "carousel-alt": "Example image {n}"
       },
       "responsive": {
         "eyebrow": "Responsive",
         "heading": "Looks right on every screen",
         "description": "The same tokens and components adapt from phone to desktop, with no separate breakpoints to maintain by hand.",
-        "mobile-label": "Mobile",
-        "tablet-label": "Tablet",
-        "desktop-label": "Desktop",
+        "specimen-sample": "Light through glass",
         "links-heading": "Open source, free to use",
         "github-link": "View on GitHub",
         "website-link": "More by Stefano Biddau",
@@ -227,6 +272,11 @@
     "route-section": "Quick Links",
     "route-fallback": "Navigation coming soon",
     "contact-section": "Contact & Social",
+    "social": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram"
+    },
     "credit-section": "© { year } [your name] - All rights reserved.",
     "made-with": "Designed and developed with ❤ by Stefano Biddau"
   }

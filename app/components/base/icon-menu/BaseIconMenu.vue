@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<BaseIconMenuProps>(), {
 })
 
 const emit = defineEmits<{
-  // eslint-disable-next-line no-unused-vars
   (e: 'select', itemId: string): void
 }>()
 
@@ -24,46 +23,96 @@ const { reference, floating, floatingStyles, open, toggleFloating } = useFloatin
   strategy: 'fixed',
 })
 
-// State
+// Data
+const menuId = useId()
 const menu = ref<HTMLElement | null>(null)
+
+// Which item receives focus when the menu opens
+let _initialFocus: 'first' | 'last' = 'first'
+
+// Helpers
+const _getItems = (): HTMLElement[] => {
+  return Array.from(menu.value?.querySelectorAll<HTMLElement>('[role="menuitemradio"]') ?? [])
+}
+
+const _focusTrigger = () => {
+  reference.value?.querySelector<HTMLElement>('button')?.focus()
+}
+
+const _closeAndRestoreFocus = () => {
+  toggleFloating(false)
+  _focusTrigger()
+}
+
+const _moveFocus = (step: 1 | -1) => {
+  const items = _getItems()
+  if (!items.length) {
+    return
+  }
+  const current = items.indexOf(document.activeElement as HTMLElement)
+  const next = (current + step + items.length) % items.length
+  items[next]?.focus()
+}
 
 // Events
 const onSelect = (itemId: string) => {
   emit('select', itemId)
-  toggleFloating(false)
+  _closeAndRestoreFocus()
 }
 
-// Click outside: chiudi se clicchi fuori dal menu, ignorando il trigger
+// Click outside: close when clicking outside the menu, ignoring the trigger
 onClickOutside(floating, () => {
   toggleFloating(false)
 }, { ignore: [reference] })
 
-const onKeydown = (e: KeyboardEvent) => {
-  if (e.key === 'Escape') {
+const onTriggerKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
     e.preventDefault()
+    _initialFocus = e.key === 'ArrowUp' ? 'last' : 'first'
+    toggleFloating(true)
+  }
+  else if (e.key === 'Escape' && open.value) {
+    e.preventDefault()
+    e.stopPropagation()
     toggleFloating(false)
   }
 }
 
-onMounted(() => {
-  if (!import.meta.client) {
-    return
+const onMenuKeydown = (e: KeyboardEvent) => {
+  switch (e.key) {
+    case 'ArrowDown':
+      e.preventDefault()
+      _moveFocus(1)
+      break
+    case 'ArrowUp':
+      e.preventDefault()
+      _moveFocus(-1)
+      break
+    case 'Home':
+      e.preventDefault()
+      _getItems()[0]?.focus()
+      break
+    case 'End':
+      e.preventDefault()
+      _getItems().at(-1)?.focus()
+      break
+    case 'Escape':
+    case 'Tab':
+      // The panel is teleported to <body>, so Tab would leave the page flow: return to the trigger instead
+      e.preventDefault()
+      e.stopPropagation()
+      _closeAndRestoreFocus()
+      break
   }
-  window.addEventListener('keydown', onKeydown)
-})
-
-onBeforeUnmount(() => {
-  if (!import.meta.client) {
-    return
-  }
-  window.removeEventListener('keydown', onKeydown)
-})
+}
 
 watch(open, (newVal) => {
   if (newVal) {
     nextTick(() => {
-      const first = menu.value?.querySelector<HTMLElement>('[role="menuitem"]')
-      first?.focus()
+      const items = _getItems()
+      const target = _initialFocus === 'last' ? items.at(-1) : items[0]
+      target?.focus()
+      _initialFocus = 'first'
     })
   }
 })
@@ -72,8 +121,9 @@ watch(open, (newVal) => {
 <template>
   <div class="relative inline-block">
     <!-- Trigger -->
-    <div ref="reference">
+    <div ref="reference" @keydown="onTriggerKeydown">
       <BaseIconButton
+        :aria-controls="open ? menuId : undefined"
         :aria-expanded="open ? 'true' : 'false'"
         aria-haspopup="menu"
         :aria-label="props.ariaLabel"
@@ -89,23 +139,27 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-100 rounded-md border border-app-border bg-app-surface w-fit shadow-[0_20px_44px_-18px_var(--color-app-shadow),0_2px_8px_var(--color-app-shadow)]"
+          class="z-100 rounded-md border border-border bg-surface w-fit shadow-lg"
           :style="floatingStyles"
+          @keydown="onMenuKeydown"
         >
           <ul
+            :id="menuId"
             ref="menu"
+            :aria-label="props.ariaLabel"
             class="p-2 outline-none space-y-2 mb-0"
             role="menu"
           >
-            <li v-for="item in props.items" :key="item.code">
+            <li v-for="item in props.items" :key="item.code" role="none">
               <button
-                :aria-current="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex items-center w-full text-left rounded-sm px-3 py-2 md:px-3.5 md:py-2.5 text-app-contrast normal-case! gap-2 u-app-focus u-app-soft-transition"
+                :aria-checked="item.code === props.selectedItemId ? 'true' : 'false'"
+                class="group inline-flex items-center w-full text-left rounded-sm px-3 py-2 md:px-3.5 md:py-2.5 pointer-coarse:min-h-11 text-ink gap-2 sb-focus sb-transition"
                 :class="{
-                  'bg-app-surface-2': props.selectedItemId === item.code,
-                  'hover:bg-app-surface-2 cursor-pointer': props.selectedItemId !== item.code,
+                  'bg-surface-2': props.selectedItemId === item.code,
+                  'hover:bg-surface-2 cursor-pointer': props.selectedItemId !== item.code,
                 }"
-                role="menuitem"
+                role="menuitemradio"
+                tabindex="-1"
                 type="button"
                 @click="onSelect(item.code)"
               >
@@ -120,10 +174,10 @@ watch(open, (newVal) => {
                   class="size-4 shrink-0"
                   :src="item.icon"
                 />
-                <span class="truncate flex-1 ty-app-small">{{ item.label }}</span>
+                <span class="truncate flex-1 sb-small">{{ item.label }}</span>
                 <Icon
                   v-if="item.code === props.selectedItemId"
-                  class="size-4 text-app-accent shrink-0"
+                  class="size-4 text-primary shrink-0"
                   name="lucide:check"
                 />
               </button>

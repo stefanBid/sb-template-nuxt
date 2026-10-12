@@ -26,13 +26,11 @@ const { notifications, removeNotification, info } = useAppNotifications()
 // State
 
 const routes = computed(() => [
-  { name: t('nav.sections.buttons'), path: `${localePath('index')}#buttons` },
-  { name: t('nav.sections.cards'), path: `${localePath('index')}#cards` },
-  { name: t('nav.sections.accordion'), path: `${localePath('index')}#accordion` },
-  { name: t('nav.sections.form'), path: `${localePath('index')}#form` },
-  { name: t('nav.sections.dialog'), path: `${localePath('index')}#dialog` },
-  { name: t('nav.sections.components'), path: `${localePath('index')}#components` },
-  { name: t('nav.sections.responsive'), path: `${localePath('index')}#responsive` },
+  { name: t('nav.sections.actions'), path: `${localePath('index')}#buttons`, sectionIds: ['buttons', 'badges'] },
+  { name: t('nav.sections.content'), path: `${localePath('index')}#cards`, sectionIds: ['cards', 'accordion'] },
+  { name: t('nav.sections.form'), path: `${localePath('index')}#form`, sectionIds: ['form'] },
+  { name: t('nav.sections.overlays'), path: `${localePath('index')}#dialog`, sectionIds: ['dialog', 'components'] },
+  { name: t('nav.sections.system'), path: `${localePath('index')}#i18n`, sectionIds: ['i18n', 'responsive'] },
 ] as Array<RouteItem>)
 
 const langs = [
@@ -53,8 +51,8 @@ const onCloseNotification = (id: string) => {
 onMounted(() => {
   nextTick(() => {
     info({
-      title: `Notification Title`,
-      message: `This is an informational notification to welcome users to the website.`,
+      title: t('ui.welcome-title'),
+      message: t('ui.welcome-message'),
       icon: 'lucide:joystick',
       autoClose: true,
       dismissible: true,
@@ -72,8 +70,8 @@ onMounted(() => {
       :selected-lang-id="locale"
       @change-lang="langCode => onChangeLang(langCode)"
     />
-    <main class="pt-16 px-6 md:px-10 u-app-soft-transition">
-      <div class="w-full max-w-350 mx-auto u-app-soft-transition">
+    <main class="pt-16 px-6 md:px-10 sb-transition">
+      <div class="w-full max-w-350 mx-auto sb-transition">
         <slot></slot>
       </div>
     </main>

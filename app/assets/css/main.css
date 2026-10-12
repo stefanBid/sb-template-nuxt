@@ -1,18 +1,21 @@
-@import "tailwindcss";
+/* ==========================================================================
+   main.css — entry point of the global style
+   The only file listed in nuxt.config.ts (css). Prefix "sb".
+   ========================================================================== */
 
+@import "tailwindcss";
 @import "./theme.css";
 @import "./typography.css";
-@import './utilities.css';
-@import './animations.css';
+@import "./animation.css";
+
+/* The dark theme follows data-theme on <html>, written by @nuxtjs/color-mode */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @layer base {
-    html {
+  html {
     overflow-x: hidden;
-    box-sizing: border-box;
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%; /* prevent iOS Safari text inflation */
   }
 
@@ -27,19 +30,8 @@
   }
 
   body {
-    margin: 0;
-    background-color: var(--color-app-main);
-    color: var(--color-app-contrast);
-    font-family: var(--font-app-secondary);
-    font-weight: 400;
-    line-height: 1.5;
+    @apply bg-bg text-ink antialiased sb-body;
     text-rendering: optimizeLegibility;
-  }
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: inherit;
   }
 
   img, picture, video, canvas, svg {
@@ -49,8 +41,8 @@
   }
 
   ::selection {
-    background: var(--color-app-accent);
-    color: #ffffff;
+    background-color: var(--sb-primary);
+    color: var(--sb-on-primary);
   }
 
   /* Scrollbar (webkit only, subtle) */
@@ -59,9 +51,7 @@
     height: 5px;
   }
   *::-webkit-scrollbar-thumb {
-    background: var(--color-app-muted);
-    border: 1px solid var(--color-app-muted);
-    border-radius: 999px;
+    @apply bg-ink-muted border border-ink-muted rounded-full;
   }
   *::-webkit-scrollbar-track {
     background: transparent;

@@ -35,6 +35,7 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary' },
       ],
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
     },
@@ -42,8 +43,9 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   colorMode: {
     classSuffix: '',
+    dataValue: 'theme',
     preference: 'system',
-    fallback: 'dark',
+    fallback: 'light',
   },
 
   // ---------------------------------------------------------------------------
@@ -107,8 +109,8 @@ export default defineNuxtConfig({
   },
   fonts: {
     families: [
-      { name: 'Poppins', provider: 'google', weights: [400, 500, 600, 700, 800] },
-      { name: 'Inter', provider: 'google', weights: [300, 400, 500, 600, 700] },
+      { name: 'Poppins', provider: 'google', weights: [600, 700] },
+      { name: 'Inter', provider: 'google', weights: [400, 600, 700] },
     ],
   },
   i18n: {

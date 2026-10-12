@@ -28,7 +28,11 @@
 
 ### ✅ Resolved — `3.0.0`: Fern UI design system redesign
 
-Every component in `app/components/` was recomposed around a new design language ("Fern UI") — new colour tokens, a semantic radius hierarchy (`--radius-sm/md/lg`), accent-tinted shadows (`var(--color-app-shadow)` instead of neutral black), and recurring structural motifs (icon-in-a-block, badge-dot separators, section-tag eyebrows, two-tier surface stacking). This is a breaking visual change for anyone who forked the template pre-`3.0.0` and customised component markup directly, hence the major bump. The canonical reference for the new tokens/motifs is `app/assets/design-system/fern-ui-preview.html` (live preview) and `.claude/skills/fern-ui-migration/references/fern-ui-tokens.md` (the AI-facing spec used to recompose components) — read the latter before hand-styling any new component so it stays consistent with the rest of the system.
+Every component in `app/components/` was recomposed around a new design language ("Fern UI") — new colour tokens, a semantic radius hierarchy (`--radius-sm/md/lg`), accent-tinted shadows (`var(--color-app-shadow)` instead of neutral black), and recurring structural motifs (icon-in-a-block, badge-dot separators, section-tag eyebrows, two-tier surface stacking). This is a breaking visual change for anyone who forked the template pre-`3.0.0` and customised component markup directly, hence the major bump. The `app/assets/design-system/fern-ui-preview.html` file is a historical live preview of that original palette; the current tokens live in `app/assets/css/theme.css` (see [Design System](#4-design-system)).
+
+### ✅ Resolved — global style rewritten (`sb-*` closed design system)
+
+The global CSS was reorganised into `main.css` / `theme.css` / `typography.css` / `animation.css` with prefix `sb`: a closed Tailwind theme (no default palette/sizes/shadows/radii/easings), a fixed type scale, role-based colour tokens for both themes (`data-theme` instead of `.dark`), explicit shadows and motion tokens. **Breaking** for forks: `bg-app-*`/`text-app-*`/`ty-app-*`/`u-app-*` classes are gone (see the mapping in the Design System section), and the primary green was darkened to `#00804a` (light) to meet WCAG AA with white text. `utilities.css` and `animations.css` are no longer imported and can be deleted.
 
 ### ✅ Resolved — `nuxt` bumped to `4.5.2` (was pinned to `4.4.8`)
 
@@ -60,7 +64,7 @@ Build/dev warning `Plugin .../check-if-page-unused.js has no default export and 
 
 ## 1. Overview
 
-SB-Template Nuxt is designed to provide a solid and opinionated starting structure for building new web applications. It ships with **Fern UI** — a pre-configured design system (CSS custom properties + Tailwind v4 utilities) covering colours, radius hierarchy, tinted shadows and typography — plus reusable UI components, i18n, dark/light theme, a notification system and layouts, so that developers can focus on building features rather than scaffolding.
+SB-Template Nuxt is designed to provide a solid and opinionated starting structure for building new web applications. It ships with a pre-configured, closed design system (CSS custom properties + Tailwind v4 utilities) covering colours, radius hierarchy, shadows, typography and motion — plus reusable UI components, i18n, dark/light theme, a notification system and layouts, so that developers can focus on building features rather than scaffolding.
 
 > **v3.0.0** is a from-scratch visual redesign: every component was recomposed around the Fern UI tokens (new colour palette, semantic radius scale, accent-tinted shadows, icon-in-a-block and section-tag motifs). See [Developer Notes](#developer-notes) and [Design System](#4-design-system) below.
 
@@ -140,7 +144,7 @@ This section shows the annotated directory tree. The project follows a feature-a
 ── public/
      favicon.ico
      sitemap.xml
-     logo.webp
+     logo.svg          ← brand mark (header, footer, SVG favicon); gradient is theme-safe, no CSS variables inside
 ── server/
      routes/
        robots.txt.ts        ← dynamic robots.txt — disallows indexing outside Netlify production
@@ -156,10 +160,9 @@ This section shows the annotated directory tree. The project follows a feature-a
      assets/
        css/
          main.css          ← entry point: imports all CSS layers in order
-         theme.css         ← @theme block: CSS custom properties + dark mode overrides
-         typography.css    ← @utility ty-app-* classes
-         utilities.css     ← @utility u-app-* classes
-         animations.css    ← Vue transition classes (fade, slide-down, scale-fade)
+         theme.css         ← colours (light/dark), shadows, radii, breakpoints
+         typography.css    ← font families, type scale, @utility sb-* text classes
+         animation.css     ← durations, easings, sb-transition/sb-focus, Vue transitions
      components/
        base/               ← reusable design-system components (no business logic)
          accordion/        BaseAccordion.vue
@@ -177,9 +180,11 @@ This section shows the annotated directory tree. The project follows a feature-a
          media-carousel/   BaseMediaCarousel.vue
          radio/            BaseRadio.vue
          rich-text/        BaseRichText.vue
+         section-header/   BaseSectionHeader.vue
          select/           BaseSelect.vue
          switch/           BaseSwitch.vue
          textarea/         BaseTextarea.vue
+         window-panel/     BaseWindowPanel.vue
        the-footer/         TheFooter.vue
        the-header/         TheHeader.vue, TheHeaderMenuToggle.vue
        the-notification/   TheNotificationBanner.vue, TheNotificationBox.vue
@@ -188,6 +193,7 @@ This section shows the annotated directory tree. The project follows a feature-a
        useAppNotifications.ts  ← global notification system (success/warning/error/info)
        useFloatingUi.ts        ← @floating-ui/vue wrapper for dropdown positioning
        useLockScroll.ts        ← scroll lock with multi-caller safety
+       useScrollSpy.ts         ← active in-page section tracking (IntersectionObserver)
        useSanitize.ts          ← XSS-safe HTML sanitisation
      layouts/
        default.vue         ← main layout: TheHeader + <slot> + TheFooter + notifications
@@ -206,92 +212,95 @@ This section shows the annotated directory tree. The project follows a feature-a
 
 ## 4. Design System
 
-The design system ("Fern UI") lives entirely in `app/assets/css/` and provides a single source of truth for colours, typography, spacing and transitions. **Never use hardcoded values** — always reference the design tokens. For a live view of every token and structural motif in one place, see `app/assets/design-system/fern-ui-preview.html`; for the AI-facing spec used when recomposing a component, see `.claude/skills/fern-ui-migration/references/fern-ui-tokens.md`.
+The design system lives entirely in `app/assets/css/` and provides a single source of truth for colours, typography, shadows, radii, breakpoints and motion. It is **closed**: Tailwind's default palette, text sizes, shadows, radii, easings, animations and breakpoints are reset, so only the tokens below exist. **Never use hardcoded values** — always reference the design tokens.
 
-### Colours — `--color-app-*`
+| File | Contents |
+|---|---|
+| `main.css` | Entry point (the only CSS file listed in `nuxt.config.ts`), base resets, `dark` variant bound to `data-theme` |
+| `theme.css` | Raw colour values per theme (`--sb-*`), `@theme inline` colour/shadow tokens, radii, breakpoints |
+| `typography.css` | Font families, weights, the type scale and the `sb-*` text utilities |
+| `animation.css` | Durations, easings, animations, `sb-transition` / `sb-focus*` utilities, Vue transition classes, reduced motion |
 
-All colours are CSS custom properties defined in `theme.css` inside an `@theme` block, auto-mapped to Tailwind utilities. Dark mode is handled via variable overrides inside `.dark` — **never use `dark:` Tailwind variants**.
+The method (roles, lightness proportions, contrast checks) is applied by the `global-style-nuxt` workflow; `global-style-refactor` migrates templates after a change (see [AI workflows](#workflows)).
 
-| Token | Tailwind utility | Usage |
+### Colours
+
+Raw values are `--sb-*` variables defined only in `theme.css` — `:root, [data-theme="light"]` for light and `[data-theme="dark"]` for dark — and mapped to Tailwind with `@theme inline`. Dark mode follows `data-theme` on `<html>` (written by `@nuxtjs/color-mode`); roles change on their own, so **never use `dark:` Tailwind variants**.
+
+| Tailwind utility | Raw variable | Usage |
 |---|---|---|
-| `--color-app-main` | `bg-app-main` | Page background |
-| `--color-app-surface` | `bg-app-surface` | Card / elevated surface |
-| `--color-app-surface-2` | `bg-app-surface-2` | Nested surfaces, inputs |
-| `--color-app-border` | `border-app-border` | Default borders |
-| `--color-app-shadow` | `shadow-[0_4px_20px_var(--color-app-shadow)]` | Accent-tinted shadow colour — always used via `var()`, never a neutral black shadow |
-| `--color-app-accent` | `bg-app-accent` / `text-app-accent` | Primary CTA, highlights |
-| `--color-app-accent-hover` | `hover:bg-app-accent-hover` | Hover state of accent |
-| `--color-app-accent-border` | `border-app-accent-border` | Border on accent elements |
-| `--color-app-contrast` | `text-app-contrast` | Primary text |
-| `--color-app-muted` | `text-app-muted` | Secondary / placeholder text |
-| `--color-app-success/warning/error/info` | `text-app-success` etc. | Status colours |
-| `--color-app-*-bg` | `bg-app-success-bg` etc. | Status background tints |
+| `bg-bg` | `--sb-bg` | Page background |
+| `bg-surface` | `--sb-surface` | Card / elevated surface |
+| `bg-surface-2` | `--sb-surface-2` | Nested surfaces, inputs |
+| `border-border` | `--sb-border` | Decorative borders, dividers |
+| `border-border-strong` | `--sb-border-strong` | Input / control borders |
+| `text-ink` | `--sb-ink` | Primary text |
+| `text-ink-muted` | `--sb-ink-muted` | Secondary / placeholder text |
+| `bg-primary` / `text-primary` | `--sb-primary` | Actions, links, selection |
+| `hover:bg-primary-hover` | `--sb-primary-hover` | Hover state of primary |
+| `text-on-primary` | `--sb-on-primary` | Text on a primary fill |
+| `text-on-error` | `--sb-on-error` | Text on a solid error fill (danger button hover) |
+| `bg-primary-soft` | `--sb-primary-soft` | Light tint of primary |
+| `text-success/warning/error/info` | `--sb-success` … | Status colours |
+| `bg-success-soft` etc. | `--sb-*-soft` | Status background tints |
+| `ring-focus-ring` | `--sb-focus-ring` | Focus ring |
 
-Tailwind opacity modifiers are allowed: `bg-app-main/80`, `text-app-muted/70`.
+Tailwind opacity modifiers are allowed: `bg-bg/80`, `bg-ink-muted/10`.
 
-### Radius — `--radius-*`
+### Shadows & radius
 
-Defined in `theme.css`'s `@theme` block, these **override Tailwind's default `rounded-sm`/`rounded-md`/`rounded-lg` scale** so the whole app's corner-radius hierarchy is a semantic signal rather than an arbitrary per-component choice (`rounded-full`, used for pills/dots/avatars, is Tailwind's own default and needs no override).
+- **Shadows**: `shadow-sm` (resting cards), `shadow-md` (hover, small floating), `shadow-lg` (dropdowns, dialogs, side panels). Tinted with the ink in light mode, denser black in dark mode.
+- **Radius** (`--radius-*`): `rounded-sm` 10px (buttons, inputs, icon blocks, chips), `rounded-md` 14px (cards, menu panels), `rounded-lg` 22px (dialogs, hero/feature panels). `rounded-full` and `rounded-none` are always available. Use the canonical classes, never `rounded-[var(--radius-*)]`.
+- **Breakpoints**: `sm` 640, `md` 768, `lg` 1024, `xl` 1280 (no `2xl`).
 
-| Token | Value | Tailwind utility | Usage |
+### Typography — `sb-*`
+
+Two families — `font-display` (Poppins, headings) and `font-body` (Inter, everything else) — plus `font-mono`, and three weights: 400, 600, 700. Each utility carries family, size, line height, weight and letter spacing, never colour.
+
+| Class | Size / line height | Weight | Usage |
 |---|---|---|---|
-| `--radius-sm` | `10px` | `rounded-sm` | Buttons, inputs, icon blocks, small chips/menu items |
-| `--radius-md` | `14px` | `rounded-md` | Standard cards, dropdown/menu panels |
-| `--radius-lg` | `22px` | `rounded-lg` | Dialogs, hero/feature panels, page-level elevated blocks |
+| `sb-display` | 56/60 (36/40 below `lg`) | 700 | Home hero only |
+| `sb-h1` | 40/46 (30/36 below `lg`) | 700 | Page title |
+| `sb-h2` | 30/36 (24/30 below `lg`) | 700 | Section headlines |
+| `sb-h3` | 22/28 | 600 | Card / dialog titles |
+| `sb-h4` | 18/24 | 600 | Subtitles, notification titles |
+| `sb-lead` | 19/30 | 400 | Subtitle below a heading |
+| `sb-body` | 16/26 | 400 | Running text, inputs |
+| `sb-body-strong` | 16/26 | 600 | Emphasis, button text |
+| `sb-label` | 14/20 | 600 | Field labels, chips |
+| `sb-small` | 14/20 | 400 | Help, errors, captions, footer |
+| `sb-overline` | 12/16, uppercase | 700 | Eyebrows, badges, counters |
 
-Always use the canonical `rounded-sm` / `rounded-md` / `rounded-lg` classes (never `rounded-[var(--radius-*)]` arbitrary syntax) so the token override applies.
-
-### Typography — `ty-app-*`
-
-Custom `@utility` classes defined in `typography.css`. Apply them as regular Tailwind classes alongside spacing, colour and layout utilities.
-
-| Class | Font | Usage |
-|---|---|---|
-| `ty-app-h1` | Poppins | Biggest heading — hero titles (`--fs-app-h1`) |
-| `ty-app-h2` | Poppins | Large section headlines (`--fs-app-h2`) |
-| `ty-app-h3` | Poppins | Standard titles — cards, dialogs, brand mark (`--fs-app-h3`) |
-| `ty-app-h4` | Poppins semibold | Smallest heading — subtitles, notification titles (`--fs-app-h4`) |
-| `ty-app-p` | Inter | Body text (`--fs-app-p`) |
-| `ty-app-span` | Inter | Inline text at body size, for non-`<p>` elements |
-| `ty-app-label` | Inter, uppercase, tracked | Form labels, tags, eyebrows |
-| `ty-app-small` | Inter | Fine print |
-| `ty-app-code` | Monospace | Inline code |
-| `ty-app-btn-label` | Inter bold, uppercase | Button text |
-| `ty-app-caption` | Inter italic | Captions, secondary notes |
-
-`ty-app-h1`–`ty-app-p` mirror the `--fs-app-h1`–`--fs-app-p` modular scale in `theme.css` (ratio `--fs-app-scale-ratio`, `1.25`) and reset `margin: 0`, leaving spacing entirely to Tailwind (`mt-*`, `space-y-*`) instead of a hidden default margin. **Pick the class for the element's actual weight in its container, not its HTML tag** — a card's own title is `ty-app-h3` even on a page whose main section headline is `ty-app-h2`; matching two different-weight headings to the same class is what makes a compact card or toast notification look oversized next to the rest of the page.
+Only `display`, `h1` and `h2` change size, in one step at `lg`; there is no fluid `clamp()`. The role utilities reset `margin: 0`, leaving spacing to Tailwind (`mt-*`, `space-y-*`). **Pick the class for the element's actual weight in its container, not its HTML tag.**
 
 ```vue
-<h2 class="ty-app-h3 text-app-contrast">Card title</h2>
-<p class="ty-app-p text-app-muted mt-2">Some description.</p>
+<h2 class="sb-h3 text-ink">Card title</h2>
+<p class="sb-body text-ink-muted mt-2">Some description.</p>
 ```
 
-Raw `<h1>`–`<h4>`/`<p>` tags (e.g. inside content rendered by `BaseRichText`) are sized the same way via `@layer base` in `typography.css`, but keep the browser's default bottom margin — appropriate for prose flow where you don't want to hand-manage every paragraph's spacing.
+Raw `<h1>`–`<h4>`, `<p>`, `<label>`, `<small>` and `<code>` tags get the matching role through `@layer base`, so a size class on a matching tag is redundant — add one only when the look must differ (`<h3 class="sb-h4">`). Raw tags keep a bottom margin for prose flow (e.g. content rendered by `BaseRichText`).
 
-**Font families:**
-- `font-app-primary` → Poppins (headings, display)
-- `font-app-secondary` → Inter (body, UI)
-
-### Utility classes — `u-app-*`
+### Utility classes & motion
 
 | Class | Effect |
 |---|---|
-| `u-app-soft-transition` | `transition-all duration-200 ease-in-out` |
-| `u-app-hard-transition` | `transition-all duration-500 ease-in-out` |
-| `u-app-focus` | `outline-none ring-app-contrast focus-visible:ring-2` |
-| `u-app-focus-within` | `outline-none ring-app-contrast focus-within:ring-2` |
+| `sb-transition` | Explicit colour / background / border / shadow / opacity / transform transition (120ms, `ease-standard`) |
+| `sb-focus` | `outline-none focus-visible:ring-2 focus-visible:ring-focus-ring` |
+| `sb-focus-within` | Same ring via `focus-within` |
+| `sb-no-focus` | Removes the focus ring (only for elements with custom focus handling) |
 
-Always add `u-app-soft-transition` to interactive and themed elements so they animate on theme switch.
+Always add `sb-transition` to interactive and themed elements. Durations: `--sb-duration-fast` 120ms, `base` 200ms, `slow` 320ms. Nothing animates `all`, nothing exceeds 400ms, and `prefers-reduced-motion` is honoured.
 
 ### Animations — Vue `<Transition>`
 
-Named transition classes defined in `animations.css`. Use as the `name` prop on `<Transition>`.
+Named transition classes defined in `animation.css`. Use as the `name` prop on `<Transition>`.
 
-| Name | Effect | Duration |
+| Name | Effect | Enter / leave |
 |---|---|---|
-| `fade` | Opacity + slight Y offset | 800ms |
-| `slide-down` | Opacity + slides from top | 200ms |
-| `scale-fade` | Opacity + scale from 0.95 | 200ms |
+| `fade` | Opacity + slight Y offset | 320ms / 120ms |
+| `slide-down` | Opacity + slides from top | 200ms / 120ms |
+| `scale-fade` | Opacity + scale from 0.95 | 200ms / 120ms |
+| `page` | Opacity (route changes) | 320ms / 120ms |
 
 ```vue
 <Transition name="scale-fade">
@@ -306,11 +315,11 @@ Always use the `<Icon>` component from `@nuxt/icon`. The collection prefix is ma
 Available collections: `lucide` (UI icons), `flagpack` (country flags).
 
 ```vue
-<Icon name="lucide:arrow-right" class="size-5 text-app-accent" />
+<Icon name="lucide:arrow-right" class="size-5 text-primary" />
 <Icon name="flagpack:it" class="size-5" />
 ```
 
-Size via Tailwind: `size-4`, `size-5`, `size-6`. Colour via token: `text-app-contrast`, `text-app-muted`, `text-app-accent`. Always set `aria-label` on icon-only interactive elements.
+Size via Tailwind: `size-4`, `size-5`, `size-6`. Colour via token: `text-ink`, `text-ink-muted`, `text-primary`. Always set `aria-label` on icon-only interactive elements.
 
 ---
 
@@ -441,7 +450,7 @@ useHead({
 
 | Page | URL | Description |
 |---|---|---|
-| `index.vue` | `/` | Homepage — Fern UI–style single-page demo (hero, i18n, Buttons, Badges & Chips, Cards, Accordion, Form, Dialog, Components, Responsive), most sections anchored and linked from `TheHeader`'s nav |
+| `index.vue` | `/` | Homepage — single-page design-system showcase (hero, i18n, Buttons, Badges & Chips, Cards, Accordion, Form, Dialog, Components, Responsive), most sections anchored and linked from `TheHeader`'s nav |
 
 ---
 
@@ -464,7 +473,7 @@ Full-featured action button with variants, loading state and link support.
 | `to` | `string` | `undefined` | Required when `type='link'` |
 | `ariaLabel` | `string` | `undefined` | For icon-only usage |
 | `isDisabled` | `boolean` | `false` | |
-| `isLoading` | `boolean` | `false` | Shows spinner |
+| `isLoading` | `boolean` | `false` | Shows spinner and sets `aria-busy`; also applies to `type="link"` |
 
 Slot: `default` (button label / content)
 
@@ -493,7 +502,7 @@ Slots: `default`, `card-header`, `card-body`, `card-footer`
 ```vue
 <BaseCard title="Card Title" subtitle="Subtitle" variant="dark-hover">
   <template #card-header>
-    <Icon name="lucide:star" class="size-6 text-app-accent" />
+    <Icon name="lucide:star" class="size-6 text-primary" />
   </template>
   <template #card-footer>
     <BaseButton>Action</BaseButton>
@@ -509,11 +518,13 @@ Text input with label, hints, error states and prefix icon.
 |---|---|---|---|
 | `id` | `string` | — | Required |
 | `label` | `string` | `undefined` | |
-| `placeholder` | `string` | `'Insert a value...'` | |
+| `placeholder` | `string` | `undefined` | Falls back to the `ui.placeholder` i18n key | |
 | `type` | `'text' \| 'password' \| 'email' \| 'number' \| 'search' \| 'tel' \| 'url'` | `'text'` | |
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | Shows error label and red border |
 | `prefixIcon` | `string` | `undefined` | Iconify name e.g. `lucide:search` |
+| `isDisabled` | `boolean` | `false` | Dims the field and blocks input |
+| `isReadonly` | `boolean` | `false` | Focusable and copyable, not editable |
 
 Model: `defineModel<string>('input')`
 
@@ -536,10 +547,12 @@ Multi-line input with optional character counter.
 |---|---|---|---|
 | `id` | `string` | — | Required |
 | `label` | `string` | `undefined` | |
-| `placeholder` | `string` | `'Insert a value...'` | |
+| `placeholder` | `string` | `undefined` | Falls back to the `ui.placeholder` i18n key | |
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | |
 | `maxLength` | `number` | `undefined` | Shows character counter when set |
+| `isDisabled` | `boolean` | `false` | |
+| `isReadonly` | `boolean` | `false` | |
 
 Model: `defineModel<string>('input')`
 
@@ -552,6 +565,7 @@ Custom checkbox with label slot.
 | `id` | `string` | — | Required |
 | `label` | `string` | `undefined` | Shown if no `default` slot |
 | `error` | `string \| null` | `null` | |
+| `isDisabled` | `boolean` | `false` | |
 
 Model: `defineModel<boolean>('input')`
 Slot: `default` (custom label content)
@@ -566,6 +580,7 @@ Single radio input for a native radio group. Multiple instances sharing the same
 | `name` | `string` | — | Required — groups radios together |
 | `value` | `string` | — | Required — value set on the shared model when selected |
 | `label` | `string` | `undefined` | |
+| `isDisabled` | `boolean` | `false` | |
 
 Model: `defineModel<string>('input')` (bind the same ref across all radios in the group)
 
@@ -583,6 +598,9 @@ Toggle switch backed by a native checkbox input, styled via `accent`-free custom
 | `id` | `string` | — | Required |
 | `name` | `string` | `undefined` | Falls back to `${id}-name` |
 | `label` | `string` | `undefined` | Shown next to the switch |
+| `isDisabled` | `boolean` | `false` | |
+
+Renders a native checkbox with `role="switch"`.
 
 Model: `defineModel<boolean>('input')`
 
@@ -598,12 +616,13 @@ Native `<select>` wrapper with label, hint, error state and a themed chevron.
 | `placeholder` | `string` | `undefined` | Rendered as a disabled first `<option>` |
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | |
+| `isDisabled` | `boolean` | `false` | |
 
 Model: `defineModel<string>('input')`
 
 ### `BaseCombobox`
 
-Generic select component with single/multiple selection and search.
+Generic select-only combobox with single/multiple selection. Follows the ARIA combobox/listbox pattern: focus stays on the input, `ArrowUp`/`ArrowDown`/`Home`/`End` move the highlighted option, `Enter`/`Space` selects, `Escape` closes (only while open), `Tab` closes, and typing jumps to a matching option.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
@@ -611,10 +630,11 @@ Generic select component with single/multiple selection and search.
 | `type` | `'single' \| 'multiple'` | `'single'` | Selection mode |
 | `items` | `{ label: string, value: T }[]` | — | Required |
 | `label` | `string` | `undefined` | |
-| `placeholder` | `string` | `'Insert a value...'` | |
+| `placeholder` | `string` | `undefined` | Falls back to the `ui.placeholder` i18n key | |
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | |
 | `prefixIcon` | `string` | `undefined` | |
+| `isDisabled` | `boolean` | `false` | |
 
 Model: `defineModel<T[]>('input', { default: () => [] })`
 
@@ -640,6 +660,7 @@ Compact label for tags, badges and status indicators.
 | `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | |
 | `clickable` | `boolean` | `false` | Renders as `<button>` |
 | `linkable` | `{ href: string, target?: string }` | `undefined` | Renders as `<a>` |
+| `isDisabled` | `boolean` | `false` | Disables the button/link variants |
 
 Emits: `chip-click` (only when `clickable: true`)
 
@@ -672,11 +693,11 @@ Modal dialog with size variants, scroll lock and focus trap.
 | `isOpen` | `boolean` | — | Required |
 | `title` | `string` | — | Required |
 | `subtitle` | `string` | `undefined` | |
-| `size` | `'sm' \| 'md' \| 'lg' \| 'full'` | `'sm'` | Also scales `title`'s typography (sm→`ty-app-h4` … full→`ty-app-h1`) and the padding, so a bigger dialog doesn't end up with a disproportionately small title, or vice versa |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'full'` | `'sm'` | Also scales `title`'s typography (sm→`sb-h4` … full→`sb-h1`) and the padding, so a bigger dialog doesn't end up with a disproportionately small title, or vice versa |
 
 Emits: `(e: 'close', value: false): void`
 Slots: `default` (body), `header` (below title bar), `footer` (bottom actions)
-Behaviour: closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
+Behaviour: closes on `Escape`, locks scroll, traps `Tab`/`Shift+Tab` inside the panel, makes the app root (`#__nuxt`) `inert` while open, returns focus to the element that opened it, uses `<Teleport to="body">`. The title id is generated per instance, so several dialogs can coexist.
 
 ```vue
 <BaseDialog :is-open="isOpen" title="Confirm action" size="md" @close="isOpen = false">
@@ -697,10 +718,12 @@ Collapsible section. Can be controlled externally or manage its own state.
 | `id` | `string` | — | Required |
 | `title` | `string` | — | Required |
 | `icon` | `string` | `undefined` | Iconify name shown in icon box |
-| `isOpen` | `boolean` | `undefined` | If omitted, accordion manages state internally |
+| `isOpen` | `boolean` | `undefined` | Controlled mode: pair with `@toggle`. If omitted, accordion manages state internally |
+| `defaultOpen` | `boolean` | `false` | Initial state in uncontrolled mode; the user can still close it |
 
 Emits: `toggle` (only when `isOpen` is controlled externally)
 Slot: `default` (body content)
+A11y: the header is a heading containing the toggle button (`aria-expanded`, `aria-controls`); the body is a labelled `region`.
 
 ### `BaseIconButton`
 
@@ -711,6 +734,7 @@ Icon-only button with active state styling.
 | `icon` | `string` | — | Required. Iconify name |
 | `ariaLabel` | `string` | `undefined` | Always set it |
 | `isActive` | `boolean` | `false` | Active/pressed state |
+| `isDisabled` | `boolean` | `false` | |
 
 Emits: `(e: 'click'): void`
 
@@ -726,6 +750,7 @@ Dropdown menu with floating positioning and keyboard navigation.
 | `selectedItemId` | `string \| null` | `null` | Highlighted item, marked with a trailing checkmark |
 
 Emits: `(e: 'select', itemId: string): void`
+Keyboard: `ArrowDown`/`ArrowUp` on the trigger opens the menu; inside it `ArrowUp`/`ArrowDown`/`Home`/`End` move focus, `Escape` or `Tab` close it and return focus to the trigger. Items use `role="menuitemradio"` with `aria-checked`.
 
 ```vue
 <BaseIconMenu
@@ -738,17 +763,29 @@ Emits: `(e: 'select', itemId: string): void`
 
 ### `BaseCloseButton`
 
-Accessible close button. No props.
+Accessible close button.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `ariaLabel` | `string` | `undefined` | Falls back to the `ui.close` i18n key |
 
 Emits: `(e: 'close', value: false): void`. Renders a `lucide:x` icon button.
 
 ### `BaseMediaCarousel`
 
-Image/media carousel with navigation controls. See `app/components/base/media-carousel/BaseMediaCarousel.vue` for the full prop reference.
+Image/media carousel with navigation controls. Autoplay holds on hover and keyboard focus, never starts under `prefers-reduced-motion`, and announces slide changes politely once paused. See `app/components/base/media-carousel/BaseMediaCarousel.vue` for the full prop reference.
 
 ### `BaseRichText`
 
 Renders a `RichBlock[]` array (Strapi rich text format) as sanitised HTML via `blocksToHtml` + `useSanitize`. Never write `v-html` directly — always use this component. See `app/components/base/rich-text/BaseRichText.vue` for the full prop reference.
+
+### `BaseSectionHeader`
+
+Eyebrow + `h2` heading + optional description for a page section. Props: `heading` (required), `eyebrow?`, `description?`. Layout classes (margin, sticky) are passed by the parent. See `app/components/base/section-header/BaseSectionHeader.vue`.
+
+### `BaseWindowPanel`
+
+Framed "window" panel with decorative dots and a monospace filename, used to present token/config readouts. Prop: `filename` (required). Slot: `default`. See `app/components/base/window-panel/BaseWindowPanel.vue`.
 
 ---
 
@@ -797,6 +834,10 @@ const { lock, unlock, isLocked } = useLockScroll()
 lock()    // adds app-scroll-locked class to <html>
 unlock()  // removes it only when no other caller holds a lock
 ```
+
+### `useScrollSpy(ids)`
+
+Tracks which in-page section is currently being read. Pass the section element ids (array, ref or getter); it returns `{ activeId, pin }`: `activeId` (`Ref<string | null>`) changes only after the reading position settles (100 ms), so a fast scroll never lights the sections it crosses; `pin(id)` activates a section immediately and holds it until the scroll ends, the user takes over, or 1.5 s pass (call it on nav click). Used by `TheHeader` to drive the active nav indicator and `aria-current="location"` from `RouteItem.sectionIds`. SSR-safe, re-observes on route change, disconnects on unmount.
 
 ### `useSanitize()`
 
@@ -848,7 +889,8 @@ Documented inside `CLAUDE.md` under **## Workflows**. They aren't slash commands
 | Dependency check & update | "check dependencies" · "update dependencies" | Checks outdated packages, auto-updates safe minor/patch bumps, reports major bumps with changelog links, runs `npm audit` + `npm audit fix`, delivers a full vulnerability report |
 | GSC / SEO readiness check | "check SEO" · "check GSC readiness" | Validates `sitemap.xml`, the dynamic `server/routes/robots.txt.ts`, global meta/brand values in `nuxt.config.ts` and `app/app.config.ts`, and per-page `useHead`/`useSeoMeta` calls across all pages |
 | Full project checkup | "full checkup" · "run a full checkup" | Orchestrates all four checks (dependencies, SEO, build, lint) in sequence; optionally updates documentation |
-| Fern UI migration | "apply Fern UI" · "migrate to Fern" · "restyle this component with Fern UI" | Recomposes an existing component's markup/classes around the Fern UI tokens and structural motifs (radius hierarchy, tinted shadow, icon-in-a-block, section-tag) instead of a plain class swap |
+| Global style | "reorganize the global style" · "fix the theme" | Analyses and rewrites `main.css` / `theme.css` / `typography.css` / `animation.css` (colours + light/dark theme, type scale, shadows, radii, motion) with a report and confirmation before writing |
+| Template refactor | "refactor the templates after the global style change" | Migrates component/page classes to the current theme, line by line, after confirmation |
 
 ### How to run a workflow
 
