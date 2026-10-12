@@ -193,6 +193,7 @@ This section shows the annotated directory tree. The project follows a feature-a
        useAppNotifications.ts  ← global notification system (success/warning/error/info)
        useFloatingUi.ts        ← @floating-ui/vue wrapper for dropdown positioning
        useLockScroll.ts        ← scroll lock with multi-caller safety
+       useScrollSpy.ts         ← active in-page section tracking (IntersectionObserver)
        useSanitize.ts          ← XSS-safe HTML sanitisation
      layouts/
        default.vue         ← main layout: TheHeader + <slot> + TheFooter + notifications
@@ -833,6 +834,10 @@ const { lock, unlock, isLocked } = useLockScroll()
 lock()    // adds app-scroll-locked class to <html>
 unlock()  // removes it only when no other caller holds a lock
 ```
+
+### `useScrollSpy(ids)`
+
+Tracks which in-page section is currently being read. Pass the section element ids (array, ref or getter); it returns `{ activeId }` (`Ref<string | null>`). Used by `TheHeader` to drive the active nav indicator and `aria-current="location"` from `RouteItem.sectionIds`. SSR-safe, re-observes on route change, disconnects on unmount.
 
 ### `useSanitize()`
 

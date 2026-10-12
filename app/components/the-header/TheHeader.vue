@@ -22,10 +22,15 @@ const open = useState('header-drawer-open', () => false)
 const isMdUp = import.meta.client ? useMediaQuery('(min-width: 768px)') : ref(false)
 const currentRoute = useRoute()
 const getRouteBaseName = useRouteBaseName()
+const appConfig = useAppConfig()
+const { activeId } = useScrollSpy(() => props.routes.flatMap(r => r.sectionIds ?? []))
 
 const isActiveRoute = (r: RouteItem) => {
   if (r.disabled) {
     return false
+  }
+  if (r.sectionIds?.length) {
+    return activeId.value !== null && r.sectionIds.includes(activeId.value)
   }
   if (!r.routeName) {
     return currentRoute.path === r.path
@@ -106,7 +111,8 @@ watch(isMdUp, (newVal) => {
                    bg-surface-2 border border-border overflow-hidden shrink-0 sb-transition"
           >
             <img
-              :alt="t('ui.logo-alt')"
+              alt=""
+              aria-hidden="true"
               class="object-contain size-6 md:size-7"
               fetchpriority="high"
               height="797"
@@ -116,7 +122,7 @@ watch(isMdUp, (newVal) => {
             />
           </span>
           <span class="sb-h3 tracking-tight text-ink sb-transition">
-            Your Website
+            {{ appConfig.site.name }}
           </span>
         </NuxtLink>
 
@@ -125,6 +131,7 @@ watch(isMdUp, (newVal) => {
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
+              :aria-current="isActiveRoute(r) ? 'location' : undefined"
               class="relative px-3 py-2 cursor-pointer sb-transition sb-focus rounded-sm"
               :class="isActiveRoute(r) ? 'text-primary' : 'text-ink-muted hover:text-ink'"
               :to="r.path"
@@ -202,6 +209,7 @@ watch(isMdUp, (newVal) => {
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
+              :aria-current="isActiveRoute(r) ? 'location' : undefined"
               class="rounded-sm px-4 py-3 sb-body-strong cursor-pointer sb-transition sb-focus"
               :class="isActiveRoute(r)
                 ? 'bg-primary text-on-primary font-bold!'

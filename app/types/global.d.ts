@@ -13,6 +13,7 @@ declare global {
     path: string
     disabled?: true
     routeName?: string
+    sectionIds?: string[]
   }
 
   interface NotificationItem {

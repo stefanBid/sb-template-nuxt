@@ -26,11 +26,11 @@ const { notifications, removeNotification, info } = useAppNotifications()
 // State
 
 const routes = computed(() => [
-  { name: t('nav.sections.actions'), path: `${localePath('index')}#buttons` },
-  { name: t('nav.sections.content'), path: `${localePath('index')}#cards` },
-  { name: t('nav.sections.form'), path: `${localePath('index')}#form` },
-  { name: t('nav.sections.overlays'), path: `${localePath('index')}#dialog` },
-  { name: t('nav.sections.system'), path: `${localePath('index')}#i18n` },
+  { name: t('nav.sections.actions'), path: `${localePath('index')}#buttons`, sectionIds: ['buttons', 'badges'] },
+  { name: t('nav.sections.content'), path: `${localePath('index')}#cards`, sectionIds: ['cards', 'accordion'] },
+  { name: t('nav.sections.form'), path: `${localePath('index')}#form`, sectionIds: ['form'] },
+  { name: t('nav.sections.overlays'), path: `${localePath('index')}#dialog`, sectionIds: ['dialog', 'components'] },
+  { name: t('nav.sections.system'), path: `${localePath('index')}#i18n`, sectionIds: ['i18n', 'responsive'] },
 ] as Array<RouteItem>)
 
 const langs = [

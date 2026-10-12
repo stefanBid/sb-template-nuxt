@@ -11,6 +11,7 @@ interface TheFooterProps {
 // Dependencies
 const { t } = useI18n()
 const localePath = useLocalePath()
+const appConfig = useAppConfig()
 
 // Input / Output
 const props = withDefaults(defineProps<TheFooterProps>(), {
@@ -48,17 +49,17 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
                        bg-surface-2 border border-border overflow-hidden shrink-0 sb-transition"
             >
               <img
-                :alt="t('ui.logo-alt')"
+                alt=""
+                aria-hidden="true"
                 class="object-contain size-6 sm:size-7"
-                fetchpriority="high"
                 height="797"
-                loading="eager"
+                loading="lazy"
                 src="/logo.svg"
                 width="682"
               />
             </span>
             <span class="sb-h3">
-              Your Website
+              {{ appConfig.site.name }}
             </span>
           </NuxtLink>
 
@@ -163,7 +164,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
                 target: '_blank',
                 rel: 'noopener noreferrer',
               }"
-              text="GitHub"
+              :text="t('footer.social.github')"
               variant="secondary"
             />
 
@@ -175,7 +176,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
                 target: '_blank',
                 rel: 'noopener noreferrer',
               }"
-              text="LinkedIn"
+              :text="t('footer.social.linkedin')"
               variant="secondary"
             />
 
@@ -187,7 +188,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
                 target: '_blank',
                 rel: 'noopener noreferrer',
               }"
-              text="Instagram"
+              :text="t('footer.social.instagram')"
               variant="secondary"
             />
           </div>

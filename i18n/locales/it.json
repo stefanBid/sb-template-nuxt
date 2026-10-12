@@ -2,7 +2,6 @@
   "announcement": {},
   "ui": {
     "close": "Chiudi",
-    "logo-alt": "Logo",
     "loading-theme": "Caricamento tema",
     "empty": "Nessun risultato",
     "placeholder": "Inserisci un valore...",
@@ -33,7 +32,7 @@
     "terms-and-conditions": "Termini e Condizioni",
     "sections": {
       "actions": "Azioni",
-      "content": "Contenuti",
+      "content": "Card e Accordion",
       "form": "Form",
       "overlays": "Dialog e media",
       "system": "Sistema"
@@ -273,6 +272,11 @@
     "route-section": "Link Rapidi",
     "route-fallback": "Navigazione in arrivo",
     "contact-section": "Contatti & Social",
+    "social": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram"
+    },
     "credit-section": "© { year } [your name] - Tutti i diritti riservati.",
     "made-with": "Progettato e sviluppato con ❤ da Stefano Biddau"
   }

@@ -585,6 +585,14 @@ unlock() // removes (only when no other owner holds lock)
 
 SSR-safe, multi-caller safe (each instance holds its own owner ID). `isLocked: ComputedRef<boolean>`.
 
+### `useScrollSpy(ids)`
+
+```ts
+const { activeId } = useScrollSpy(() => routes.flatMap(r => r.sectionIds ?? []))
+```
+
+`ids`: `MaybeRefOrGetter<string[]>` of section element ids. Returns `{ activeId: Ref<string | null> }`, the first section crossing the reading band below the sticky header (the last one is kept between sections, `null` when none of the ids exist on the page). Drives the `TheHeader` active indicator via `RouteItem.sectionIds`.
+
 ### `useSanitize()`
 
 ```ts
