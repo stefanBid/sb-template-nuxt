@@ -837,7 +837,7 @@ unlock()  // removes it only when no other caller holds a lock
 
 ### `useScrollSpy(ids)`
 
-Tracks which in-page section is currently being read. Pass the section element ids (array, ref or getter); it returns `{ activeId }` (`Ref<string | null>`). Used by `TheHeader` to drive the active nav indicator and `aria-current="location"` from `RouteItem.sectionIds`. SSR-safe, re-observes on route change, disconnects on unmount.
+Tracks which in-page section is currently being read. Pass the section element ids (array, ref or getter); it returns `{ activeId, pin }`: `activeId` (`Ref<string | null>`) changes only after the reading position settles (100 ms), so a fast scroll never lights the sections it crosses; `pin(id)` activates a section immediately and holds it until the scroll ends, the user takes over, or 1.5 s pass (call it on nav click). Used by `TheHeader` to drive the active nav indicator and `aria-current="location"` from `RouteItem.sectionIds`. SSR-safe, re-observes on route change, disconnects on unmount.
 
 ### `useSanitize()`
 

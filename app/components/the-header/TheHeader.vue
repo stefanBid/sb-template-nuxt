@@ -23,27 +23,39 @@ const isMdUp = import.meta.client ? useMediaQuery('(min-width: 768px)') : ref(fa
 const currentRoute = useRoute()
 const getRouteBaseName = useRouteBaseName()
 const appConfig = useAppConfig()
-const { activeId } = useScrollSpy(() => props.routes.flatMap(r => r.sectionIds ?? []))
+const { activeId, pin } = useScrollSpy(() => props.routes.flatMap(r => r.sectionIds ?? []))
 
 const isActiveRoute = (r: RouteItem) => {
   if (r.disabled) {
     return false
   }
+  // In-page anchors: the section being read decides, the router only knows the page
   if (r.sectionIds?.length) {
     return activeId.value !== null && r.sectionIds.includes(activeId.value)
   }
-  if (!r.routeName) {
-    return currentRoute.path === r.path
+  // Real pages: compare the locale-agnostic route name
+  if (r.routeName) {
+    const baseName = String(getRouteBaseName(currentRoute) ?? '')
+    return baseName === r.routeName || baseName.startsWith(`${r.routeName}-`)
   }
-  const baseName = String(getRouteBaseName(currentRoute) ?? '')
-  return baseName === r.routeName || baseName.startsWith(`${r.routeName}-`)
+  return currentRoute.path === r.path
 }
+
+// Exactly one item is current: the first match wins, every other item is false
+const activeRoutePath = computed(() => props.routes.find(r => isActiveRoute(r))?.path ?? null)
 
 const currentLang = computed(() =>
   props.langs.find(l => l.code === props.selectedLangId) ?? props.langs[0] ?? null,
 )
 
 // Events
+const onSelectRoute = (r: RouteItem) => {
+  const sectionId = r.path.split('#')[1]
+  if (sectionId) {
+    pin(sectionId)
+  }
+}
+
 const onKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Escape') {
     e.preventDefault()
@@ -131,16 +143,17 @@ watch(isMdUp, (newVal) => {
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
-              :aria-current="isActiveRoute(r) ? 'location' : undefined"
+              :aria-current="activeRoutePath === r.path ? 'location' : undefined"
               class="relative px-3 py-2 cursor-pointer sb-transition sb-focus rounded-sm"
-              :class="isActiveRoute(r) ? 'text-primary' : 'text-ink-muted hover:text-ink'"
+              :class="activeRoutePath === r.path ? 'text-primary' : 'text-ink-muted hover:text-ink'"
               :to="r.path"
+              @click="onSelectRoute(r)"
             >
               {{ r.name }}
               <span
                 aria-hidden="true"
                 class="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-primary origin-left transition-transform duration-200"
-                :class="isActiveRoute(r) ? 'scale-x-100' : 'scale-x-0'"
+                :class="activeRoutePath === r.path ? 'scale-x-100' : 'scale-x-0'"
               ></span>
             </NuxtLink>
             <span
@@ -209,13 +222,13 @@ watch(isMdUp, (newVal) => {
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
-              :aria-current="isActiveRoute(r) ? 'location' : undefined"
+              :aria-current="activeRoutePath === r.path ? 'location' : undefined"
               class="rounded-sm px-4 py-3 sb-body-strong cursor-pointer sb-transition sb-focus"
-              :class="isActiveRoute(r)
+              :class="activeRoutePath === r.path
                 ? 'bg-primary text-on-primary font-bold!'
                 : 'text-ink/80 hover:bg-surface-2'"
               :to="r.path"
-              @click="onClose()"
+              @click="onSelectRoute(r); onClose()"
             >
               {{ r.name }}
             </NuxtLink>

@@ -588,10 +588,11 @@ SSR-safe, multi-caller safe (each instance holds its own owner ID). `isLocked: C
 ### `useScrollSpy(ids)`
 
 ```ts
-const { activeId } = useScrollSpy(() => routes.flatMap(r => r.sectionIds ?? []))
+const { activeId, pin } = useScrollSpy(() => routes.flatMap(r => r.sectionIds ?? []))
+pin('cards') // on nav click: light only the target until the scroll ends
 ```
 
-`ids`: `MaybeRefOrGetter<string[]>` of section element ids. Returns `{ activeId: Ref<string | null> }`, the first section crossing the reading band below the sticky header (the last one is kept between sections, `null` when none of the ids exist on the page). Drives the `TheHeader` active indicator via `RouteItem.sectionIds`.
+`ids`: `MaybeRefOrGetter<string[]>` of section element ids. Returns `{ activeId: Ref<string | null>, pin(id) }`. `activeId` is the first section crossing the reading band below the sticky header, committed after a 100 ms settle so fast scrolling doesn't flash intermediate sections (the last one is kept between sections, `null` when none of the ids exist on the page). `pin(id)` sets it immediately and holds it until `scrollend`, user input, or 1.5 s. Drives the `TheHeader` active indicator via `RouteItem.sectionIds`.
 
 ### `useSanitize()`
 
