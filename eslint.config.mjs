@@ -130,4 +130,15 @@ export default withNuxt({
       allowEmptyLines: false,
     }],
   },
+},
+
+// ============================================================
+// 🔹 Claude Code scripts (CLI output, compact one-liners)
+// ============================================================
+{
+  files: ['.claude/**/*.mjs'],
+  rules: {
+    'no-console': 'off',
+    '@stylistic/max-statements-per-line': 'off',
+  },
 })
