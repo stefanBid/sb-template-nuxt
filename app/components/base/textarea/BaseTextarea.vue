@@ -42,7 +42,7 @@ const lengths = computed(() => ({
 <template>
   <div>
     <label
-      class="ty-app-label block text-app-muted u-app-soft-transition mb-2 md:mb-3"
+      class="sb-label block text-ink-muted sb-transition mb-2 md:mb-3"
       :for="props.id"
     >{{ props.label }}</label>
     <textarea
@@ -50,23 +50,23 @@ const lengths = computed(() => ({
       v-model="model"
       :aria-describedby="describedBy"
       :aria-invalid="props.error ? 'true' : 'false'"
-      class="w-full rounded-sm bg-app-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-app-contrast ty-app-p focus:outline-none focus:ring-2 focus:ring-app-accent resize-y min-h-38"
-      :class="props.error ? 'border-app-error' : 'border-app-border'"
+      class="w-full rounded-sm bg-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-focus-ring resize-y min-h-38"
+      :class="props.error ? 'border-error' : 'border-border'"
       :name="props.name || `${props.id}-name`"
       :placeholder="props.placeholder"
     ></textarea>
     <!-- Max Counter -->
     <p
       v-if="props.maxLength"
-      class="ty-app-caption text-app-muted u-app-soft-transition text-right mt-1"
+      class="sb-small text-ink-muted sb-transition text-right mt-1"
     >
-      <span :class="lengths.current > lengths.max ? 'text-app-error!' : 'text-app-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
+      <span :class="lengths.current > lengths.max ? 'text-error!' : 'text-ink-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
     </p>
     <!-- Hint -->
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="ty-app-label normal-case! text-app-muted mt-1 md:mt-1.5 u-app-soft-transition"
+      class="sb-small text-ink-muted mt-1 md:mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -74,7 +74,7 @@ const lengths = computed(() => ({
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-app-label normal-case! text-app-error mt-1 md:mt-1.5 u-app-soft-transition"
+      class="sb-small text-error mt-1 md:mt-1.5 sb-transition"
       role="alert"
     >
       {{ props.error }}

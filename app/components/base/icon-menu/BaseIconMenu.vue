@@ -89,7 +89,7 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-100 rounded-md border border-app-border bg-app-surface w-fit shadow-[0_20px_44px_-18px_var(--color-app-shadow),0_2px_8px_var(--color-app-shadow)]"
+          class="z-100 rounded-md border border-border bg-surface w-fit shadow-lg"
           :style="floatingStyles"
         >
           <ul
@@ -100,10 +100,10 @@ watch(open, (newVal) => {
             <li v-for="item in props.items" :key="item.code">
               <button
                 :aria-current="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex items-center w-full text-left rounded-sm px-3 py-2 md:px-3.5 md:py-2.5 text-app-contrast normal-case! gap-2 u-app-focus u-app-soft-transition"
+                class="group inline-flex items-center w-full text-left rounded-sm px-3 py-2 md:px-3.5 md:py-2.5 text-ink gap-2 sb-focus sb-transition"
                 :class="{
-                  'bg-app-surface-2': props.selectedItemId === item.code,
-                  'hover:bg-app-surface-2 cursor-pointer': props.selectedItemId !== item.code,
+                  'bg-surface-2': props.selectedItemId === item.code,
+                  'hover:bg-surface-2 cursor-pointer': props.selectedItemId !== item.code,
                 }"
                 role="menuitem"
                 type="button"
@@ -120,10 +120,10 @@ watch(open, (newVal) => {
                   class="size-4 shrink-0"
                   :src="item.icon"
                 />
-                <span class="truncate flex-1 ty-app-small">{{ item.label }}</span>
+                <span class="truncate flex-1 sb-small">{{ item.label }}</span>
                 <Icon
                   v-if="item.code === props.selectedItemId"
-                  class="size-4 text-app-accent shrink-0"
+                  class="size-4 text-primary shrink-0"
                   name="lucide:check"
                 />
               </button>

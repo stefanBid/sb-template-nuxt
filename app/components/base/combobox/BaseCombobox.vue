@@ -169,7 +169,7 @@ watch(open, (newVal) => {
   <div>
     <label
       v-if="props.label"
-      class="ty-app-label block text-app-muted mb-2 md:mb-3 u-app-soft-transition"
+      class="sb-label block text-ink-muted mb-2 md:mb-3 sb-transition"
       :for="props.id"
     >
       {{ props.label }}
@@ -178,14 +178,14 @@ watch(open, (newVal) => {
     <div class="relative">
       <span
         v-if="props.prefixIcon"
-        class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-app-muted/70 u-app-soft-transition pointer-events-none"
+        class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-ink-muted sb-transition pointer-events-none"
       >
         <Icon class="size-5" :name="props.prefixIcon" />
       </span>
 
-      <span class="absolute top-1/2 right-3 md:right-4 transform -translate-y-1/2 text-app-muted/70 u-app-soft-transition pointer-events-none">
+      <span class="absolute top-1/2 right-3 md:right-4 transform -translate-y-1/2 text-ink-muted sb-transition pointer-events-none">
         <Icon
-          class="size-6 u-app-soft-transition"
+          class="size-6 sb-transition"
           :class="{
             'rotate-0': !open,
             'rotate-180': open,
@@ -200,10 +200,10 @@ watch(open, (newVal) => {
         ref="reference"
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
-        class="w-full rounded-sm bg-app-surface-2 border pl-3 pr-11 py-1.5 md:pl-4 md:pr-12 md:py-2 text-app-contrast ty-app-p focus:outline-none focus:ring-2 focus:ring-app-accent truncate"
+        class="w-full rounded-sm bg-surface-2 border pl-3 pr-11 py-1.5 md:pl-4 md:pr-12 md:py-2 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-focus-ring truncate"
         :class="{
-          'border-app-error': props.error,
-          'border-app-border': !props.error,
+          'border-error': props.error,
+          'border-border': !props.error,
           'pl-10! md:pl-11!': props.prefixIcon,
         }"
         :name="props.name || `${props.id}-name`"
@@ -220,7 +220,7 @@ watch(open, (newVal) => {
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="ty-app-label normal-case! text-app-muted mt-1 md:mt-1.5 u-app-soft-transition"
+      class="sb-small text-ink-muted mt-1 md:mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -229,7 +229,7 @@ watch(open, (newVal) => {
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-app-label normal-case! text-app-error mt-1 md:mt-1.5 u-app-soft-transition"
+      class="sb-small text-error mt-1 md:mt-1.5 sb-transition"
       role="alert"
     >
       {{ props.error }}
@@ -240,7 +240,7 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-300 rounded-md border border-app-border/60 bg-app-surface shadow-[0_20px_44px_-18px_var(--color-app-shadow),0_2px_8px_var(--color-app-shadow)]"
+          class="z-300 rounded-md border border-border/60 bg-surface shadow-lg"
           :style="[
             floatingStyles,
             { width: menuWidth ? menuWidth : 'auto' },
@@ -254,10 +254,10 @@ watch(open, (newVal) => {
             <li v-for="item in props.items" :key="item.label">
               <button
                 :aria-current="model.includes(item.value) ? 'true' : 'false'"
-                class="relative inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 h-9 sm:h-10 gap-1 text-app-contrast cursor-pointer ty-app-label normal-case! u-app-focus u-app-soft-transition"
+                class="relative inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 h-9 sm:h-10 gap-1 text-ink cursor-pointer sb-label sb-focus sb-transition"
                 :class="{
-                  'bg-app-border': model.includes(item.value),
-                  'hover:bg-app-surface-2': !model.includes(item.value),
+                  'bg-border': model.includes(item.value),
+                  'hover:bg-surface-2': !model.includes(item.value),
                 }"
                 role="menuitem"
                 type="button"
@@ -266,7 +266,7 @@ watch(open, (newVal) => {
                 <span class="truncate flex-1">{{ item.label }}</span>
                 <Icon
                   v-if="model.includes(item.value)"
-                  class="size-5 text-app-accent u-app-soft-transition"
+                  class="size-5 text-primary sb-transition"
                   name="lucide:check-circle"
                 />
               </button>

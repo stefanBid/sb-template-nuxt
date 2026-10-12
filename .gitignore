@@ -25,3 +25,7 @@ logs
 .env
 .env.*
 !.env.example
+
+# SKILL PERSONAL
+.claude/skills/global-style-nuxt
+.claude/skills/global-style-refactor

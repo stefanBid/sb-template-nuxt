@@ -19,14 +19,14 @@ const model = defineModel<string>('input')
     <input
       :id="props.id"
       v-model="model"
-      class="size-4.5 md:size-5 accent-app-accent cursor-pointer u-app-focus"
+      class="size-4.5 md:size-5 accent-primary cursor-pointer sb-focus"
       :name="props.name"
       type="radio"
       :value="props.value"
     />
     <label
       v-if="props.label"
-      class="ty-app-p text-app-contrast cursor-pointer"
+      class="sb-body text-ink cursor-pointer"
       :for="props.id"
     >
       {{ props.label }}

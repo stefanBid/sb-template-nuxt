@@ -86,10 +86,10 @@ useSeoMeta({
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <div>
           <BaseBadge dot :text="t('pages.home.hero.badge')" variant="accent" />
-          <h1 class="ty-app-h1 text-app-contrast mt-4">
+          <h1 class="text-ink mt-4">
             {{ t('pages.home.hero.title') }}
           </h1>
-          <p class="ty-app-p text-app-muted mt-4 max-w-xl">
+          <p class="sb-body text-ink-muted mt-4 max-w-xl">
             {{ t('pages.home.hero.lead') }}
           </p>
           <div class="flex flex-wrap gap-3 mt-7">
@@ -108,99 +108,99 @@ useSeoMeta({
         </div>
 
         <!-- Token panel: mirrors the hero token-panel from the Fern UI preview -->
-        <div class="rounded-lg border border-app-border bg-app-surface p-6 md:p-7 shadow-[0_20px_44px_-18px_var(--color-app-shadow),0_2px_8px_var(--color-app-shadow)]">
+        <div class="rounded-lg border border-border bg-surface p-6 md:p-7 shadow-lg">
           <div class="flex items-center justify-between mb-4">
             <div aria-hidden="true" class="flex gap-1.5">
-              <span class="size-2 rounded-full bg-app-border"></span>
-              <span class="size-2 rounded-full bg-app-border"></span>
-              <span class="size-2 rounded-full bg-app-border"></span>
+              <span class="size-2 rounded-full bg-border"></span>
+              <span class="size-2 rounded-full bg-border"></span>
+              <span class="size-2 rounded-full bg-border"></span>
             </div>
-            <code class="ty-app-caption text-app-accent not-italic">{{ t('pages.home.hero.panel-filename') }}</code>
+            <code class="sb-small text-primary">{{ t('pages.home.hero.panel-filename') }}</code>
           </div>
 
           <div class="grid grid-cols-6 gap-2 mb-4">
-            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-accent)"></div>
-            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-accent-hover)"></div>
-            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-success)"></div>
-            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-warning)"></div>
-            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-error)"></div>
-            <div class="aspect-square rounded-sm border border-app-border" style="background: var(--color-app-info)"></div>
+            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-primary)"></div>
+            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-primary-hover)"></div>
+            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-success)"></div>
+            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-warning)"></div>
+            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-error)"></div>
+            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-info)"></div>
           </div>
 
-          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span class="flex items-center gap-2">
-              <span aria-hidden="true" class="size-2.5 rounded-xs shrink-0" style="background: var(--color-app-accent)"></span>
+              <span aria-hidden="true" class="size-2.5 rounded-sm shrink-0" style="background: var(--color-primary)"></span>
               {{ t('pages.home.hero.token-lines.accent') }}
             </span>
-            <span class="text-app-contrast font-medium">#009F5D</span>
+            <span class="text-ink font-semibold">#00804A</span>
           </div>
-          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span>{{ t('pages.home.hero.token-lines.font-primary') }}</span>
-            <span class="text-app-contrast font-medium">Poppins</span>
+            <span class="text-ink font-semibold">Poppins</span>
           </div>
-          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span>{{ t('pages.home.hero.token-lines.font-secondary') }}</span>
-            <span class="text-app-contrast font-medium">Inter</span>
+            <span class="text-ink font-semibold">Inter</span>
           </div>
-          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span>{{ t('pages.home.hero.token-lines.scale-ratio') }}</span>
-            <span class="text-app-contrast font-medium">1.25</span>
+            <span class="text-ink font-semibold">1rem</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- i18n -->
-    <section class="py-16 md:py-20 border-t border-app-border">
+    <section class="py-16 md:py-20 border-t border-border">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <div>
-          <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.i18n.eyebrow') }}</span>
-          <h2 class="ty-app-h2 text-app-contrast">
+          <span class="sb-overline text-primary block mb-2">{{ t('pages.home.i18n.eyebrow') }}</span>
+          <h2 class="text-ink">
             {{ t('pages.home.i18n.heading') }}
           </h2>
-          <p class="ty-app-p text-app-muted mt-3">
+          <p class="sb-body text-ink-muted mt-3">
             {{ t('pages.home.i18n.description') }}
           </p>
-          <p class="ty-app-label normal-case! text-app-muted mt-4 flex items-center gap-2">
-            <Icon class="size-4 text-app-accent shrink-0" name="lucide:languages" />
+          <p class="sb-small text-ink-muted mt-4 flex items-center gap-2">
+            <Icon class="size-4 text-primary shrink-0" name="lucide:languages" />
             {{ t('pages.home.i18n.hint') }}
           </p>
         </div>
 
-        <div class="rounded-lg border border-app-border bg-app-surface p-6 md:p-7 shadow-[0_20px_44px_-18px_var(--color-app-shadow),0_2px_8px_var(--color-app-shadow)]">
+        <div class="rounded-lg border border-border bg-surface p-6 md:p-7 shadow-lg">
           <div class="flex items-center justify-between mb-4">
             <div aria-hidden="true" class="flex gap-1.5">
-              <span class="size-2 rounded-full bg-app-border"></span>
-              <span class="size-2 rounded-full bg-app-border"></span>
-              <span class="size-2 rounded-full bg-app-border"></span>
+              <span class="size-2 rounded-full bg-border"></span>
+              <span class="size-2 rounded-full bg-border"></span>
+              <span class="size-2 rounded-full bg-border"></span>
             </div>
-            <code class="ty-app-caption text-app-accent not-italic">{{ t('pages.home.i18n.panel-filename') }}</code>
+            <code class="sb-small text-primary">{{ t('pages.home.i18n.panel-filename') }}</code>
           </div>
 
-          <div class="flex items-center justify-between py-2 ty-app-caption not-italic text-app-muted">
+          <div class="flex items-center justify-between py-2 sb-small text-ink-muted">
             <span>{{ t('pages.home.i18n.locale-label') }}</span>
             <BaseBadge dot :text="locale" variant="accent" />
           </div>
-          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span>{{ t('pages.home.i18n.strategy-label') }}</span>
-            <span class="text-app-contrast font-medium">{{ t('pages.home.i18n.strategy-value') }}</span>
+            <span class="text-ink font-semibold">{{ t('pages.home.i18n.strategy-value') }}</span>
           </div>
-          <div class="flex items-center justify-between py-2 border-t border-app-border ty-app-caption not-italic text-app-muted">
+          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span>{{ t('pages.home.i18n.files-label') }}</span>
-            <span class="text-app-contrast font-medium">{{ t('pages.home.i18n.files-value') }}</span>
+            <span class="text-ink font-semibold">{{ t('pages.home.i18n.files-value') }}</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Buttons -->
-    <section id="buttons" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+    <section id="buttons" class="py-16 md:py-20 border-t border-border scroll-mt-24">
       <div class="max-w-2xl mb-8">
-        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.buttons.eyebrow') }}</span>
-        <h2 class="ty-app-h2 text-app-contrast">
+        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.buttons.eyebrow') }}</span>
+        <h2 class="text-ink">
           {{ t('pages.home.buttons.heading') }}
         </h2>
-        <p class="ty-app-p text-app-muted mt-2">
+        <p class="sb-body text-ink-muted mt-2">
           {{ t('pages.home.buttons.description') }}
         </p>
       </div>
@@ -237,20 +237,20 @@ useSeoMeta({
     </section>
 
     <!-- Badges & Chips -->
-    <section id="badges" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+    <section id="badges" class="py-16 md:py-20 border-t border-border scroll-mt-24">
       <div class="max-w-2xl mb-8">
-        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.badges.eyebrow') }}</span>
-        <h2 class="ty-app-h2 text-app-contrast">
+        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.badges.eyebrow') }}</span>
+        <h2 class="text-ink">
           {{ t('pages.home.badges.heading') }}
         </h2>
-        <p class="ty-app-p text-app-muted mt-2">
+        <p class="sb-body text-ink-muted mt-2">
           {{ t('pages.home.badges.description') }}
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <p class="ty-app-label text-app-muted mb-3">
+          <p class="sb-overline text-ink-muted mb-3">
             {{ t('pages.home.badges.badges-label') }}
           </p>
           <div class="flex flex-wrap gap-2">
@@ -264,7 +264,7 @@ useSeoMeta({
         </div>
 
         <div>
-          <p class="ty-app-label text-app-muted mb-3">
+          <p class="sb-overline text-ink-muted mb-3">
             {{ t('pages.home.badges.chips-label') }}
           </p>
           <div class="flex flex-wrap gap-2">
@@ -278,13 +278,13 @@ useSeoMeta({
     </section>
 
     <!-- Cards -->
-    <section id="cards" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+    <section id="cards" class="py-16 md:py-20 border-t border-border scroll-mt-24">
       <div class="max-w-2xl mb-8">
-        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.cards.eyebrow') }}</span>
-        <h2 class="ty-app-h2 text-app-contrast">
+        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.cards.eyebrow') }}</span>
+        <h2 class="text-ink">
           {{ t('pages.home.cards.heading') }}
         </h2>
-        <p class="ty-app-p text-app-muted mt-2">
+        <p class="sb-body text-ink-muted mt-2">
           {{ t('pages.home.cards.description') }}
         </p>
       </div>
@@ -294,13 +294,13 @@ useSeoMeta({
         <BaseCard :full-custom-content="true" variant="dark">
           <div class="flex flex-col justify-between h-full">
             <div>
-              <div class="size-11 rounded-sm bg-app-accent text-white flex items-center justify-center ty-app-h3 font-bold mb-4">
+              <div class="size-11 rounded-sm bg-primary text-on-primary flex items-center justify-center sb-h3 font-bold mb-4">
                 01
               </div>
-              <h3 class="ty-app-h3 text-app-contrast">
+              <h3 class="text-ink">
                 {{ t('pages.home.cards.feature.title') }}
               </h3>
-              <p class="ty-app-p text-app-muted mt-2">
+              <p class="sb-body text-ink-muted mt-2">
                 {{ t('pages.home.cards.feature.paragraph') }}
               </p>
             </div>
@@ -312,40 +312,40 @@ useSeoMeta({
 
         <!-- Stat card -->
         <BaseCard :full-custom-content="true" variant="light">
-          <p class="ty-app-label text-app-muted">
+          <p class="sb-overline text-ink-muted">
             {{ t('pages.home.cards.stat.label') }}
           </p>
-          <p class="ty-app-h2 text-app-contrast mt-1">
+          <p class="sb-h2 text-ink mt-1">
             128
           </p>
-          <p class="ty-app-label normal-case! font-semibold! text-app-success">
+          <p class="sb-label text-success">
             {{ t('pages.home.cards.stat.delta') }}
           </p>
         </BaseCard>
 
         <!-- List card -->
         <BaseCard :full-custom-content="true" variant="light">
-          <p class="ty-app-label text-app-muted mb-3">
+          <p class="sb-overline text-ink-muted mb-3">
             {{ t('pages.home.cards.list.label') }}
           </p>
-          <div class="flex flex-col divide-y divide-app-border">
+          <div class="flex flex-col divide-y divide-border">
             <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-              <span class="flex items-center gap-2.5 ty-app-p text-app-contrast">
-                <span class="size-7 rounded-full bg-app-surface-2 flex items-center justify-center ty-app-label normal-case! text-app-muted shrink-0">Bt</span>
+              <span class="flex items-center gap-2.5 sb-body text-ink">
+                <span class="size-7 rounded-full bg-surface-2 flex items-center justify-center sb-small text-ink-muted shrink-0">Bt</span>
                 {{ t('pages.home.cards.list.button.name') }}
               </span>
               <BaseBadge :text="t('pages.home.cards.list.button.status')" variant="success" />
             </div>
             <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-              <span class="flex items-center gap-2.5 ty-app-p text-app-contrast">
-                <span class="size-7 rounded-full bg-app-surface-2 flex items-center justify-center ty-app-label normal-case! text-app-muted shrink-0">Dg</span>
+              <span class="flex items-center gap-2.5 sb-body text-ink">
+                <span class="size-7 rounded-full bg-surface-2 flex items-center justify-center sb-small text-ink-muted shrink-0">Dg</span>
                 {{ t('pages.home.cards.list.dialog.name') }}
               </span>
               <BaseBadge :text="t('pages.home.cards.list.dialog.status')" variant="success" />
             </div>
             <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
-              <span class="flex items-center gap-2.5 ty-app-p text-app-contrast">
-                <span class="size-7 rounded-full bg-app-surface-2 flex items-center justify-center ty-app-label normal-case! text-app-muted shrink-0">Ac</span>
+              <span class="flex items-center gap-2.5 sb-body text-ink">
+                <span class="size-7 rounded-full bg-surface-2 flex items-center justify-center sb-small text-ink-muted shrink-0">Ac</span>
                 {{ t('pages.home.cards.list.accordion.name') }}
               </span>
               <BaseBadge :text="t('pages.home.cards.list.accordion.status')" variant="warning" />
@@ -356,13 +356,13 @@ useSeoMeta({
     </section>
 
     <!-- Accordion -->
-    <section id="accordion" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+    <section id="accordion" class="py-16 md:py-20 border-t border-border scroll-mt-24">
       <div class="max-w-2xl mb-8">
-        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.accordion.eyebrow') }}</span>
-        <h2 class="ty-app-h2 text-app-contrast">
+        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.accordion.eyebrow') }}</span>
+        <h2 class="text-ink">
           {{ t('pages.home.accordion.heading') }}
         </h2>
-        <p class="ty-app-p text-app-muted mt-2">
+        <p class="sb-body text-ink-muted mt-2">
           {{ t('pages.home.accordion.description') }}
         </p>
       </div>
@@ -373,7 +373,7 @@ useSeoMeta({
           :is-open="true"
           :title="t('pages.home.accordion.items.theme-colors.title')"
         >
-          <p class="ty-app-p">
+          <p class="sb-body">
             {{ t('pages.home.accordion.items.theme-colors.content') }}
           </p>
         </BaseAccordion>
@@ -382,7 +382,7 @@ useSeoMeta({
           id="accordion-nuxt-compat"
           :title="t('pages.home.accordion.items.nuxt-compat.title')"
         >
-          <p class="ty-app-p">
+          <p class="sb-body">
             {{ t('pages.home.accordion.items.nuxt-compat.content') }}
           </p>
         </BaseAccordion>
@@ -391,7 +391,7 @@ useSeoMeta({
           id="accordion-dark-mode"
           :title="t('pages.home.accordion.items.dark-mode.title')"
         >
-          <p class="ty-app-p">
+          <p class="sb-body">
             {{ t('pages.home.accordion.items.dark-mode.content') }}
           </p>
         </BaseAccordion>
@@ -399,13 +399,13 @@ useSeoMeta({
     </section>
 
     <!-- Form -->
-    <section id="form" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+    <section id="form" class="py-16 md:py-20 border-t border-border scroll-mt-24">
       <div class="max-w-2xl mb-8">
-        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.form.eyebrow') }}</span>
-        <h2 class="ty-app-h2 text-app-contrast">
+        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.form.eyebrow') }}</span>
+        <h2 class="text-ink">
           {{ t('pages.home.form.heading') }}
         </h2>
-        <p class="ty-app-p text-app-muted mt-2">
+        <p class="sb-body text-ink-muted mt-2">
           {{ t('pages.home.form.description') }}
         </p>
       </div>
@@ -445,7 +445,7 @@ useSeoMeta({
 
         <div class="space-y-6">
           <div>
-            <p class="ty-app-label text-app-muted mb-3">
+            <p class="sb-overline text-ink-muted mb-3">
               {{ t('pages.home.form.notifications-title') }}
             </p>
             <div class="space-y-3">
@@ -463,7 +463,7 @@ useSeoMeta({
           </div>
 
           <div>
-            <p class="ty-app-label text-app-muted mb-3">
+            <p class="sb-overline text-ink-muted mb-3">
               {{ t('pages.home.form.visibility-title') }}
             </p>
             <div class="space-y-2.5">
@@ -492,7 +492,7 @@ useSeoMeta({
           </div>
 
           <div>
-            <p class="ty-app-label text-app-muted mb-3">
+            <p class="sb-overline text-ink-muted mb-3">
               {{ t('pages.home.form.preferences-title') }}
             </p>
             <div class="space-y-2.5">
@@ -513,13 +513,13 @@ useSeoMeta({
     </section>
 
     <!-- Dialog -->
-    <section id="dialog" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+    <section id="dialog" class="py-16 md:py-20 border-t border-border scroll-mt-24">
       <div class="max-w-2xl mb-8">
-        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.dialog.eyebrow') }}</span>
-        <h2 class="ty-app-h2 text-app-contrast">
+        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.dialog.eyebrow') }}</span>
+        <h2 class="text-ink">
           {{ t('pages.home.dialog.heading') }}
         </h2>
-        <p class="ty-app-p text-app-muted mt-2">
+        <p class="sb-body text-ink-muted mt-2">
           {{ t('pages.home.dialog.description') }}
         </p>
       </div>
@@ -547,7 +547,7 @@ useSeoMeta({
       :title="t('pages.home.dialog.sm.title')"
       @close="isSmDialogOpen = false"
     >
-      <p class="ty-app-p">
+      <p class="sb-body">
         {{ t('pages.home.dialog.sm.content') }}
       </p>
       <template #footer>
@@ -568,7 +568,7 @@ useSeoMeta({
       :title="t('pages.home.dialog.md.title')"
       @close="isMdDialogOpen = false"
     >
-      <p class="ty-app-p">
+      <p class="sb-body">
         {{ t('pages.home.dialog.md.content') }}
       </p>
       <template #footer>
@@ -589,7 +589,7 @@ useSeoMeta({
       :title="t('pages.home.dialog.lg.title')"
       @close="isLgDialogOpen = false"
     >
-      <p class="ty-app-p">
+      <p class="sb-body">
         {{ t('pages.home.dialog.lg.content') }}
       </p>
       <template #footer>
@@ -607,7 +607,7 @@ useSeoMeta({
       :title="t('pages.home.dialog.full.title')"
       @close="isFullDialogOpen = false"
     >
-      <p class="ty-app-p">
+      <p class="sb-body">
         {{ t('pages.home.dialog.full.content') }}
       </p>
       <template #footer>
@@ -621,30 +621,30 @@ useSeoMeta({
     </BaseDialog>
 
     <!-- Complex components -->
-    <section id="components" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+    <section id="components" class="py-16 md:py-20 border-t border-border scroll-mt-24">
       <div class="max-w-2xl mb-8">
-        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.components.eyebrow') }}</span>
-        <h2 class="ty-app-h2 text-app-contrast">
+        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.components.eyebrow') }}</span>
+        <h2 class="text-ink">
           {{ t('pages.home.components.heading') }}
         </h2>
-        <p class="ty-app-p text-app-muted mt-2">
+        <p class="sb-body text-ink-muted mt-2">
           {{ t('pages.home.components.description') }}
         </p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <p class="ty-app-label text-app-muted mb-3">
+          <p class="sb-overline text-ink-muted mb-3">
             {{ t('pages.home.components.carousel-label') }}
           </p>
           <BaseMediaCarousel :items="carouselItems" />
         </div>
 
         <div>
-          <p class="ty-app-label text-app-muted mb-3">
+          <p class="sb-overline text-ink-muted mb-3">
             {{ t('pages.home.components.rich-text-label') }}
           </p>
-          <div class="rounded-md border border-app-border bg-app-surface p-5 md:p-6">
+          <div class="rounded-md border border-border bg-surface p-5 md:p-6">
             <BaseRichText :blocks="richTextBlocks" />
           </div>
         </div>
@@ -652,13 +652,13 @@ useSeoMeta({
     </section>
 
     <!-- Responsive -->
-    <section id="responsive" class="py-16 md:py-20 border-t border-app-border scroll-mt-24">
+    <section id="responsive" class="py-16 md:py-20 border-t border-border scroll-mt-24">
       <div class="max-w-2xl mb-8">
-        <span class="ty-app-label text-app-accent block mb-2">{{ t('pages.home.responsive.eyebrow') }}</span>
-        <h2 class="ty-app-h2 text-app-contrast">
+        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.responsive.eyebrow') }}</span>
+        <h2 class="text-ink">
           {{ t('pages.home.responsive.heading') }}
         </h2>
-        <p class="ty-app-p text-app-muted mt-2">
+        <p class="sb-body text-ink-muted mt-2">
           {{ t('pages.home.responsive.description') }}
         </p>
       </div>
@@ -666,41 +666,41 @@ useSeoMeta({
       <!-- Device frames: purely decorative mockups proving the same tokens scale down, not real breakpoints -->
       <div aria-hidden="true" class="flex flex-wrap items-end gap-6 mb-10">
         <div class="flex flex-col items-center gap-2">
-          <div class="w-20 h-36 rounded-md border-2 border-app-border bg-app-surface p-1.5 flex flex-col gap-1">
-            <div class="h-2 rounded-full bg-app-accent w-1/2"></div>
-            <div class="flex-1 rounded-sm bg-app-surface-2"></div>
-            <div class="h-1.5 rounded-full bg-app-border"></div>
-            <div class="h-1.5 rounded-full bg-app-border w-2/3"></div>
+          <div class="w-20 h-36 rounded-md border-2 border-border bg-surface p-1.5 flex flex-col gap-1">
+            <div class="h-2 rounded-full bg-primary w-1/2"></div>
+            <div class="flex-1 rounded-sm bg-surface-2"></div>
+            <div class="h-1.5 rounded-full bg-border"></div>
+            <div class="h-1.5 rounded-full bg-border w-2/3"></div>
           </div>
-          <span class="ty-app-label text-app-muted">{{ t('pages.home.responsive.mobile-label') }}</span>
+          <span class="sb-overline text-ink-muted">{{ t('pages.home.responsive.mobile-label') }}</span>
         </div>
 
         <div class="flex flex-col items-center gap-2">
-          <div class="w-36 h-28 rounded-md border-2 border-app-border bg-app-surface p-2 flex flex-col gap-1.5">
-            <div class="h-2 rounded-full bg-app-accent w-1/3"></div>
+          <div class="w-36 h-28 rounded-md border-2 border-border bg-surface p-2 flex flex-col gap-1.5">
+            <div class="h-2 rounded-full bg-primary w-1/3"></div>
             <div class="flex-1 grid grid-cols-2 gap-1.5">
-              <div class="rounded-sm bg-app-surface-2"></div>
-              <div class="rounded-sm bg-app-surface-2"></div>
+              <div class="rounded-sm bg-surface-2"></div>
+              <div class="rounded-sm bg-surface-2"></div>
             </div>
           </div>
-          <span class="ty-app-label text-app-muted">{{ t('pages.home.responsive.tablet-label') }}</span>
+          <span class="sb-overline text-ink-muted">{{ t('pages.home.responsive.tablet-label') }}</span>
         </div>
 
         <div class="flex flex-col items-center gap-2">
-          <div class="w-56 h-32 rounded-md border-2 border-app-border bg-app-surface p-2.5 flex flex-col gap-2">
-            <div class="h-2 rounded-full bg-app-accent w-1/4"></div>
+          <div class="w-56 h-32 rounded-md border-2 border-border bg-surface p-2.5 flex flex-col gap-2">
+            <div class="h-2 rounded-full bg-primary w-1/4"></div>
             <div class="flex-1 grid grid-cols-3 gap-2">
-              <div class="rounded-sm bg-app-surface-2"></div>
-              <div class="rounded-sm bg-app-surface-2"></div>
-              <div class="rounded-sm bg-app-surface-2"></div>
+              <div class="rounded-sm bg-surface-2"></div>
+              <div class="rounded-sm bg-surface-2"></div>
+              <div class="rounded-sm bg-surface-2"></div>
             </div>
           </div>
-          <span class="ty-app-label text-app-muted">{{ t('pages.home.responsive.desktop-label') }}</span>
+          <span class="sb-overline text-ink-muted">{{ t('pages.home.responsive.desktop-label') }}</span>
         </div>
       </div>
 
-      <div class="rounded-lg border border-app-border bg-app-surface-2 p-6 md:p-8">
-        <h3 class="ty-app-h4 text-app-contrast mb-4">
+      <div class="rounded-lg border border-border bg-surface-2 p-6 md:p-8">
+        <h3 class="sb-h4 text-ink mb-4">
           {{ t('pages.home.responsive.links-heading') }}
         </h3>
         <div class="flex flex-wrap gap-3">

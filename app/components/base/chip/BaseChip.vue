@@ -50,14 +50,14 @@ const onClick = () => {
 <template>
   <component
     :is="componentTag"
-    class="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full u-app-soft-transition u-app-focus"
+    class="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-full sb-transition sb-focus"
     :class="{
-      'bg-app-accent text-white': props.variant === 'primary',
-      'bg-app-surface border border-app-border text-app-contrast': props.variant === 'secondary',
-      'bg-transparent border border-app-accent text-app-accent': props.variant === 'outline',
+      'bg-primary text-on-primary': props.variant === 'primary',
+      'bg-surface border border-border text-ink': props.variant === 'secondary',
+      'bg-transparent border border-primary text-primary': props.variant === 'outline',
       'cursor-pointer hover:scale-105 active:scale-95': isInteractive && props.variant === 'primary',
-      'cursor-pointer hover:bg-app-surface-2 active:bg-app-border': isInteractive && props.variant === 'secondary',
-      'cursor-pointer hover:bg-app-accent hover:text-white active:opacity-90': isInteractive && props.variant === 'outline',
+      'cursor-pointer hover:bg-surface-2 active:bg-border': isInteractive && props.variant === 'secondary',
+      'cursor-pointer hover:bg-primary hover:text-on-primary active:opacity-90': isInteractive && props.variant === 'outline',
     }"
     :href="props.linkable?.href"
     :rel="props.linkable?.rel"
@@ -70,6 +70,6 @@ const onClick = () => {
       class="size-3.5 md:size-4"
       :name="props.icon"
     />
-    <span class="ty-app-label truncate">{{ props.text }}</span>
+    <span class="sb-label truncate">{{ props.text }}</span>
   </component>
 </template>

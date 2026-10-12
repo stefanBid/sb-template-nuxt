@@ -8,7 +8,7 @@ This file is the **single source of AI context** for the project. It replaces th
 
 ## App context
 
-*(Placeholder — filled in by the "initialize project" workflow below with 2–4 sentences describing what the app does and who it's for. Until then, treat this as a generic template with no specific product context.)*
+*(Placeholder — to be filled in with 2–4 sentences describing what the app does and who it's for. Until then, treat this as a generic template with no specific product context.)*
 
 ---
 
@@ -18,9 +18,9 @@ This file is the **single source of AI context** for the project. It replaces th
 - **Tailwind CSS v4** via `@tailwindcss/vite` — no config file, tokens in CSS `@theme`
 - **@nuxt/icon** — Iconify SVG mode (`lucide` + `flagpack`)
 - **@nuxt/image** — `ipx` local provider (Cloudinary provider can be added via `image.providers.cloudinary`; `provider="none"` is pre-registered for arbitrary external URLs, e.g. CMS media)
-- **@nuxt/fonts** — self-hosted Poppins/Inter, explicitly declared in `fonts.families` (not auto-detected, since the family names only appear inside CSS custom properties in `theme.css`)
+- **@nuxt/fonts** — self-hosted Poppins/Inter, explicitly declared in `fonts.families` (not auto-detected, since the family names only appear inside CSS custom properties in `typography.css`)
 - **@nuxtjs/i18n** — `en` default, `it` secondary; `prefix_except_default`
-- **@nuxtjs/color-mode** — dark/light via `.dark` class on `<html>`
+- **@nuxtjs/color-mode** — dark/light via `data-theme` attribute on `<html>`
 - **@vueuse/nuxt**, **@floating-ui/vue**, **isomorphic-dompurify**
 - **ESLint** with `@nuxt/eslint`, **TypeScript** strict mode
 - Deployment target: **Netlify** (Nitro preset)
@@ -54,8 +54,8 @@ Standard Nuxt 4 layout (`app/` source directory: `assets`, `components/base|the-
 | Vue file | PascalCase + prefix | `BaseButton.vue`, `TheHeader.vue` |
 | Composable file | camelCase + `use` | `useAppNotifications.ts` |
 | Utility / type file | camelCase | `generateUuid.ts` |
-| CSS utility | `ty-app-*` / `u-app-*` | `ty-app-h3`, `u-app-soft-transition` |
-| CSS variable | `--color-app-*`, `--font-app-*` | `--color-app-accent` |
+| CSS utility | `sb-*` | `sb-h3`, `sb-transition` |
+| CSS variable | `--sb-*` (raw), role tokens (`--color-primary`) | `--sb-primary` |
 
 - `Base` prefix: fully reusable, no business logic, no API calls
 - `The` prefix: singletons used once per layout
@@ -139,10 +139,10 @@ Use the call-signature syntax inside the generic, not the object/tuple syntax.
 ### Styling
 
 - Default: inline Tailwind utilities in template — no custom CSS classes unless requested
-- Colours: `text-app-contrast`, `bg-app-surface`, `border-app-border` (from `--color-app-*`)
-- Typography: `ty-app-h3`, `ty-app-p`, etc. — pick the class matching the element's actual weight in its container, not its HTML tag
-- Transitions: `u-app-soft-transition` (200ms), `u-app-hard-transition` (500ms)
-- Focus: `u-app-focus`, `u-app-focus-within`
+- Colours: `text-ink`, `bg-surface`, `border-border` (role tokens from `theme.css`)
+- Typography: `sb-h3`, `sb-body`, etc. — pick the class matching the element's actual weight in its container, not its HTML tag
+- Transitions: `sb-transition`
+- Focus: `sb-focus`, `sb-focus-within`
 - **No `dark:` Tailwind variants** — dark mode via CSS variables only
 - **No `<style>` blocks** unless explicitly requested
 - Dynamic classes: `:class` array/object bindings — never string concatenation
@@ -150,7 +150,7 @@ Use the call-signature syntax inside the generic, not the object/tuple syntax.
 ### Icons
 
 ```vue
-<Icon name="lucide:arrow-right" class="size-5 text-app-accent" />
+<Icon name="lucide:arrow-right" class="size-5 text-primary" />
 <Icon name="flagpack:it" class="size-5" />
 ```
 
@@ -185,80 +185,76 @@ No semicolons · single quotes · trailing commas · 2-space indent · `vue/attr
 
 ## Design system
 
-### Colours (`--color-app-*`)
+Global style lives in `app/assets/css/` as four files imported by `main.css` (the only CSS entry in `nuxt.config.ts`): `main.css` (entry, base resets, `dark` variant), `theme.css` (colours, shadows, radii, breakpoints), `typography.css` (families, type scale, `sb-*` text utilities), `animation.css` (durations, easings, `sb-transition`/`sb-focus`, Vue transitions, reduced motion). The system is **closed**: the default Tailwind palette, text sizes, shadows, radii, easings, animations and breakpoints are reset (`--color-*: initial` etc.), so only the tokens below exist. Prefix: `sb`. To re-run or adjust the method use the `global-style-nuxt` skill; to migrate templates afterwards use `global-style-refactor`.
 
-All colours are CSS custom properties defined in `app/assets/css/theme.css` inside an `@theme` block and auto-mapped to Tailwind utilities. **Never hardcode raw hex values.**
+### Colours
 
-| Token | Tailwind utility | Usage |
+Raw values live **only** in `theme.css` as `--sb-*` variables — `:root, [data-theme="light"]` for light and `[data-theme="dark"]` for dark — and are mapped to Tailwind with `@theme inline`. **Never hardcode raw hex values.** Dark mode follows `data-theme` on `<html>` (written by `@nuxtjs/color-mode`, `dataValue: 'theme'`); semantic roles change on their own, so **no `dark:` variants**.
+
+| Tailwind utility | Raw variable | Usage |
 |---|---|---|
-| `--color-app-main` | `bg-app-main` | Page background |
-| `--color-app-surface` | `bg-app-surface` | Card / elevated surface |
-| `--color-app-surface-2` | `bg-app-surface-2` | Nested surfaces, inputs |
-| `--color-app-border` | `border-app-border` | Default borders |
-| `--color-app-shadow` | `shadow-[0_4px_20px_var(--color-app-shadow)]` | Shadows via `var()` |
-| `--color-app-accent` | `bg-app-accent` / `text-app-accent` | Primary CTA |
-| `--color-app-accent-hover` | `hover:bg-app-accent-hover` | Hover on accent |
-| `--color-app-accent-border` | `border-app-accent-border` | Accent borders |
-| `--color-app-contrast` | `text-app-contrast` | Primary text |
-| `--color-app-muted` | `text-app-muted` | Secondary / placeholder text |
-| `--color-app-success/warning/error/info` | `text-app-*` / `bg-app-*` | Status colours |
-| `--color-app-*-bg` | `bg-app-*-bg` | Status background tints |
+| `bg-bg` | `--sb-bg` | Page background |
+| `bg-surface` | `--sb-surface` | Card / elevated surface |
+| `bg-surface-2` | `--sb-surface-2` | Nested surfaces, inputs |
+| `border-border` | `--sb-border` | Decorative borders, dividers |
+| `border-border-strong` | `--sb-border-strong` | Input / control borders (≥ 3:1) |
+| `text-ink` | `--sb-ink` | Primary text |
+| `text-ink-muted` | `--sb-ink-muted` | Secondary / placeholder text |
+| `bg-primary` / `text-primary` | `--sb-primary` | Actions, links, selection |
+| `hover:bg-primary-hover` | `--sb-primary-hover` | Hover on primary |
+| `text-on-primary` | `--sb-on-primary` | Text on a primary fill |
+| `bg-primary-soft` | `--sb-primary-soft` | Light relief tint of primary |
+| `text-success/warning/error/info` | `--sb-success` … | Status colours (always with an icon + text) |
+| `bg-success-soft/warning-soft/error-soft/info-soft` | `--sb-*-soft` | Status background tints |
+| `ring-focus-ring` | `--sb-focus-ring` | Focus ring |
 
-Opacity modifiers allowed: `bg-app-main/80`, `text-app-muted/70`.
+Opacity modifiers allowed (`bg-bg/80`, `bg-ink-muted/10`). Keep the contrast pairs valid in both themes — check with `.claude/skills/global-style-nuxt/scripts/contrast.mjs`.
 
-Dark mode: handled via CSS variable overrides in `.dark` class — never use `dark:` variants.
+### Shadows & radius
 
-### Radius (`--radius-*`)
+- Shadows: `shadow-sm` (resting cards), `shadow-md` (hover, small floating), `shadow-lg` (dropdowns, dialogs, side panels) — tinted with the ink in light, denser black in dark. No arbitrary `shadow-[…]`.
+- Radius (`--radius-*`): `rounded-sm` 10px (buttons, inputs, icon blocks, chips), `rounded-md` 14px (cards, menu panels), `rounded-lg` 22px (dialogs, hero/feature panels); `rounded-full` and `rounded-none` always available. Use the canonical classes, never `rounded-[var(--radius-*)]`.
+- Breakpoints (rigid): `sm` 640, `md` 768, `lg` 1024, `xl` 1280. No `2xl`.
 
-Defined in `theme.css`'s `@theme` block, overriding Tailwind's default `rounded-sm`/`rounded-md`/`rounded-lg` scale — a semantic radius hierarchy instead of an arbitrary per-component choice. `rounded-full` (pills, dots, avatars) is Tailwind's own default and needs no override.
+### Typography (`sb-*`)
 
-| Token | Value | Tailwind utility | Usage |
+Two families: `font-display` (Poppins, headings) and `font-body` (Inter, everything else), plus `font-mono`. Three weights only: 400, 600, 700. One utility per role carries family, size, line height, weight and letter spacing — never colour. `display`, `h1`, `h2` shrink at `lg` (stepped, not fluid); the others are fixed.
+
+| Class | Size / line | Weight | Usage |
 |---|---|---|---|
-| `--radius-sm` | `10px` | `rounded-sm` | Buttons, inputs, icon blocks, small chips/menu items |
-| `--radius-md` | `14px` | `rounded-md` | Standard cards, dropdown/menu panels |
-| `--radius-lg` | `22px` | `rounded-lg` | Dialogs, hero/feature panels, page-level elevated blocks |
+| `sb-display` | 56/60 (36/40 below `lg`) | 700 | Home hero only (also error-page code) |
+| `sb-h1` | 40/46 (30/36) | 700 | Page title |
+| `sb-h2` | 30/36 (24/30) | 700 | Section headlines |
+| `sb-h3` | 22/28 | 600 | Card / dialog titles |
+| `sb-h4` | 18/24 | 600 | Subtitles, notification titles, groups |
+| `sb-lead` | 19/30 | 400 | Subtitle below `display`/`h1` |
+| `sb-body` | 16/26 | 400 | Running text, inputs |
+| `sb-body-strong` | 16/26 | 600 | Emphasis, button text |
+| `sb-label` | 14/20 | 600 | Field labels, chips |
+| `sb-small` | 14/20 | 400 | Help, errors, captions, footer |
+| `sb-overline` | 12/16, uppercase, +0.08em | 700 | Eyebrows, badges, counters |
 
-Always use the canonical `rounded-sm` / `rounded-md` / `rounded-lg` classes — never `rounded-[var(--radius-*)]` arbitrary syntax.
+`h1`–`h4`, `p`, `label`, `small`, `code` get their role from `@layer base`, so a size class on a matching tag is redundant — use a class only when the look must differ from the tag (`<h3 class="sb-h4">`). The role utilities reset `margin: 0` (spacing via Tailwind); raw tags in prose (e.g. `BaseRichText`) keep a bottom margin. Pick the role by the element's actual weight in its container, not by its tag. Inputs are never below 16px.
 
-### Typography (`ty-app-*`)
-
-| Class | Font | Usage |
-|---|---|---|
-| `ty-app-h1` | Poppins | Biggest heading — hero titles, `--fs-app-h1` |
-| `ty-app-h2` | Poppins | Large section headlines, `--fs-app-h2` |
-| `ty-app-h3` | Poppins | Standard titles (cards, dialogs, brand mark), `--fs-app-h3` |
-| `ty-app-h4` | Poppins semibold | Smallest heading — subtitles, notification titles, `--fs-app-h4` |
-| `ty-app-p` | Inter | Body text, `--fs-app-p` |
-| `ty-app-span` | Inter | Inline text at body size, for non-`<p>` elements |
-| `ty-app-label` | Inter uppercase tracked | Form labels, tags, eyebrows |
-| `ty-app-small` | Inter | Fine print |
-| `ty-app-code` | Monospace | Inline code |
-| `ty-app-btn-label` | Inter bold uppercase | Button text |
-| `ty-app-caption` | Inter italic | Captions, secondary notes |
-
-`ty-app-h1`–`ty-app-p` mirror the `--fs-app-h1`–`--fs-app-p` modular scale (ratio `--fs-app-scale-ratio`, 1.25) in `theme.css`, and reset `margin: 0` — matching raw `<h1>`–`<p>` tags in visual weight, but with spacing left entirely to Tailwind (`mt-*`/`space-y-*`) instead of the browser default. **Always pick the class for the element's actual weight in its container** (e.g. a card's own title is `ty-app-h3` even though the page's h2 section headline is bigger) — matching two different-weight headings to the same class is what makes a compact card or toast look oversized. Raw `<h1>`–`<h4>`/`<p>` tags (e.g. inside `BaseRichText`'s sanitised HTML) get sized the same way via `@layer base`, but keep the browser's default bottom margin for prose flow.
-
-Font families: `font-app-primary` (Poppins), `font-app-secondary` (Inter).
-
-### Utility classes (`u-app-*`)
+### Utility classes & motion
 
 | Class | Effect |
 |---|---|
-| `u-app-soft-transition` | `transition-all duration-200 ease-in-out` |
-| `u-app-hard-transition` | `transition-all duration-500 ease-in-out` |
-| `u-app-focus` | `outline-none ring-app-contrast focus-visible:ring-2` |
-| `u-app-focus-within` | `outline-none ring-app-contrast focus-within:ring-2` |
-| `u-app-no-focus` | Removes all focus outlines (only on elements with custom focus handling) |
+| `sb-transition` | Explicit colour/background/border/shadow/opacity/transform transition, 120ms, `ease-standard` |
+| `sb-focus` | `outline-none focus-visible:ring-2 focus-visible:ring-focus-ring` |
+| `sb-focus-within` | Same ring via `focus-within` |
+| `sb-no-focus` | Removes focus ring (only on elements with custom focus handling) |
 
-Always add `u-app-soft-transition` to interactive and themed elements.
+Add `sb-transition` to interactive and themed elements. Durations: `--sb-duration-fast` 120ms, `-base` 200ms, `-slow` 320ms; easings `ease-standard`, `ease-enter`, `ease-exit`; animations `animate-fade-in/out`, `rise-in`, `slide-in-right`, `spin` (loaders only). Never `transition: all`, nothing above 400ms, `prefers-reduced-motion` is handled in `animation.css`.
 
-### Animations (Vue `<Transition>`)
+### Vue `<Transition>` names
 
-| Name | Effect | Duration |
+| Name | Effect | Enter / leave |
 |---|---|---|
-| `fade` | Opacity + slight Y offset | 800ms |
-| `slide-down` | Opacity + slides from top | 200ms |
-| `scale-fade` | Opacity + scale from 0.95 | 200ms |
+| `fade` | Opacity + slight Y offset | 320ms / 120ms |
+| `slide-down` | Opacity + slides from top | 200ms / 120ms |
+| `scale-fade` | Opacity + scale from 0.95 | 200ms / 120ms |
+| `page` | Opacity (route changes) | 320ms / 120ms |
 
 ```vue
 <Transition name="scale-fade">
@@ -422,7 +418,7 @@ Non-interactive status label (pairs with `BaseChip` for the selectable/removable
 | `subtitle` | `string` | `undefined` |
 | `size` | `'sm' \| 'md' \| 'lg' \| 'full'` | `'sm'` |
 
-`title`'s typography and the header/body/footer padding scale with `size` (sm→`ty-app-h4`, md→`ty-app-h3`, lg→`ty-app-h2`, full→`ty-app-h1`) so a bigger dialog doesn't end up with a disproportionately small title, or vice versa — pick `size` to match how much content the dialog actually holds, not just its width.
+`title`'s typography and the header/body/footer padding scale with `size` (sm→`sb-h4`, md→`sb-h3`, lg→`sb-h2`, full→`sb-h1`) so a bigger dialog doesn't end up with a disproportionately small title, or vice versa — pick `size` to match how much content the dialog actually holds, not just its width.
 
 Emits: `(e: 'close', value: false): void`. Slots: `default`, `header`, `footer`.
 Closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
@@ -528,7 +524,7 @@ No props. Fixed-position wrapper (`<div class="fixed ...">` with a `default` slo
 4. `<script setup lang="ts">` only — no Options API
 5. Props: inline interface + `withDefaults`, only defaults for non-required props
 6. Use design system tokens for all styling — no raw hex values, no hardcoded sizes
-7. Add `u-app-soft-transition` to themed/interactive elements
+7. Add `sb-transition` to themed/interactive elements
 8. For a heavy or below-the-fold component used conditionally in a real page (not the `index.vue` showcase, which intentionally renders every component at once), prefer Nuxt's `Lazy` prefix (`<LazyBaseDialog v-if="isOpen" />`) or `hydrate-on-visible` to defer loading/hydration instead of bundling it into the initial page chunk
 
 ---
@@ -786,14 +782,14 @@ Recurring maintenance/setup routines, each implemented as a skill under `.claude
 
 | Skill | Trigger phrases |
 |---|---|
-| `init` | "initialize the project", "reset the project", "inizializza il progetto" |
 | `docs-update` | "update the documentation", "update the README", "aggiorna la documentazione" |
 | `full-checkup` | "full checkup", "run a full checkup", "checkup completo" |
 | `build-check` | "check the build", "does the project build?", "check del build" |
 | `lint-check` | "check the lint", "is the project clean?", "check del lint" |
 | `dependency-check` | "check dependencies", "update dependencies", "verifichiamo le dipendenze" |
 | `seo-check` | "check SEO", "check GSC readiness", "verifica la SEO" |
-| `fern-ui-migration` | "apply Fern UI", "migrate to Fern", "restyle this component with Fern UI" |
+| `global-style-nuxt` | "reorganize the global style", "fix the theme / type scale / dark mode" |
+| `global-style-refactor` | "refactor the templates after the global style change" |
 
 ---
 

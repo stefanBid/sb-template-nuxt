@@ -35,29 +35,29 @@ const isInteractive = computed(() => {
   <a
     v-if="props.type === 'link'"
     :aria-label="props.ariaLabel"
-    class="ty-app-btn-label border rounded-sm u-app-soft-transition inline-flex items-center u-app-focus"
+    class="sb-body-strong border rounded-sm sb-transition inline-flex items-center sb-focus"
     :class="[
       sizeClasses,
 
       // Variants
       props.variant === 'primary'
-        ? 'bg-app-accent hover:bg-app-accent-hover border-app-accent-border text-white'
+        ? 'bg-primary hover:bg-primary-hover border-primary text-on-primary'
         : '',
 
       props.variant === 'secondary'
-        ? 'bg-app-surface hover:bg-app-surface-2 border-app-border text-app-contrast'
+        ? 'bg-surface hover:bg-surface-2 border-border text-ink'
         : '',
 
       props.variant === 'outline'
-        ? 'bg-transparent border-app-accent text-app-accent hover:bg-app-accent hover:text-white'
+        ? 'bg-transparent border-primary text-primary hover:bg-primary hover:text-on-primary'
         : '',
 
       props.variant === 'ghost'
-        ? 'bg-transparent border-transparent text-app-muted hover:bg-app-surface-2 hover:text-app-contrast'
+        ? 'bg-transparent border-transparent text-ink-muted hover:bg-surface-2 hover:text-ink'
         : '',
 
       props.variant === 'danger'
-        ? 'bg-app-error-bg border-transparent text-app-error hover:bg-app-error hover:text-white'
+        ? 'bg-error-soft border-transparent text-error hover:bg-error hover:text-surface'
         : '',
     ]"
     :href="props.to"
@@ -69,7 +69,7 @@ const isInteractive = computed(() => {
   <button
     v-else
     :aria-label="props.ariaLabel"
-    class="ty-app-btn-label border rounded-sm u-app-soft-transition inline-flex items-center u-app-focus"
+    class="sb-body-strong border rounded-sm sb-transition inline-flex items-center sb-focus"
 
     :class="[
       sizeClasses,
@@ -80,32 +80,32 @@ const isInteractive = computed(() => {
       // Variants
       props.variant === 'primary'
         ? isInteractive
-          ? 'bg-app-accent hover:bg-app-accent-hover border-app-accent-border text-white'
-          : 'bg-app-accent border-app-accent-border text-white'
+          ? 'bg-primary hover:bg-primary-hover border-primary text-on-primary'
+          : 'bg-primary border-primary text-on-primary'
         : '',
 
       props.variant === 'secondary'
         ? isInteractive
-          ? 'bg-app-surface hover:bg-app-surface-2 border-app-border text-app-contrast'
-          : 'bg-app-surface border-app-border text-app-contrast'
+          ? 'bg-surface hover:bg-surface-2 border-border text-ink'
+          : 'bg-surface border-border text-ink'
         : '',
 
       props.variant === 'outline'
         ? isInteractive
-          ? 'bg-transparent border-app-accent text-app-accent hover:bg-app-accent hover:text-white'
-          : 'bg-transparent border-app-accent text-app-accent'
+          ? 'bg-transparent border-primary text-primary hover:bg-primary hover:text-on-primary'
+          : 'bg-transparent border-primary text-primary'
         : '',
 
       props.variant === 'ghost'
         ? isInteractive
-          ? 'bg-transparent border-transparent text-app-muted hover:bg-app-surface-2 hover:text-app-contrast'
-          : 'bg-transparent border-transparent text-app-muted'
+          ? 'bg-transparent border-transparent text-ink-muted hover:bg-surface-2 hover:text-ink'
+          : 'bg-transparent border-transparent text-ink-muted'
         : '',
 
       props.variant === 'danger'
         ? isInteractive
-          ? 'bg-app-error-bg border-transparent text-app-error hover:bg-app-error hover:text-white'
-          : 'bg-app-error-bg border-transparent text-app-error'
+          ? 'bg-error-soft border-transparent text-error hover:bg-error hover:text-surface'
+          : 'bg-error-soft border-transparent text-error'
         : '',
     ]"
     :disabled="props.isDisabled || props.isLoading"

@@ -26,16 +26,16 @@ const model = defineModel<boolean>('input')
       />
       <span
         aria-hidden="true"
-        class="absolute inset-0 rounded-full bg-app-border u-app-soft-transition
-               peer-checked:bg-app-accent
-               peer-focus-visible:ring-2 peer-focus-visible:ring-app-accent peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-app-main"
+        class="absolute inset-0 rounded-full bg-border sb-transition
+               peer-checked:bg-primary
+               peer-focus-visible:ring-2 peer-focus-visible:ring-focus-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-bg"
       ></span>
       <span
         aria-hidden="true"
-        class="absolute left-0.75 top-0.75 size-4.5 rounded-full bg-app-surface shadow-[0_1px_2px_var(--color-app-shadow)]
-               u-app-soft-transition peer-checked:translate-x-4.5"
+        class="absolute left-0.75 top-0.75 size-4.5 rounded-full bg-surface shadow-sm
+               sb-transition peer-checked:translate-x-4.5"
       ></span>
     </span>
-    <span v-if="props.label" class="ty-app-p text-app-contrast">{{ props.label }}</span>
+    <span v-if="props.label" class="sb-body text-ink">{{ props.label }}</span>
   </label>
 </template>

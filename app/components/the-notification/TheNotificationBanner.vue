@@ -42,28 +42,28 @@ onMounted(() => {
   <div
     :aria-live="props.type === 'error' ? 'assertive' : 'polite'"
     :class="[
-      'w-full sm:w-lg p-4 md:p-6 rounded-md border u-app-soft-transition pointer-events-auto',
-      'shadow-[0_4px_20px_var(--color-app-shadow)]',
+      'w-full sm:w-lg p-4 md:p-6 rounded-md border sb-transition pointer-events-auto',
+      'shadow-md',
       {
-        'bg-app-success-bg border-app-success': props.type === 'success',
-        'bg-app-warning-bg border-app-warning': props.type === 'warning',
-        'bg-app-error-bg border-app-error': props.type === 'error',
-        'bg-app-info-bg border-app-info': props.type === 'info',
+        'bg-success-soft border-success': props.type === 'success',
+        'bg-warning-soft border-warning': props.type === 'warning',
+        'bg-error-soft border-error': props.type === 'error',
+        'bg-info-soft border-info': props.type === 'info',
       },
     ]"
     role="alert"
   >
-    <div class="flex items-start gap-3 md:gap-4 u-app-soft-transition">
+    <div class="flex items-start gap-3 md:gap-4 sb-transition">
       <!-- Icon -->
       <div
         v-if="props.icon"
         :class="[
-          'shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-sm u-app-soft-transition',
+          'shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-sm sb-transition',
           {
-            'bg-app-surface text-app-success': props.type === 'success',
-            'bg-app-surface text-app-warning': props.type === 'warning',
-            'bg-app-surface text-app-error': props.type === 'error',
-            'bg-app-surface text-app-info': props.type === 'info',
+            'bg-surface text-success': props.type === 'success',
+            'bg-surface text-warning': props.type === 'warning',
+            'bg-surface text-error': props.type === 'error',
+            'bg-surface text-info': props.type === 'info',
           },
         ]"
       >
@@ -74,12 +74,12 @@ onMounted(() => {
       <div class="flex-1 min-w-0">
         <h3
           v-if="props.title"
-          class="ty-app-h4 text-app-contrast mb-1 u-app-soft-transition"
+          class="sb-h4 text-ink mb-1 sb-transition"
         >
           {{ props.title }}
         </h3>
         <p
-          class="ty-app-label normal-case! text-app-muted u-app-soft-transition"
+          class="sb-small text-ink-muted sb-transition"
         >
           {{ props.message }}
         </p>

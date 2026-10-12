@@ -1,77 +1,153 @@
-/* app/assets/css/typography.css
-   ============================================================
-   Owns the entire typography domain: both the @layer base
-   defaults for raw text tags AND the ty-app-* utilities that
-   override them when a non-semantic element needs the same
-   look. Same --fs-app-* tokens (theme.css) drive both halves,
-   so a utility class always renders pixel-identical to its
-   matching tag.
-   ============================================================ */
+/* ==========================================================================
+   typography.css — families, type scale, typographic utilities
+   Prefix "sb".
+   ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   1. Fixed tokens
+   The --text-* values are the DESKTOP values. The mobile reduction lives
+   in the utilities (section 2), not in the tokens.
+   -------------------------------------------------------------------------- */
+@theme {
+  --font-*: initial;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --default-font-family: var(--font-body);
+  --default-mono-font-family: var(--font-mono);
+
+  --font-weight-*: initial;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --text-*: initial;
+  --text-shadow-*: initial;
+
+  --text-display: 3.5rem;                 /* 56 */
+  --text-display--line-height: 3.75rem;   /* 60 */
+  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-h1: 2.5rem;                      /* 40 */
+  --text-h1--line-height: 2.875rem;       /* 46 */
+  --text-h1--font-weight: 700;
+  --text-h1--letter-spacing: -0.015em;
+
+  --text-h2: 1.875rem;                    /* 30 */
+  --text-h2--line-height: 2.25rem;        /* 36 */
+  --text-h2--font-weight: 700;
+  --text-h2--letter-spacing: -0.01em;
+
+  --text-h3: 1.375rem;                    /* 22 */
+  --text-h3--line-height: 1.75rem;        /* 28 */
+  --text-h3--font-weight: 600;
+
+  --text-h4: 1.125rem;                    /* 18 */
+  --text-h4--line-height: 1.5rem;         /* 24 */
+  --text-h4--font-weight: 600;
+
+  --text-lead: 1.1875rem;                 /* 19 */
+  --text-lead--line-height: 1.875rem;     /* 30 */
+  --text-lead--font-weight: 400;
+
+  --text-body: 1rem;                      /* 16: the base, never less in inputs */
+  --text-body--line-height: 1.625rem;     /* 26 */
+  --text-body--font-weight: 400;
+
+  --text-body-strong: 1rem;
+  --text-body-strong--line-height: 1.625rem;
+  --text-body-strong--font-weight: 600;
+
+  --text-label: 0.875rem;                 /* 14 */
+  --text-label--line-height: 1.25rem;     /* 20 */
+  --text-label--font-weight: 600;
+
+  --text-small: 0.875rem;                 /* 14 */
+  --text-small--line-height: 1.25rem;     /* 20 */
+  --text-small--font-weight: 400;
+
+  --text-overline: 0.75rem;               /* 12 */
+  --text-overline--line-height: 1rem;     /* 16 */
+  --text-overline--font-weight: 700;
+  --text-overline--letter-spacing: 0.08em;
+}
+
+/* --------------------------------------------------------------------------
+   2. Typographic utilities
+   One class = one complete style. No color inside: the context provides it.
+   Only display, h1 and h2 change size, in one step at lg.
+   margin: 0 on heading/paragraph utilities: components control their own
+   spacing with Tailwind (mt-*, space-y-*); the base prose margins below
+   would otherwise stack on top.
+   -------------------------------------------------------------------------- */
+@utility sb-display {
+  @apply font-display text-display;
+  font-size: 2.25rem;       /* mobile 36 / 40 */
+  line-height: 2.5rem;
+  margin: 0;
+  @variant lg {
+    font-size: var(--text-display);
+    line-height: var(--text-display--line-height);
+  }
+}
+
+@utility sb-h1 {
+  @apply font-display text-h1;
+  font-size: 1.875rem;      /* mobile 30 / 36 */
+  line-height: 2.25rem;
+  margin: 0;
+  @variant lg {
+    font-size: var(--text-h1);
+    line-height: var(--text-h1--line-height);
+  }
+}
+
+@utility sb-h2 {
+  @apply font-display text-h2;
+  font-size: 1.5rem;        /* mobile 24 / 30 */
+  line-height: 1.875rem;
+  margin: 0;
+  @variant lg {
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+  }
+}
+
+@utility sb-h3          { @apply font-display text-h3; margin: 0; }
+@utility sb-h4          { @apply font-display text-h4; margin: 0; }
+@utility sb-lead        { @apply font-body text-lead; margin: 0; }
+@utility sb-body        { @apply font-body text-body; margin: 0; }
+@utility sb-body-strong { @apply font-body text-body-strong; margin: 0; }
+@utility sb-label       { @apply font-body text-label; }
+@utility sb-small       { @apply font-body text-small; }
+@utility sb-overline    { @apply font-body text-overline uppercase; }
+
+/* --------------------------------------------------------------------------
+   3. Default tag styles
+   The tag level follows the page structure; where the look must differ,
+   override it with a class (<h3 class="sb-h4">).
+   -------------------------------------------------------------------------- */
 @layer base {
-  h1 {
-    font-family: var(--font-app-primary);
-    font-size: var(--fs-app-h1);
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-
-  h2 {
-    font-family: var(--font-app-primary);
-    font-size: var(--fs-app-h2);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-  }
-
-  h3 {
-    font-family: var(--font-app-primary);
-    font-size: var(--fs-app-h3);
-    line-height: 1.25;
-  }
-
-  /* h5/h6 kept at the same visual level as h4 — no dedicated
-     size step, they only exist so unexpected deeper markdown
-     headings from BaseRichText don't fall back to the browser
-     default. Bumped weight: at this size Poppins needs it to
-     still read as a heading rather than body text. */
-  h4, h5, h6 {
-    font-family: var(--font-app-primary);
-    font-weight: 600;
-    font-size: var(--fs-app-h4);
-    line-height: 1.35;
-  }
-
-  p {
-    font-family: var(--font-app-secondary);
-    font-size: var(--fs-app-p);
-    line-height: 1.6;
-  }
-
-  span {
-    font-family: var(--font-app-secondary);
-    font-size: var(--fs-app-p);
-    line-height: 1.5;
-  }
-
-  label {
-    font-family: var(--font-app-secondary);
-    font-size: var(--fs-app-small);
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-  }
-
-  small {
-    font-size: var(--fs-app-small);
-  }
+  h1 { @apply sb-h1; }
+  h2 { @apply sb-h2; }
+  h3 { @apply sb-h3; }
+  h4, h5, h6 { @apply sb-h4; }
+  p { @apply sb-body; }
+  label { @apply sb-label; }
+  small { @apply sb-small; }
 
   code {
-    font-family: ui-monospace, monospace;
-    font-size: var(--fs-app-small);
-    background-color: var(--color-app-surface-2);
-    border-radius: 0.25rem;
+    @apply font-mono text-small rounded-sm bg-surface-2;
     padding: 0.125rem 0.375rem;
   }
 
+  /* Inputs never below 16px (iOS zoom) */
+  input, select, textarea {
+    font-size: var(--text-body);
+  }
+
+  /* Prose flow for raw tags (e.g. sanitised BaseRichText HTML) */
   h1, h2, h3, h4, p, ul, ol, blockquote {
     margin: 0 0 1em;
   }
@@ -79,99 +155,4 @@
   h1:last-child, h2:last-child, h3:last-child, h4:last-child, p:last-child {
     margin-bottom: 0;
   }
-
-  /* label/small step up to --fs-app-small-lg at md+ — the only
-     two tags small enough that a fluid clamp() would round to
-     the same pixel value on mobile and desktop anyway. */
-  @media (width >= 48rem) {
-    label, small {
-      font-size: var(--fs-app-small-lg);
-    }
-  }
-}
-
-/* =======================================
-   UTILITIES — same tokens, for elements that
-   aren't semantically the matching tag.
-   ======================================= */
-
-/* margin: 0 on every ty-app-* heading/paragraph utility is deliberate: the
-   @layer base rules above give raw h1-p tags a default 1em bottom margin for
-   prose-like content (e.g. BaseRichText), but components that opt into these
-   utilities control their own spacing explicitly via Tailwind's mt- and
-   space-y- utilities — without this reset, the base margin stacks on top of that spacing and
-   every heading ends up with a disproportionate gap below it. */
-
-@utility ty-app-h1 {
-  @apply font-app-primary leading-tight;
-  letter-spacing: -0.01em;
-  font-size: var(--fs-app-h1);
-  margin: 0;
-}
-
-@utility ty-app-h2 {
-  @apply font-app-primary leading-tight;
-  letter-spacing: -0.01em;
-  font-size: var(--fs-app-h2);
-  margin: 0;
-}
-
-@utility ty-app-h3 {
-  @apply font-app-primary leading-tight;
-  font-size: var(--fs-app-h3);
-  margin: 0;
-}
-
-@utility ty-app-h4 {
-  @apply font-app-primary font-semibold leading-snug;
-  font-size: var(--fs-app-h4);
-  margin: 0;
-}
-
-@utility ty-app-p {
-  @apply font-app-secondary leading-relaxed;
-  font-size: var(--fs-app-p);
-  margin: 0;
-}
-
-@utility ty-app-span {
-  @apply font-app-secondary leading-normal;
-  font-size: var(--fs-app-p);
-}
-
-@utility ty-app-label {
-  @apply font-app-secondary uppercase tracking-wide;
-  font-size: var(--fs-app-small);
-
-  @media (width >= 48rem) {
-    font-size: var(--fs-app-small-lg);
-  }
-}
-
-@utility ty-app-small {
-  @apply font-app-secondary;
-  font-size: var(--fs-app-small);
-
-  @media (width >= 48rem) {
-    font-size: var(--fs-app-small-lg);
-  }
-}
-
-@utility ty-app-code {
-  @apply rounded-sm px-1 py-0.5;
-  font-family: ui-monospace, monospace;
-  font-size: var(--fs-app-small);
-  background-color: var(--color-app-surface-2);
-}
-
-/* Sits level with p: bold + uppercase + tracking already gives
-   it presence, no need for a dedicated size step above body. */
-@utility ty-app-btn-label {
-  @apply font-app-secondary font-bold uppercase tracking-wide;
-  font-size: var(--fs-app-p);
-}
-
-@utility ty-app-caption {
-  @apply font-app-secondary italic;
-  font-size: var(--fs-app-small);
 }

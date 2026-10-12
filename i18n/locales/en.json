@@ -34,10 +34,10 @@
         "cta-secondary": "View on GitHub",
         "panel-filename": "theme.css",
         "token-lines": {
-          "accent": "--color-app-accent",
-          "font-primary": "--font-app-primary",
-          "font-secondary": "--font-app-secondary",
-          "scale-ratio": "--fs-app-scale-ratio"
+          "accent": "--sb-primary",
+          "font-primary": "--font-display",
+          "font-secondary": "--font-body",
+          "scale-ratio": "--text-body"
         }
       },
       "i18n": {

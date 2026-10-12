@@ -77,8 +77,8 @@ onUnmounted(() => {
   <div v-if="currentItem" class="relative w-full">
     <!-- Main Media -->
     <div
-      class="relative rounded-lg overflow-hidden shadow-[0_4px_20px_var(--color-app-shadow)] border border-app-border u-app-soft-transition"
-      :class="currentItem.type === 'photo' ? 'aspect-video md:aspect-21/9 bg-app-muted/10' : 'h-125 md:h-150 bg-app-surface-2 flex items-center justify-center'"
+      class="relative rounded-lg overflow-hidden shadow-md border border-border sb-transition"
+      :class="currentItem.type === 'photo' ? 'aspect-video md:aspect-21/9 bg-ink-muted/10' : 'h-125 md:h-150 bg-surface-2 flex items-center justify-center'"
     >
       <!-- Image -->
       <NuxtImg
@@ -146,10 +146,10 @@ onUnmounted(() => {
       <button
         v-for="(item, index) in props.items"
         :key="index"
-        class="relative shrink-0 size-16 md:size-20 rounded-sm overflow-hidden border-2 u-app-soft-transition u-app-focus"
+        class="relative shrink-0 size-16 md:size-20 rounded-sm overflow-hidden border-2 sb-transition sb-focus"
         :class="{
-          'border-app-accent': currentIndex === index,
-          'border-app-border hover:border-app-contrast/30': currentIndex !== index,
+          'border-primary': currentIndex === index,
+          'border-border hover:border-ink/30': currentIndex !== index,
         }"
         type="button"
         @click="onGoToIndex(index)"
@@ -158,7 +158,7 @@ onUnmounted(() => {
         <NuxtImg
           v-if="item.type === 'photo'"
           :alt="item.alternativeText || `Thumbnail ${index + 1}`"
-          class="w-full h-full object-cover u-app-soft-transition"
+          class="w-full h-full object-cover sb-transition"
           loading="lazy"
           provider="none"
           :src="item.url"
@@ -169,13 +169,13 @@ onUnmounted(() => {
           <NuxtImg
             v-if="item.previewUrl"
             :alt="item.alternativeText || `Thumbnail video ${index + 1}`"
-            class="w-full h-full object-cover u-app-soft-transition"
+            class="w-full h-full object-cover sb-transition"
             loading="lazy"
             provider="none"
             :src="item.previewUrl"
           />
-          <div v-else class="w-full h-full bg-app-muted/20 flex items-center justify-center u-app-soft-transition">
-            <Icon class="size-6 text-app-muted u-app-soft-transition" name="lucide:video" />
+          <div v-else class="w-full h-full bg-ink-muted/20 flex items-center justify-center sb-transition">
+            <Icon class="size-6 text-ink-muted sb-transition" name="lucide:video" />
           </div>
         </div>
       </button>
