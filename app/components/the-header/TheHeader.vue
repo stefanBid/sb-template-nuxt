@@ -105,12 +105,14 @@ watch(isMdUp, (newVal) => {
             class="inline-flex items-center justify-center size-9 md:size-10 rounded-sm
                    bg-surface-2 border border-border overflow-hidden shrink-0 sb-transition"
           >
-            <NuxtImg
-              alt="Logo"
+            <img
+              :alt="t('ui.logo-alt')"
               class="object-contain size-6 md:size-7"
               fetchpriority="high"
+              height="797"
               loading="eager"
-              src="/logo.webp"
+              src="/logo.svg"
+              width="682"
             />
           </span>
           <span class="sb-h3 tracking-tight text-ink sb-transition">
@@ -136,6 +138,7 @@ watch(isMdUp, (newVal) => {
             </NuxtLink>
             <span
               v-else
+              aria-disabled="true"
               class="px-3 py-2 sb-body-strong cursor-not-allowed opacity-40 text-ink-muted"
             >
               {{ r.name }}
@@ -149,7 +152,7 @@ watch(isMdUp, (newVal) => {
             <TheThemeToggle />
             <template #fallback>
               <BaseIconButton
-                aria-label="Loading theme"
+                :aria-label="t('ui.loading-theme')"
                 icon="lucide:ellipsis"
               />
             </template>
@@ -186,7 +189,7 @@ watch(isMdUp, (newVal) => {
       <aside
         id="mobile-drawer"
         :aria-modal="open ? 'true' : undefined"
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-surface border-r border-border shadow-lg transition-transform duration-300 will-change-transform flex flex-col"
+        class="fixed left-0 top-16 h-[calc(100dvh-4rem)] w-72 max-w-[85vw] bg-surface border-r border-border shadow-lg transition-transform duration-300 will-change-transform flex flex-col"
         :class="open ? 'translate-x-0' : '-translate-x-full'"
         :inert="!open"
         :role="open ? 'dialog' : undefined"
@@ -210,6 +213,7 @@ watch(isMdUp, (newVal) => {
             </NuxtLink>
             <span
               v-else
+              aria-disabled="true"
               class="rounded-sm px-4 py-3 sb-body-strong cursor-not-allowed opacity-40 text-ink/70"
             >
               {{ r.name }}
@@ -225,7 +229,7 @@ watch(isMdUp, (newVal) => {
             <TheThemeToggle />
             <template #fallback>
               <BaseIconButton
-                aria-label="Loading theme"
+                :aria-label="t('ui.loading-theme')"
                 icon="lucide:ellipsis"
               />
             </template>

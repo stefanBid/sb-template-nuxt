@@ -64,7 +64,7 @@ const isInteractive = computed(() => {
         : '',
 
       props.variant === 'danger'
-        ? 'bg-error-soft border-transparent text-error hover:bg-error hover:text-on-error'
+        ? 'bg-error-soft border-error text-error hover:bg-error hover:text-on-error'
         : '',
     ]"
     :href="isInteractive ? props.to : undefined"
@@ -115,8 +115,8 @@ const isInteractive = computed(() => {
 
       props.variant === 'danger'
         ? isInteractive
-          ? 'bg-error-soft border-transparent text-error hover:bg-error hover:text-on-error'
-          : 'bg-error-soft border-transparent text-error'
+          ? 'bg-error-soft border-error text-error hover:bg-error hover:text-on-error'
+          : 'bg-error-soft border-error text-error'
         : '',
     ]"
     :disabled="props.isDisabled || props.isLoading"

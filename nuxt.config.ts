@@ -35,6 +35,7 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary' },
       ],
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
     },

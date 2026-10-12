@@ -2,9 +2,12 @@
   "announcement": {},
   "ui": {
     "close": "Chiudi",
+    "logo-alt": "Logo",
+    "loading-theme": "Caricamento tema",
     "empty": "Nessun risultato",
     "placeholder": "Inserisci un valore...",
     "carousel": {
+      "label": "Carosello multimediale",
       "previous-photo": "Foto precedente",
       "next-photo": "Foto successiva",
       "previous-video": "Video precedente",
@@ -16,6 +19,11 @@
       "video-thumbnail-alt": "Miniatura video {n}",
       "video-unsupported": "Questo browser non supporta il formato video."
     },
+    "combobox": {
+      "selected-count": "{n} selezionati",
+      "selected-list": "Opzioni selezionate",
+      "remove": "Rimuovi {label}"
+    },
     "opens-new-tab": "(si apre in una nuova scheda)",
     "welcome-title": "Benvenuto",
     "welcome-message": "Questa è una notifica informativa di benvenuto per gli utenti del sito."
@@ -24,13 +32,11 @@
     "privacy-policy": "Informativa sulla Privacy",
     "terms-and-conditions": "Termini e Condizioni",
     "sections": {
-      "buttons": "Bottoni",
-      "cards": "Card",
-      "accordion": "Accordion",
-      "form": "Modulo",
-      "dialog": "Dialog",
-      "components": "Componenti",
-      "responsive": "Responsive"
+      "actions": "Azioni",
+      "content": "Contenuti",
+      "form": "Form",
+      "overlays": "Dialog e media",
+      "system": "Sistema"
     }
   },
   "meta": {
@@ -80,13 +86,15 @@
         "description": "Quattro varianti semantiche e tre dimensioni, pensate per coprire dalla toolbar alla call to action principale.",
         "save": "Salva modifiche",
         "cancel": "Annulla",
+        "duplicate": "Duplica",
         "learn-more": "Scopri di più",
         "delete-account": "Elimina account",
         "unavailable": "Non disponibile",
         "sizes-title": "Dimensioni",
         "small": "Piccolo",
         "medium": "Medio",
-        "large": "Grande"
+        "large": "Grande",
+        "loading": "Salvataggio…"
       },
       "badges": {
         "eyebrow": "Badge & Chip",
@@ -103,7 +111,8 @@
         "all": "Tutti",
         "frontend": "Frontend",
         "backend": "Backend",
-        "design": "Design"
+        "design": "Design",
+        "archived": "Archiviato"
       },
       "cards": {
         "eyebrow": "Card",
@@ -193,7 +202,9 @@
           "readonly-label": "Slug del progetto",
           "readonly-value": "sb-template-nuxt",
           "disabled-switch": "Funzioni beta",
-          "disabled-checkbox": "Accetta i termini legacy"
+          "disabled-checkbox": "Accetta i termini legacy",
+          "error-label": "Email di fatturazione",
+          "error-value": "fatturazione{'@'}"
         },
         "combobox": {
           "single-label": "Team principale",
@@ -249,9 +260,7 @@
         "eyebrow": "Responsive",
         "heading": "A posto su ogni schermo",
         "description": "Gli stessi token e componenti si adattano da mobile a desktop, senza breakpoint separati da mantenere a mano.",
-        "mobile-label": "Mobile",
-        "tablet-label": "Tablet",
-        "desktop-label": "Desktop",
+        "specimen-sample": "La luce attraverso il vetro",
         "links-heading": "Open source, gratuito da usare",
         "github-link": "Vedi su GitHub",
         "website-link": "Altro di Stefano Biddau",

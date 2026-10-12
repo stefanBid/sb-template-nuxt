@@ -21,6 +21,7 @@ const props = defineProps<BaseMediaCarouselProps>()
 
 // State
 const isPlaying = ref(true)
+const isInteracting = ref(false)
 const currentIndex = ref(0)
 const videoRef = ref<HTMLVideoElement | null>(null)
 
@@ -40,6 +41,20 @@ const onGoToNext = () => {
 const onGoToIndex = (index: number) => {
   currentIndex.value = index
   resetAutoplay()
+}
+
+// Hover or keyboard focus inside the carousel holds the slide so it never moves under the user (WCAG 2.2.2)
+const onInteractionStart = () => {
+  isInteracting.value = true
+}
+
+const onInteractionEnd = (e: FocusEvent | MouseEvent) => {
+  const root = e.currentTarget as HTMLElement | null
+  const next = (e as FocusEvent).relatedTarget as Node | null
+  if (e.type === 'focusout' && root && next && root.contains(next)) {
+    return
+  }
+  isInteracting.value = false
 }
 
 const onToggleAutoplay = () => {
@@ -72,6 +87,9 @@ const startAutoplay = () => {
 
   intervalId = setInterval(() => {
     // Skip auto-advance only if current item is a video AND it's playing (not paused)
+    if (isInteracting.value) {
+      return
+    }
     if (currentItem.value?.type === 'video' && videoRef.value && !videoRef.value.paused) {
       return
     }
@@ -80,7 +98,11 @@ const startAutoplay = () => {
 }
 
 onMounted(() => {
-  startAutoplay()
+  // Autoplay never starts on its own for users who prefer reduced motion (WCAG 2.2.2)
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    isPlaying.value = false
+  }
+  resetAutoplay()
 })
 
 onUnmounted(() => {
@@ -91,9 +113,20 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="currentItem" class="relative w-full">
+  <div
+    v-if="currentItem"
+    :aria-label="t('ui.carousel.label')"
+    aria-roledescription="carousel"
+    class="relative w-full"
+    role="region"
+    @focusin="onInteractionStart"
+    @focusout="onInteractionEnd"
+    @mouseenter="onInteractionStart"
+    @mouseleave="onInteractionEnd"
+  >
     <!-- Main Media -->
     <div
+      :aria-live="isPlaying ? 'off' : 'polite'"
       class="relative rounded-lg overflow-hidden shadow-md border border-border sb-transition"
       :class="currentItem.type === 'photo' ? 'aspect-video md:aspect-21/9 bg-ink-muted/10' : 'h-125 md:h-150 bg-surface-2 flex items-center justify-center'"
     >
@@ -102,7 +135,7 @@ onUnmounted(() => {
         v-if="currentItem.type === 'photo'"
         :alt="currentItem.alternativeText || t('ui.carousel.media-alt', { n: currentIndex + 1 })"
         class="w-full h-full object-cover"
-        loading="lazy"
+        loading="eager"
         provider="none"
         :src="currentItem.url"
       />
@@ -175,6 +208,7 @@ onUnmounted(() => {
       <button
         v-for="(item, index) in props.items"
         :key="index"
+        :aria-current="currentIndex === index ? 'true' : undefined"
         class="relative shrink-0 size-16 md:size-20 rounded-sm overflow-hidden border-2 sb-transition sb-focus"
         :class="{
           'border-primary': currentIndex === index,

@@ -395,7 +395,7 @@ Generic (`<script setup lang="ts" generic="T">`).
 | `prefixIcon` | `string` | `undefined` |
 | `isDisabled` | `boolean` | `false` |
 
-Model: `defineModel<T[]>('input', { default: () => [] })`.
+Model: `defineModel<T[]>('input', { default: () => [] })`. With `type='multiple'`, two or more selections collapse to a "N selected" count in the field and each selection appears as a removable chip below it.
 
 ### `BaseChip`
 
@@ -478,7 +478,7 @@ Prop: `ariaLabel` (`string`, falls back to i18n `ui.close`). Emits: `(e: 'close'
 |---|---|
 | `items` | `MediaItem[]` |
 
-`MediaItem`: `{ type: 'photo' | 'video', url: string, alternativeText?, caption?, previewUrl?, width?, height? }`. Auto-plays, pauses on video playback, and has a play/pause button; all labels come from i18n (`ui.carousel.*`).
+`MediaItem`: `{ type: 'photo' | 'video', url: string, alternativeText?, caption?, previewUrl?, width?, height? }`. Auto-plays, pauses on video playback, on hover and on keyboard focus (and never starts under `prefers-reduced-motion`), and has a play/pause button; all labels come from i18n (`ui.carousel.*`).
 
 ### `BaseRichText`
 

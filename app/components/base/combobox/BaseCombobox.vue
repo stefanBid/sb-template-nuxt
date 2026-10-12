@@ -62,11 +62,19 @@ const activeOptionId = computed(() => {
   return open.value && activeIndex.value >= 0 ? _optionId(activeIndex.value) : undefined
 })
 
-const valuesWithCommas = computed<string>(() => {
-  return model.value.map((v) => {
+const selectedItems = computed(() => {
+  return model.value.flatMap((v) => {
     const item = props.items.find(i => i.value === v)
-    return item ? item.label : ''
-  }).join(', ')
+    return item ? [item] : []
+  })
+})
+
+// A long joined string would truncate inside the field, so many selections collapse to a count
+const displayValue = computed<string>(() => {
+  if (selectedItems.value.length <= 1) {
+    return selectedItems.value[0]?.label ?? ''
+  }
+  return t('ui.combobox.selected-count', { n: selectedItems.value.length })
 })
 
 const describedBy = computed(() => {
@@ -177,6 +185,10 @@ const onSelect = (value: T) => {
     }
     _closeMenu()
   }
+}
+
+const onRemove = (value: T) => {
+  model.value = model.value.filter(v => v !== value)
 }
 
 const onToggle = () => {
@@ -386,11 +398,30 @@ watch(activeIndex, (index) => {
         readonly
         role="combobox"
         type="text"
-        :value="valuesWithCommas"
+        :value="displayValue"
         @click="onToggle"
         @keydown="onKeydown"
       />
     </div>
+
+    <!-- Selected items (multiple): each one is removable without opening the menu -->
+    <ul
+      v-if="props.type === 'multiple' && selectedItems.length"
+      :aria-label="t('ui.combobox.selected-list')"
+      class="flex flex-wrap gap-2 mt-2"
+    >
+      <li v-for="(item, index) in selectedItems" :key="index">
+        <BaseChip
+          :aria-label="t('ui.combobox.remove', { label: item.label })"
+          clickable
+          icon="lucide:x"
+          :is-disabled="props.isDisabled"
+          :text="item.label"
+          variant="secondary"
+          @chip-click="onRemove(item.value)"
+        />
+      </li>
+    </ul>
 
     <!-- Hint -->
     <p

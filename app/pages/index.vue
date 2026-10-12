@@ -15,10 +15,10 @@ const githubRepoUrl = 'https://github.com/stefanBid/sb-template-nuxt'
 const personalWebsiteUrl = 'https://stefanobiddau.com/'
 const otherTemplatesUrl = 'https://stefanobiddau.com/my-projects/sb-templates'
 
-const carouselItems = computed(() => [1, 2, 3].map(n => ({
+const carouselItems = computed(() => ['road', 'forest', 'mist'].map((name, index) => ({
   type: 'photo' as const,
-  url: '/example.jpg',
-  alternativeText: t('pages.home.components.carousel-alt', { n }),
+  url: `/example-${name}.jpg`,
+  alternativeText: t('pages.home.components.carousel-alt', { n: index + 1 }),
 })))
 
 const richTextBlocks = computed<RichBlock[]>(() => [
@@ -66,8 +66,22 @@ const _readTokens = () => {
   tokenValues.textBody = styles.getPropertyValue('--text-body').trim()
 }
 
+const specimenRoles = [
+  { className: 'sb-display' },
+  { className: 'sb-h1' },
+  { className: 'sb-h2' },
+  { className: 'sb-h3' },
+  { className: 'sb-h4' },
+  { className: 'sb-body' },
+  { className: 'sb-small' },
+]
+
 const projectName = ref('')
-const emailValue = ref('invalid@')
+const emailValue = ref('')
+const emailError = computed(() => {
+  const isInvalid = emailValue.value !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue.value)
+  return isInvalid ? t('pages.home.form.email.error') : null
+})
 const descriptionValue = ref('')
 
 const teamOptions = computed(() => [
@@ -92,7 +106,7 @@ watch(() => colorMode.value, () => nextTick(_readTokens))
 
 // Events
 const onExploreComponents = () => {
-  navigateTo(`${localePath('index')}#buttons`)
+  navigateTo(`${localePath('index')}#cards`)
 }
 
 useSeoMeta({
@@ -112,17 +126,18 @@ useSeoMeta({
 <template>
   <div class="py-10 md:py-14">
     <!-- Hero -->
-    <section class="pb-16 md:pb-20">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+    <section class="pb-20 md:pb-28">
+      <BaseBadge dot :text="t('pages.home.hero.badge')" variant="accent" />
+      <h1 class="sb-display text-ink text-balance mt-5 max-w-4xl">
+        {{ t('pages.home.hero.title') }}
+      </h1>
+
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-start mt-10 md:mt-14">
         <div>
-          <BaseBadge dot :text="t('pages.home.hero.badge')" variant="accent" />
-          <h1 class="text-ink mt-4">
-            {{ t('pages.home.hero.title') }}
-          </h1>
-          <p class="sb-body text-ink-muted mt-4 max-w-xl">
+          <p class="sb-lead text-ink-muted max-w-xl">
             {{ t('pages.home.hero.lead') }}
           </p>
-          <div class="flex flex-wrap gap-3 mt-7">
+          <div class="flex flex-wrap gap-3 mt-8">
             <BaseButton
               size="lg"
               variant="primary"
@@ -142,16 +157,7 @@ useSeoMeta({
         </div>
 
         <!-- Token panel: shows the design-system tokens -->
-        <div class="rounded-lg border border-border bg-surface p-6 md:p-7 shadow-lg">
-          <div class="flex items-center justify-between mb-4">
-            <div aria-hidden="true" class="flex gap-1.5">
-              <span class="size-2 rounded-full bg-border"></span>
-              <span class="size-2 rounded-full bg-border"></span>
-              <span class="size-2 rounded-full bg-border"></span>
-            </div>
-            <code class="sb-small text-primary">{{ t('pages.home.hero.panel-filename') }}</code>
-          </div>
-
+        <BaseWindowPanel :filename="t('pages.home.hero.panel-filename')">
           <div class="grid grid-cols-6 gap-2 mb-4">
             <div class="aspect-square rounded-sm border border-border bg-primary"></div>
             <div class="aspect-square rounded-sm border border-border bg-primary-hover"></div>
@@ -180,25 +186,25 @@ useSeoMeta({
             <span>{{ t('pages.home.hero.token-lines.scale-ratio') }}</span>
             <span class="text-ink font-semibold">{{ tokenValues.textBody }}</span>
           </div>
-        </div>
+        </BaseWindowPanel>
       </div>
     </section>
 
     <!-- Buttons -->
-    <section id="buttons" class="py-16 md:py-20 border-t border-border scroll-mt-24">
-      <div class="max-w-2xl mb-8">
-        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.buttons.eyebrow') }}</span>
-        <h2 class="text-ink">
-          {{ t('pages.home.buttons.heading') }}
-        </h2>
-        <p class="sb-body text-ink-muted mt-2">
-          {{ t('pages.home.buttons.description') }}
-        </p>
-      </div>
+    <section id="buttons" class="py-12 md:py-16 border-t border-border scroll-mt-24">
+      <BaseSectionHeader
+        class="mb-8"
+        :description="t('pages.home.buttons.description')"
+        :eyebrow="t('pages.home.buttons.eyebrow')"
+        :heading="t('pages.home.buttons.heading')"
+      />
 
       <div class="flex flex-wrap items-center gap-3 mb-4">
         <BaseButton variant="primary">
           {{ t('pages.home.buttons.save') }}
+        </BaseButton>
+        <BaseButton variant="secondary">
+          {{ t('pages.home.buttons.duplicate') }}
         </BaseButton>
         <BaseButton variant="outline">
           {{ t('pages.home.buttons.cancel') }}
@@ -211,6 +217,9 @@ useSeoMeta({
         </BaseButton>
         <BaseButton :is-disabled="true" variant="primary">
           {{ t('pages.home.buttons.unavailable') }}
+        </BaseButton>
+        <BaseButton is-loading variant="primary">
+          {{ t('pages.home.buttons.loading') }}
         </BaseButton>
       </div>
 
@@ -228,16 +237,13 @@ useSeoMeta({
     </section>
 
     <!-- Badges & Chips -->
-    <section id="badges" class="py-16 md:py-20 border-t border-border scroll-mt-24">
-      <div class="max-w-2xl mb-8">
-        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.badges.eyebrow') }}</span>
-        <h2 class="text-ink">
-          {{ t('pages.home.badges.heading') }}
-        </h2>
-        <p class="sb-body text-ink-muted mt-2">
-          {{ t('pages.home.badges.description') }}
-        </p>
-      </div>
+    <section id="badges" class="py-12 md:py-16 border-t border-border scroll-mt-24">
+      <BaseSectionHeader
+        class="mb-8"
+        :description="t('pages.home.badges.description')"
+        :eyebrow="t('pages.home.badges.eyebrow')"
+        :heading="t('pages.home.badges.heading')"
+      />
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
@@ -263,22 +269,20 @@ useSeoMeta({
             <BaseChip :text="t('pages.home.badges.frontend')" variant="secondary" />
             <BaseChip :text="t('pages.home.badges.backend')" variant="secondary" />
             <BaseChip icon="lucide:pen-tool" :text="t('pages.home.badges.design')" variant="secondary" />
+            <BaseChip is-disabled :text="t('pages.home.badges.archived')" variant="secondary" />
           </div>
         </div>
       </div>
     </section>
 
     <!-- Cards -->
-    <section id="cards" class="py-16 md:py-20 border-t border-border scroll-mt-24">
-      <div class="max-w-2xl mb-8">
-        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.cards.eyebrow') }}</span>
-        <h2 class="text-ink">
-          {{ t('pages.home.cards.heading') }}
-        </h2>
-        <p class="sb-body text-ink-muted mt-2">
-          {{ t('pages.home.cards.description') }}
-        </p>
-      </div>
+    <section id="cards" class="py-20 md:py-28 border-t border-border scroll-mt-24">
+      <BaseSectionHeader
+        class="mb-8"
+        :description="t('pages.home.cards.description')"
+        :eyebrow="t('pages.home.cards.eyebrow')"
+        :heading="t('pages.home.cards.heading')"
+      />
 
       <div class="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr_1fr] gap-5">
         <!-- Feature card -->
@@ -309,7 +313,8 @@ useSeoMeta({
           <p class="sb-h2 text-ink mt-1">
             {{ t('pages.home.cards.stat.value') }}
           </p>
-          <p class="sb-label text-success">
+          <p class="sb-label text-success flex items-center gap-1">
+            <Icon aria-hidden="true" class="size-4" name="lucide:trending-up" />
             {{ t('pages.home.cards.stat.delta') }}
           </p>
         </BaseCard>
@@ -347,16 +352,13 @@ useSeoMeta({
     </section>
 
     <!-- Accordion -->
-    <section id="accordion" class="py-16 md:py-20 border-t border-border scroll-mt-24">
-      <div class="max-w-2xl mb-8">
-        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.accordion.eyebrow') }}</span>
-        <h2 class="text-ink">
-          {{ t('pages.home.accordion.heading') }}
-        </h2>
-        <p class="sb-body text-ink-muted mt-2">
-          {{ t('pages.home.accordion.description') }}
-        </p>
-      </div>
+    <section id="accordion" class="py-12 md:py-16 border-t border-border scroll-mt-24">
+      <BaseSectionHeader
+        class="mb-8"
+        :description="t('pages.home.accordion.description')"
+        :eyebrow="t('pages.home.accordion.eyebrow')"
+        :heading="t('pages.home.accordion.heading')"
+      />
 
       <div class="max-w-3xl space-y-3">
         <BaseAccordion
@@ -390,176 +392,179 @@ useSeoMeta({
     </section>
 
     <!-- Form -->
-    <section id="form" class="py-16 md:py-20 border-t border-border scroll-mt-24">
-      <div class="max-w-2xl mb-8">
-        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.form.eyebrow') }}</span>
-        <h2 class="text-ink">
-          {{ t('pages.home.form.heading') }}
-        </h2>
-        <p class="sb-body text-ink-muted mt-2">
-          {{ t('pages.home.form.description') }}
-        </p>
-      </div>
+    <section id="form" class="py-20 md:py-28 border-t border-border scroll-mt-24 lg:grid lg:grid-cols-[18rem_1fr] lg:gap-14">
+      <BaseSectionHeader
+        class="mb-8 lg:mb-0 lg:sticky lg:top-24 lg:self-start"
+        :description="t('pages.home.form.description')"
+        :eyebrow="t('pages.home.form.eyebrow')"
+        :heading="t('pages.home.form.heading')"
+      />
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-6 max-w-4xl">
-        <div class="space-y-6">
-          <BaseInput
-            id="form-project-name"
-            v-model:input="projectName"
-            :label="t('pages.home.form.project-name.label')"
-            :placeholder="t('pages.home.form.project-name.placeholder')"
-            type="text"
-          />
+      <div>
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-x-10 gap-y-6 max-w-4xl">
+          <div class="space-y-6">
+            <BaseInput
+              id="form-project-name"
+              v-model:input="projectName"
+              :label="t('pages.home.form.project-name.label')"
+              :placeholder="t('pages.home.form.project-name.placeholder')"
+              type="text"
+            />
 
-          <BaseInput
-            id="form-email"
-            v-model:input="emailValue"
-            :error="t('pages.home.form.email.error')"
-            :label="t('pages.home.form.email.label')"
-            type="email"
-          />
+            <BaseInput
+              id="form-email"
+              v-model:input="emailValue"
+              :error="emailError"
+              :label="t('pages.home.form.email.label')"
+              type="email"
+            />
 
-          <BaseTextarea
-            id="form-description"
-            v-model:input="descriptionValue"
-            :label="t('pages.home.form.description-field.label')"
-            :placeholder="t('pages.home.form.description-field.placeholder')"
-          />
+            <BaseTextarea
+              id="form-description"
+              v-model:input="descriptionValue"
+              :label="t('pages.home.form.description-field.label')"
+              :placeholder="t('pages.home.form.description-field.placeholder')"
+            />
 
-          <BaseSelect
-            id="form-team"
-            v-model:input="selectedTeam"
-            :label="t('pages.home.form.team.label')"
-            :options="teamOptions"
-          />
+            <BaseSelect
+              id="form-team"
+              v-model:input="selectedTeam"
+              :label="t('pages.home.form.team.label')"
+              :options="teamOptions"
+            />
 
-          <BaseCombobox
-            id="form-primary-team"
-            v-model:input="primaryTeam"
-            :items="teamOptions"
-            :label="t('pages.home.form.combobox.single-label')"
-          />
+            <BaseCombobox
+              id="form-primary-team"
+              v-model:input="primaryTeam"
+              :items="teamOptions"
+              :label="t('pages.home.form.combobox.single-label')"
+            />
+          </div>
+
+          <div class="space-y-6">
+            <BaseCombobox
+              id="form-collaborating-teams"
+              v-model:input="collaboratingTeams"
+              :items="teamOptions"
+              :label="t('pages.home.form.combobox.multiple-label')"
+              type="multiple"
+            />
+
+            <fieldset class="min-w-0">
+              <legend class="sb-overline text-ink-muted mb-3">
+                {{ t('pages.home.form.notifications-title') }}
+              </legend>
+              <div class="space-y-3">
+                <BaseSwitch
+                  id="form-email-notifications"
+                  v-model:input="emailNotifications"
+                  :label="t('pages.home.form.email-notifications')"
+                />
+                <BaseSwitch
+                  id="form-weekly-report"
+                  v-model:input="weeklyReport"
+                  :label="t('pages.home.form.weekly-report')"
+                />
+              </div>
+            </fieldset>
+
+            <fieldset class="min-w-0">
+              <legend class="sb-overline text-ink-muted mb-3">
+                {{ t('pages.home.form.visibility-title') }}
+              </legend>
+              <div class="space-y-2.5">
+                <BaseRadio
+                  id="form-visibility-private"
+                  v-model:input="visibility"
+                  :label="t('pages.home.form.visibility-private')"
+                  name="visibility"
+                  value="private"
+                />
+                <BaseRadio
+                  id="form-visibility-team"
+                  v-model:input="visibility"
+                  :label="t('pages.home.form.visibility-team')"
+                  name="visibility"
+                  value="team"
+                />
+                <BaseRadio
+                  id="form-visibility-public"
+                  v-model:input="visibility"
+                  :label="t('pages.home.form.visibility-public')"
+                  name="visibility"
+                  value="public"
+                />
+              </div>
+            </fieldset>
+
+            <fieldset class="min-w-0">
+              <legend class="sb-overline text-ink-muted mb-3">
+                {{ t('pages.home.form.preferences-title') }}
+              </legend>
+              <div class="space-y-2.5">
+                <BaseCheckbox
+                  id="form-accept-terms"
+                  v-model:input="acceptTerms"
+                  :label="t('pages.home.form.accept-terms')"
+                />
+                <BaseCheckbox
+                  id="form-newsletter"
+                  v-model:input="newsletter"
+                  :label="t('pages.home.form.subscribe-newsletter')"
+                />
+              </div>
+            </fieldset>
+          </div>
         </div>
-
-        <div class="space-y-6">
-          <BaseCombobox
-            id="form-collaborating-teams"
-            v-model:input="collaboratingTeams"
-            :items="teamOptions"
-            :label="t('pages.home.form.combobox.multiple-label')"
-            type="multiple"
-          />
-
-          <div>
-            <p class="sb-overline text-ink-muted mb-3">
-              {{ t('pages.home.form.notifications-title') }}
-            </p>
-            <div class="space-y-3">
-              <BaseSwitch
-                id="form-email-notifications"
-                v-model:input="emailNotifications"
-                :label="t('pages.home.form.email-notifications')"
-              />
-              <BaseSwitch
-                id="form-weekly-report"
-                v-model:input="weeklyReport"
-                :label="t('pages.home.form.weekly-report')"
-              />
-            </div>
+        <div class="max-w-4xl mt-10 rounded-md border border-dashed border-border p-5 md:p-6">
+          <p class="sb-overline text-ink-muted mb-4">
+            {{ t('pages.home.form.states-title') }}
+          </p>
+          <div class="grid grid-cols-1 xl:grid-cols-2 gap-x-10 gap-y-6">
+            <BaseInput
+              id="form-state-disabled"
+              is-disabled
+              :label="t('pages.home.form.states.disabled-label')"
+              :placeholder="t('pages.home.form.states.disabled-placeholder')"
+            />
+            <BaseInput
+              id="form-state-error"
+              :error="t('pages.home.form.email.error')"
+              :input="t('pages.home.form.states.error-value')"
+              :label="t('pages.home.form.states.error-label')"
+              type="email"
+            />
+            <BaseInput
+              id="form-state-readonly"
+              :input="t('pages.home.form.states.readonly-value')"
+              is-readonly
+              :label="t('pages.home.form.states.readonly-label')"
+            />
+            <BaseSwitch
+              id="form-state-switch"
+              :input="true"
+              is-disabled
+              :label="t('pages.home.form.states.disabled-switch')"
+            />
+            <BaseCheckbox
+              id="form-state-checkbox"
+              :input="true"
+              is-disabled
+              :label="t('pages.home.form.states.disabled-checkbox')"
+            />
           </div>
-
-          <div>
-            <p class="sb-overline text-ink-muted mb-3">
-              {{ t('pages.home.form.visibility-title') }}
-            </p>
-            <div class="space-y-2.5">
-              <BaseRadio
-                id="form-visibility-private"
-                v-model:input="visibility"
-                :label="t('pages.home.form.visibility-private')"
-                name="visibility"
-                value="private"
-              />
-              <BaseRadio
-                id="form-visibility-team"
-                v-model:input="visibility"
-                :label="t('pages.home.form.visibility-team')"
-                name="visibility"
-                value="team"
-              />
-              <BaseRadio
-                id="form-visibility-public"
-                v-model:input="visibility"
-                :label="t('pages.home.form.visibility-public')"
-                name="visibility"
-                value="public"
-              />
-            </div>
-          </div>
-
-          <div>
-            <p class="sb-overline text-ink-muted mb-3">
-              {{ t('pages.home.form.preferences-title') }}
-            </p>
-            <div class="space-y-2.5">
-              <BaseCheckbox
-                id="form-accept-terms"
-                v-model:input="acceptTerms"
-                :label="t('pages.home.form.accept-terms')"
-              />
-              <BaseCheckbox
-                id="form-newsletter"
-                v-model:input="newsletter"
-                :label="t('pages.home.form.subscribe-newsletter')"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="max-w-4xl mt-10">
-        <p class="sb-overline text-ink-muted mb-3">
-          {{ t('pages.home.form.states-title') }}
-        </p>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-6">
-          <BaseInput
-            id="form-state-disabled"
-            is-disabled
-            :label="t('pages.home.form.states.disabled-label')"
-            :placeholder="t('pages.home.form.states.disabled-placeholder')"
-          />
-          <BaseInput
-            id="form-state-readonly"
-            :input="t('pages.home.form.states.readonly-value')"
-            is-readonly
-            :label="t('pages.home.form.states.readonly-label')"
-          />
-          <BaseSwitch
-            id="form-state-switch"
-            :input="true"
-            is-disabled
-            :label="t('pages.home.form.states.disabled-switch')"
-          />
-          <BaseCheckbox
-            id="form-state-checkbox"
-            :input="true"
-            is-disabled
-            :label="t('pages.home.form.states.disabled-checkbox')"
-          />
         </div>
       </div>
     </section>
 
     <!-- Dialog -->
-    <section id="dialog" class="py-16 md:py-20 border-t border-border scroll-mt-24">
-      <div class="max-w-2xl mb-8">
-        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.dialog.eyebrow') }}</span>
-        <h2 class="text-ink">
-          {{ t('pages.home.dialog.heading') }}
-        </h2>
-        <p class="sb-body text-ink-muted mt-2">
-          {{ t('pages.home.dialog.description') }}
-        </p>
-      </div>
+    <section id="dialog" class="py-12 md:py-16 border-t border-border scroll-mt-24">
+      <BaseSectionHeader
+        class="mb-8"
+        :description="t('pages.home.dialog.description')"
+        :eyebrow="t('pages.home.dialog.eyebrow')"
+        :heading="t('pages.home.dialog.heading')"
+      />
 
       <div class="flex flex-wrap items-center gap-3">
         <BaseButton size="sm" variant="outline" @click="isSmDialogOpen = true">
@@ -658,16 +663,13 @@ useSeoMeta({
     </BaseDialog>
 
     <!-- Complex components -->
-    <section id="components" class="py-16 md:py-20 border-t border-border scroll-mt-24">
-      <div class="max-w-2xl mb-8">
-        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.components.eyebrow') }}</span>
-        <h2 class="text-ink">
-          {{ t('pages.home.components.heading') }}
-        </h2>
-        <p class="sb-body text-ink-muted mt-2">
-          {{ t('pages.home.components.description') }}
-        </p>
-      </div>
+    <section id="components" class="py-20 md:py-28 border-t border-border scroll-mt-24">
+      <BaseSectionHeader
+        class="mb-8"
+        :description="t('pages.home.components.description')"
+        :eyebrow="t('pages.home.components.eyebrow')"
+        :heading="t('pages.home.components.heading')"
+      />
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
@@ -689,32 +691,21 @@ useSeoMeta({
     </section>
 
     <!-- i18n -->
-    <section id="i18n" class="py-16 md:py-20 border-t border-border scroll-mt-24">
+    <section id="i18n" class="py-12 md:py-16 border-t border-border scroll-mt-24">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <div>
-          <span class="sb-overline text-primary block mb-2">{{ t('pages.home.i18n.eyebrow') }}</span>
-          <h2 class="text-ink">
-            {{ t('pages.home.i18n.heading') }}
-          </h2>
-          <p class="sb-body text-ink-muted mt-3">
-            {{ t('pages.home.i18n.description') }}
-          </p>
+          <BaseSectionHeader
+            :description="t('pages.home.i18n.description')"
+            :eyebrow="t('pages.home.i18n.eyebrow')"
+            :heading="t('pages.home.i18n.heading')"
+          />
           <p class="sb-small text-ink-muted mt-4 flex items-center gap-2">
             <Icon class="size-4 text-primary shrink-0" name="lucide:languages" />
             {{ t('pages.home.i18n.hint') }}
           </p>
         </div>
 
-        <div class="rounded-lg border border-border bg-surface p-6 md:p-7 shadow-lg">
-          <div class="flex items-center justify-between mb-4">
-            <div aria-hidden="true" class="flex gap-1.5">
-              <span class="size-2 rounded-full bg-border"></span>
-              <span class="size-2 rounded-full bg-border"></span>
-              <span class="size-2 rounded-full bg-border"></span>
-            </div>
-            <code class="sb-small text-primary">{{ t('pages.home.i18n.panel-filename') }}</code>
-          </div>
-
+        <BaseWindowPanel :filename="t('pages.home.i18n.panel-filename')">
           <div class="flex items-center justify-between py-2 sb-small text-ink-muted">
             <span>{{ t('pages.home.i18n.locale-label') }}</span>
             <BaseBadge dot :text="locale" variant="accent" />
@@ -727,55 +718,30 @@ useSeoMeta({
             <span>{{ t('pages.home.i18n.files-label') }}</span>
             <span class="text-ink font-semibold">{{ t('pages.home.i18n.files-value') }}</span>
           </div>
-        </div>
+        </BaseWindowPanel>
       </div>
     </section>
 
     <!-- Responsive -->
-    <section id="responsive" class="py-16 md:py-20 border-t border-border scroll-mt-24">
-      <div class="max-w-2xl mb-8">
-        <span class="sb-overline text-primary block mb-2">{{ t('pages.home.responsive.eyebrow') }}</span>
-        <h2 class="text-ink">
-          {{ t('pages.home.responsive.heading') }}
-        </h2>
-        <p class="sb-body text-ink-muted mt-2">
-          {{ t('pages.home.responsive.description') }}
-        </p>
-      </div>
+    <section id="responsive" class="py-12 md:py-16 border-t border-border scroll-mt-24">
+      <BaseSectionHeader
+        class="mb-8"
+        :description="t('pages.home.responsive.description')"
+        :eyebrow="t('pages.home.responsive.eyebrow')"
+        :heading="t('pages.home.responsive.heading')"
+      />
 
-      <!-- Device frames: purely decorative mockups proving the same tokens scale down, not real breakpoints -->
-      <div aria-hidden="true" class="flex flex-wrap items-end gap-6 mb-10">
-        <div class="flex flex-col items-center gap-2">
-          <div class="w-20 h-36 rounded-md border-2 border-border bg-surface p-1.5 flex flex-col gap-1">
-            <div class="h-2 rounded-full bg-primary w-1/2"></div>
-            <div class="flex-1 rounded-sm bg-surface-2"></div>
-            <div class="h-1.5 rounded-full bg-border"></div>
-            <div class="h-1.5 rounded-full bg-border w-2/3"></div>
-          </div>
-          <span class="sb-overline text-ink-muted">{{ t('pages.home.responsive.mobile-label') }}</span>
-        </div>
-
-        <div class="flex flex-col items-center gap-2">
-          <div class="w-36 h-28 rounded-md border-2 border-border bg-surface p-2 flex flex-col gap-1.5">
-            <div class="h-2 rounded-full bg-primary w-1/3"></div>
-            <div class="flex-1 grid grid-cols-2 gap-1.5">
-              <div class="rounded-sm bg-surface-2"></div>
-              <div class="rounded-sm bg-surface-2"></div>
-            </div>
-          </div>
-          <span class="sb-overline text-ink-muted">{{ t('pages.home.responsive.tablet-label') }}</span>
-        </div>
-
-        <div class="flex flex-col items-center gap-2">
-          <div class="w-56 h-32 rounded-md border-2 border-border bg-surface p-2.5 flex flex-col gap-2">
-            <div class="h-2 rounded-full bg-primary w-1/4"></div>
-            <div class="flex-1 grid grid-cols-3 gap-2">
-              <div class="rounded-sm bg-surface-2"></div>
-              <div class="rounded-sm bg-surface-2"></div>
-              <div class="rounded-sm bg-surface-2"></div>
-            </div>
-          </div>
-          <span class="sb-overline text-ink-muted">{{ t('pages.home.responsive.desktop-label') }}</span>
+      <!-- Type specimen: the real sb-* roles, so resizing the window shows display/h1/h2 stepping at lg -->
+      <div class="mb-10 divide-y divide-border border-y border-border">
+        <div
+          v-for="role in specimenRoles"
+          :key="role.className"
+          class="flex flex-col gap-1 py-4 md:flex-row md:items-baseline md:gap-6"
+        >
+          <code class="sb-small text-ink-muted shrink-0 md:w-36">{{ role.className }}</code>
+          <p class="text-ink min-w-0 text-balance" :class="role.className">
+            {{ t('pages.home.responsive.specimen-sample') }}
+          </p>
         </div>
       </div>
 

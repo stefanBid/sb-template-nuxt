@@ -144,7 +144,7 @@ This section shows the annotated directory tree. The project follows a feature-a
 ── public/
      favicon.ico
      sitemap.xml
-     logo.webp
+     logo.svg          ← brand mark (header, footer, SVG favicon); gradient is theme-safe, no CSS variables inside
 ── server/
      routes/
        robots.txt.ts        ← dynamic robots.txt — disallows indexing outside Netlify production
@@ -180,9 +180,11 @@ This section shows the annotated directory tree. The project follows a feature-a
          media-carousel/   BaseMediaCarousel.vue
          radio/            BaseRadio.vue
          rich-text/        BaseRichText.vue
+         section-header/   BaseSectionHeader.vue
          select/           BaseSelect.vue
          switch/           BaseSwitch.vue
          textarea/         BaseTextarea.vue
+         window-panel/     BaseWindowPanel.vue
        the-footer/         TheFooter.vue
        the-header/         TheHeader.vue, TheHeaderMenuToggle.vue
        the-notification/   TheNotificationBanner.vue, TheNotificationBox.vue
@@ -770,11 +772,19 @@ Emits: `(e: 'close', value: false): void`. Renders a `lucide:x` icon button.
 
 ### `BaseMediaCarousel`
 
-Image/media carousel with navigation controls. See `app/components/base/media-carousel/BaseMediaCarousel.vue` for the full prop reference.
+Image/media carousel with navigation controls. Autoplay holds on hover and keyboard focus, never starts under `prefers-reduced-motion`, and announces slide changes politely once paused. See `app/components/base/media-carousel/BaseMediaCarousel.vue` for the full prop reference.
 
 ### `BaseRichText`
 
 Renders a `RichBlock[]` array (Strapi rich text format) as sanitised HTML via `blocksToHtml` + `useSanitize`. Never write `v-html` directly — always use this component. See `app/components/base/rich-text/BaseRichText.vue` for the full prop reference.
+
+### `BaseSectionHeader`
+
+Eyebrow + `h2` heading + optional description for a page section. Props: `heading` (required), `eyebrow?`, `description?`. Layout classes (margin, sticky) are passed by the parent. See `app/components/base/section-header/BaseSectionHeader.vue`.
+
+### `BaseWindowPanel`
+
+Framed "window" panel with decorative dots and a monospace filename, used to present token/config readouts. Prop: `filename` (required). Slot: `default`. See `app/components/base/window-panel/BaseWindowPanel.vue`.
 
 ---
 

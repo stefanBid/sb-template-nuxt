@@ -47,12 +47,14 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
               class="inline-flex items-center justify-center size-9 sm:size-10 rounded-sm
                        bg-surface-2 border border-border overflow-hidden shrink-0 sb-transition"
             >
-              <NuxtImg
-                alt="Logo"
+              <img
+                :alt="t('ui.logo-alt')"
                 class="object-contain size-6 sm:size-7"
                 fetchpriority="high"
+                height="797"
                 loading="eager"
-                src="/logo.webp"
+                src="/logo.svg"
+                width="682"
               />
             </span>
             <span class="sb-h3">

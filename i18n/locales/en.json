@@ -2,9 +2,12 @@
   "announcement": {},
   "ui": {
     "close": "Close",
+    "logo-alt": "Logo",
+    "loading-theme": "Loading theme",
     "empty": "No results found",
     "placeholder": "Insert a value...",
     "carousel": {
+      "label": "Media carousel",
       "previous-photo": "Previous photo",
       "next-photo": "Next photo",
       "previous-video": "Previous video",
@@ -16,6 +19,11 @@
       "video-thumbnail-alt": "Video thumbnail {n}",
       "video-unsupported": "This browser does not support the video format."
     },
+    "combobox": {
+      "selected-count": "{n} selected",
+      "selected-list": "Selected options",
+      "remove": "Remove {label}"
+    },
     "opens-new-tab": "(opens in a new tab)",
     "welcome-title": "Welcome",
     "welcome-message": "This is an informational notification to welcome users to the website."
@@ -24,13 +32,11 @@
     "privacy-policy": "Privacy Policy",
     "terms-and-conditions": "Terms & Conditions",
     "sections": {
-      "buttons": "Buttons",
-      "cards": "Cards",
-      "accordion": "Accordion",
+      "actions": "Actions",
+      "content": "Content",
       "form": "Form",
-      "dialog": "Dialog",
-      "components": "Components",
-      "responsive": "Responsive"
+      "overlays": "Dialogs & media",
+      "system": "System"
     }
   },
   "meta": {
@@ -80,13 +86,15 @@
         "description": "Four semantic variants and three sizes, covering everything from toolbar actions to the main call to action.",
         "save": "Save changes",
         "cancel": "Cancel",
+        "duplicate": "Duplicate",
         "learn-more": "Learn more",
         "delete-account": "Delete account",
         "unavailable": "Not available",
         "sizes-title": "Sizes",
         "small": "Small",
         "medium": "Medium",
-        "large": "Large"
+        "large": "Large",
+        "loading": "Saving…"
       },
       "badges": {
         "eyebrow": "Badges & Chips",
@@ -103,7 +111,8 @@
         "all": "All",
         "frontend": "Frontend",
         "backend": "Backend",
-        "design": "Design"
+        "design": "Design",
+        "archived": "Archived"
       },
       "cards": {
         "eyebrow": "Cards",
@@ -193,7 +202,9 @@
           "readonly-label": "Project slug",
           "readonly-value": "sb-template-nuxt",
           "disabled-switch": "Beta features",
-          "disabled-checkbox": "Accept legacy terms"
+          "disabled-checkbox": "Accept legacy terms",
+          "error-label": "Billing email",
+          "error-value": "billing{'@'}"
         },
         "combobox": {
           "single-label": "Primary team",
@@ -249,9 +260,7 @@
         "eyebrow": "Responsive",
         "heading": "Looks right on every screen",
         "description": "The same tokens and components adapt from phone to desktop, with no separate breakpoints to maintain by hand.",
-        "mobile-label": "Mobile",
-        "tablet-label": "Tablet",
-        "desktop-label": "Desktop",
+        "specimen-sample": "Light through glass",
         "links-heading": "Open source, free to use",
         "github-link": "View on GitHub",
         "website-link": "More by Stefano Biddau",
