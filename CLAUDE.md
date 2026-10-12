@@ -203,6 +203,7 @@ Raw values live **only** in `theme.css` as `--sb-*` variables — `:root, [data-
 | `bg-primary` / `text-primary` | `--sb-primary` | Actions, links, selection |
 | `hover:bg-primary-hover` | `--sb-primary-hover` | Hover on primary |
 | `text-on-primary` | `--sb-on-primary` | Text on a primary fill |
+| `text-on-error` | `--sb-on-error` | Text on a solid error fill (danger button hover) |
 | `bg-primary-soft` | `--sb-primary-soft` | Light relief tint of primary |
 | `text-success/warning/error/info` | `--sb-success` … | Status colours (always with an icon + text) |
 | `bg-success-soft/warning-soft/error-soft/info-soft` | `--sb-*-soft` | Status background tints |
@@ -278,7 +279,7 @@ Add `sb-transition` to interactive and themed elements. Durations: `--sb-duratio
 | `isDisabled` | `boolean` | `false` |
 | `isLoading` | `boolean` | `false` |
 
-Slot: `default`. `type='link'` renders `<a target="_blank">`.
+Slot: `default`. `type='link'` renders `<a target="_blank">` with a screen-reader-only "opens in a new tab" hint; `isDisabled` / `isLoading` also apply to links; `isLoading` sets `aria-busy`.
 
 ### `BaseCard`
 
@@ -300,12 +301,14 @@ Slots: `default`, `card-header`, `card-body`, `card-footer`.
 | `id` | `string` | required |
 | `name` | `string` | `undefined` (falls back to `${id}-name`) |
 | `label` | `string` | `undefined` |
-| `placeholder` | `string` | `'Insert a value...'` |
+| `placeholder` | `string` | `undefined` (falls back to i18n `ui.placeholder`) |
 | `type` | `'text' \| 'password' \| 'email' \| 'number' \| 'search' \| 'tel' \| 'url'` | `'text'` |
 | `hint` | `string` | `undefined` |
 | `error` | `string \| null` | `null` |
 | `autocomplete` | `string` | `'off'` |
 | `prefixIcon` | `string` | `undefined` |
+| `isDisabled` | `boolean` | `false` |
+| `isReadonly` | `boolean` | `false` |
 
 Model: `defineModel<string>('input')`.
 
@@ -316,10 +319,12 @@ Model: `defineModel<string>('input')`.
 | `id` | `string` | required |
 | `name` | `string` | `undefined` |
 | `label` | `string` | `undefined` |
-| `placeholder` | `string` | `'Insert a value...'` |
+| `placeholder` | `string` | `undefined` (falls back to i18n `ui.placeholder`) |
 | `hint` | `string` | `undefined` |
 | `error` | `string \| null` | `null` |
 | `maxLength` | `number` | `undefined` |
+| `isDisabled` | `boolean` | `false` |
+| `isReadonly` | `boolean` | `false` |
 
 Model: `defineModel<string>('input')`. Shows a character counter when `maxLength` is set.
 
@@ -331,8 +336,9 @@ Model: `defineModel<string>('input')`. Shows a character counter when `maxLength
 | `name` | `string` | `undefined` |
 | `label` | `string` | `undefined` |
 | `error` | `string \| null` | `null` |
+| `isDisabled` | `boolean` | `false` |
 
-Model: `defineModel<boolean>('input')`. Slot: `default` (custom label).
+Model: `defineModel<boolean>('input')`. Slot: `default` (custom label). Renders the `error` message below the control (`aria-describedby`, `role="alert"`).
 
 ### `BaseRadio`
 
@@ -342,6 +348,7 @@ Model: `defineModel<boolean>('input')`. Slot: `default` (custom label).
 | `name` | `string` | required |
 | `value` | `string` | required |
 | `label` | `string` | `undefined` |
+| `isDisabled` | `boolean` | `false` |
 
 Model: `defineModel<string>('input')`. Multiple instances sharing `name` + the same model form a native radio group.
 
@@ -352,6 +359,7 @@ Model: `defineModel<string>('input')`. Multiple instances sharing `name` + the s
 | `id` | `string` | required |
 | `name` | `string` | `undefined` (falls back to `${id}-name`) |
 | `label` | `string` | `undefined` |
+| `isDisabled` | `boolean` | `false` |
 
 Model: `defineModel<boolean>('input')`.
 
@@ -366,6 +374,7 @@ Model: `defineModel<boolean>('input')`.
 | `placeholder` | `string` | `undefined` |
 | `hint` | `string` | `undefined` |
 | `error` | `string \| null` | `null` |
+| `isDisabled` | `boolean` | `false` |
 
 Model: `defineModel<string>('input')`. Native `<select>` wrapper with a themed chevron overlay.
 
@@ -380,10 +389,11 @@ Generic (`<script setup lang="ts" generic="T">`).
 | `items` | `{ label: string, value: T }[]` | required |
 | `name` | `string` | `undefined` |
 | `label` | `string` | `undefined` |
-| `placeholder` | `string` | `'Insert a value...'` |
+| `placeholder` | `string` | `undefined` (falls back to i18n `ui.placeholder`) |
 | `hint` | `string` | `undefined` |
 | `error` | `string \| null` | `null` |
 | `prefixIcon` | `string` | `undefined` |
+| `isDisabled` | `boolean` | `false` |
 
 Model: `defineModel<T[]>('input', { default: () => [] })`.
 
@@ -396,6 +406,7 @@ Model: `defineModel<T[]>('input', { default: () => [] })`.
 | `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` |
 | `clickable` | `boolean` | `false` |
 | `linkable` | `{ href: string, target?: string, rel?: string }` | `undefined` |
+| `isDisabled` | `boolean` | `false` |
 
 Emits: `chip-click` (when `clickable: true`).
 
@@ -421,7 +432,7 @@ Non-interactive status label (pairs with `BaseChip` for the selectable/removable
 `title`'s typography and the header/body/footer padding scale with `size` (sm→`sb-h4`, md→`sb-h3`, lg→`sb-h2`, full→`sb-h1`) so a bigger dialog doesn't end up with a disproportionately small title, or vice versa — pick `size` to match how much content the dialog actually holds, not just its width.
 
 Emits: `(e: 'close', value: false): void`. Slots: `default`, `header`, `footer`.
-Closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
+Closes on `Escape`, locks scroll, traps `Tab` inside the panel, makes the app root (`#__nuxt`) `inert` while open, restores focus to the opener on close, uses `<Teleport to="body">`.
 
 ### `BaseAccordion`
 
@@ -431,8 +442,9 @@ Closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
 | `title` | `string` | required |
 | `icon` | `string` | `undefined` |
 | `isOpen` | `boolean` | `undefined` |
+| `defaultOpen` | `boolean` | `false` |
 
-Emits: `toggle` (when `isOpen` controlled externally). Slot: `default`.
+`isOpen` = controlled mode (pair with `@toggle`); `defaultOpen` = uncontrolled, starts open but the user can still close it. Emits: `toggle` (when `isOpen` controlled externally). Slot: `default`. Exposes `aria-expanded` / `aria-controls` and a labelled region.
 
 ### `BaseIconButton`
 
@@ -441,6 +453,7 @@ Emits: `toggle` (when `isOpen` controlled externally). Slot: `default`.
 | `icon` | `string` | required |
 | `ariaLabel` | `string` | `undefined` |
 | `isActive` | `boolean` | `false` |
+| `isDisabled` | `boolean` | `false` |
 
 Emits: `(e: 'click'): void`.
 
@@ -453,11 +466,11 @@ Emits: `(e: 'click'): void`.
 | `ariaLabel` | `string` | `undefined` |
 | `selectedItemId` | `string \| null` | `null` |
 
-Emits: `(e: 'select', itemId: string): void`. Uses `useFloatingUi` with `placement: 'bottom-start'`. Selected item gets a trailing `lucide:check` mark.
+Emits: `(e: 'select', itemId: string): void`. Uses `useFloatingUi` with `placement: 'bottom-start'`. Selected item gets a trailing `lucide:check` mark. Arrow keys / `Home` / `End` move focus; `Escape` and `Tab` close and return focus to the trigger.
 
 ### `BaseCloseButton`
 
-No props. Emits: `(e: 'close', value: false): void`. Renders `lucide:x` icon button.
+Prop: `ariaLabel` (`string`, falls back to i18n `ui.close`). Emits: `(e: 'close', value: false): void`. Renders `lucide:x` icon button.
 
 ### `BaseMediaCarousel`
 
@@ -465,7 +478,7 @@ No props. Emits: `(e: 'close', value: false): void`. Renders `lucide:x` icon but
 |---|---|
 | `items` | `MediaItem[]` |
 
-`MediaItem`: `{ type: 'photo' | 'video', url: string, alternativeText?, caption?, previewUrl?, width?, height? }`. Auto-plays, pauses on video playback.
+`MediaItem`: `{ type: 'photo' | 'video', url: string, alternativeText?, caption?, previewUrl?, width?, height? }`. Auto-plays, pauses on video playback, and has a play/pause button; all labels come from i18n (`ui.carousel.*`).
 
 ### `BaseRichText`
 
@@ -506,7 +519,7 @@ Emits: `(e: 'toggle', newOpenValue: boolean): void`.
 
 ### `TheNotificationBanner`
 
-Driven by `useAppNotifications`. Do not instantiate manually — managed by `default.vue`.
+Driven by `useAppNotifications`. Do not instantiate manually — managed by `default.vue`. `error`/`warning` use `role="alert"`, `info`/`success` use `role="status"`; the auto-close timer pauses on hover and focus.
 
 ### `TheThemeToggle`
 

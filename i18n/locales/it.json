@@ -1,5 +1,25 @@
 {
   "announcement": {},
+  "ui": {
+    "close": "Chiudi",
+    "empty": "Nessun risultato",
+    "placeholder": "Inserisci un valore...",
+    "carousel": {
+      "previous-photo": "Foto precedente",
+      "next-photo": "Foto successiva",
+      "previous-video": "Video precedente",
+      "next-video": "Video successivo",
+      "pause": "Metti in pausa la presentazione",
+      "play": "Avvia la presentazione",
+      "media-alt": "Contenuto {n}",
+      "thumbnail-alt": "Miniatura {n}",
+      "video-thumbnail-alt": "Miniatura video {n}",
+      "video-unsupported": "Questo browser non supporta il formato video."
+    },
+    "opens-new-tab": "(si apre in una nuova scheda)",
+    "welcome-title": "Benvenuto",
+    "welcome-message": "Questa è una notifica informativa di benvenuto per gli utenti del sito."
+  },
   "nav": {
     "privacy-policy": "Informativa sulla Privacy",
     "terms-and-conditions": "Termini e Condizioni",
@@ -22,13 +42,15 @@
   "header": {
     "route-section": "Menu",
     "settings-section": "Impostazioni",
-    "change-lang": "Cambia lingua"
+    "change-lang": "Cambia lingua",
+    "open-menu": "Apri il menu",
+    "close-menu": "Chiudi il menu"
   },
   "pages": {
     "home": {
       "hero": {
         "badge": "Nuxt 4 · Tailwind v4",
-        "title": "Un template di base per interfacce coerenti, non un altro kit di card uguali.",
+        "title": "Un template di base per interfacce coerenti, con token, componenti e dark mode già inclusi.",
         "lead": "SB Template Nuxt UI è il punto di partenza per i tuoi prossimi progetti: token di colore e tipografia già definiti, componenti pronti all'uso, dark mode inclusa di serie.",
         "cta-primary": "Esplora i componenti",
         "cta-secondary": "Vedi su GitHub",
@@ -94,7 +116,8 @@
         },
         "stat": {
           "label": "Progetti avviati con questo starter",
-          "delta": "+12 questo mese"
+          "delta": "+12 questo mese",
+          "value": "128"
         },
         "list": {
           "label": "Ultimi componenti aggiunti",
@@ -162,7 +185,20 @@
         "visibility-public": "Pubblico",
         "preferences-title": "Preferenze",
         "accept-terms": "Accetto i termini di servizio",
-        "subscribe-newsletter": "Iscrivimi alla newsletter"
+        "subscribe-newsletter": "Iscrivimi alla newsletter",
+        "states-title": "Disabilitati e sola lettura",
+        "states": {
+          "disabled-label": "ID workspace",
+          "disabled-placeholder": "Bloccato dall'amministratore",
+          "readonly-label": "Slug del progetto",
+          "readonly-value": "sb-template-nuxt",
+          "disabled-switch": "Funzioni beta",
+          "disabled-checkbox": "Accetta i termini legacy"
+        },
+        "combobox": {
+          "single-label": "Team principale",
+          "multiple-label": "Team collaboratori"
+        }
       },
       "dialog": {
         "eyebrow": "Dialog",
@@ -206,7 +242,8 @@
         "rich-text-heading": "Rendering rich text",
         "rich-text-intro": "BaseRichText converte un array di blocchi in HTML sanificato, con la stessa tipografia del resto dell'app — sicuro da usare direttamente con contenuti da CMS.",
         "rich-text-list-item-1": "Titoli, paragrafi e formattazione inline",
-        "rich-text-list-item-2": "Liste ordinate e non ordinate, citazioni e blocchi di codice"
+        "rich-text-list-item-2": "Liste ordinate e non ordinate, citazioni e blocchi di codice",
+        "carousel-alt": "Immagine di esempio {n}"
       },
       "responsive": {
         "eyebrow": "Responsive",

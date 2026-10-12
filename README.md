@@ -236,6 +236,7 @@ Raw values are `--sb-*` variables defined only in `theme.css` — `:root, [data-
 | `bg-primary` / `text-primary` | `--sb-primary` | Actions, links, selection |
 | `hover:bg-primary-hover` | `--sb-primary-hover` | Hover state of primary |
 | `text-on-primary` | `--sb-on-primary` | Text on a primary fill |
+| `text-on-error` | `--sb-on-error` | Text on a solid error fill (danger button hover) |
 | `bg-primary-soft` | `--sb-primary-soft` | Light tint of primary |
 | `text-success/warning/error/info` | `--sb-success` … | Status colours |
 | `bg-success-soft` etc. | `--sb-*-soft` | Status background tints |
@@ -469,7 +470,7 @@ Full-featured action button with variants, loading state and link support.
 | `to` | `string` | `undefined` | Required when `type='link'` |
 | `ariaLabel` | `string` | `undefined` | For icon-only usage |
 | `isDisabled` | `boolean` | `false` | |
-| `isLoading` | `boolean` | `false` | Shows spinner |
+| `isLoading` | `boolean` | `false` | Shows spinner and sets `aria-busy`; also applies to `type="link"` |
 
 Slot: `default` (button label / content)
 
@@ -514,11 +515,13 @@ Text input with label, hints, error states and prefix icon.
 |---|---|---|---|
 | `id` | `string` | — | Required |
 | `label` | `string` | `undefined` | |
-| `placeholder` | `string` | `'Insert a value...'` | |
+| `placeholder` | `string` | `undefined` | Falls back to the `ui.placeholder` i18n key | |
 | `type` | `'text' \| 'password' \| 'email' \| 'number' \| 'search' \| 'tel' \| 'url'` | `'text'` | |
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | Shows error label and red border |
 | `prefixIcon` | `string` | `undefined` | Iconify name e.g. `lucide:search` |
+| `isDisabled` | `boolean` | `false` | Dims the field and blocks input |
+| `isReadonly` | `boolean` | `false` | Focusable and copyable, not editable |
 
 Model: `defineModel<string>('input')`
 
@@ -541,10 +544,12 @@ Multi-line input with optional character counter.
 |---|---|---|---|
 | `id` | `string` | — | Required |
 | `label` | `string` | `undefined` | |
-| `placeholder` | `string` | `'Insert a value...'` | |
+| `placeholder` | `string` | `undefined` | Falls back to the `ui.placeholder` i18n key | |
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | |
 | `maxLength` | `number` | `undefined` | Shows character counter when set |
+| `isDisabled` | `boolean` | `false` | |
+| `isReadonly` | `boolean` | `false` | |
 
 Model: `defineModel<string>('input')`
 
@@ -557,6 +562,7 @@ Custom checkbox with label slot.
 | `id` | `string` | — | Required |
 | `label` | `string` | `undefined` | Shown if no `default` slot |
 | `error` | `string \| null` | `null` | |
+| `isDisabled` | `boolean` | `false` | |
 
 Model: `defineModel<boolean>('input')`
 Slot: `default` (custom label content)
@@ -571,6 +577,7 @@ Single radio input for a native radio group. Multiple instances sharing the same
 | `name` | `string` | — | Required — groups radios together |
 | `value` | `string` | — | Required — value set on the shared model when selected |
 | `label` | `string` | `undefined` | |
+| `isDisabled` | `boolean` | `false` | |
 
 Model: `defineModel<string>('input')` (bind the same ref across all radios in the group)
 
@@ -588,6 +595,9 @@ Toggle switch backed by a native checkbox input, styled via `accent`-free custom
 | `id` | `string` | — | Required |
 | `name` | `string` | `undefined` | Falls back to `${id}-name` |
 | `label` | `string` | `undefined` | Shown next to the switch |
+| `isDisabled` | `boolean` | `false` | |
+
+Renders a native checkbox with `role="switch"`.
 
 Model: `defineModel<boolean>('input')`
 
@@ -603,12 +613,13 @@ Native `<select>` wrapper with label, hint, error state and a themed chevron.
 | `placeholder` | `string` | `undefined` | Rendered as a disabled first `<option>` |
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | |
+| `isDisabled` | `boolean` | `false` | |
 
 Model: `defineModel<string>('input')`
 
 ### `BaseCombobox`
 
-Generic select component with single/multiple selection and search.
+Generic select-only combobox with single/multiple selection. Follows the ARIA combobox/listbox pattern: focus stays on the input, `ArrowUp`/`ArrowDown`/`Home`/`End` move the highlighted option, `Enter`/`Space` selects, `Escape` closes (only while open), `Tab` closes, and typing jumps to a matching option.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
@@ -616,10 +627,11 @@ Generic select component with single/multiple selection and search.
 | `type` | `'single' \| 'multiple'` | `'single'` | Selection mode |
 | `items` | `{ label: string, value: T }[]` | — | Required |
 | `label` | `string` | `undefined` | |
-| `placeholder` | `string` | `'Insert a value...'` | |
+| `placeholder` | `string` | `undefined` | Falls back to the `ui.placeholder` i18n key | |
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | |
 | `prefixIcon` | `string` | `undefined` | |
+| `isDisabled` | `boolean` | `false` | |
 
 Model: `defineModel<T[]>('input', { default: () => [] })`
 
@@ -645,6 +657,7 @@ Compact label for tags, badges and status indicators.
 | `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | |
 | `clickable` | `boolean` | `false` | Renders as `<button>` |
 | `linkable` | `{ href: string, target?: string }` | `undefined` | Renders as `<a>` |
+| `isDisabled` | `boolean` | `false` | Disables the button/link variants |
 
 Emits: `chip-click` (only when `clickable: true`)
 
@@ -681,7 +694,7 @@ Modal dialog with size variants, scroll lock and focus trap.
 
 Emits: `(e: 'close', value: false): void`
 Slots: `default` (body), `header` (below title bar), `footer` (bottom actions)
-Behaviour: closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
+Behaviour: closes on `Escape`, locks scroll, traps `Tab`/`Shift+Tab` inside the panel, makes the app root (`#__nuxt`) `inert` while open, returns focus to the element that opened it, uses `<Teleport to="body">`. The title id is generated per instance, so several dialogs can coexist.
 
 ```vue
 <BaseDialog :is-open="isOpen" title="Confirm action" size="md" @close="isOpen = false">
@@ -702,10 +715,12 @@ Collapsible section. Can be controlled externally or manage its own state.
 | `id` | `string` | — | Required |
 | `title` | `string` | — | Required |
 | `icon` | `string` | `undefined` | Iconify name shown in icon box |
-| `isOpen` | `boolean` | `undefined` | If omitted, accordion manages state internally |
+| `isOpen` | `boolean` | `undefined` | Controlled mode: pair with `@toggle`. If omitted, accordion manages state internally |
+| `defaultOpen` | `boolean` | `false` | Initial state in uncontrolled mode; the user can still close it |
 
 Emits: `toggle` (only when `isOpen` is controlled externally)
 Slot: `default` (body content)
+A11y: the header is a heading containing the toggle button (`aria-expanded`, `aria-controls`); the body is a labelled `region`.
 
 ### `BaseIconButton`
 
@@ -716,6 +731,7 @@ Icon-only button with active state styling.
 | `icon` | `string` | — | Required. Iconify name |
 | `ariaLabel` | `string` | `undefined` | Always set it |
 | `isActive` | `boolean` | `false` | Active/pressed state |
+| `isDisabled` | `boolean` | `false` | |
 
 Emits: `(e: 'click'): void`
 
@@ -731,6 +747,7 @@ Dropdown menu with floating positioning and keyboard navigation.
 | `selectedItemId` | `string \| null` | `null` | Highlighted item, marked with a trailing checkmark |
 
 Emits: `(e: 'select', itemId: string): void`
+Keyboard: `ArrowDown`/`ArrowUp` on the trigger opens the menu; inside it `ArrowUp`/`ArrowDown`/`Home`/`End` move focus, `Escape` or `Tab` close it and return focus to the trigger. Items use `role="menuitemradio"` with `aria-checked`.
 
 ```vue
 <BaseIconMenu
@@ -743,7 +760,11 @@ Emits: `(e: 'select', itemId: string): void`
 
 ### `BaseCloseButton`
 
-Accessible close button. No props.
+Accessible close button.
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `ariaLabel` | `string` | `undefined` | Falls back to the `ui.close` i18n key |
 
 Emits: `(e: 'close', value: false): void`. Renders a `lucide:x` icon button.
 

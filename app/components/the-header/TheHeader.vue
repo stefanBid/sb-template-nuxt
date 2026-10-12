@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<TheHeaderProps>(), {
   selectedLangId: null,
 })
 
-// eslint-disable-next-line no-unused-vars
 const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 
 // Data

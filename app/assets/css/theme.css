@@ -38,6 +38,7 @@
   --sb-warning-soft: #fef3c7;
   --sb-error: #b91c1c;
   --sb-error-soft: #fee2e2;
+  --sb-on-error: #ffffff;
   --sb-info: #1d4ed8;
   --sb-info-soft: #dbeafe;
 
@@ -76,6 +77,7 @@
   --sb-warning-soft: #78350f;
   --sb-error: #fca5a5;
   --sb-error-soft: #7f1d1d;
+  --sb-on-error: #0d0f0e;
   --sb-info: #93c5fd;
   --sb-info-soft: #1e3a8a;
 
@@ -115,6 +117,7 @@
   --color-warning-soft: var(--sb-warning-soft);
   --color-error: var(--sb-error);
   --color-error-soft: var(--sb-error-soft);
+  --color-on-error: var(--sb-on-error);
   --color-info: var(--sb-info);
   --color-info-soft: var(--sb-info-soft);
   --color-focus-ring: var(--sb-focus-ring);

@@ -12,6 +12,7 @@ interface BaseSelectProps {
   placeholder?: string
   hint?: string
   error?: string | null
+  isDisabled?: boolean
 }
 
 // Input / Output
@@ -21,6 +22,7 @@ const props = withDefaults(defineProps<BaseSelectProps>(), {
   placeholder: undefined,
   hint: undefined,
   error: null,
+  isDisabled: false,
 })
 
 const model = defineModel<string>('input')
@@ -55,8 +57,9 @@ const describedBy = computed(() => {
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
         class="w-full appearance-none rounded-sm bg-surface-2 border pl-3 pr-10 py-1.5 md:pl-4 md:pr-11 md:py-2
-               text-ink sb-body focus:outline-none focus:ring-2 focus:ring-focus-ring cursor-pointer"
-        :class="props.error ? 'border-error' : 'border-border'"
+               text-ink sb-body focus:outline-none focus:ring-2 focus:ring-focus-ring cursor-pointer disabled:opacity-45 disabled:cursor-not-allowed"
+        :class="props.error ? 'border-error' : 'border-border-strong'"
+        :disabled="props.isDisabled"
         :name="props.name || `${props.id}-name`"
       >
         <option v-if="props.placeholder" disabled value="">

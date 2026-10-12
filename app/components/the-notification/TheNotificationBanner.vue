@@ -19,28 +19,61 @@ const props = withDefaults(defineProps<TheNotificationBannerProps>(), {
 })
 
 const emit = defineEmits <{
-  // eslint-disable-next-line no-unused-vars
   (e: 'close', falsyValue: false): void
 }>()
+
+// Data
+// Errors and warnings interrupt screen readers, the rest is announced politely
+const liveRole = computed(() => (props.type === 'error' || props.type === 'warning') ? 'alert' : 'status')
+
+let _timerId: ReturnType<typeof setTimeout> | undefined
+let _remaining = props.duration
+let _startedAt = 0
+
+// Helpers
+const _startTimer = () => {
+  if (!props.autoClose || _remaining <= 0 || !import.meta.client) {
+    return
+  }
+  clearTimeout(_timerId)
+  _startedAt = Date.now()
+  _timerId = setTimeout(() => {
+    onClose()
+  }, _remaining)
+}
 
 // Events
 const onClose = () => {
   emit('close', false)
 }
 
-onMounted(() => {
-  // Auto-close logic
-  if (props.autoClose && props.duration > 0 && import.meta.client) {
-    setTimeout(() => {
-      onClose()
-    }, props.duration)
+// Hovering or focusing the banner pauses the countdown so it can be read and used
+const onPauseTimer = () => {
+  if (_timerId === undefined) {
+    return
   }
+  clearTimeout(_timerId)
+  _timerId = undefined
+  _remaining -= Date.now() - _startedAt
+}
+
+const onResumeTimer = () => {
+  if (_timerId === undefined) {
+    _startTimer()
+  }
+}
+
+onMounted(() => {
+  _startTimer()
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(_timerId)
 })
 </script>
 
 <template>
   <div
-    :aria-live="props.type === 'error' ? 'assertive' : 'polite'"
     :class="[
       'w-full sm:w-lg p-4 md:p-6 rounded-md border sb-transition pointer-events-auto',
       'shadow-md',
@@ -51,7 +84,11 @@ onMounted(() => {
         'bg-info-soft border-info': props.type === 'info',
       },
     ]"
-    role="alert"
+    :role="liveRole"
+    @focusin="onPauseTimer"
+    @focusout="onResumeTimer"
+    @mouseenter="onPauseTimer"
+    @mouseleave="onResumeTimer"
   >
     <div class="flex items-start gap-3 md:gap-4 sb-transition">
       <!-- Icon -->

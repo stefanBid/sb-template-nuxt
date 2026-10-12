@@ -1,7 +1,17 @@
 <script setup lang="ts">
+interface BaseCloseButtonProps {
+  ariaLabel?: string
+}
+
+// Dependencies
+const { t } = useI18n()
+
 // Input / Output
+const props = withDefaults(defineProps<BaseCloseButtonProps>(), {
+  ariaLabel: undefined,
+})
+
 const emit = defineEmits<{
-  // eslint-disable-next-line no-unused-vars
   (e: 'close', falsyValue: false): void
 }>()
 
@@ -13,7 +23,9 @@ const onClose = () => {
 
 <template>
   <button
-    class="inline-flex group items-center rounded-sm p-1 ml-4 cursor-pointer text-ink-muted hover:text-ink sb-transition sb-focus"
+    :aria-label="props.ariaLabel || t('ui.close')"
+    class="relative inline-flex group items-center rounded-sm p-1 ml-4 cursor-pointer text-ink-muted hover:text-ink sb-transition sb-focus before:absolute before:-inset-2"
+    type="button"
     @click.stop="onClose"
   >
     <Icon

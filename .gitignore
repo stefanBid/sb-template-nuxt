@@ -29,3 +29,7 @@ logs
 # SKILL PERSONAL
 .claude/skills/global-style-nuxt
 .claude/skills/global-style-refactor
+
+# IMPECCABLE (local design tooling, not versioned)
+.impeccable/
+DESIGN.md

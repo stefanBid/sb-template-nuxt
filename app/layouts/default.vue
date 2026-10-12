@@ -53,8 +53,8 @@ const onCloseNotification = (id: string) => {
 onMounted(() => {
   nextTick(() => {
     info({
-      title: `Notification Title`,
-      message: `This is an informational notification to welcome users to the website.`,
+      title: t('ui.welcome-title'),
+      message: t('ui.welcome-message'),
       icon: 'lucide:joystick',
       autoClose: true,
       dismissible: true,

@@ -3,6 +3,7 @@
 const { t, locale } = useI18n()
 const route = useRoute()
 const config = useRuntimeConfig()
+const localePath = useLocalePath()
 
 // Data
 const isSmDialogOpen = ref(false)
@@ -14,11 +15,11 @@ const githubRepoUrl = 'https://github.com/stefanBid/sb-template-nuxt'
 const personalWebsiteUrl = 'https://stefanobiddau.com/'
 const otherTemplatesUrl = 'https://stefanobiddau.com/my-projects/sb-templates'
 
-const carouselItems = [
-  { type: 'photo' as const, url: '/example.jpg', alternativeText: 'Example image 1' },
-  { type: 'photo' as const, url: '/example.jpg', alternativeText: 'Example image 2' },
-  { type: 'photo' as const, url: '/example.jpg', alternativeText: 'Example image 3' },
-]
+const carouselItems = computed(() => [1, 2, 3].map(n => ({
+  type: 'photo' as const,
+  url: '/example.jpg',
+  alternativeText: t('pages.home.components.carousel-alt', { n }),
+})))
 
 const richTextBlocks = computed<RichBlock[]>(() => [
   {
@@ -46,6 +47,25 @@ const richTextBlocks = computed<RichBlock[]>(() => [
   },
 ])
 
+// Reads the live tokens so the hero panel never drifts from theme.css and typography.css
+const colorMode = useColorMode()
+const tokenValues = reactive({
+  primary: '',
+  fontDisplay: '',
+  fontBody: '',
+  textBody: '',
+})
+
+const _readFamily = (value: string): string => value.split(',')[0]?.replace(/["']/g, '').trim() ?? ''
+
+const _readTokens = () => {
+  const styles = getComputedStyle(document.documentElement)
+  tokenValues.primary = styles.getPropertyValue('--sb-primary').trim().toUpperCase()
+  tokenValues.fontDisplay = _readFamily(styles.getPropertyValue('--font-display'))
+  tokenValues.fontBody = _readFamily(styles.getPropertyValue('--font-body'))
+  tokenValues.textBody = styles.getPropertyValue('--text-body').trim()
+}
+
 const projectName = ref('')
 const emailValue = ref('invalid@')
 const descriptionValue = ref('')
@@ -56,6 +76,8 @@ const teamOptions = computed(() => [
   { label: t('pages.home.form.team.design'), value: 'design' },
 ])
 const selectedTeam = ref('frontend')
+const primaryTeam = ref<string[]>([])
+const collaboratingTeams = ref<string[]>(['design'])
 
 const emailNotifications = ref(true)
 const weeklyReport = ref(false)
@@ -64,6 +86,14 @@ const visibility = ref('private')
 
 const acceptTerms = ref(true)
 const newsletter = ref(false)
+
+onMounted(_readTokens)
+watch(() => colorMode.value, () => nextTick(_readTokens))
+
+// Events
+const onExploreComponents = () => {
+  navigateTo(`${localePath('index')}#buttons`)
+}
 
 useSeoMeta({
   // LOCALIZED
@@ -93,7 +123,11 @@ useSeoMeta({
             {{ t('pages.home.hero.lead') }}
           </p>
           <div class="flex flex-wrap gap-3 mt-7">
-            <BaseButton size="lg" variant="primary">
+            <BaseButton
+              size="lg"
+              variant="primary"
+              @click="onExploreComponents"
+            >
               {{ t('pages.home.hero.cta-primary') }}
             </BaseButton>
             <BaseButton
@@ -119,75 +153,32 @@ useSeoMeta({
           </div>
 
           <div class="grid grid-cols-6 gap-2 mb-4">
-            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-primary)"></div>
-            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-primary-hover)"></div>
-            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-success)"></div>
-            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-warning)"></div>
-            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-error)"></div>
-            <div class="aspect-square rounded-sm border border-border" style="background: var(--color-info)"></div>
+            <div class="aspect-square rounded-sm border border-border bg-primary"></div>
+            <div class="aspect-square rounded-sm border border-border bg-primary-hover"></div>
+            <div class="aspect-square rounded-sm border border-border bg-success"></div>
+            <div class="aspect-square rounded-sm border border-border bg-warning"></div>
+            <div class="aspect-square rounded-sm border border-border bg-error"></div>
+            <div class="aspect-square rounded-sm border border-border bg-info"></div>
           </div>
 
           <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span class="flex items-center gap-2">
-              <span aria-hidden="true" class="size-2.5 rounded-sm shrink-0" style="background: var(--color-primary)"></span>
+              <span aria-hidden="true" class="size-2.5 rounded-sm shrink-0 bg-primary"></span>
               {{ t('pages.home.hero.token-lines.accent') }}
             </span>
-            <span class="text-ink font-semibold">#00804A</span>
+            <span class="text-ink font-semibold">{{ tokenValues.primary }}</span>
           </div>
           <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span>{{ t('pages.home.hero.token-lines.font-primary') }}</span>
-            <span class="text-ink font-semibold">Poppins</span>
+            <span class="text-ink font-semibold">{{ tokenValues.fontDisplay }}</span>
           </div>
           <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span>{{ t('pages.home.hero.token-lines.font-secondary') }}</span>
-            <span class="text-ink font-semibold">Inter</span>
+            <span class="text-ink font-semibold">{{ tokenValues.fontBody }}</span>
           </div>
           <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
             <span>{{ t('pages.home.hero.token-lines.scale-ratio') }}</span>
-            <span class="text-ink font-semibold">1rem</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- i18n -->
-    <section class="py-16 md:py-20 border-t border-border">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-        <div>
-          <span class="sb-overline text-primary block mb-2">{{ t('pages.home.i18n.eyebrow') }}</span>
-          <h2 class="text-ink">
-            {{ t('pages.home.i18n.heading') }}
-          </h2>
-          <p class="sb-body text-ink-muted mt-3">
-            {{ t('pages.home.i18n.description') }}
-          </p>
-          <p class="sb-small text-ink-muted mt-4 flex items-center gap-2">
-            <Icon class="size-4 text-primary shrink-0" name="lucide:languages" />
-            {{ t('pages.home.i18n.hint') }}
-          </p>
-        </div>
-
-        <div class="rounded-lg border border-border bg-surface p-6 md:p-7 shadow-lg">
-          <div class="flex items-center justify-between mb-4">
-            <div aria-hidden="true" class="flex gap-1.5">
-              <span class="size-2 rounded-full bg-border"></span>
-              <span class="size-2 rounded-full bg-border"></span>
-              <span class="size-2 rounded-full bg-border"></span>
-            </div>
-            <code class="sb-small text-primary">{{ t('pages.home.i18n.panel-filename') }}</code>
-          </div>
-
-          <div class="flex items-center justify-between py-2 sb-small text-ink-muted">
-            <span>{{ t('pages.home.i18n.locale-label') }}</span>
-            <BaseBadge dot :text="locale" variant="accent" />
-          </div>
-          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
-            <span>{{ t('pages.home.i18n.strategy-label') }}</span>
-            <span class="text-ink font-semibold">{{ t('pages.home.i18n.strategy-value') }}</span>
-          </div>
-          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
-            <span>{{ t('pages.home.i18n.files-label') }}</span>
-            <span class="text-ink font-semibold">{{ t('pages.home.i18n.files-value') }}</span>
+            <span class="text-ink font-semibold">{{ tokenValues.textBody }}</span>
           </div>
         </div>
       </div>
@@ -271,7 +262,7 @@ useSeoMeta({
             <BaseChip :text="t('pages.home.badges.all')" variant="primary" />
             <BaseChip :text="t('pages.home.badges.frontend')" variant="secondary" />
             <BaseChip :text="t('pages.home.badges.backend')" variant="secondary" />
-            <BaseChip icon="lucide:x" :text="t('pages.home.badges.design')" variant="secondary" />
+            <BaseChip icon="lucide:pen-tool" :text="t('pages.home.badges.design')" variant="secondary" />
           </div>
         </div>
       </div>
@@ -294,8 +285,8 @@ useSeoMeta({
         <BaseCard :full-custom-content="true" variant="dark">
           <div class="flex flex-col justify-between h-full">
             <div>
-              <div class="size-11 rounded-sm bg-primary text-on-primary flex items-center justify-center sb-h3 font-bold mb-4">
-                01
+              <div class="size-11 rounded-sm bg-primary text-on-primary flex items-center justify-center mb-4">
+                <Icon aria-hidden="true" class="size-6" name="lucide:layers" />
               </div>
               <h3 class="text-ink">
                 {{ t('pages.home.cards.feature.title') }}
@@ -316,7 +307,7 @@ useSeoMeta({
             {{ t('pages.home.cards.stat.label') }}
           </p>
           <p class="sb-h2 text-ink mt-1">
-            128
+            {{ t('pages.home.cards.stat.value') }}
           </p>
           <p class="sb-label text-success">
             {{ t('pages.home.cards.stat.delta') }}
@@ -331,21 +322,21 @@ useSeoMeta({
           <div class="flex flex-col divide-y divide-border">
             <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
               <span class="flex items-center gap-2.5 sb-body text-ink">
-                <span class="size-7 rounded-full bg-surface-2 flex items-center justify-center sb-small text-ink-muted shrink-0">Bt</span>
+                <span class="size-7 rounded-full bg-surface-2 flex items-center justify-center sb-small text-ink-muted shrink-0">{{ t('pages.home.cards.list.button.name').slice(0, 2) }}</span>
                 {{ t('pages.home.cards.list.button.name') }}
               </span>
               <BaseBadge :text="t('pages.home.cards.list.button.status')" variant="success" />
             </div>
             <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
               <span class="flex items-center gap-2.5 sb-body text-ink">
-                <span class="size-7 rounded-full bg-surface-2 flex items-center justify-center sb-small text-ink-muted shrink-0">Dg</span>
+                <span class="size-7 rounded-full bg-surface-2 flex items-center justify-center sb-small text-ink-muted shrink-0">{{ t('pages.home.cards.list.dialog.name').slice(0, 2) }}</span>
                 {{ t('pages.home.cards.list.dialog.name') }}
               </span>
               <BaseBadge :text="t('pages.home.cards.list.dialog.status')" variant="success" />
             </div>
             <div class="flex items-center justify-between py-3 first:pt-0 last:pb-0">
               <span class="flex items-center gap-2.5 sb-body text-ink">
-                <span class="size-7 rounded-full bg-surface-2 flex items-center justify-center sb-small text-ink-muted shrink-0">Ac</span>
+                <span class="size-7 rounded-full bg-surface-2 flex items-center justify-center sb-small text-ink-muted shrink-0">{{ t('pages.home.cards.list.accordion.name').slice(0, 2) }}</span>
                 {{ t('pages.home.cards.list.accordion.name') }}
               </span>
               <BaseBadge :text="t('pages.home.cards.list.accordion.status')" variant="warning" />
@@ -370,7 +361,7 @@ useSeoMeta({
       <div class="max-w-3xl space-y-3">
         <BaseAccordion
           id="accordion-theme-colors"
-          :is-open="true"
+          default-open
           :title="t('pages.home.accordion.items.theme-colors.title')"
         >
           <p class="sb-body">
@@ -441,9 +432,24 @@ useSeoMeta({
             :label="t('pages.home.form.team.label')"
             :options="teamOptions"
           />
+
+          <BaseCombobox
+            id="form-primary-team"
+            v-model:input="primaryTeam"
+            :items="teamOptions"
+            :label="t('pages.home.form.combobox.single-label')"
+          />
         </div>
 
         <div class="space-y-6">
+          <BaseCombobox
+            id="form-collaborating-teams"
+            v-model:input="collaboratingTeams"
+            :items="teamOptions"
+            :label="t('pages.home.form.combobox.multiple-label')"
+            type="multiple"
+          />
+
           <div>
             <p class="sb-overline text-ink-muted mb-3">
               {{ t('pages.home.form.notifications-title') }}
@@ -508,6 +514,37 @@ useSeoMeta({
               />
             </div>
           </div>
+        </div>
+      </div>
+      <div class="max-w-4xl mt-10">
+        <p class="sb-overline text-ink-muted mb-3">
+          {{ t('pages.home.form.states-title') }}
+        </p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-6">
+          <BaseInput
+            id="form-state-disabled"
+            is-disabled
+            :label="t('pages.home.form.states.disabled-label')"
+            :placeholder="t('pages.home.form.states.disabled-placeholder')"
+          />
+          <BaseInput
+            id="form-state-readonly"
+            :input="t('pages.home.form.states.readonly-value')"
+            is-readonly
+            :label="t('pages.home.form.states.readonly-label')"
+          />
+          <BaseSwitch
+            id="form-state-switch"
+            :input="true"
+            is-disabled
+            :label="t('pages.home.form.states.disabled-switch')"
+          />
+          <BaseCheckbox
+            id="form-state-checkbox"
+            :input="true"
+            is-disabled
+            :label="t('pages.home.form.states.disabled-checkbox')"
+          />
         </div>
       </div>
     </section>
@@ -646,6 +683,49 @@ useSeoMeta({
           </p>
           <div class="rounded-md border border-border bg-surface p-5 md:p-6">
             <BaseRichText :blocks="richTextBlocks" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- i18n -->
+    <section id="i18n" class="py-16 md:py-20 border-t border-border scroll-mt-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        <div>
+          <span class="sb-overline text-primary block mb-2">{{ t('pages.home.i18n.eyebrow') }}</span>
+          <h2 class="text-ink">
+            {{ t('pages.home.i18n.heading') }}
+          </h2>
+          <p class="sb-body text-ink-muted mt-3">
+            {{ t('pages.home.i18n.description') }}
+          </p>
+          <p class="sb-small text-ink-muted mt-4 flex items-center gap-2">
+            <Icon class="size-4 text-primary shrink-0" name="lucide:languages" />
+            {{ t('pages.home.i18n.hint') }}
+          </p>
+        </div>
+
+        <div class="rounded-lg border border-border bg-surface p-6 md:p-7 shadow-lg">
+          <div class="flex items-center justify-between mb-4">
+            <div aria-hidden="true" class="flex gap-1.5">
+              <span class="size-2 rounded-full bg-border"></span>
+              <span class="size-2 rounded-full bg-border"></span>
+              <span class="size-2 rounded-full bg-border"></span>
+            </div>
+            <code class="sb-small text-primary">{{ t('pages.home.i18n.panel-filename') }}</code>
+          </div>
+
+          <div class="flex items-center justify-between py-2 sb-small text-ink-muted">
+            <span>{{ t('pages.home.i18n.locale-label') }}</span>
+            <BaseBadge dot :text="locale" variant="accent" />
+          </div>
+          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
+            <span>{{ t('pages.home.i18n.strategy-label') }}</span>
+            <span class="text-ink font-semibold">{{ t('pages.home.i18n.strategy-value') }}</span>
+          </div>
+          <div class="flex items-center justify-between py-2 border-t border-border sb-small text-ink-muted">
+            <span>{{ t('pages.home.i18n.files-label') }}</span>
+            <span class="text-ink font-semibold">{{ t('pages.home.i18n.files-value') }}</span>
           </div>
         </div>
       </div>

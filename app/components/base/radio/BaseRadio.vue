@@ -4,32 +4,37 @@ interface BaseRadioProps {
   name: string
   value: string
   label?: string
+  isDisabled?: boolean
 }
 
 // Input / Output
 const props = withDefaults(defineProps<BaseRadioProps>(), {
   label: undefined,
+  isDisabled: false,
 })
 
 const model = defineModel<string>('input')
 </script>
 
 <template>
-  <div class="flex w-fit items-center gap-2.5">
+  <label
+    class="flex w-fit items-center gap-2.5 cursor-pointer pointer-coarse:min-h-11 has-disabled:cursor-not-allowed has-disabled:opacity-45"
+    :for="props.id"
+  >
     <input
       :id="props.id"
       v-model="model"
-      class="size-4.5 md:size-5 accent-primary cursor-pointer sb-focus"
+      class="size-4.5 md:size-5 accent-primary cursor-pointer disabled:cursor-not-allowed sb-focus"
+      :disabled="props.isDisabled"
       :name="props.name"
       type="radio"
       :value="props.value"
     />
-    <label
+    <span
       v-if="props.label"
-      class="sb-body text-ink cursor-pointer"
-      :for="props.id"
+      class="sb-body text-ink"
     >
       {{ props.label }}
-    </label>
-  </div>
+    </span>
+  </label>
 </template>

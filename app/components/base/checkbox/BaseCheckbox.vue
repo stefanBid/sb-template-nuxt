@@ -4,6 +4,7 @@ interface BaseCheckboxProps {
   name?: string
   label?: string
   error?: string | null
+  isDisabled?: boolean
 }
 
 // Input / Output
@@ -11,51 +12,57 @@ const props = withDefaults(defineProps<BaseCheckboxProps>(), {
   name: undefined,
   label: undefined,
   error: null,
+  isDisabled: false,
 })
 
 const model = defineModel<boolean>('input')
 </script>
 
 <template>
-  <div class="flex w-fit h-fit items-center gap-2">
-    <input
-      :id="props.id"
-      v-model="model"
-      :aria-invalid="props.error ? 'true' : 'false'"
-      autocomplete="on"
-      class="
-      relative
-      peer size-4.5 md:size-5 shrink-0 rounded-sm border
-      sb-transition cursor-pointer
-      appearance-none
-      outline-none
-      checked:bg-primary-hover
-      checked:border-ink
-      focus-visible:ring-2
-      focus-visible:ring-focus-ring
-      before:absolute
-      before:left-1/2 before:top-1/2
-      before:-translate-x-1/2 before:-translate-y-1/2
-      before:flex before:items-center before:justify-center
-      before:text-ink before:sb-lead
-      before:content-['✓'] before:opacity-0
-    "
-      :class="props.error ? 'border-error' : 'border-border'"
-      :name="props.name || `${props.id}-name`"
-      type="checkbox"
-    />
+  <div>
+    <label
+      class="flex w-fit h-fit items-center gap-2 cursor-pointer pointer-coarse:min-h-11 has-disabled:cursor-not-allowed has-disabled:opacity-45"
+      :for="props.id"
+    >
+      <span class="relative inline-flex shrink-0">
+        <input
+          :id="props.id"
+          v-model="model"
+          :aria-describedby="props.error ? `${props.id}-error` : undefined"
+          :aria-invalid="props.error ? 'true' : 'false'"
+          class="peer size-4.5 md:size-5 rounded-sm border bg-surface-2 sb-transition cursor-pointer appearance-none checked:bg-primary checked:border-primary sb-focus"
+          :class="props.error ? 'border-error' : 'border-border-strong'"
+          :disabled="props.isDisabled"
+          :name="props.name || `${props.id}-name`"
+          type="checkbox"
+        />
+        <Icon
+          class="pointer-events-none absolute inset-0 m-auto size-3.5 text-on-primary opacity-0 peer-checked:opacity-100 sb-transition"
+          name="lucide:check"
+        />
+      </span>
 
-    <span
-      v-if="!$slots.default"
-      class="sb-body text-ink sb-transition"
+      <span
+        v-if="!$slots.default"
+        class="sb-body text-ink sb-transition"
+      >
+        {{ props.label }}
+      </span>
+      <span
+        v-else
+        class="sb-body text-ink sb-transition"
+      >
+        <slot></slot>
+      </span>
+    </label>
+
+    <p
+      v-if="props.error"
+      :id="`${props.id}-error`"
+      class="sb-small text-error mt-1 md:mt-1.5 sb-transition"
+      role="alert"
     >
-      {{ props.label }}
-    </span>
-    <span
-      v-else
-      class="sb-body text-ink sb-transition"
-    >
-      <slot></slot>
-    </span>
+      {{ props.error }}
+    </p>
   </div>
 </template>

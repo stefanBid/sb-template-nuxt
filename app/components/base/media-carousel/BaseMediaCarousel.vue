@@ -13,10 +13,14 @@ interface BaseMediaCarouselProps {
   items: MediaItem[]
 }
 
+// Dependencies
+const { t } = useI18n()
+
 // Input / Output
 const props = defineProps<BaseMediaCarouselProps>()
 
 // State
+const isPlaying = ref(true)
 const currentIndex = ref(0)
 const videoRef = ref<HTMLVideoElement | null>(null)
 
@@ -38,6 +42,17 @@ const onGoToIndex = (index: number) => {
   resetAutoplay()
 }
 
+const onToggleAutoplay = () => {
+  isPlaying.value = !isPlaying.value
+  if (isPlaying.value) {
+    resetAutoplay()
+  }
+  else if (intervalId) {
+    clearInterval(intervalId)
+    intervalId = null
+  }
+}
+
 // Auto-play
 let intervalId: NodeJS.Timeout | null = null
 
@@ -45,7 +60,9 @@ const resetAutoplay = () => {
   if (intervalId) {
     clearInterval(intervalId)
   }
-  startAutoplay()
+  if (isPlaying.value) {
+    startAutoplay()
+  }
 }
 
 const startAutoplay = () => {
@@ -83,7 +100,7 @@ onUnmounted(() => {
       <!-- Image -->
       <NuxtImg
         v-if="currentItem.type === 'photo'"
-        :alt="currentItem.alternativeText || `Media ${currentIndex + 1}`"
+        :alt="currentItem.alternativeText || t('ui.carousel.media-alt', { n: currentIndex + 1 })"
         class="w-full h-full object-cover"
         loading="lazy"
         provider="none"
@@ -95,14 +112,14 @@ onUnmounted(() => {
         v-else-if="currentItem.type === 'video'"
         :key="currentItem.url"
         ref="videoRef"
-        :alt="currentItem.alternativeText || `Video ${currentIndex + 1}`"
+        :aria-label="currentItem.alternativeText || t('ui.carousel.media-alt', { n: currentIndex + 1 })"
         class="w-full max-h-full"
         controls
         :poster="currentItem.previewUrl || undefined"
         preload="metadata"
       >
         <source :src="currentItem.url" type="video/mp4" />
-        Questo browser non supporta il formato video.
+        {{ t('ui.carousel.video-unsupported') }}
       </video>
 
       <!-- Navigation Arrows (only if more than 1 item) -->
@@ -110,7 +127,7 @@ onUnmounted(() => {
         <!-- Previous -->
         <div class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2">
           <BaseIconButton
-            :aria-label="currentItem.type === 'photo' ? 'Foto precedente' : 'Video precedente'"
+            :aria-label="currentItem.type === 'photo' ? t('ui.carousel.previous-photo') : t('ui.carousel.previous-video')"
             icon="lucide:chevron-left"
             @click="onGoToPrevious"
           />
@@ -119,12 +136,24 @@ onUnmounted(() => {
         <!-- Next -->
         <div class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2">
           <BaseIconButton
-            :aria-label="currentItem.type === 'photo' ? 'Foto successiva' : 'Video successivo'"
+            :aria-label="currentItem.type === 'photo' ? t('ui.carousel.next-photo') : t('ui.carousel.next-video')"
             icon="lucide:chevron-right"
             @click="onGoToNext"
           />
         </div>
       </template>
+
+      <!-- Autoplay control (only if more than 1 item) -->
+      <div
+        v-if="props.items.length > 1"
+        class="absolute bottom-4 left-4"
+      >
+        <BaseIconButton
+          :aria-label="isPlaying ? t('ui.carousel.pause') : t('ui.carousel.play')"
+          :icon="isPlaying ? 'lucide:pause' : 'lucide:play'"
+          @click="onToggleAutoplay"
+        />
+      </div>
 
       <!-- Counter (only if more than 1 item) -->
       <div
@@ -157,7 +186,7 @@ onUnmounted(() => {
         <!-- Photo Thumbnail -->
         <NuxtImg
           v-if="item.type === 'photo'"
-          :alt="item.alternativeText || `Thumbnail ${index + 1}`"
+          :alt="item.alternativeText || t('ui.carousel.thumbnail-alt', { n: index + 1 })"
           class="w-full h-full object-cover sb-transition"
           loading="lazy"
           provider="none"
@@ -168,7 +197,7 @@ onUnmounted(() => {
         <div v-else-if="item.type === 'video'" class="relative w-full h-full">
           <NuxtImg
             v-if="item.previewUrl"
-            :alt="item.alternativeText || `Thumbnail video ${index + 1}`"
+            :alt="item.alternativeText || t('ui.carousel.video-thumbnail-alt', { n: index + 1 })"
             class="w-full h-full object-cover sb-transition"
             loading="lazy"
             provider="none"

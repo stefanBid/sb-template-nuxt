@@ -1,5 +1,25 @@
 {
   "announcement": {},
+  "ui": {
+    "close": "Close",
+    "empty": "No results found",
+    "placeholder": "Insert a value...",
+    "carousel": {
+      "previous-photo": "Previous photo",
+      "next-photo": "Next photo",
+      "previous-video": "Previous video",
+      "next-video": "Next video",
+      "pause": "Pause slideshow",
+      "play": "Start slideshow",
+      "media-alt": "Media {n}",
+      "thumbnail-alt": "Thumbnail {n}",
+      "video-thumbnail-alt": "Video thumbnail {n}",
+      "video-unsupported": "This browser does not support the video format."
+    },
+    "opens-new-tab": "(opens in a new tab)",
+    "welcome-title": "Welcome",
+    "welcome-message": "This is an informational notification to welcome users to the website."
+  },
   "nav": {
     "privacy-policy": "Privacy Policy",
     "terms-and-conditions": "Terms & Conditions",
@@ -22,13 +42,15 @@
   "header": {
     "route-section": "Menu",
     "settings-section": "Settings",
-    "change-lang": "Change language"
+    "change-lang": "Change language",
+    "open-menu": "Open menu",
+    "close-menu": "Close menu"
   },
   "pages": {
     "home": {
       "hero": {
         "badge": "Nuxt 4 · Tailwind v4",
-        "title": "A base template for consistent interfaces, not another kit of identical cards.",
+        "title": "A base template for consistent interfaces, with tokens, components and dark mode built in.",
         "lead": "SB Template Nuxt UI is the starting point for your next projects: color and typography tokens already defined, ready-to-use components, dark mode included by default.",
         "cta-primary": "Explore components",
         "cta-secondary": "View on GitHub",
@@ -94,7 +116,8 @@
         },
         "stat": {
           "label": "Projects started with this starter",
-          "delta": "+12 this month"
+          "delta": "+12 this month",
+          "value": "128"
         },
         "list": {
           "label": "Latest components added",
@@ -162,7 +185,20 @@
         "visibility-public": "Public",
         "preferences-title": "Preferences",
         "accept-terms": "I accept the terms of service",
-        "subscribe-newsletter": "Subscribe to the newsletter"
+        "subscribe-newsletter": "Subscribe to the newsletter",
+        "states-title": "Disabled and read-only",
+        "states": {
+          "disabled-label": "Workspace ID",
+          "disabled-placeholder": "Locked by your admin",
+          "readonly-label": "Project slug",
+          "readonly-value": "sb-template-nuxt",
+          "disabled-switch": "Beta features",
+          "disabled-checkbox": "Accept legacy terms"
+        },
+        "combobox": {
+          "single-label": "Primary team",
+          "multiple-label": "Collaborating teams"
+        }
       },
       "dialog": {
         "eyebrow": "Dialog",
@@ -206,7 +242,8 @@
         "rich-text-heading": "Rich text rendering",
         "rich-text-intro": "BaseRichText converts a block array into sanitized HTML, styled with the same typography tokens as the rest of the app — safe to use directly with CMS content.",
         "rich-text-list-item-1": "Headings, paragraphs and inline formatting",
-        "rich-text-list-item-2": "Ordered and unordered lists, quotes and code blocks"
+        "rich-text-list-item-2": "Ordered and unordered lists, quotes and code blocks",
+        "carousel-alt": "Example image {n}"
       },
       "responsive": {
         "eyebrow": "Responsive",

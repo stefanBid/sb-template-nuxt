@@ -9,6 +9,9 @@ interface BaseButtonProps {
   isLoading?: boolean
 }
 
+// Dependencies
+const { t } = useI18n()
+
 // Input / Output
 const props = withDefaults(defineProps<BaseButtonProps>(), {
   variant: 'primary',
@@ -21,6 +24,7 @@ const props = withDefaults(defineProps<BaseButtonProps>(), {
 })
 
 const sizeClasses = computed(() => ({
+  'pointer-coarse:min-h-11': true,
   'px-3 py-1.5 md:px-3.5 md:py-2': props.size === 'sm',
   'px-4 py-2 md:px-6 md:py-3': props.size === 'md',
   'px-6 py-3 md:px-8 md:py-4': props.size === 'lg',
@@ -34,10 +38,13 @@ const isInteractive = computed(() => {
 <template>
   <a
     v-if="props.type === 'link'"
+    :aria-busy="props.isLoading ? 'true' : undefined"
+    :aria-disabled="!isInteractive ? 'true' : undefined"
     :aria-label="props.ariaLabel"
     class="sb-body-strong border rounded-sm sb-transition inline-flex items-center sb-focus"
     :class="[
       sizeClasses,
+      !isInteractive ? 'opacity-45 pointer-events-none' : '',
 
       // Variants
       props.variant === 'primary'
@@ -57,17 +64,21 @@ const isInteractive = computed(() => {
         : '',
 
       props.variant === 'danger'
-        ? 'bg-error-soft border-transparent text-error hover:bg-error hover:text-surface'
+        ? 'bg-error-soft border-transparent text-error hover:bg-error hover:text-on-error'
         : '',
     ]"
-    :href="props.to"
+    :href="isInteractive ? props.to : undefined"
     rel="noopener noreferrer"
+    :tabindex="isInteractive ? undefined : -1"
     target="_blank"
   >
     <slot></slot>
+    <span class="sr-only">{{ t('ui.opens-new-tab') }}</span>
+    <Icon v-if="props.isLoading" class="inline-block size-5 md:size-6 ml-2 animate-spin" name="lucide:loader-circle" />
   </a>
   <button
     v-else
+    :aria-busy="props.isLoading ? 'true' : undefined"
     :aria-label="props.ariaLabel"
     class="sb-body-strong border rounded-sm sb-transition inline-flex items-center sb-focus"
 
@@ -104,7 +115,7 @@ const isInteractive = computed(() => {
 
       props.variant === 'danger'
         ? isInteractive
-          ? 'bg-error-soft border-transparent text-error hover:bg-error hover:text-surface'
+          ? 'bg-error-soft border-transparent text-error hover:bg-error hover:text-on-error'
           : 'bg-error-soft border-transparent text-error'
         : '',
     ]"

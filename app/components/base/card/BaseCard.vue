@@ -63,7 +63,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
 
         <!-- Default body content -->
         <template v-else>
-          <h2
+          <h3
             v-if="props.title"
             class="sb-h3 sb-transition"
             :class="{
@@ -73,7 +73,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
             }"
           >
             {{ props.title }}
-          </h2>
+          </h3>
           <p
             v-if="props.subtitle"
             class="sb-h4 text-ink-muted mt-1 sb-transition"
@@ -87,7 +87,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           </p>
           <p
             v-if="props.paragraph"
-            class="sb-body text-justify mt-3 md:mt-4 sb-transition"
+            class="sb-body mt-3 md:mt-4 sb-transition"
           >
             {{ props.paragraph }}
           </p>
