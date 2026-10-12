@@ -14,6 +14,8 @@ permissions:
 
 jobs:
   release-please:
+    # Template-only. init-project removes this workflow in user projects.
+    if: github.repository == 'stefanBid/sb-template-nuxt'
     runs-on: ubuntu-latest
 
     steps:
