@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/stefanBid/sb-template-nuxt/compare/v3.0.0...v3.0.1) (2026-10-12)
+
+
+### Bug Fixes
+
+* global style ([#115](https://github.com/stefanBid/sb-template-nuxt/issues/115)) ([b7a74c9](https://github.com/stefanBid/sb-template-nuxt/commit/b7a74c9d8002bea79e31e69f61cf57386b3cafbd))
+
 ## [3.0.0](https://github.com/stefanBid/sb-template-nuxt/compare/v2.5.1...v3.0.0) (2026-09-14)
 
 
