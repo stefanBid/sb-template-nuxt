@@ -3,8 +3,9 @@
   "ui": {
     "close": "Chiudi",
     "loading-theme": "Caricamento tema",
-    "empty": "Nessun risultato",
+    "no-options": "Nessuna opzione disponibile",
     "placeholder": "Inserisci un valore...",
+    "select-placeholder": "Seleziona…",
     "carousel": {
       "label": "Carosello multimediale",
       "previous-photo": "Foto precedente",

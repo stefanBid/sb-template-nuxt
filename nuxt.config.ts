@@ -85,7 +85,7 @@ export default defineNuxtConfig({
         '@vue/devtools-core',
         '@vue/devtools-kit',
         'isomorphic-dompurify',
-        '@floating-ui/vue',
+        'sb-floating-panel-vue',
       ],
     },
   },
