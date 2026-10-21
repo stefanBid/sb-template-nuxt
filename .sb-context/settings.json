@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "i18n": {
+    "enabled": true,
+    "source": "user",
+    "updatedAt": "2026-10-21",
+    "defaultLocale": "en",
+    "locales": [
+      "en",
+      "it"
+    ],
+    "otherLocales": "translate",
+    "messagesDir": "i18n/locales",
+    "keyStyle": "area.name.element"
+  },
+  "icons": {
+    "module": "@nuxt/icon",
+    "source": "user",
+    "updatedAt": "2026-10-21"
+  },
+  "images": {
+    "module": "@nuxt/image",
+    "source": "user",
+    "updatedAt": "2026-10-21"
+  },
+  "naming": {
+    "componentPrefix": "Base",
+    "source": "user",
+    "updatedAt": "2026-10-21"
+  },
+  "style": {
+    "prefix": "sb",
+    "source": "user",
+    "updatedAt": "2026-10-21"
+  },
+  "seo": {
+    "siteUrl": null,
+    "source": "user",
+    "updatedAt": "2026-10-21"
+  }
+}

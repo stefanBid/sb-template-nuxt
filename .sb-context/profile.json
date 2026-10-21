@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "detectedAt": "2026-10-21",
+  "confirmed": [
+    "kind",
+    "rendering"
+  ],
+  "adapter": "nuxt",
+  "framework": {
+    "name": "nuxt",
+    "major": 4
+  },
+  "bundler": {
+    "name": "vite",
+    "major": null
+  },
+  "kind": "app",
+  "rendering": "ssr",
+  "language": "ts",
+  "packageManager": "npm",
+  "templates": "vue-sfc",
+  "paths": {
+    "src": "app",
+    "styles": "app/assets/css",
+    "components": "app/components",
+    "composables": "app/composables",
+    "pages": "app/pages",
+    "layouts": "app/layouts",
+    "public": "public"
+  },
+  "entries": {
+    "config": "nuxt.config.ts",
+    "app": "app/app.vue",
+    "lib": null,
+    "css": "nuxt.config.ts"
+  },
+  "styling": {
+    "engine": {
+      "name": "tailwind4",
+      "via": "@tailwindcss/vite"
+    },
+    "colorMode": "@nuxtjs/color-mode",
+    "fonts": "@nuxt/fonts"
+  },
+  "features": {
+    "router": "nuxt",
+    "autoImport": true,
+    "i18n": "@nuxtjs/i18n",
+    "icons": "@nuxt/icon",
+    "images": "@nuxt/image",
+    "state": null,
+    "test": null,
+    "lint": "@nuxt/eslint",
+    "typecheck": "nuxi typecheck"
+  },
+  "library": null
+}

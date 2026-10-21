@@ -2,7 +2,7 @@
 
 Nuxt 4 project started from `sb-template-nuxt` (see `.template-version`). SSR, Tailwind v4, i18n, dark/light theme.
 
-**First time here? Run the `init-project` skill** (in `.claude/skills/`; re-runnable to fix mistakes, delete it by hand when happy). Optional extra tooling lives in the `sb-context-nuxt` Claude Code plugin (checks, global style, GitHub admin); it is never committed here — only project-specific context is.
+**First time here? Run the `init-project` skill** (in `.claude/skills/`; re-runnable to fix mistakes, delete it by hand when happy). Optional extra tooling lives in the `sb-context-fe` Claude Code plugins (`sb-core`, `sb-github`, `sb-health`, `sb-design`: checks, global style, GitHub admin); the plugins are never committed here — only the project context they keep in `.sb-context/` is.
 
 ## App context
 
@@ -39,3 +39,26 @@ Explore `app/components/base/` for the available components and their props — 
 ## Commands
 
 `npm run dev` · `npm run lint:fix` · `npx nuxt typecheck` · `npm run build`. On `main` use `npm ci`, never `npm install` (`npm run si` picks automatically).
+
+<!-- sb-context:docs:start -->
+<!-- Written by /sb-core:context from .sb-context/docs.json: change the links there (or run the skill again), not here. -->
+## Project docs
+
+Nuxt 4.5 app (SSR) in TypeScript, styled with Tailwind CSS 4.3.
+
+These links are the source of truth for this stack, at the versions the project uses. Open them (WebFetch) when unsure or when your own knowledge may be out of date, and say what was not verified against them.
+
+- **Nuxt 4**: [Pages, dynamic routes and middleware](https://nuxt.com/docs/4.x/directory-structure/app/pages) · [Routing](https://nuxt.com/docs/4.x/getting-started/routing) · [Components and auto-imports](https://nuxt.com/docs/4.x/directory-structure/app/components) · [Composables](https://nuxt.com/docs/4.x/directory-structure/app/composables) · [Utils](https://nuxt.com/docs/4.x/directory-structure/app/utils) · [Plugins](https://nuxt.com/docs/4.x/directory-structure/app/plugins) · [Layouts](https://nuxt.com/docs/4.x/directory-structure/app/layouts) · [Page and layout transitions](https://nuxt.com/docs/4.x/getting-started/transitions) · [SEO, meta tags and useSeoMeta](https://nuxt.com/docs/4.x/getting-started/seo-meta) · [Rendering modes, prerender and routeRules](https://nuxt.com/docs/4.x/guide/concepts/rendering) · [Shared state with useState](https://nuxt.com/docs/4.x/getting-started/state-management) · [Images, fonts and static assets](https://nuxt.com/docs/4.x/getting-started/assets) · [The public/ folder](https://nuxt.com/docs/4.x/directory-structure/public) · [Server routes (Nitro)](https://nuxt.com/docs/4.x/directory-structure/server) · [nuxt.config.ts](https://nuxt.com/docs/4.x/directory-structure/nuxt-config) · [Directory structure](https://nuxt.com/docs/4.x/directory-structure) · [API reference](https://nuxt.com/docs/4.x/api) · [Upgrade guide](https://nuxt.com/docs/4.x/getting-started/upgrade)
+- **Vue 3**: [`<script setup>`](https://vuejs.org/api/sfc-script-setup.html) · [Reactivity fundamentals](https://vuejs.org/guide/essentials/reactivity-fundamentals.html) · [Composition API FAQ](https://vuejs.org/guide/extras/composition-api-faq.html) · [Props](https://vuejs.org/guide/components/props.html) · [Slots](https://vuejs.org/guide/components/slots.html) · [Composables](https://vuejs.org/guide/reusability/composables.html) · [TypeScript with the Composition API](https://vuejs.org/guide/typescript/composition-api.html) · [API reference](https://vuejs.org/api/)
+- **Tailwind CSS 4**: [Theme variables](https://tailwindcss.com/docs/theme) · [Adding custom styles](https://tailwindcss.com/docs/adding-custom-styles) · [Functions and directives](https://tailwindcss.com/docs/functions-and-directives) · [Dark mode](https://tailwindcss.com/docs/dark-mode) · [Upgrade guide](https://tailwindcss.com/docs/upgrade-guide)
+- **Vue Router 5**: [Getting started](https://router.vuejs.org/guide/) · [Dynamic route matching](https://router.vuejs.org/guide/essentials/dynamic-matching.html) · [Navigation guards](https://router.vuejs.org/guide/advanced/navigation-guards.html) · [Lazy loading routes](https://router.vuejs.org/guide/advanced/lazy-loading.html)
+- **Nuxt I18n 10**: [Getting started, $t and useI18n](https://i18n.nuxtjs.org/docs/getting-started)
+- **Nuxt Icon 2**: [@nuxt/icon](https://nuxt.com/modules/icon)
+- **Nuxt Image 2**: [@nuxt/image](https://nuxt.com/modules/image)
+- **Nuxt Fonts 1**: [@nuxt/fonts](https://nuxt.com/modules/fonts)
+- **Nuxt Color Mode 4**: [@nuxtjs/color-mode](https://nuxt.com/modules/color-mode)
+- **Nuxt ESLint 1**: [@nuxt/eslint](https://nuxt.com/modules/eslint)
+- **VueUse 15**: [@vueuse/nuxt](https://nuxt.com/modules/vueuse) · [Functions](https://vueuse.org/functions.html)
+- **isomorphic-dompurify 4**: [isomorphic-dompurify README](https://github.com/kkomelin/isomorphic-dompurify)
+- **sb-floating-panel-vue 5**: [sb-floating-panel-vue README](https://github.com/stefanBid/sb-floating-panel-vue#readme)
+<!-- sb-context:docs:end -->
