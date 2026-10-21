@@ -2,7 +2,7 @@
 
 Production-ready **Nuxt 4** starter: SSR, Tailwind CSS v4 closed design system, base components, i18n, dark/light theme, notification system. Built to be set up in minutes with Claude Code.
 
-**Stack:** Nuxt 4 · Vue 3 (`<script setup>`) · Tailwind v4 · `@nuxt/icon` · `@nuxt/image` · `@nuxt/fonts` · `@nuxtjs/i18n` · `@nuxtjs/color-mode` · TypeScript strict · ESLint · Netlify.
+**Stack:** Nuxt 4 · Vue 3 (`<script setup>`) · Tailwind v4 · `@nuxt/icon` · `@nuxt/image` · `@nuxt/fonts` · `@nuxtjs/i18n` · `@nuxtjs/color-mode` · `sb-floating-panel-vue` · TypeScript strict · ESLint · Netlify.
 
 ---
 
@@ -109,7 +109,7 @@ On `main` always `npm ci`, never `npm install`.
 app/
   assets/css/     main.css, theme.css, typography.css, animation.css
   components/     base/ (reusable) · the-* (layout singletons)
-  composables/    useAppNotifications, useFloatingUi, useLockScroll, useScrollSpy, useSanitize
+  composables/    useAppNotifications, useLockScroll, usePointerHighlight, useScrollSpy, useSanitize
   layouts/ pages/ plugins/ types/ utils/
   app.config.ts   public branding (site name, social links)
 i18n/locales/     en.json, it.json

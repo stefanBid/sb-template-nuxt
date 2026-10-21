@@ -3,8 +3,9 @@
   "ui": {
     "close": "Close",
     "loading-theme": "Loading theme",
-    "empty": "No results found",
+    "no-options": "No options available",
     "placeholder": "Insert a value...",
+    "select-placeholder": "Select…",
     "carousel": {
       "label": "Media carousel",
       "previous-photo": "Previous photo",

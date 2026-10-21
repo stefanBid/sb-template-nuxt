@@ -13,11 +13,12 @@ Nuxt 4 project started from `sb-template-nuxt` (see `.template-version`). SSR, T
 Consult when working with Nuxt internals or a module's API beyond what's covered below. **Never remove this section.** When adding a Nuxt module, plugin or major library (Tailwind included), add its documentation link here.
 - Nuxt 4: [Introduction](https://nuxt.com/docs/4.x/getting-started/introduction) · [Directory structure](https://nuxt.com/docs/4.x/directory-structure) · [Guide](https://nuxt.com/docs/4.x/guide) · [API](https://nuxt.com/docs/4.x/api) · [Netlify deploy](https://nuxt.com/deploy/netlify)
 - Modules: [@nuxt/eslint](https://nuxt.com/modules/eslint) · [@nuxt/icon](https://nuxt.com/modules/icon) · [@nuxt/image](https://nuxt.com/modules/image) · [@vueuse/nuxt](https://nuxt.com/modules/vueuse) · [@nuxtjs/i18n](https://nuxt.com/modules/i18n) · [@nuxt/fonts](https://nuxt.com/modules/fonts) · [@nuxtjs/color-mode](https://nuxt.com/modules/color-mode) · [@nuxtjs/sitemap](https://nuxt.com/modules/sitemap)
+- Libraries: [sb-floating-panel-vue](https://github.com/stefanBid/sb-floating-panel-vue#readme) (headless floating panels behind `BaseSelect`, `BaseCombobox`, `BaseIconMenu`)
 - Tailwind CSS v4: [Docs](https://tailwindcss.com/docs) · [Theme variables (`@theme`)](https://tailwindcss.com/docs/theme) · [Upgrade guide](https://tailwindcss.com/docs/upgrade-guide)
 
 ## Stack
 
-Nuxt 4 · Vue 3 `<script setup lang="ts">` · Tailwind v4 (tokens in `app/assets/css/theme.css`) · `@nuxt/icon` (lucide, flagpack) · `@nuxt/image` · `@nuxt/fonts` · `@nuxtjs/i18n` · `@nuxtjs/color-mode` · Netlify.
+Nuxt 4 · Vue 3 `<script setup lang="ts">` · Tailwind v4 (tokens in `app/assets/css/theme.css`) · `@nuxt/icon` (lucide, flagpack) · `@nuxt/image` · `@nuxt/fonts` · `@nuxtjs/i18n` · `@nuxtjs/color-mode` · `sb-floating-panel-vue` (dropdowns, listboxes, menus) · Netlify.
 
 ## Rules
 
