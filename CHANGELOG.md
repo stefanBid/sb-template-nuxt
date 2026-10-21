@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0](https://github.com/stefanBid/sb-template-nuxt/compare/v3.1.0...v3.2.0) (2026-10-21)
+
+
+### Features
+
+* integrate sb-floating-panel-vue for select, combobox and menu ([#119](https://github.com/stefanBid/sb-template-nuxt/issues/119)) ([fb57378](https://github.com/stefanBid/sb-template-nuxt/commit/fb5737863549b181a306f1b41088c14e66099599))
+
 ## [3.1.0](https://github.com/stefanBid/sb-template-nuxt/compare/v3.0.1...v3.1.0) (2026-10-12)
 
 
