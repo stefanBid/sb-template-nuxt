@@ -67,23 +67,24 @@ Talk to it in plain language, English or Italian:
 - *"Add a Base component for tabs"* → follows the component conventions in `CLAUDE.md`.
 - *"Translate the contact page to French"* → adds the locale consistently.
 
-**Optional power-up:** the `sb-context-nuxt` plugin adds shortcuts. It lives outside your repo, so nothing from it is ever committed:
+**Optional power-up:** the `sb-context-fe` plugins (`sb-core`, `sb-github`, `sb-health`, `sb-design`) add shortcuts. They live outside your repo; only the project context they write in `.sb-context/` can be committed (personal files stay out through its own `.gitignore`):
 
 ```
-/plugin marketplace add stefanBid/sb-context-nuxt
-/plugin install sb-context-nuxt@sb-context-nuxt
+/plugin marketplace add stefanBid/sb-context-fe
+/plugin install sb-context-fe@sb-context-fe
 ```
 
 | Skill | Say |
 |---|---|
-| `build-check` | "check the build" |
-| `lint-check` | "check the lint" |
-| `dependency-check` | "check dependencies" |
-| `seo-check` | "check SEO" |
-| `docs-update` | "update the documentation" |
-| `full-checkup` | "full checkup" (all of the above) |
-| `global-style-nuxt` / `global-style-refactor` | "reorganize the global style" / "refactor the templates after the style change" |
-| `gh-repo-admin` | "open a PR", "set up the branch rules" |
+| `/sb-core:setup` | "set up the plugin on this project" (run first) |
+| `/sb-health:build` | "check the build" |
+| `/sb-health:lint` | "check the lint" |
+| `/sb-health:deps` | "check dependencies" |
+| `/sb-health:seo` | "check SEO" |
+| `/sb-health:docs` | "update the documentation" |
+| `/sb-health:checkup` | "full checkup" (all of the above) |
+| `/sb-design:align` / `/sb-design:migrate` | "reorganize the global style" / "refactor the templates after the style change" |
+| `/sb-github:admin` | "open a PR", "set up the branch rules" |
 
 ---
 

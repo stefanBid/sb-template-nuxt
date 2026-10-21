@@ -1,0 +1,556 @@
+{
+  "schema": 1,
+  "updatedAt": "2026-10-21",
+  "links": [
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure/app/pages",
+      "title": "Pages, dynamic routes and middleware",
+      "topic": "pages",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/getting-started/routing",
+      "title": "Routing",
+      "topic": "routing",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure/app/components",
+      "title": "Components and auto-imports",
+      "topic": "components",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure/app/composables",
+      "title": "Composables",
+      "topic": "composables",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure/app/utils",
+      "title": "Utils",
+      "topic": "utils",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure/app/plugins",
+      "title": "Plugins",
+      "topic": "plugins",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure/app/layouts",
+      "title": "Layouts",
+      "topic": "layouts",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/getting-started/transitions",
+      "title": "Page and layout transitions",
+      "topic": "transitions",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/getting-started/seo-meta",
+      "title": "SEO, meta tags and useSeoMeta",
+      "topic": "seo",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui",
+        "sb-health:seo"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/guide/concepts/rendering",
+      "title": "Rendering modes, prerender and routeRules",
+      "topic": "rendering",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui",
+        "sb-health:seo"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/getting-started/state-management",
+      "title": "Shared state with useState",
+      "topic": "state",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/getting-started/assets",
+      "title": "Images, fonts and static assets",
+      "topic": "assets",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure/public",
+      "title": "The public/ folder",
+      "topic": "public",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure/server",
+      "title": "Server routes (Nitro)",
+      "topic": "server",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure/nuxt-config",
+      "title": "nuxt.config.ts",
+      "topic": "config",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:align"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/directory-structure",
+      "title": "Directory structure",
+      "topic": "directory-structure",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/api",
+      "title": "API reference",
+      "topic": "api",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/docs/4.x/getting-started/upgrade",
+      "title": "Upgrade guide",
+      "topic": "upgrade",
+      "package": "nuxt",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-health:deps"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://vuejs.org/api/sfc-script-setup.html",
+      "title": "<script setup>",
+      "topic": "script-setup",
+      "package": "vue",
+      "version": "3",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://vuejs.org/guide/essentials/reactivity-fundamentals.html",
+      "title": "Reactivity fundamentals",
+      "topic": "reactivity",
+      "package": "vue",
+      "version": "3",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://vuejs.org/guide/extras/composition-api-faq.html",
+      "title": "Composition API FAQ",
+      "topic": "composition-api",
+      "package": "vue",
+      "version": "3",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://vuejs.org/guide/components/props.html",
+      "title": "Props",
+      "topic": "props",
+      "package": "vue",
+      "version": "3",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://vuejs.org/guide/components/slots.html",
+      "title": "Slots",
+      "topic": "slots",
+      "package": "vue",
+      "version": "3",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://vuejs.org/guide/reusability/composables.html",
+      "title": "Composables",
+      "topic": "composables",
+      "package": "vue",
+      "version": "3",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://vuejs.org/guide/typescript/composition-api.html",
+      "title": "TypeScript with the Composition API",
+      "topic": "typescript",
+      "package": "vue",
+      "version": "3",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://vuejs.org/api/",
+      "title": "API reference",
+      "topic": "api",
+      "package": "vue",
+      "version": "3",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://tailwindcss.com/docs/theme",
+      "title": "Theme variables",
+      "topic": "theme",
+      "package": "tailwindcss",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui",
+        "sb-design:align"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://tailwindcss.com/docs/adding-custom-styles",
+      "title": "Adding custom styles",
+      "topic": "custom-styles",
+      "package": "tailwindcss",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:align"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://tailwindcss.com/docs/functions-and-directives",
+      "title": "Functions and directives",
+      "topic": "directives",
+      "package": "tailwindcss",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:align"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://tailwindcss.com/docs/dark-mode",
+      "title": "Dark mode",
+      "topic": "dark-mode",
+      "package": "tailwindcss",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:align"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://tailwindcss.com/docs/upgrade-guide",
+      "title": "Upgrade guide",
+      "topic": "upgrade",
+      "package": "tailwindcss",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-health:deps"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://router.vuejs.org/guide/",
+      "title": "Getting started",
+      "topic": "guide",
+      "package": "vue-router",
+      "version": "5",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://router.vuejs.org/guide/essentials/dynamic-matching.html",
+      "title": "Dynamic route matching",
+      "topic": "dynamic-routes",
+      "package": "vue-router",
+      "version": "5",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://router.vuejs.org/guide/advanced/navigation-guards.html",
+      "title": "Navigation guards",
+      "topic": "guards",
+      "package": "vue-router",
+      "version": "5",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://router.vuejs.org/guide/advanced/lazy-loading.html",
+      "title": "Lazy loading routes",
+      "topic": "lazy-loading",
+      "package": "vue-router",
+      "version": "5",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://i18n.nuxtjs.org/docs/getting-started",
+      "title": "Getting started, $t and useI18n",
+      "topic": "started",
+      "package": "@nuxtjs/i18n",
+      "version": "10",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/modules/icon",
+      "title": "@nuxt/icon",
+      "topic": "module",
+      "package": "@nuxt/icon",
+      "version": "2",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/modules/image",
+      "title": "@nuxt/image",
+      "topic": "module",
+      "package": "@nuxt/image",
+      "version": "2",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/modules/fonts",
+      "title": "@nuxt/fonts",
+      "topic": "module",
+      "package": "@nuxt/fonts",
+      "version": "1",
+      "summary": "latest docs (1.x); the project is on 0.14: no versioned 0.x docs, families config is the same — upgrade via /sb-health:deps",
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:align"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/modules/color-mode",
+      "title": "@nuxtjs/color-mode",
+      "topic": "module",
+      "package": "@nuxtjs/color-mode",
+      "version": "4",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:align"
+      ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/modules/eslint",
+      "title": "@nuxt/eslint",
+      "topic": "module",
+      "package": "@nuxt/eslint",
+      "version": "1",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxt.com/modules/vueuse",
+      "title": "@vueuse/nuxt",
+      "topic": "module",
+      "package": "@vueuse/nuxt",
+      "version": "15",
+      "summary": "latest docs (v15); the project is on v14 — upgrade via /sb-health:deps",
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://vueuse.org/functions.html",
+      "title": "Functions",
+      "topic": "functions",
+      "package": "@vueuse/core",
+      "version": "15",
+      "summary": "latest docs (v15); the project is on v14: no v14 docs archive — check function changes before relying on new APIs, upgrade via /sb-health:deps",
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://github.com/stefanBid/sb-floating-panel-vue#readme",
+      "title": "sb-floating-panel-vue README",
+      "topic": "readme",
+      "package": "sb-floating-panel-vue",
+      "version": "5",
+      "summary": "covers SbContainer, SbReference, SbFloating props and events, keyboard and accessibility model, data-sbf-* attributes and --sbf-* CSS variables for styling; version 5",
+      "source": "proposed",
+      "usedBy": [
+        "sb-design:extract-ui"
+      ],
+      "verifiedAt": "2026-10-21"
+    },
+    {
+      "url": "https://github.com/kkomelin/isomorphic-dompurify",
+      "title": "isomorphic-dompurify README",
+      "topic": "readme",
+      "package": "isomorphic-dompurify",
+      "version": "4",
+      "summary": "covers sanitize(dirty, config), hooks, clearWindow() for long-running servers (jsdom), Node requirements; version 4",
+      "source": "proposed",
+      "usedBy": [],
+      "verifiedAt": "2026-10-21"
+    }
+  ]
+}

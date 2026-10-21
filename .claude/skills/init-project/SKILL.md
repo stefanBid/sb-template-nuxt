@@ -43,4 +43,4 @@ Do each edit, then summarise the diff.
 
 - Do **not** delete this skill. Tell the user it can be re-run to fix mistakes, and that they can remove `.claude/skills/init-project/` by hand once happy.
 - Suggest first commit: `git add -A && git commit -m "chore: initialise project"`. Do not commit or push without being asked.
-- Mention the optional `sb-context-nuxt` plugin (`global-style-nuxt` to refine palette, type scale and motion later, plus checks and GitHub admin) — see the README.
+- Mention the optional `sb-context-fe` plugins (`/sb-core:setup` first, then `/sb-design:align` to refine palette, type scale and motion later, plus checks and GitHub admin) — see the README.
