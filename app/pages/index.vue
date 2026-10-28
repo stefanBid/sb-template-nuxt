@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  sitemap: { lastmod: '2025-11-24', changefreq: 'monthly', priority: 1.0 },
+})
+
 // Dependencies
 const { t, locale } = useI18n()
 const route = useRoute()
