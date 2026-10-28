@@ -10,5 +10,5 @@ export default defineEventHandler((event) => {
     return 'User-Agent: *\nDisallow: /\n'
   }
 
-  return `User-Agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`
+  return `User-Agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap_index.xml\n`
 })

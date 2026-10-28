@@ -33,6 +33,7 @@ Nuxt 4 · Vue 3 `<script setup lang="ts">` · Tailwind v4 (tokens in `app/assets
 - **ESLint:** no semicolons, single quotes, trailing commas. Never use `eslint-disable` — fix the code.
 - **Data:** `useFetch` / `useAsyncData` in components; server code only in `server/`; env via `useRuntimeConfig()`.
 - Never write `v-html` directly; use `BaseRichText`.
+- **Sitemap:** `@nuxtjs/sitemap` discovers pages on its own — never list URLs by hand or add a `public/sitemap.xml`. Every new page starts its `<script setup>` with `definePageMeta({ sitemap: { lastmod: 'YYYY-MM-DD', changefreq, priority } })` (ask the user for the values; `sitemap: false` to exclude). Bump `lastmod` only when the content really changes.
 
 Explore `app/components/base/` for the available components and their props — read the component, it is the source of truth.
 
@@ -44,7 +45,7 @@ Explore `app/components/base/` for the available components and their props — 
 <!-- Written by /sb-core:context from .sb-context/docs.json: change the links there (or run the skill again), not here. -->
 ## Project docs
 
-Nuxt 4.5 app (SSR) in TypeScript, styled with Tailwind CSS 4.3.
+Nuxt 4.6 app (SSR) in TypeScript, styled with Tailwind CSS 4.3.
 
 These links are the source of truth for this stack, at the versions the project uses. Open them (WebFetch) when unsure or when your own knowledge may be out of date, and say what was not verified against them.
 
@@ -57,6 +58,7 @@ These links are the source of truth for this stack, at the versions the project 
 - **Nuxt Image 2**: [@nuxt/image](https://nuxt.com/modules/image)
 - **Nuxt Fonts 1**: [@nuxt/fonts](https://nuxt.com/modules/fonts)
 - **Nuxt Color Mode 4**: [@nuxtjs/color-mode](https://nuxt.com/modules/color-mode)
+- **Nuxt Sitemap 9**: [@nuxtjs/sitemap](https://nuxtseo.com/docs/sitemap/getting-started/introduction)
 - **Nuxt ESLint 1**: [@nuxt/eslint](https://nuxt.com/modules/eslint)
 - **VueUse 15**: [@vueuse/nuxt](https://nuxt.com/modules/vueuse) · [Functions](https://vueuse.org/functions.html)
 - **isomorphic-dompurify 4**: [isomorphic-dompurify README](https://github.com/kkomelin/isomorphic-dompurify)

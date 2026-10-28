@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updatedAt": "2026-10-21",
+  "updatedAt": "2026-10-28",
   "links": [
     {
       "url": "https://nuxt.com/docs/4.x/directory-structure/app/pages",
@@ -493,6 +493,17 @@
       "usedBy": [
         "sb-design:align"
       ],
+      "verifiedAt": null
+    },
+    {
+      "url": "https://nuxtseo.com/docs/sitemap/getting-started/introduction",
+      "title": "@nuxtjs/sitemap",
+      "topic": "sitemap",
+      "package": "@nuxtjs/sitemap",
+      "version": "9",
+      "summary": null,
+      "source": "proposed",
+      "usedBy": [],
       "verifiedAt": null
     },
     {

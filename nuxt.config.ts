@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   // ---------------------------------------------------------------------------
   // Modules
   // ---------------------------------------------------------------------------
-  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxt/fonts', '@nuxtjs/i18n', '@nuxtjs/color-mode', '@vueuse/nuxt'],
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@nuxt/fonts', '@nuxtjs/i18n', '@nuxtjs/color-mode', '@vueuse/nuxt', '@nuxtjs/sitemap'],
 
   // ---------------------------------------------------------------------------
   // Environment overrides — merged in based on the actual Nuxt CLI command
@@ -41,6 +41,11 @@ export default defineNuxtConfig({
     },
   },
   css: ['~/assets/css/main.css'],
+  site: {
+    // Every sitemap <loc> resolves against this URL (resolved at build: the sitemaps are prerendered)
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://www.yoursite.com',
+    name: 'Your Site Name',
+  },
   colorMode: {
     classSuffix: '',
     dataValue: 'theme',
@@ -145,5 +150,10 @@ export default defineNuxtConfig({
       // used for arbitrary external URLs (e.g. CMS media) not covered by image.domains
       none: {},
     },
+  },
+  sitemap: {
+    // Every page is static: prerender the sitemaps at build and ship no sitemap code in the server bundle.
+    // Pages come from app sources, hreflang alternates from @nuxtjs/i18n, priority/changefreq/lastmod from definePageMeta.
+    zeroRuntime: true,
   },
 })
