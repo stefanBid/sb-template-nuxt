@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.0](https://github.com/stefanBid/sb-template-nuxt/compare/v3.2.0...v3.3.0) (2026-10-28)
+
+
+### Features
+
+* migrate sitemap to @nuxtjs/sitemap and update dependencies ([#124](https://github.com/stefanBid/sb-template-nuxt/issues/124)) ([4dbc12b](https://github.com/stefanBid/sb-template-nuxt/commit/4dbc12b1c0dc816d001cea11ec634f1f23008fac))
+
 ## [3.2.0](https://github.com/stefanBid/sb-template-nuxt/compare/v3.1.0...v3.2.0) (2026-10-21)
 
 
