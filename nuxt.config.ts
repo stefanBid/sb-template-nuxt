@@ -155,5 +155,7 @@ export default defineNuxtConfig({
     // Every page is static: prerender the sitemaps at build and ship no sitemap code in the server bundle.
     // Pages come from app sources, hreflang alternates from @nuxtjs/i18n, priority/changefreq/lastmod from definePageMeta.
     zeroRuntime: true,
+    // No XSL stylesheet: browsers are dropping XSLT, and search engines read the plain XML anyway
+    xsl: false,
   },
 })
