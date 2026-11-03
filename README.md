@@ -110,7 +110,7 @@ On `main` always `npm ci`, never `npm install`.
 app/
   assets/css/     main.css, theme.css, typography.css, animation.css
   components/     base/ (reusable) · the-* (layout singletons)
-  composables/    useAppNotifications, useLockScroll, usePointerHighlight, useScrollSpy, useSanitize
+  composables/    useAppNotifications, useLockScroll, usePageTransition, usePointerHighlight, useScrollSpy, useSanitize
   layouts/ pages/ plugins/ types/ utils/
   app.config.ts   public branding (site name, social links)
 i18n/locales/     en.json, it.json
