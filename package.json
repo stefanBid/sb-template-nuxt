@@ -19,28 +19,28 @@
   "dependencies": {
     "@nuxt/eslint": "^1.17.0",
     "@nuxt/fonts": "^1.2.0",
-    "@nuxt/icon": "^2.6.1",
-    "@nuxt/image": "^2.2.0",
+    "@nuxt/icon": "^2.6.2",
+    "@nuxt/image": "^2.2.1",
     "@nuxtjs/color-mode": "^4.1.0",
     "@nuxtjs/i18n": "^10.6.0",
     "@nuxtjs/sitemap": "^9.1.0",
-    "@tailwindcss/vite": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.4",
     "@vueuse/core": "^15.0.0",
     "@vueuse/nuxt": "^15.0.0",
-    "eslint": "^10.13.0",
+    "eslint": "^10.14.0",
     "isomorphic-dompurify": "^4.6.0",
-    "nuxt": "4.6.3",
+    "nuxt": "4.6.4",
     "sb-floating-panel-vue": "^5.3.1",
-    "tailwindcss": "^4.3.3",
+    "tailwindcss": "^4.3.4",
     "vue": "^3.5.44",
     "vue-router": "^5.4.0"
   },
   "devDependencies": {
-    "@iconify-json/flagpack": "^1.2.8",
-    "@iconify-json/lucide": "^1.2.147",
-    "@types/node": "^26.6.5",
+    "@iconify-json/flagpack": "^1.2.10",
+    "@iconify-json/lucide": "^1.2.150",
+    "@types/node": "^26.6.6",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.13"
+    "vue-tsc": "^3.3.14"
   },
   "engines": {
     "node": ">=24.19.0"

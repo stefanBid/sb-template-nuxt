@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "notes": [
+    {
+      "id": "typescript@7.0.2",
+      "package": "typescript",
+      "current": "6.0.3",
+      "target": "7.0.2",
+      "status": "deferred",
+      "summary": "TypeScript 7 is the native (Go) compiler and no longer exposes the JS compiler API at the package root. vue-tsc 3.3.14 -> @volar/typescript 2.4.30 requires typescript <7 and @typescript-eslint 8.72.1 requires typescript >=4.8.4 <6.1.0, so typecheck and type-aware lint would break.",
+      "blockedBy": [
+        {
+          "package": "@volar/typescript",
+          "range": "<7",
+          "owner": "upstream"
+        },
+        {
+          "package": "@typescript-eslint/eslint-plugin",
+          "range": ">=4.8.4 <6.1.0",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "do npm view @typescript-eslint/eslint-plugin@latest peerDependencies and npm view @volar/typescript@latest peerDependencies both accept typescript@7?",
+      "links": [
+        "https://github.com/typescript-eslint/typescript-eslint/issues/10940",
+        "https://github.com/vuejs/language-tools/issues/5381"
+      ],
+      "firstSeen": "2026-11-03",
+      "lastChecked": "2026-11-03",
+      "history": []
+    },
+    {
+      "id": "deepmerge@>4.3.1",
+      "package": "deepmerge",
+      "current": "4.3.1",
+      "target": ">4.3.1",
+      "status": "watching",
+      "summary": "Low advisory GHSA-gcqx-w48m-w2h4 (prototype poisoning in mergeObject) affects deepmerge >=4.2.0; latest is 4.3.1, no patched release. Build-time only: nuxt -> nitropack -> @rollup/plugin-node-resolve. npm audit's only fix is downgrading nuxt, not allowed.",
+      "blockedBy": [
+        {
+          "package": "deepmerge",
+          "range": "4.3.1",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "has deepmerge published > 4.3.1, or has @rollup/plugin-node-resolve dropped it? (npm view deepmerge version; npm ls deepmerge)",
+      "links": [
+        "https://github.com/advisories/GHSA-gcqx-w48m-w2h4"
+      ],
+      "firstSeen": "2026-11-03",
+      "lastChecked": "2026-11-03",
+      "history": []
+    },
+    {
+      "id": "minimatch@11.0.1",
+      "package": "minimatch",
+      "current": "10.2.6",
+      "target": "11.0.1",
+      "status": "watching",
+      "summary": "Moderate advisory GHSA-g3hv-75wg-m249 (DoS via globparts amplification) affects minimatch <11.0.1, patched only in the 11 major; eslint 10.14.0, @eslint/config-array 0.23.5, @typescript-eslint/typescript-estree 8.72.1, readdir-glob 3.0.0 and glob 13.0.6 still ask ^10 in their latest releases. Lint/build-time tooling only.",
+      "blockedBy": [
+        {
+          "package": "eslint",
+          "range": "10.14.0",
+          "owner": "upstream"
+        },
+        {
+          "package": "@typescript-eslint/typescript-estree",
+          "range": "8.72.1",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "do the latest eslint, @eslint/config-array, @typescript-eslint/typescript-estree and readdir-glob accept minimatch ^11? (npm view <pkg> dependencies.minimatch)",
+      "links": [
+        "https://github.com/advisories/GHSA-g3hv-75wg-m249"
+      ],
+      "firstSeen": "2026-11-03",
+      "lastChecked": "2026-11-03",
+      "history": []
+    },
+    {
+      "id": "glob@14.0.2",
+      "package": "glob",
+      "current": "13.0.6",
+      "target": "14.0.2",
+      "status": "watching",
+      "summary": "Moderate advisory GHSA-3g3m-2fjr-6pw4 affects glob >=9.0.0 <=14.0.1; pulled in at build time by nuxt -> nitropack -> @vercel/nft 1.11.0 (latest), which asks glob ^13. Fixed only in 14.0.2.",
+      "blockedBy": [
+        {
+          "package": "@vercel/nft",
+          "range": "1.11.0",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "does @vercel/nft@latest depend on glob ^14? (npm view @vercel/nft dependencies.glob)",
+      "links": [
+        "https://github.com/advisories/GHSA-3g3m-2fjr-6pw4"
+      ],
+      "firstSeen": "2026-11-03",
+      "lastChecked": "2026-11-03",
+      "history": []
+    }
+  ]
+}
