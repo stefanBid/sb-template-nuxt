@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.1](https://github.com/stefanBid/sb-template-nuxt/compare/v3.3.0...v3.3.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* **deps:** update nuxt to 4.6.4 (security) and minor/patch dependencies ([#127](https://github.com/stefanBid/sb-template-nuxt/issues/127)) ([8101de4](https://github.com/stefanBid/sb-template-nuxt/commit/8101de456c07992dc9cbd0c44f98a2d70cb0322c))
+
 ## [3.3.0](https://github.com/stefanBid/sb-template-nuxt/compare/v3.2.0...v3.3.0) (2026-10-28)
 
 
