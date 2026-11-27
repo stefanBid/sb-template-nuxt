@@ -87,7 +87,6 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
     optimizeDeps: {
       include: [
-        '@vue/devtools-core',
         '@vue/devtools-kit',
         'isomorphic-dompurify',
         'sb-floating-panel-vue',
