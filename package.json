@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "nuxt typecheck",
-    "si": "bash scripts/safe-install.sh"
+    "si": "bash scripts/safe-install.sh",
+    "clear": "bash scripts/clear.sh"
   },
   "dependencies": {
     "@nuxt/eslint": "^1.17.0",

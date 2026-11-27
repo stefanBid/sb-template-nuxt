@@ -86,8 +86,9 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
+      // Direct dependencies only: pre-bundling a transitive package forces one copy on every importer
+      // and breaks the ones that need another version (e.g. @vue/devtools-kit: v9 for Nuxt DevTools, v8 for vue-router)
       include: [
-        '@vue/devtools-kit',
         'isomorphic-dompurify',
         'sb-floating-panel-vue',
       ],

@@ -32,6 +32,7 @@ Nuxt 4 · Vue 3 `<script setup lang="ts">` · Tailwind v4 (tokens in `app/assets
 - **Accessibility:** labels, `aria-describedby` / `aria-invalid` on form errors.
 - **ESLint:** no semicolons, single quotes, trailing commas. Never use `eslint-disable` — fix the code.
 - **Data:** `useFetch` / `useAsyncData` in components; server code only in `server/`; env via `useRuntimeConfig()`.
+- **Vite `optimizeDeps.include`:** list only direct dependencies from `package.json`. A transitive package installed in more than one version (check with `npm ls <pkg>`) gets pre-bundled as a single copy for every importer, and the app fails to mount in dev while build and typecheck still pass.
 - Never write `v-html` directly; use `BaseRichText`.
 - **Sitemap:** `@nuxtjs/sitemap` discovers pages on its own — never list URLs by hand or add a `public/sitemap.xml`. Every new page starts its `<script setup>` with `definePageMeta({ sitemap: { lastmod: 'YYYY-MM-DD', changefreq, priority } })` (ask the user for the values; `sitemap: false` to exclude). Bump `lastmod` only when the content really changes.
 
@@ -39,7 +40,7 @@ Explore `app/components/base/` for the available components and their props — 
 
 ## Commands
 
-`npm run dev` · `npm run lint:fix` · `npx nuxt typecheck` · `npm run build`. On `main` use `npm ci`, never `npm install` (`npm run si` picks automatically).
+`npm run dev` · `npm run lint:fix` · `npx nuxt typecheck` · `npm run build` · `npm run clear` (removes build outputs and `node_modules`, cleans the npm cache). On `main` use `npm ci`, never `npm install` (`npm run si` picks automatically).
 
 <!-- sb-context:docs:start -->
 <!-- Written by /sb-core:context from .sb-context/docs.json: change the links there (or run the skill again), not here. -->
