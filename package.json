@@ -32,7 +32,7 @@
     "eslint": "^10.15.0",
     "isomorphic-dompurify": "^4.9.0",
     "nuxt": "4.7.0",
-    "sb-floating-panel-vue": "^5.3.2",
+    "sb-floating-panel-vue": "^5.3.3",
     "tailwindcss": "^4.3.5",
     "vue": "^3.5.46",
     "vue-router": "^5.5.3"
