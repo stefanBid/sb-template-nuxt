@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.0](https://github.com/stefanBid/sb-template-nuxt/compare/v3.3.1...v3.4.0) (2026-11-27)
+
+
+### Features
+
+* add the clear script and stop pre-bundling @vue/devtools-kit ([#132](https://github.com/stefanBid/sb-template-nuxt/issues/132)) ([9ad1b60](https://github.com/stefanBid/sb-template-nuxt/commit/9ad1b60e24c97a409ed8ba4d9c82e17c0e416176))
+
 ## [3.3.1](https://github.com/stefanBid/sb-template-nuxt/compare/v3.3.0...v3.3.1) (2026-11-03)
 
 
