@@ -72,7 +72,7 @@ onMounted(() => {
     />
     <main class="pt-16 px-6 md:px-10 sb-transition">
       <div class="w-full max-w-350 mx-auto sb-transition">
-        <slot></slot>
+        <slot />
       </div>
     </main>
     <TheFooter

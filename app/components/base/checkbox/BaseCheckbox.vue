@@ -52,7 +52,7 @@ const model = defineModel<boolean>('input')
         v-else
         class="sb-body text-ink sb-transition"
       >
-        <slot></slot>
+        <slot />
       </span>
     </label>
 

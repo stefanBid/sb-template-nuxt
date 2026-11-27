@@ -91,7 +91,7 @@ const onToggle = () => {
         role="region"
       >
         <div class="text-ink-muted sb-transition">
-          <slot></slot>
+          <slot />
         </div>
       </div>
     </transition>

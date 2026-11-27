@@ -72,7 +72,7 @@ const isInteractive = computed(() => {
     :tabindex="isInteractive ? undefined : -1"
     target="_blank"
   >
-    <slot></slot>
+    <slot />
     <span class="sr-only">{{ t('ui.opens-new-tab') }}</span>
     <Icon v-if="props.isLoading" class="inline-block size-5 md:size-6 ml-2 animate-spin" name="lucide:loader-circle" />
   </a>
@@ -122,7 +122,7 @@ const isInteractive = computed(() => {
     :disabled="props.isDisabled || props.isLoading"
     :type="props.type"
   >
-    <slot></slot>
+    <slot />
     <Icon v-if="props.isLoading" class="inline-block size-5 md:size-6 ml-2 animate-spin" name="lucide:loader-circle" />
   </button>
 </template>
