@@ -53,7 +53,7 @@ Then check everything works:
 npm run dev          # http://localhost:3000
 ```
 
-If you would rather not use Claude Code, do the same by hand: edit the files in the table above, delete `CHANGELOG.md` and `.github/workflows/release-please.yml`, set `version` to `0.0.1`.
+If you would rather not use Claude Code, do the same by hand: edit the files in the table above, delete `CHANGELOG.md`, `.github/workflows/release-please.yml`, `release-please-config.json` and `.release-please-manifest.json`, set `version` to `0.0.1`.
 
 ---
 
@@ -96,7 +96,7 @@ Talk to it in plain language, English or Italian:
 | `npm run build` / `npm run preview` | Production build / preview |
 | `npm run generate` | Static generation |
 | `npm run lint` / `npm run lint:fix` | ESLint |
-| `npx nuxt typecheck` | Type check |
+| `npm run typecheck` | Type check (`nuxt typecheck`, also run by the CI) |
 | `npm run si` | Safe install: `npm ci` on `main`, `npm install` elsewhere |
 | `npm run analyze` | Bundle size report |
 
