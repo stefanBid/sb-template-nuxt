@@ -29,3 +29,6 @@ logs
 # IMPECCABLE (local design tooling, not versioned)
 .impeccable/
 DESIGN.md
+
+# sb-context-fe plugins: the template keeps its context local; in your project remove this line to commit it
+.sb-context/
