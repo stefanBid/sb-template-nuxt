@@ -209,7 +209,7 @@ watch(
             class="sb-transition"
             :class="paddingClass"
           >
-            <slot name="header"></slot>
+            <slot name="header" />
           </section>
 
           <!-- BODY -->
@@ -217,7 +217,7 @@ watch(
             class="flex-1 overflow-y-auto sb-body sb-transition"
             :class="paddingClass"
           >
-            <slot></slot>
+            <slot />
           </section>
 
           <!-- FOOTER -->
@@ -226,7 +226,7 @@ watch(
             class="flex justify-end gap-3 border-t border-border/70 sb-transition"
             :class="paddingClass"
           >
-            <slot name="footer"></slot>
+            <slot name="footer" />
           </footer>
         </div>
       </div>

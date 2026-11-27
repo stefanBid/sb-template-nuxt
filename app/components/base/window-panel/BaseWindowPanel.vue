@@ -17,6 +17,6 @@ const props = defineProps<BaseWindowPanelProps>()
       </div>
       <code class="sb-small text-primary">{{ props.filename }}</code>
     </div>
-    <slot></slot>
+    <slot />
   </div>
 </template>
