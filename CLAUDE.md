@@ -2,7 +2,7 @@
 
 Nuxt 4 project started from `sb-template-nuxt` (see `.template-version`). SSR, Tailwind v4, i18n, dark/light theme.
 
-**First time here? Run the `init-project` skill** (in `.claude/skills/`; re-runnable to fix mistakes, delete it by hand when happy). Optional extra tooling lives in the `sb-context-fe` Claude Code plugins (`sb-core`, `sb-github`, `sb-health`, `sb-design`: checks, global style, GitHub admin); the plugins are never committed here — only the project context they keep in `.sb-context/` is.
+**First time here? Run the `init-project` skill** (in `.claude/skills/`; re-runnable to fix mistakes, delete it by hand when happy). Optional extra tooling lives in the `sb-context-fe` Claude Code plugins (`sb-core`, `sb-github`, `sb-health`, `sb-design`: checks, global style, GitHub admin); neither the plugins nor the context they keep in `.sb-context/` are committed here (the template ignores `.sb-context/`: it is the maintainer's local context). In a project created from the template, remove that line from `.gitignore` to commit the context the plugins write.
 
 ## App context
 

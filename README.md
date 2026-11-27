@@ -67,7 +67,7 @@ Talk to it in plain language, English or Italian:
 - *"Add a Base component for tabs"* → follows the component conventions in `CLAUDE.md`.
 - *"Translate the contact page to French"* → adds the locale consistently.
 
-**Optional power-up:** the `sb-context-fe` plugins (`sb-core`, `sb-github`, `sb-health`, `sb-design`) add shortcuts. They live outside your repo; only the project context they write in `.sb-context/` can be committed (personal files stay out through its own `.gitignore`):
+**Optional power-up:** the `sb-context-fe` plugins (`sb-core`, `sb-github`, `sb-health`, `sb-design`) add shortcuts. They live outside your repo. The context they write goes in `.sb-context/`, which this template ignores (it is the maintainer's local context); in your project, remove the `.sb-context/` line from `.gitignore` to commit it (personal files then stay out through the folder's own `.gitignore`):
 
 ```
 /plugin marketplace add stefanBid/sb-context-fe
