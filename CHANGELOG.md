@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.1](https://github.com/stefanBid/sb-template-nuxt/compare/v3.4.0...v3.4.1) (2026-11-28)
+
+
+### Bug Fixes
+
+* make the clear script remove every locally generated file ([#135](https://github.com/stefanBid/sb-template-nuxt/issues/135)) ([3f8142b](https://github.com/stefanBid/sb-template-nuxt/commit/3f8142b962c99161e511f07998c4ada5fb477b37))
+
 ## [3.4.0](https://github.com/stefanBid/sb-template-nuxt/compare/v3.3.1...v3.4.0) (2026-11-27)
 
 
